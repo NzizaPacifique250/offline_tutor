@@ -1,0 +1,44 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Model weights: several GB each, fetched by tools/fetch_models.py
+bench/models/*.gguf
+bench/models/*.part
+bench/models/downloaded.json
+
+# Cross-compiled binaries: rebuilt by bench/scripts/01_* and 05_*
+bench/device-bin/
+bench/device-bin-vulkan/
+
+# Scratch files the benchmark runner writes while driving the tablet
+bench/results/.question.txt
+bench/results/run_one.sh
+bench/results/system_prompt.txt
+bench/results/sweep.log
+
+# REB source books (copyright reserved) and text derived from them
+curriculum/**/sources/*.pdf
+curriculum/**/lessons/*_smoke.md
+curriculum/**/lessons/*_smoke.json
+
+# React Native app
+app/node_modules/
+app/android/build/
+app/android/app/build/
+app/android/.gradle/
+app/android/local.properties
+app/.expo/
+
+# OS / editor
+.DS_Store
+*.swp
+
+# Demonstration recordings pulled from the tablet by app/scripts/record_demo.sh
+docs/demo/
+
+# Credentials
+.env
+.env.*
+!.env.example
