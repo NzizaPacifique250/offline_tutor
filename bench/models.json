@@ -1,0 +1,87 @@
+{
+  "_comment": [
+    "Candidate models for the S6 Advanced Mathematics tutor.",
+    "Tiers exist because the tablet's RAM ceiling is not known until",
+    "00_device_profile.sh has run. Fetch tier A first; only fetch tier B if the",
+    "device profile shows enough headroom.",
+    "Sizes are approximate and are confirmed after download.",
+    "Filenames are resolved from the Hugging Face API, not hardcoded, because",
+    "quantization filenames change between uploads."
+  ],
+  "generation": [
+    {
+      "id": "qwen25-math-1.5b",
+      "repo": "bartowski/Qwen2.5-Math-1.5B-Instruct-GGUF",
+      "quant": "Q4_K_M",
+      "tier": "A",
+      "approx_gb": 1.0,
+      "why": "Mathematics-specialized at a size that fits a low-end tablet. Primary candidate for the pilot.",
+      "chat_template": "qwen2"
+    },
+    {
+      "id": "qwen25-1.5b",
+      "repo": "bartowski/Qwen2.5-1.5B-Instruct-GGUF",
+      "quant": "Q4_K_M",
+      "tier": "A",
+      "approx_gb": 1.0,
+      "why": "Same size and family as the math model but general purpose. Isolates how much the math specialization is worth.",
+      "chat_template": "qwen2"
+    },
+    {
+      "id": "llama32-1b",
+      "repo": "bartowski/Llama-3.2-1B-Instruct-GGUF",
+      "quant": "Q4_K_M",
+      "tier": "A",
+      "approx_gb": 0.8,
+      "why": "Known to be weak at advanced mathematics. Acts as the low control, so the evaluation can show that retrieval grounding lifts a weak model.",
+      "chat_template": "llama3"
+    },
+    {
+      "id": "qwen3-1.7b",
+      "repo": "bartowski/Qwen_Qwen3-1.7B-GGUF",
+      "quant": "Q4_K_M",
+      "tier": "A",
+      "approx_gb": 1.1,
+      "why": "Newer architecture with an explicit reasoning mode, which suits multi-step mathematics if latency allows it.",
+      "chat_template": "qwen3"
+    },
+    {
+      "id": "qwen25-3b",
+      "repo": "bartowski/Qwen2.5-3B-Instruct-GGUF",
+      "quant": "Q4_K_M",
+      "tier": "B",
+      "approx_gb": 1.9,
+      "why": "Tests whether doubling parameters buys enough accuracy to justify the memory cost.",
+      "chat_template": "qwen2"
+    },
+    {
+      "id": "qwen3-4b",
+      "repo": "Qwen/Qwen3-4B-GGUF",
+      "quant": "Q4_K_M",
+      "tier": "B",
+      "approx_gb": 2.4,
+      "why": "Upper bound on quality. Likely too large for a 3 GB tablet, but establishes the ceiling we are trading away.",
+      "chat_template": "qwen3"
+    }
+  ],
+  "embedding": [
+    {
+      "id": "bge-small-en",
+      "repo": "CompendiumLabs/bge-small-en-v1.5-gguf",
+      "quant": "q8_0",
+      "tier": "A",
+      "approx_gb": 0.14,
+      "why": "384-dimension English retrieval embeddings, small enough to keep resident alongside the generation model.",
+      "dims": 384
+    },
+    {
+      "id": "all-minilm-l6",
+      "repo": "leliuga/all-MiniLM-L6-v2-GGUF",
+      "quant": "Q8_0",
+      "tier": "A",
+      "approx_gb": 0.09,
+      "why": "Smaller fallback if the embedding model has to share memory with a tier B generation model.",
+      "dims": 384
+    }
+  ]
+}
