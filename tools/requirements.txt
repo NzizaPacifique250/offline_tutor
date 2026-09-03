@@ -1,0 +1,6 @@
+# Python tools: grader, package validator, corpus extractor, model fetcher.
+# Install into the project virtualenv: python3 -m venv .venv && .venv/bin/pip install -r tools/requirements.txt
+sympy==1.14.0
+pymupdf==1.28.2
+requests==2.34.2
+huggingface_hub==1.32.0
