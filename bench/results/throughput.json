@@ -1,0 +1,158 @@
+[
+  {
+    "model": "llama32-1b",
+    "threads": 3,
+    "ok": true,
+    "wall_seconds": 118.6,
+    "runs": [
+      {
+        "test": "pp128",
+        "n_prompt": 128,
+        "n_gen": 0,
+        "tokens_per_second": 4.45,
+        "stddev_ts": 0.16,
+        "model_size_bytes": 799862912,
+        "model_n_params": 1235814432
+      },
+      {
+        "test": "tg32",
+        "n_prompt": 0,
+        "n_gen": 32,
+        "tokens_per_second": 2.39,
+        "stddev_ts": 0.22,
+        "model_size_bytes": 799862912,
+        "model_n_params": 1235814432
+      }
+    ]
+  },
+  {
+    "model": "qwen25-1.5b",
+    "threads": 3,
+    "ok": true,
+    "wall_seconds": 181.7,
+    "runs": [
+      {
+        "test": "pp128",
+        "n_prompt": 128,
+        "n_gen": 0,
+        "tokens_per_second": 2.5,
+        "stddev_ts": 0.14,
+        "model_size_bytes": 980097536,
+        "model_n_params": 1543714304
+      },
+      {
+        "test": "tg32",
+        "n_prompt": 0,
+        "n_gen": 32,
+        "tokens_per_second": 2.08,
+        "stddev_ts": 0.34,
+        "model_size_bytes": 980097536,
+        "model_n_params": 1543714304
+      }
+    ]
+  },
+  {
+    "model": "qwen25-math-1.5b",
+    "threads": 3,
+    "ok": true,
+    "wall_seconds": 145.5,
+    "runs": [
+      {
+        "test": "pp128",
+        "n_prompt": 128,
+        "n_gen": 0,
+        "tokens_per_second": 3.57,
+        "stddev_ts": 0.07,
+        "model_size_bytes": 980097536,
+        "model_n_params": 1543714304
+      },
+      {
+        "test": "tg32",
+        "n_prompt": 0,
+        "n_gen": 32,
+        "tokens_per_second": 2.29,
+        "stddev_ts": 0.32,
+        "model_size_bytes": 980097536,
+        "model_n_params": 1543714304
+      }
+    ]
+  },
+  {
+    "model": "qwen25-math-1.5b-IQ4_XS",
+    "threads": 3,
+    "ok": true,
+    "wall_seconds": 144.2,
+    "runs": [
+      {
+        "test": "pp128",
+        "n_prompt": 128,
+        "n_gen": 0,
+        "tokens_per_second": 3.6,
+        "stddev_ts": 0.36,
+        "model_size_bytes": 889780736,
+        "model_n_params": 1543714304
+      },
+      {
+        "test": "tg32",
+        "n_prompt": 0,
+        "n_gen": 32,
+        "tokens_per_second": 2.65,
+        "stddev_ts": 0.02,
+        "model_size_bytes": 889780736,
+        "model_n_params": 1543714304
+      }
+    ]
+  },
+  {
+    "model": "qwen25-math-1.5b-Q4_0",
+    "threads": 3,
+    "ok": true,
+    "wall_seconds": 140.5,
+    "runs": [
+      {
+        "test": "pp128",
+        "n_prompt": 128,
+        "n_gen": 0,
+        "tokens_per_second": 3.62,
+        "stddev_ts": 0.01,
+        "model_size_bytes": 931584512,
+        "model_n_params": 1543714304
+      },
+      {
+        "test": "tg32",
+        "n_prompt": 0,
+        "n_gen": 32,
+        "tokens_per_second": 2.49,
+        "stddev_ts": 0.01,
+        "model_size_bytes": 931584512,
+        "model_n_params": 1543714304
+      }
+    ]
+  },
+  {
+    "model": "qwen3-1.7b",
+    "threads": 3,
+    "ok": true,
+    "wall_seconds": 156.6,
+    "runs": [
+      {
+        "test": "pp128",
+        "n_prompt": 128,
+        "n_gen": 0,
+        "tokens_per_second": 3.28,
+        "stddev_ts": 0.01,
+        "model_size_bytes": 1276487680,
+        "model_n_params": 2031739904
+      },
+      {
+        "test": "tg32",
+        "n_prompt": 0,
+        "n_gen": 32,
+        "tokens_per_second": 2.17,
+        "stddev_ts": 0.02,
+        "model_size_bytes": 1276487680,
+        "model_n_params": 2031739904
+      }
+    ]
+  }
+]
