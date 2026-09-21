@@ -1,0 +1,149 @@
+[
+  {
+    "id": "rw-s6-am.u1.q.001",
+    "lesson": "rw-s6-am.u1.l07",
+    "pages": [15],
+    "source_label": "Application activity 1.7, question 3",
+    "difficulty": "basic",
+    "prompt": {
+      "text": "Evaluate z₁ + z₂ if z₁ = 3 + 4i and z₂ = 2 − i. Give your answer in the form a + bi.",
+      "tex": "z_1 + z_2, \\qquad z_1 = 3 + 4i,\\; z_2 = 2 - i"
+    },
+    "answer": {
+      "check": "symbolic_equal",
+      "expected": "5 + 3*I",
+      "check_args": {},
+      "accepted": ["5 + 3i", "3i + 5", "5+3i"],
+      "display_tex": "5 + 3i",
+      "input": "expression"
+    },
+    "hints": [
+      "Add the two real parts together, and separately add the two imaginary parts.",
+      "The real parts are 3 and 2. The imaginary parts are 4 and −1.",
+      "(3 + 2) + (4 + (−1))i. Simplify each bracket."
+    ],
+    "solution": [
+      { "text": "Add real parts and imaginary parts separately.", "tex": "(3 + 4i) + (2 - i) = (3 + 2) + (4 - 1)\\,i" },
+      { "text": "Simplify.", "tex": "= 5 + 3i" }
+    ],
+    "review": { "status": "developer-test", "reviewed_by": null, "date": null }
+  },
+  {
+    "id": "rw-s6-am.u1.q.002",
+    "lesson": "rw-s6-am.u1.l07",
+    "pages": [15],
+    "source_label": "Application activity 1.7, question 7",
+    "difficulty": "basic",
+    "prompt": {
+      "text": "Evaluate z₁ − z₂ if z₁ = 13 − 14i and z₂ = 22 + i. Give your answer in the form a + bi.",
+      "tex": "z_1 - z_2, \\qquad z_1 = 13 - 14i,\\; z_2 = 22 + i"
+    },
+    "answer": {
+      "check": "symbolic_equal",
+      "expected": "-9 - 15*I",
+      "check_args": {},
+      "accepted": ["-9 - 15i", "-9-15i", "-15i - 9"],
+      "display_tex": "-9 - 15i",
+      "input": "expression"
+    },
+    "hints": [
+      "Subtract the real parts, and separately subtract the imaginary parts.",
+      "Be careful with the sign of the imaginary part of z₂: it is +1, so you subtract 1 from −14.",
+      "(13 − 22) + (−14 − 1)i. Simplify each bracket."
+    ],
+    "solution": [
+      { "text": "Subtract real parts and imaginary parts separately.", "tex": "(13 - 14i) - (22 + i) = (13 - 22) + (-14 - 1)\\,i" },
+      { "text": "Simplify.", "tex": "= -9 - 15i" }
+    ],
+    "review": { "status": "developer-test", "reviewed_by": null, "date": null }
+  },
+  {
+    "id": "rw-s6-am.u1.q.003",
+    "lesson": "rw-s6-am.u1.l07",
+    "pages": [18],
+    "source_label": "Application activity 1.8, question 7",
+    "difficulty": "intermediate",
+    "prompt": {
+      "text": "Find the conjugate of z = (4 − 6i) − (1 − i). Give your answer in the form a + bi.",
+      "tex": "\\bar{z}, \\qquad z = (4 - 6i) - (1 - i)"
+    },
+    "answer": {
+      "check": "symbolic_equal",
+      "expected": "3 + 5*I",
+      "check_args": {},
+      "accepted": ["3 + 5i", "3+5i", "5i + 3"],
+      "display_tex": "\\bar{z} = 3 + 5i",
+      "input": "expression"
+    },
+    "hints": [
+      "First simplify z by subtracting real parts and imaginary parts separately.",
+      "z = (4 − 1) + (−6 − (−1))i. What is −6 − (−1)?",
+      "Once z is in the form x + yi, the conjugate changes the sign of the imaginary part only."
+    ],
+    "solution": [
+      { "text": "Simplify z.", "tex": "z = (4 - 6i) - (1 - i) = (4 - 1) + (-6 + 1)\\,i = 3 - 5i" },
+      { "text": "Change the sign of the imaginary part.", "tex": "\\bar{z} = 3 + 5i" },
+      { "text": "Alternatively, conjugate each number first, since conjugation distributes over subtraction.", "tex": "\\bar{z} = (4 + 6i) - (1 + i) = 3 + 5i" }
+    ],
+    "review": { "status": "developer-test", "reviewed_by": null, "date": null }
+  },
+  {
+    "id": "rw-s6-am.u1.q.004",
+    "lesson": "rw-s6-am.u1.l07",
+    "pages": [19],
+    "source_label": "Application activity 1.9, question 3",
+    "difficulty": "intermediate",
+    "prompt": {
+      "text": "Evaluate z₁ · z₂ if z₁ = 3 + 4i and z₂ = 2 − i. Give your answer in the form a + bi.",
+      "tex": "z_1 \\cdot z_2, \\qquad z_1 = 3 + 4i,\\; z_2 = 2 - i"
+    },
+    "answer": {
+      "check": "symbolic_equal",
+      "expected": "10 + 5*I",
+      "check_args": {},
+      "accepted": ["10 + 5i", "10+5i", "5i + 10"],
+      "display_tex": "10 + 5i",
+      "input": "expression"
+    },
+    "hints": [
+      "Expand the brackets: multiply each term of the first number by each term of the second.",
+      "You will get a term in i². Replace i² with −1.",
+      "3·2 + 3·(−i) + 4i·2 + 4i·(−i). Collect the real terms and the terms in i."
+    ],
+    "solution": [
+      { "text": "Expand the brackets.", "tex": "(3 + 4i)(2 - i) = 6 - 3i + 8i - 4i^2" },
+      { "text": "Replace i² with −1 and collect terms.", "tex": "= 6 + 5i + 4 = 10 + 5i" },
+      { "text": "Check against the formula (ac − bd) + (bc + ad)i with a = 3, b = 4, c = 2, d = −1.", "tex": "(3 \\cdot 2 - 4 \\cdot (-1)) + (4 \\cdot 2 + 3 \\cdot (-1))\\,i = 10 + 5i" }
+    ],
+    "review": { "status": "developer-test", "reviewed_by": null, "date": null }
+  },
+  {
+    "id": "rw-s6-am.u1.q.005",
+    "lesson": "rw-s6-am.u1.l07",
+    "pages": [19],
+    "source_label": "Application activity 1.9, question 5",
+    "difficulty": "advanced",
+    "prompt": {
+      "text": "Evaluate z₁ · z₂ if z₁ = 11i + 4 and z₂ = −3 − 2i. Give your answer in the form a + bi.",
+      "tex": "z_1 \\cdot z_2, \\qquad z_1 = 11i + 4,\\; z_2 = -3 - 2i"
+    },
+    "answer": {
+      "check": "symbolic_equal",
+      "expected": "10 - 41*I",
+      "check_args": {},
+      "accepted": ["10 - 41i", "10-41i", "-41i + 10"],
+      "display_tex": "10 - 41i",
+      "input": "expression"
+    },
+    "hints": [
+      "Write z₁ in the usual order first: z₁ = 4 + 11i. Then expand the brackets term by term.",
+      "Four products: 4·(−3), 4·(−2i), 11i·(−3), 11i·(−2i). The last one contains i².",
+      "11i·(−2i) = −22i² = +22. Now collect the real terms and the terms in i, watching the signs."
+    ],
+    "solution": [
+      { "text": "Expand the brackets.", "tex": "(4 + 11i)(-3 - 2i) = -12 - 8i - 33i - 22i^2" },
+      { "text": "Replace i² with −1 and collect terms.", "tex": "= -12 - 41i + 22 = 10 - 41i" }
+    ],
+    "review": { "status": "developer-test", "reviewed_by": null, "date": null }
+  }
+]

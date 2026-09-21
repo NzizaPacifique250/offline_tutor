@@ -1,0 +1,54 @@
+[
+  {
+    "id": "rw-s6-am.u1.ex.01",
+    "lesson": "rw-s6-am.u1.l07",
+    "pages": [15],
+    "source_label": "Example 1.16",
+    "question": {
+      "text": "Evaluate z₁ − z₂ if z₁ = 1 − 2i and z₂ = 9 + 3i.",
+      "tex": "z_1 - z_2 \\quad \\text{where} \\quad z_1 = 1 - 2i,\\; z_2 = 9 + 3i"
+    },
+    "steps": [
+      {
+        "text": "Subtract the real parts and the imaginary parts separately.",
+        "tex": "(1 - 2i) - (9 + 3i) = (1 - 9) + (-2 - 3)\\,i"
+      },
+      {
+        "text": "Simplify each part.",
+        "tex": "= -8 - 5i"
+      }
+    ],
+    "answer_tex": "z_1 - z_2 = -8 - 5i",
+    "review": { "status": "developer-test", "reviewed_by": null, "date": null }
+  },
+  {
+    "id": "rw-s6-am.u1.ex.02",
+    "lesson": "rw-s6-am.u1.l07",
+    "pages": [21],
+    "source_label": "Example 1.22",
+    "question": {
+      "text": "Find the real numbers x and y such that (x + iy)(3 − 2i) = 6 − 17i.",
+      "tex": "(x + iy)(3 - 2i) = 6 - 17i"
+    },
+    "steps": [
+      {
+        "text": "Expand the product on the left using the multiplication rule and i² = −1.",
+        "tex": "(x + iy)(3 - 2i) = 3x - 2xi + 3yi - 2y\\,i^2 = (3x + 2y) + (3y - 2x)\\,i"
+      },
+      {
+        "text": "Two complex numbers are equal when their real parts are equal and their imaginary parts are equal.",
+        "tex": "3x + 2y = 6, \\qquad 3y - 2x = -17"
+      },
+      {
+        "text": "Solve the pair of equations: from the first, 2y = 6 − 3x; substituting into the second gives 3y − 2x = −17, so multiply the first by 2 and the second by 3 to eliminate y.",
+        "tex": "6x + 4y = 12, \\quad -6x + 9y = -51 \\;\\Rightarrow\\; 13y = -39 \\;\\Rightarrow\\; y = -3"
+      },
+      {
+        "text": "Substitute back to find x.",
+        "tex": "3x + 2(-3) = 6 \\;\\Rightarrow\\; 3x = 12 \\;\\Rightarrow\\; x = 4"
+      }
+    ],
+    "answer_tex": "x = 4, \\quad y = -3",
+    "review": { "status": "developer-test", "reviewed_by": null, "date": null }
+  }
+]
