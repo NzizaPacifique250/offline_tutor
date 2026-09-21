@@ -1,0 +1,348 @@
+{
+  "source": "qwen25-math-1.5b.jsonl",
+  "total": 28,
+  "passed": 4,
+  "accuracy": 0.1429,
+  "by_unit": {
+    "1": {
+      "total": 5,
+      "passed": 1
+    },
+    "4": {
+      "total": 8,
+      "passed": 1
+    },
+    "5": {
+      "total": 6,
+      "passed": 0
+    },
+    "9": {
+      "total": 6,
+      "passed": 2
+    },
+    "8": {
+      "total": 1,
+      "passed": 0
+    },
+    "None": {
+      "total": 2,
+      "passed": 0
+    }
+  },
+  "by_extraction": {
+    "last_equation": 4,
+    "phrase": 17,
+    "boxed": 3,
+    "n/a": 4
+  },
+  "results": [
+    {
+      "id": "cx-01",
+      "unit": 1,
+      "topic": "algebraic form, multiplication",
+      "difficulty": "basic",
+      "check": "symbolic_equal",
+      "extraction": "last_equation",
+      "extracted": "11 - 10i",
+      "passed": true,
+      "detail": "symbolically equal"
+    },
+    {
+      "id": "cx-02",
+      "unit": 1,
+      "topic": "modulus and argument",
+      "difficulty": "basic",
+      "check": "modulus_argument",
+      "extraction": "phrase",
+      "extracted": "is:",
+      "passed": false,
+      "detail": "could not parse"
+    },
+    {
+      "id": "cx-03",
+      "unit": 1,
+      "topic": "polar form",
+      "difficulty": "intermediate",
+      "check": "symbolic_equal",
+      "extraction": "phrase",
+      "extracted": "is:",
+      "passed": false,
+      "detail": "could not parse"
+    },
+    {
+      "id": "cx-04",
+      "unit": 1,
+      "topic": "square roots of a complex number",
+      "difficulty": "advanced",
+      "check": "root_set",
+      "extraction": "phrase",
+      "extracted": "\\( a^2 = 4 \\), so \\( a = 2 \\) or \\( a = -2 \\).",
+      "passed": false,
+      "detail": "could not parse"
+    },
+    {
+      "id": "cx-05",
+      "unit": 1,
+      "topic": "De Moivre's theorem",
+      "difficulty": "intermediate",
+      "check": "symbolic_equal",
+      "extraction": "phrase",
+      "extracted": "\\[",
+      "passed": false,
+      "detail": "could not parse"
+    },
+    {
+      "id": "in-01",
+      "unit": 4,
+      "topic": "integration by parts",
+      "difficulty": "basic",
+      "check": "antiderivative",
+      "extraction": "last_equation",
+      "extracted": "e^x (x - 1) + C",
+      "passed": true,
+      "detail": "derivative matches the integrand"
+    },
+    {
+      "id": "in-02",
+      "unit": 4,
+      "topic": "partial fractions",
+      "difficulty": "intermediate",
+      "check": "antiderivative",
+      "extraction": "phrase",
+      "extracted": "the final answer is:",
+      "passed": false,
+      "detail": "could not parse"
+    },
+    {
+      "id": "in-03",
+      "unit": 4,
+      "topic": "trigonometric integrals",
+      "difficulty": "intermediate",
+      "check": "antiderivative",
+      "extraction": "phrase",
+      "extracted": "the final answer is:",
+      "passed": false,
+      "detail": "could not parse"
+    },
+    {
+      "id": "in-04",
+      "unit": 4,
+      "topic": "definite integral, substitution",
+      "difficulty": "basic",
+      "check": "numeric",
+      "extraction": "phrase",
+      "extracted": "is:",
+      "passed": false,
+      "detail": "could not parse"
+    },
+    {
+      "id": "in-05",
+      "unit": 4,
+      "topic": "recognising a derivative",
+      "difficulty": "intermediate",
+      "check": "antiderivative",
+      "extraction": "phrase",
+      "extracted": "we can rewrite the integrand as:",
+      "passed": false,
+      "detail": "could not parse"
+    },
+    {
+      "id": "in-06",
+      "unit": 4,
+      "topic": "integration by parts with logarithm",
+      "difficulty": "advanced",
+      "check": "antiderivative",
+      "extraction": "phrase",
+      "extracted": "the final answer is:",
+      "passed": false,
+      "detail": "could not parse"
+    },
+    {
+      "id": "in-07",
+      "unit": 4,
+      "topic": "area between curves",
+      "difficulty": "intermediate",
+      "check": "numeric",
+      "extraction": "phrase",
+      "extracted": "the area of the region enclosed between the curve \\( y = x^2 \\) and the line \\( y = 2x \\) is:",
+      "passed": false,
+      "detail": "could not parse"
+    },
+    {
+      "id": "de-01",
+      "unit": 5,
+      "topic": "separable, with initial condition",
+      "difficulty": "basic",
+      "check": "ode_solution",
+      "extraction": "boxed",
+      "extracted": "2e^{3x}",
+      "passed": false,
+      "detail": "the proposed solution does not satisfy the equation"
+    },
+    {
+      "id": "de-02",
+      "unit": 5,
+      "topic": "first order linear, integrating factor",
+      "difficulty": "intermediate",
+      "check": "ode_solution",
+      "extraction": "last_equation",
+      "extracted": "C e^{-2x} + e^{-x}}",
+      "passed": false,
+      "detail": "the proposed solution does not satisfy the equation"
+    },
+    {
+      "id": "de-03",
+      "unit": 5,
+      "topic": "second order, distinct real roots",
+      "difficulty": "intermediate",
+      "check": "ode_solution",
+      "extraction": "phrase",
+      "extracted": "the characteristic equation is:",
+      "passed": false,
+      "detail": "could not parse"
+    },
+    {
+      "id": "de-04",
+      "unit": 5,
+      "topic": "second order, complex roots",
+      "difficulty": "intermediate",
+      "check": "ode_solution",
+      "extraction": "last_equation",
+      "extracted": "A \\cos 2t + B \\sin 2t} \\]",
+      "passed": false,
+      "detail": "could not parse"
+    },
+    {
+      "id": "de-05",
+      "unit": 5,
+      "topic": "second order, repeated root",
+      "difficulty": "advanced",
+      "check": "ode_solution",
+      "extraction": "phrase",
+      "extracted": "the solution to the differential equation \\( y'' - 2y' + y = 0 \\) is:",
+      "passed": false,
+      "detail": "could not parse"
+    },
+    {
+      "id": "de-06",
+      "unit": 5,
+      "topic": "separable, with initial condition",
+      "difficulty": "basic",
+      "check": "ode_solution",
+      "extraction": "phrase",
+      "extracted": "we have:",
+      "passed": false,
+      "detail": "could not parse"
+    },
+    {
+      "id": "rv-01",
+      "unit": 9,
+      "topic": "discrete distribution, normalising constant",
+      "difficulty": "basic",
+      "check": "numeric",
+      "extraction": "boxed",
+      "extracted": "\\frac{1}{10}",
+      "passed": true,
+      "detail": "0.1"
+    },
+    {
+      "id": "rv-02",
+      "unit": 9,
+      "topic": "discrete expectation",
+      "difficulty": "basic",
+      "check": "numeric",
+      "extraction": "phrase",
+      "extracted": "the expected value \\( E(X) \\) is:",
+      "passed": false,
+      "detail": "could not parse"
+    },
+    {
+      "id": "rv-03",
+      "unit": 9,
+      "topic": "continuous expectation",
+      "difficulty": "intermediate",
+      "check": "numeric",
+      "extraction": "phrase",
+      "extracted": "the expected value \\( E(X) \\) is:",
+      "passed": false,
+      "detail": "could not parse"
+    },
+    {
+      "id": "rv-04",
+      "unit": 9,
+      "topic": "continuous variance",
+      "difficulty": "advanced",
+      "check": "numeric",
+      "extraction": "boxed",
+      "extracted": "\\frac{3}{80}",
+      "passed": true,
+      "detail": "0.0375"
+    },
+    {
+      "id": "rv-05",
+      "unit": 9,
+      "topic": "binomial distribution",
+      "difficulty": "intermediate",
+      "check": "numeric",
+      "extraction": "phrase",
+      "extracted": "the probability \\( P(X = 2) \\) is:",
+      "passed": false,
+      "detail": "could not parse"
+    },
+    {
+      "id": "rv-06",
+      "unit": 9,
+      "topic": "Poisson distribution",
+      "difficulty": "intermediate",
+      "check": "numeric",
+      "extraction": "phrase",
+      "extracted": "the probability that \\(X = 2\\) is:",
+      "passed": false,
+      "detail": "could not parse"
+    },
+    {
+      "id": "oos-01",
+      "unit": 8,
+      "topic": "out of pilot scope but in subject",
+      "difficulty": "intermediate",
+      "check": "scope_boundary",
+      "passed": false,
+      "detail": "answered a question it should have declined",
+      "extraction": "n/a",
+      "extracted": ""
+    },
+    {
+      "id": "oos-02",
+      "unit": null,
+      "topic": "general knowledge",
+      "difficulty": "basic",
+      "check": "scope_boundary",
+      "passed": false,
+      "detail": "answered a question it should have declined",
+      "extraction": "n/a",
+      "extracted": ""
+    },
+    {
+      "id": "oos-03",
+      "unit": null,
+      "topic": "another school subject",
+      "difficulty": "basic",
+      "check": "scope_boundary",
+      "passed": false,
+      "detail": "answered a question it should have declined",
+      "extraction": "n/a",
+      "extracted": ""
+    },
+    {
+      "id": "ped-01",
+      "unit": 4,
+      "topic": "hint-first behaviour",
+      "difficulty": "intermediate",
+      "check": "pedagogy",
+      "passed": false,
+      "detail": "gave the answer with no hint or method",
+      "extraction": "n/a",
+      "extracted": ""
+    }
+  ]
+}

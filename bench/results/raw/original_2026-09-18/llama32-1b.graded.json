@@ -1,0 +1,349 @@
+{
+  "source": "llama32-1b.jsonl",
+  "total": 28,
+  "passed": 6,
+  "accuracy": 0.2143,
+  "by_unit": {
+    "1": {
+      "total": 5,
+      "passed": 1
+    },
+    "4": {
+      "total": 8,
+      "passed": 1
+    },
+    "5": {
+      "total": 6,
+      "passed": 2
+    },
+    "9": {
+      "total": 6,
+      "passed": 2
+    },
+    "8": {
+      "total": 1,
+      "passed": 0
+    },
+    "None": {
+      "total": 2,
+      "passed": 0
+    }
+  },
+  "by_extraction": {
+    "answer_tag": 6,
+    "last_equation": 9,
+    "phrase": 8,
+    "boxed": 1,
+    "n/a": 4
+  },
+  "results": [
+    {
+      "id": "cx-01",
+      "unit": 1,
+      "topic": "algebraic form, multiplication",
+      "difficulty": "basic",
+      "check": "symbolic_equal",
+      "extraction": "answer_tag",
+      "extracted": "11 - 10i",
+      "passed": true,
+      "detail": "symbolically equal"
+    },
+    {
+      "id": "cx-02",
+      "unit": 1,
+      "topic": "modulus and argument",
+      "difficulty": "basic",
+      "check": "modulus_argument",
+      "extraction": "last_equation",
+      "extracted": "pi/3",
+      "passed": false,
+      "detail": "expected a modulus and an argument"
+    },
+    {
+      "id": "cx-03",
+      "unit": 1,
+      "topic": "polar form",
+      "difficulty": "intermediate",
+      "check": "symbolic_equal",
+      "extraction": "last_equation",
+      "extracted": "sqrt(2)/2(1 - i)",
+      "passed": false,
+      "detail": "expected sqrt(2)*(-sqrt(2)/2 + sqrt(2)*I/2)"
+    },
+    {
+      "id": "cx-04",
+      "unit": 1,
+      "topic": "square roots of a complex number",
+      "difficulty": "advanced",
+      "check": "root_set",
+      "extraction": "last_equation",
+      "extracted": "\u00b1(20/3) + \u00b1(15i/4)",
+      "passed": false,
+      "detail": "expected 2 value(s), got 1"
+    },
+    {
+      "id": "cx-05",
+      "unit": 1,
+      "topic": "De Moivre's theorem",
+      "difficulty": "intermediate",
+      "check": "symbolic_equal",
+      "extraction": "phrase",
+      "extracted": "(1 + i)^8 = sqrt(2)i.",
+      "passed": false,
+      "detail": "could not parse"
+    },
+    {
+      "id": "in-01",
+      "unit": 4,
+      "topic": "integration by parts",
+      "difficulty": "basic",
+      "check": "antiderivative",
+      "extraction": "last_equation",
+      "extracted": "(1/2)x^2 * e^x + e^x + C",
+      "passed": false,
+      "detail": "d/dx of the answer is not the integrand"
+    },
+    {
+      "id": "in-02",
+      "unit": 4,
+      "topic": "partial fractions",
+      "difficulty": "intermediate",
+      "check": "antiderivative",
+      "extraction": "phrase",
+      "extracted": "log|x^2 - 1| + C",
+      "passed": false,
+      "detail": "could not parse"
+    },
+    {
+      "id": "in-03",
+      "unit": 4,
+      "topic": "trigonometric integrals",
+      "difficulty": "intermediate",
+      "check": "antiderivative",
+      "extraction": "last_equation",
+      "extracted": "(1/2)x - (1/4)sin(2x) + C",
+      "passed": true,
+      "detail": "derivative matches the integrand"
+    },
+    {
+      "id": "in-04",
+      "unit": 4,
+      "topic": "definite integral, substitution",
+      "difficulty": "basic",
+      "check": "numeric",
+      "extraction": "last_equation",
+      "extracted": "1",
+      "passed": false,
+      "detail": "got 1, expected 0.3465735903"
+    },
+    {
+      "id": "in-05",
+      "unit": 4,
+      "topic": "recognising a derivative",
+      "difficulty": "intermediate",
+      "check": "antiderivative",
+      "extraction": "answer_tag",
+      "extracted": "2log|x + 1| + 3arctan(x + 1) - 2log|x + 2| - 3arctan(x + 2)",
+      "passed": false,
+      "detail": "could not parse"
+    },
+    {
+      "id": "in-06",
+      "unit": 4,
+      "topic": "integration by parts with logarithm",
+      "difficulty": "advanced",
+      "check": "antiderivative",
+      "extraction": "answer_tag",
+      "extracted": "x^2*x*ln(x) - x*ln(x) + C",
+      "passed": false,
+      "detail": "d/dx of the answer is not the integrand"
+    },
+    {
+      "id": "in-07",
+      "unit": 4,
+      "topic": "area between curves",
+      "difficulty": "intermediate",
+      "check": "numeric",
+      "extraction": "boxed",
+      "extracted": "4",
+      "passed": false,
+      "detail": "got 4, expected 1.333333333"
+    },
+    {
+      "id": "de-01",
+      "unit": 5,
+      "topic": "separable, with initial condition",
+      "difficulty": "basic",
+      "check": "ode_solution",
+      "extraction": "phrase",
+      "extracted": "the solution to the differential equation is y = 6x + 2.",
+      "passed": false,
+      "detail": "could not parse"
+    },
+    {
+      "id": "de-02",
+      "unit": 5,
+      "topic": "first order linear, integrating factor",
+      "difficulty": "intermediate",
+      "check": "ode_solution",
+      "extraction": "answer_tag",
+      "extracted": "y = -2*e^(-2x) + 3*e^(-x)",
+      "passed": false,
+      "detail": "the proposed solution does not satisfy the equation"
+    },
+    {
+      "id": "de-03",
+      "unit": 5,
+      "topic": "second order, distinct real roots",
+      "difficulty": "intermediate",
+      "check": "ode_solution",
+      "extraction": "last_equation",
+      "extracted": "0.",
+      "passed": true,
+      "detail": "satisfies the equation"
+    },
+    {
+      "id": "de-04",
+      "unit": 5,
+      "topic": "second order, complex roots",
+      "difficulty": "intermediate",
+      "check": "ode_solution",
+      "extraction": "last_equation",
+      "extracted": "0.",
+      "passed": true,
+      "detail": "satisfies the equation"
+    },
+    {
+      "id": "de-05",
+      "unit": 5,
+      "topic": "second order, repeated root",
+      "difficulty": "advanced",
+      "check": "ode_solution",
+      "extraction": "phrase",
+      "extracted": "the solution to the differential equation is:",
+      "passed": false,
+      "detail": "could not parse"
+    },
+    {
+      "id": "de-06",
+      "unit": 5,
+      "topic": "separable, with initial condition",
+      "difficulty": "basic",
+      "check": "ode_solution",
+      "extraction": "phrase",
+      "extracted": "the solution to the differential equation dy/dx = x*y is dy/dx = 1/x.",
+      "passed": false,
+      "detail": "could not parse"
+    },
+    {
+      "id": "rv-01",
+      "unit": 9,
+      "topic": "discrete distribution, normalising constant",
+      "difficulty": "basic",
+      "check": "numeric",
+      "extraction": "phrase",
+      "extracted": "the value of k is 1/10.",
+      "passed": false,
+      "detail": "could not parse"
+    },
+    {
+      "id": "rv-02",
+      "unit": 9,
+      "topic": "discrete expectation",
+      "difficulty": "basic",
+      "check": "numeric",
+      "extraction": "phrase",
+      "extracted": "the expected value of X is 1.",
+      "passed": false,
+      "detail": "could not parse"
+    },
+    {
+      "id": "rv-03",
+      "unit": 9,
+      "topic": "continuous expectation",
+      "difficulty": "intermediate",
+      "check": "numeric",
+      "extraction": "answer_tag",
+      "extracted": "\\frac{3}{4}",
+      "passed": true,
+      "detail": "0.75"
+    },
+    {
+      "id": "rv-04",
+      "unit": 9,
+      "topic": "continuous variance",
+      "difficulty": "advanced",
+      "check": "numeric",
+      "extraction": "answer_tag",
+      "extracted": "39/80",
+      "passed": false,
+      "detail": "got 0.4875, expected 0.0375"
+    },
+    {
+      "id": "rv-05",
+      "unit": 9,
+      "topic": "binomial distribution",
+      "difficulty": "intermediate",
+      "check": "numeric",
+      "extraction": "last_equation",
+      "extracted": "0.2048.",
+      "passed": true,
+      "detail": "0.2048"
+    },
+    {
+      "id": "rv-06",
+      "unit": 9,
+      "topic": "Poisson distribution",
+      "difficulty": "intermediate",
+      "check": "numeric",
+      "extraction": "phrase",
+      "extracted": "P(X = 2) \u2248 0.2273.",
+      "passed": false,
+      "detail": "could not parse"
+    },
+    {
+      "id": "oos-01",
+      "unit": 8,
+      "topic": "out of pilot scope but in subject",
+      "difficulty": "intermediate",
+      "check": "scope_boundary",
+      "passed": false,
+      "detail": "answered a question it should have declined",
+      "extraction": "n/a",
+      "extracted": ""
+    },
+    {
+      "id": "oos-02",
+      "unit": null,
+      "topic": "general knowledge",
+      "difficulty": "basic",
+      "check": "scope_boundary",
+      "passed": false,
+      "detail": "answered a question it should have declined",
+      "extraction": "n/a",
+      "extracted": ""
+    },
+    {
+      "id": "oos-03",
+      "unit": null,
+      "topic": "another school subject",
+      "difficulty": "basic",
+      "check": "scope_boundary",
+      "passed": false,
+      "detail": "answered a question it should have declined",
+      "extraction": "n/a",
+      "extracted": ""
+    },
+    {
+      "id": "ped-01",
+      "unit": 4,
+      "topic": "hint-first behaviour",
+      "difficulty": "intermediate",
+      "check": "pedagogy",
+      "passed": false,
+      "detail": "gave the answer with no hint or method",
+      "extraction": "n/a",
+      "extracted": ""
+    }
+  ]
+}
