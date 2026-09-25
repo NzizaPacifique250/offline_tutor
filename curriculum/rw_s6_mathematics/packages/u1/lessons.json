@@ -1,0 +1,145 @@
+[
+  {
+    "id": "rw-s6-am.u1.l07",
+    "title": "Operations on complex numbers in algebraic form",
+    "tg_lessons": [
+      "1.7",
+      "1.8",
+      "1.9"
+    ],
+    "objective": "Given two complex numbers, add and subtract them; given a complex number, find its conjugate and its opposite; given two complex numbers, multiply them.",
+    "pages": [
+      13,
+      19
+    ],
+    "topics": [
+      "addition of complex numbers",
+      "subtraction of complex numbers",
+      "adding complex numbers",
+      "subtracting complex numbers",
+      "add",
+      "sum",
+      "subtract",
+      "difference",
+      "conjugate",
+      "complex conjugate",
+      "opposite of a complex number",
+      "multiplication of complex numbers",
+      "multiplying complex numbers",
+      "multiply",
+      "product",
+      "times",
+      "complex number",
+      "complex numbers",
+      "algebraic form",
+      "real part",
+      "imaginary part",
+      "i squared"
+    ],
+    "blocks": [
+      {
+        "kind": "p",
+        "text": "Two complex numbers are added, or subtracted, by adding, or subtracting, separately the two real parts and the two imaginary parts. Geometrically this is the parallelogram rule on the Argand diagram (Figure 1.3 in the book).",
+        "topics": [
+          "addition of complex numbers",
+          "subtraction of complex numbers",
+          "adding complex numbers",
+          "subtracting complex numbers",
+          "add",
+          "sum",
+          "subtract",
+          "difference"
+        ]
+      },
+      {
+        "kind": "math",
+        "tex": "(a + bi) + (c + di) = (a + c) + (b + d)\\,i"
+      },
+      {
+        "kind": "math",
+        "tex": "(a + bi) - (c + di) = (a - c) + (b - d)\\,i"
+      },
+      {
+        "kind": "p",
+        "text": "The number 0 = 0 + 0i is the additive identity: adding it to any complex number leaves that number unchanged.",
+        "topics": [
+          "add",
+          "sum"
+        ]
+      },
+      {
+        "kind": "example",
+        "ref": "rw-s6-am.u1.ex.01"
+      },
+      {
+        "kind": "p",
+        "text": "The complex conjugate of z = x + yi, written z̄ or z*, is obtained by changing the sign of the imaginary part. The opposite of z is −z = −x − yi, the point symmetric to z with respect to 0. On the Argand diagram, z̄ is the reflection of z in the real axis.",
+        "topics": [
+          "conjugate",
+          "complex conjugate",
+          "opposite of a complex number"
+        ]
+      },
+      {
+        "kind": "math",
+        "tex": "\\bar{z} = x - yi, \\qquad -z = -x - yi"
+      },
+      {
+        "kind": "p",
+        "text": "Conjugating twice gives the original number, and a complex number is real if and only if it equals its conjugate. Conjugation distributes over addition, subtraction and multiplication, so the conjugate of a combination can be found either by simplifying first and then conjugating, or by conjugating each number first.",
+        "topics": [
+          "conjugate",
+          "complex conjugate"
+        ]
+      },
+      {
+        "kind": "math",
+        "tex": "\\overline{z_1 + z_2} = \\bar{z}_1 + \\bar{z}_2, \\qquad \\overline{z_1 - z_2} = \\bar{z}_1 - \\bar{z}_2, \\qquad \\overline{z_1 z_2} = \\bar{z}_1\\,\\bar{z}_2"
+      },
+      {
+        "kind": "p",
+        "text": "The multiplication of z₁ = a + bi and z₂ = c + di follows from expanding the brackets and replacing i² with −1:",
+        "topics": [
+          "multiplication of complex numbers",
+          "multiplying complex numbers",
+          "multiply",
+          "product",
+          "times"
+        ]
+      },
+      {
+        "kind": "math",
+        "tex": "z_1 \\times z_2 = (a + bi)(c + di) = (ac - bd) + (bc + ad)\\,i"
+      },
+      {
+        "kind": "p",
+        "text": "In particular, 1 is the multiplicative identity, (a + bi)·i = −b + ai, and i·i = −1 is the fundamental relation from which the definition of multiplication follows.",
+        "topics": [
+          "multiply",
+          "product",
+          "i squared"
+        ]
+      },
+      {
+        "kind": "math",
+        "tex": "i^2 = -1"
+      },
+      {
+        "kind": "example",
+        "ref": "rw-s6-am.u1.ex.02"
+      }
+    ],
+    "exercises": [
+      "rw-s6-am.u1.q.001",
+      "rw-s6-am.u1.q.002",
+      "rw-s6-am.u1.q.003",
+      "rw-s6-am.u1.q.004",
+      "rw-s6-am.u1.q.005"
+    ],
+    "review": {
+      "status": "developer-test",
+      "reviewed_by": null,
+      "date": null
+    }
+  }
+]
