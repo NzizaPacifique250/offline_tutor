@@ -174,3 +174,52 @@ no network. The plan, from the state today to the school pilot:
    Synchronization stays optional and never on the tutoring path.
 7. **After the capstone.** More units and grades through the package
    format, one subject at a time.
+
+## Current status
+
+**The offline study flow, with bounded model guidance behind the topic router, runs on the target tablet with no laptop attached.** Updated 2026-09-30.
+
+The pilot scope is fixed: Rwanda REB curriculum, Senior Six Advanced
+Mathematics, four pilot units, an ATMPC IT-801B Android tablet, React Native
+with `llama.rn`.
+
+What exists now:
+
+- `bench/`: a benchmark kit that cross-compiles llama.cpp for the tablet's CPU,
+  pushes models over adb, measures throughput and answer quality, and grades answers
+  deterministically. See [bench/README.md](bench/README.md).
+- `curriculum/rw_s6_mathematics/packages/u1/`: the first curriculum package, one
+  Complex Numbers lesson with worked examples and exercises taken from the REB
+  Student's Book, checked by `tools/validate_package.py`.
+- `tools/`: model fetcher, benchmark driver, symbolic grader (audited and
+  corrected on 2026-09-21), package validator and corpus extractor.
+- `app/`: the React Native application. A learner chooses a code, opens the
+  Unit 1 lesson rendered with KaTeX from local assets, practises the book's
+  exercises with answers checked on the device against the proven keys, reveals
+  hints in order before the solution, and reviews progress computed from saved
+  attempts; all of it in airplane mode, surviving a restart, with learner codes
+  kept apart. A question box asks the local model, but only after the router
+  has matched a loaded topic, from one passage of the book, one request at a
+  time, cancellable, paced one step at a time with "Next step" and "Explain
+  this step more simply", with the text labelled as generated and never used
+  for marking; on an exercise the stored hints come first and the model's
+  text is masked wherever it states the answer.
+- `bench/results/THROUGHPUT_FINDINGS.md`: measured tokens per second on the tablet's
+  CPU and GPU and what that means for response time.
+
+Two findings shape everything that follows:
+
+- **Accuracy is not the constraint.** After the grading audit, Qwen2.5-Math-1.5B
+  answered 23 of 24 S6 mathematics probes correctly. It is the provisional model.
+- **Speed is.** The tablet generates at 2.2–2.7 tokens per second, which rules out
+  a live retrieve-then-generate design. The replacement is reviewed content served
+  instantly plus short bounded generation.
+
+The application bridge is proven on the device: the correct `armv8-a` native
+library loads, the model answers in-app at benchmark speed, records persist
+across restarts, and equations render offline.
+
+Next:
+
+1. Content: the remaining Unit 1 objectives, then Units 4, 5 and 9, with teacher review.
+2. Model installation without `run-as`, diagnostics, the installation guide and the tablet test script.
