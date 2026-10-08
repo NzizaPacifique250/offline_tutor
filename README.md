@@ -4,7 +4,7 @@
 
 **Offline-First Intelligent Tutoring Platform: Enabling Resilient Academic Support**
 
-**Repository:** [github.com/NzizaPacifique250/capstone_project](https://github.com/NzizaPacifique250/capstone_project)
+**Repository:** [github.com/NzizaPacifique250/offline_tutor](https://github.com/NzizaPacifique250/offline_tutor)
 **Student:** Nziza Aime Pacifique · **Target device:** ATMPC IT-801B Android tablet · **Pilot:** Rwanda REB Senior Six Advanced Mathematics
 
 ## Overview
@@ -56,8 +56,8 @@ commands below assume a Linux or macOS shell.
 ### 1. Clone and install
 
 ```bash
-git clone https://github.com/NzizaPacifique250/capstone_project.git
-cd capstone_project
+git clone https://github.com/NzizaPacifique250/offline_tutor.git
+cd offline_tutor
 
 # Python tools
 python3 -m venv .venv
