@@ -118,3 +118,59 @@ all rights. They are only needed to re-run `tools/extract_corpus.py`.
 Download them from the REB e-learning portal and place them in
 `curriculum/rw_s6_mathematics/sources/` as
 `S6_Advanced_Math_StudentBook.pdf` and `S6_Advanced_Math_TeacherGuide.pdf`.
+
+## Designs
+
+This is a software project on an off-the-shelf tablet, so there is no
+circuit diagram; the hardware is described in
+[bench/results/device_profile.md](bench/results/device_profile.md). The
+interface was refined on the device rather than in Figma; the screenshots
+below are the interface as built. The data model the app implements is in
+`app/src/content/types.ts` and `app/src/learner/store.ts`.
+
+### Application interfaces (screenshots from the tablet, airplane mode on)
+
+| Screen | Screenshot |
+|---|---|
+| Topics, with progress and the recommended next exercise | ![Topics](docs/images/p4-tablet-topics.png) |
+| Lesson rendered offline with KaTeX | ![Lesson](docs/images/p4-tablet-lesson.png) |
+| Practice: an answer checked on the device, hints before the solution | ![Practice](docs/images/p4-tablet-practice-correct.png) |
+| Worked solution from the book | ![Solution](docs/images/p4-tablet-solution.png) |
+| Progress computed from saved attempts | ![Progress](docs/images/p4-tablet-progress.png) |
+| Out-of-scope question declined without the model | ![Declined](docs/images/p4-tablet-scope-declined.png) |
+| Tutor answering one step at a time | ![Steps](docs/images/p5-tablet-steps.png) |
+| A simpler explanation of a step | ![Simpler](docs/images/p5-tablet-simpler.png) |
+| Stored hint served before any generation | ![Stored hint](docs/images/p5-tablet-stored-hint.png) |
+| Model missing: stored content still works | ![No model](docs/images/p5-tablet-no-model.png) |
+| App launched with no laptop attached | ![Untethered](docs/images/p6-tablet-untethered.png) |
+
+## Deployment plan
+
+The platform deploys to tablets that are prepared once and then used with
+no network. The plan, from the state today to the school pilot:
+
+1. **Test build (done).** A debug-signed APK with the JavaScript bundled
+   runs on the tablet with no laptop, no tunnel and no Metro. The model is
+   copied into the app's private storage with `app/scripts/stage_model.sh`,
+   the curriculum package is bundled in the APK and imported into SQLite on
+   first launch, and KaTeX is packaged as an asset. Nothing is fetched at
+   run time.
+2. **Release build and model installation (next).** A release-signed APK,
+   and a way to install the 935 MB model without the developer tooling:
+   bundled in an expansion file, or copied from external storage on first
+   launch with a checksum. The weights' redistribution terms are checked
+   before bundling.
+3. **Diagnostics and result export.** Build id, model checksum, content
+   version, timings, memory and errors recorded on the device and exported
+   with test learner codes, so a pilot session can be reproduced.
+4. **Installation guide and tablet test script.** Written for the school
+   contact, with the known-issues list and readiness checks.
+5. **School pilot at Agahozo Shalom Youth Village.** After teacher review
+   of the content and the institutional approvals: tablets prepared
+   offline, learner codes rather than names, data kept on the device,
+   results exported by the researcher.
+6. **Updates.** Curriculum packages are versioned; a new version is
+   re-imported on the next launch. Application updates are a new APK.
+   Synchronization stays optional and never on the tutoring path.
+7. **After the capstone.** More units and grades through the package
+   format, one subject at a time.
