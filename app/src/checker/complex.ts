@@ -1,16 +1,22 @@
 /**
- * A small evaluator for answers in the algebraic form a + bi.
+ * A small evaluator for the answers the pilot's exercises ask for.
  *
  * The package keys are proven at build time by tools/grade.py with SymPy. The
  * device cannot run SymPy, so this module covers exactly the class of answer
- * the pilot's exercises ask for: rational or decimal numbers combined with the
- * imaginary unit by +, -, *, /, implicit multiplication and brackets. It
- * mirrors the grader's Unicode folding (minus signs, dots, superscripts) so a
- * student's "5 − 3i" and the key's "5 - 3*I" evaluate to the same value.
+ * the four units need: rational or decimal numbers and the imaginary unit,
+ * combined by +, -, *, /, ^ (or **), implicit multiplication and brackets;
+ * the constants π and e; sqrt (√), ln (or log, the natural logarithm, as in
+ * SymPy) and exp; and, when the checker passes a value for it, one variable
+ * such as x. It mirrors the grader's Unicode folding (minus signs, dots,
+ * superscripts) so a student's "5 − 3i" and the key's "5 - 3*I" evaluate to
+ * the same value.
  *
- * Anything outside that grammar (a square root, a variable, a function) is an
- * UnsupportedInput error, which the checker reports as "cannot be checked
- * automatically" rather than guessing a grade.
+ * Anything outside that grammar (another variable, a trigonometric
+ * function) is an UnsupportedInput error, which the checker reports as
+ * "cannot be checked automatically" rather than guessing a grade. A value
+ * outside a function's domain (the logarithm of a negative number, a
+ * division by zero) is a DomainError, so a checker sampling a function can
+ * skip that point.
  *
  * Pure: no React, no database.
  */
@@ -24,33 +30,66 @@ export class UnsupportedInput extends Error {
   }
 }
 
+export class DomainError extends UnsupportedInput {
+  constructor(message: string) {
+    super(message);
+    this.name = 'DomainError';
+  }
+}
+
 // The same folds as _UNICODE_FOLD and _SUPERSCRIPTS in tools/grade.py, limited
-// to what an a + bi answer can contain.
+// to what these answers can contain. "**" goes first so that it is not read
+// as two multiplications.
 const UNICODE_FOLD: Array<[string, string]> = [
+  ['**', '^'],
   ['−', '-'], ['–', '-'], ['—', '-'],
   ['×', '*'], ['⋅', '*'], ['·', '*'], ['÷', '/'], ['⁄', '/'],
   ['²', '^2'], ['³', '^3'],
-  [' ', ' '], [' ', ' '],
+  [' ', ' '], [' ', ' '],
 ];
+
+// A leading label such as "z =", "y =", "x_1 =", "E(X) =", "Var(X) =",
+// "SD(X) =" or "σ =" is not part of the answer.
+const LABEL = /^\s*(?:[A-Za-zσμ]{1,4}(?:_?\d)?(?:\(\s*[A-Za-z]\s*\))?)\s*=\s*/;
 
 export function fold(text: string): string {
   let s = text;
   for (const [from, to] of UNICODE_FOLD) {
     s = s.split(from).join(to);
   }
-  // The grader accepts "z = 5 + 3i"; strip that kind of label.
-  s = s.replace(/^\s*[a-zA-Z](?:_?\d)?\s*=\s*/, '');
+  if (s.split('=').length === 2) {
+    s = s.replace(LABEL, '');
+  }
   return s.trim();
 }
+
+type Fn = 'sqrt' | 'ln' | 'exp';
 
 type Token =
   | { kind: 'num'; value: number }
   | { kind: 'i' }
+  | { kind: 'var'; value: number }
+  | { kind: 'fn'; name: Fn }
   | { kind: 'op'; value: '+' | '-' | '*' | '/' | '^' }
   | { kind: '(' }
   | { kind: ')' };
 
-function tokenize(s: string): Token[] {
+const WORDS: Record<string, Token> = {
+  i: { kind: 'i' },
+  I: { kind: 'i' },
+  j: { kind: 'i' },
+  pi: { kind: 'num', value: Math.PI },
+  Pi: { kind: 'num', value: Math.PI },
+  PI: { kind: 'num', value: Math.PI },
+  e: { kind: 'num', value: Math.E },
+  E: { kind: 'num', value: Math.E },
+  sqrt: { kind: 'fn', name: 'sqrt' },
+  ln: { kind: 'fn', name: 'ln' },
+  log: { kind: 'fn', name: 'ln' },
+  exp: { kind: 'fn', name: 'exp' },
+};
+
+function tokenize(s: string, vars: Record<string, number>): Token[] {
   const out: Token[] = [];
   let k = 0;
   while (k < s.length) {
@@ -60,6 +99,7 @@ function tokenize(s: string): Token[] {
       continue;
     }
     if (/[0-9.]/.test(c)) {
+      // No scientific notation: "2e+1" is 2e + 1, as a student means it.
       const m = /^(\d+\.?\d*|\.\d+)/.exec(s.slice(k));
       if (!m) {
         throw new UnsupportedInput(`unexpected "${c}"`);
@@ -68,14 +108,31 @@ function tokenize(s: string): Token[] {
       k += m[1].length;
       continue;
     }
-    if (c === 'i' || c === 'I' || c === 'j') {
-      // A lone i is the imaginary unit; a letter run such as "sin" is not.
-      const next = s[k + 1];
-      if (next !== undefined && /[a-zA-Z]/.test(next)) {
-        throw new UnsupportedInput('a variable or function name');
-      }
-      out.push({ kind: 'i' });
+    if (c === 'π') {
+      out.push({ kind: 'num', value: Math.PI });
       k += 1;
+      continue;
+    }
+    if (c === '√') {
+      out.push({ kind: 'fn', name: 'sqrt' });
+      k += 1;
+      continue;
+    }
+    if (/[a-zA-Z]/.test(c)) {
+      const word = /^[a-zA-Z]+/.exec(s.slice(k))![0];
+      if (Object.prototype.hasOwnProperty.call(vars, word)) {
+        out.push({ kind: 'var', value: vars[word] });
+      } else if (Object.prototype.hasOwnProperty.call(WORDS, word)) {
+        out.push(WORDS[word]);
+      } else if (word.length > 1 && [...word].every(ch => Object.prototype.hasOwnProperty.call(vars, ch))) {
+        // "xx" is unusual but harmless; a run of the variable is a product.
+        for (const ch of word) {
+          out.push({ kind: 'var', value: vars[ch] });
+        }
+      } else {
+        throw new UnsupportedInput(`"${word}" is a variable or function the tablet cannot check`);
+      }
+      k += word.length;
       continue;
     }
     if (c === '+' || c === '-' || c === '*' || c === '/' || c === '^') {
@@ -93,14 +150,12 @@ function tokenize(s: string): Token[] {
       k += 1;
       continue;
     }
-    if (/[a-zA-Z]/.test(c)) {
-      throw new UnsupportedInput('a variable or function name');
-    }
     throw new UnsupportedInput(`unexpected "${c}"`);
   }
   return out;
 }
 
+const real = (x: number): Complex => ({ re: x, im: 0 });
 const add = (a: Complex, b: Complex): Complex => ({ re: a.re + b.re, im: a.im + b.im });
 const sub = (a: Complex, b: Complex): Complex => ({ re: a.re - b.re, im: a.im - b.im });
 const mul = (a: Complex, b: Complex): Complex => ({
@@ -110,20 +165,53 @@ const mul = (a: Complex, b: Complex): Complex => ({
 function div(a: Complex, b: Complex): Complex {
   const d = b.re * b.re + b.im * b.im;
   if (d === 0) {
-    throw new UnsupportedInput('division by zero');
+    throw new DomainError('division by zero');
   }
   return { re: (a.re * b.re + a.im * b.im) / d, im: (a.im * b.re - a.re * b.im) / d };
 }
+
+function expC(z: Complex): Complex {
+  const r = Math.exp(z.re);
+  return z.im === 0 ? real(r) : { re: r * Math.cos(z.im), im: r * Math.sin(z.im) };
+}
+
+function sqrtC(z: Complex): Complex {
+  if (z.im === 0) {
+    return z.re >= 0 ? real(Math.sqrt(z.re)) : { re: 0, im: Math.sqrt(-z.re) };
+  }
+  const r = Math.hypot(z.re, z.im);
+  return { re: Math.sqrt((r + z.re) / 2), im: Math.sign(z.im) * Math.sqrt((r - z.re) / 2) };
+}
+
+function lnC(z: Complex): Complex {
+  if (z.im !== 0 || z.re <= 0) {
+    throw new DomainError('the logarithm of a number that is not positive');
+  }
+  return real(Math.log(z.re));
+}
+
+const FNS: Record<Fn, (z: Complex) => Complex> = { sqrt: sqrtC, ln: lnC, exp: expC };
+
 function pow(a: Complex, b: Complex): Complex {
-  // Only small non-negative integer powers, which is all i² and (a+bi)² need.
-  if (b.im !== 0 || !Number.isInteger(b.re) || b.re < 0 || b.re > 8) {
-    throw new UnsupportedInput('a power other than a small whole number');
+  // Whole-number powers are exact repeated products, which is all i² and
+  // (a+bi)² need; other real powers of a positive base go through Math.pow.
+  if (b.im === 0 && Number.isInteger(b.re) && Math.abs(b.re) <= 12) {
+    let r: Complex = real(1);
+    for (let n = 0; n < Math.abs(b.re); n += 1) {
+      r = mul(r, a);
+    }
+    return b.re < 0 ? div(real(1), r) : r;
   }
-  let r: Complex = { re: 1, im: 0 };
-  for (let n = 0; n < b.re; n += 1) {
-    r = mul(r, a);
+  if (a.im === 0 && a.re > 0) {
+    if (b.im === 0) {
+      return real(Math.pow(a.re, b.re));
+    }
+    return expC(mul(b, real(Math.log(a.re))));
   }
-  return r;
+  if (a.im === 0 && a.re === 0 && b.im === 0 && b.re > 0) {
+    return real(0);
+  }
+  throw new DomainError('a power the tablet cannot evaluate');
 }
 
 /**
@@ -132,7 +220,9 @@ function pow(a: Complex, b: Complex): Complex {
  *   term    := unary (('*' | '/')? unary)*      implicit product allowed
  *   unary   := ('+' | '-') unary | power
  *   power   := atom ('^' unary)?
- *   atom    := number | i | '(' expr ')'
+ *   atom    := number | i | variable | fn power | '(' expr ')'
+ * A function applies to the bracket or the single power after it, so
+ * "ln x", "√2" and "sqrt(1 - x^2)" read as written.
  */
 class Parser {
   private pos = 0;
@@ -175,8 +265,8 @@ class Parser {
         this.pos += 1;
         const r = this.unary();
         v = p.value === '*' ? mul(v, r) : div(v, r);
-      } else if (p && (p.kind === 'num' || p.kind === 'i' || p.kind === '(')) {
-        // Implicit multiplication: "3i", "2(1+i)", "i3" is odd but harmless.
+      } else if (p && (p.kind === 'num' || p.kind === 'i' || p.kind === 'var' || p.kind === 'fn' || p.kind === '(')) {
+        // Implicit multiplication: "3i", "2(1+i)", "2x", "2ln 3".
         v = mul(v, this.power());
       } else {
         return v;
@@ -209,13 +299,17 @@ class Parser {
     if (!p) {
       throw new UnsupportedInput('incomplete');
     }
-    if (p.kind === 'num') {
+    if (p.kind === 'num' || p.kind === 'var') {
       this.pos += 1;
-      return { re: p.value, im: 0 };
+      return real(p.value);
     }
     if (p.kind === 'i') {
       this.pos += 1;
       return { re: 0, im: 1 };
+    }
+    if (p.kind === 'fn') {
+      this.pos += 1;
+      return FNS[p.name](this.power());
     }
     if (p.kind === '(') {
       this.pos += 1;
@@ -230,9 +324,13 @@ class Parser {
   }
 }
 
-/** Evaluate an a + bi expression. Throws UnsupportedInput outside the grammar. */
-export function evaluate(text: string): Complex {
-  return new Parser(tokenize(fold(text))).parse();
+/**
+ * Evaluate an answer. `vars` gives the value of each variable the answer may
+ * use, for a checker comparing two functions at sample points; without it a
+ * letter other than i, e or a function name is unsupported.
+ */
+export function evaluate(text: string, vars: Record<string, number> = {}): Complex {
+  return new Parser(tokenize(fold(text), vars)).parse();
 }
 
 export function approxEqual(a: Complex, b: Complex, tolerance = 1e-9): boolean {
