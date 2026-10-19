@@ -1,0 +1,110 @@
+[
+  {
+    "id": "rw-s6-am.u5.l02",
+    "title": "Separable equations and particular solutions",
+    "tg_lessons": [
+      "5.2",
+      "5.5"
+    ],
+    "objective": "Solve a first-order differential equation with separable variables, and use an initial condition to find its particular solution.",
+    "pages": [
+      308,
+      316
+    ],
+    "topics": [
+      "differential equation",
+      "differential equations",
+      "first order",
+      "separable",
+      "separable variables",
+      "separate the variables",
+      "separating the variables",
+      "separation of variables",
+      "general solution",
+      "particular solution",
+      "initial condition",
+      "initial value problem",
+      "constant of integration",
+      "solve the differential equation",
+      "dy dx"
+    ],
+    "blocks": [
+      {
+        "kind": "p",
+        "text": "A first-order differential equation can be written F(x, y, dy/dx) = 0 or dy/dx = f(x, y). The simplest kind has separable variables: the right-hand side is a product g(x)h(y) of a function of x alone and a function of y alone.",
+        "topics": [
+          "differential equation",
+          "differential equations",
+          "first order",
+          "separable",
+          "separable variables",
+          "dy dx"
+        ]
+      },
+      {
+        "kind": "math",
+        "tex": "\\frac{dy}{dx} = g(x)\\,h(y)"
+      },
+      {
+        "kind": "p",
+        "text": "To solve it, separate the variables, with everything in y on one side and everything in x on the other, then integrate both sides. One constant of integration, c, is enough.",
+        "topics": [
+          "separate the variables",
+          "separating the variables",
+          "separation of variables",
+          "separable",
+          "constant of integration",
+          "solve the differential equation"
+        ]
+      },
+      {
+        "kind": "math",
+        "tex": "\\frac{dy}{h(y)} = g(x)\\,dx \\quad \\Longrightarrow \\quad \\int \\frac{dy}{h(y)} = \\int g(x)\\,dx"
+      },
+      {
+        "kind": "example",
+        "ref": "rw-s6-am.u5.ex.01"
+      },
+      {
+        "kind": "example",
+        "ref": "rw-s6-am.u5.ex.02"
+      },
+      {
+        "kind": "p",
+        "text": "A solution that contains an arbitrary constant is the general solution. When more information is given, such as the value of y for one value of x (an initial condition), the constant can be found, and substituting it gives the particular solution. A differential equation with an initial condition is an initial value problem.",
+        "topics": [
+          "general solution",
+          "particular solution",
+          "initial condition",
+          "initial value problem",
+          "constant of integration"
+        ]
+      },
+      {
+        "kind": "math",
+        "tex": "y(x_0) = y_0"
+      },
+      {
+        "kind": "p",
+        "text": "An initial value problem dy/dx = p(x)y, y(x₀) = y₀ has one and only one solution on a given interval, so a particular solution can be checked by substituting it into the equation and into the initial condition.",
+        "topics": [
+          "particular solution",
+          "initial value problem",
+          "initial condition"
+        ]
+      }
+    ],
+    "exercises": [
+      "rw-s6-am.u5.q.001",
+      "rw-s6-am.u5.q.002",
+      "rw-s6-am.u5.q.003",
+      "rw-s6-am.u5.q.004",
+      "rw-s6-am.u5.q.005"
+    ],
+    "review": {
+      "status": "developer-test",
+      "reviewed_by": null,
+      "date": null
+    }
+  }
+]

@@ -1,0 +1,26 @@
+{
+  "id": "rw-s6-am.u4",
+  "version": "0.1.0",
+  "curriculum": "rw_s6_mathematics",
+  "unit": 4,
+  "unit_title": "Integration",
+  "source": {
+    "student_book": "REB, Advanced Mathematics for Rwanda Schools, Senior Six Student's Book (2020)",
+    "teacher_guide": "REB, Advanced Mathematics for Rwanda Schools, Senior Six Teacher's Guide (2020)",
+    "pages": [
+      197,
+      303
+    ]
+  },
+  "attribution": "Content prepared from materials that are the property of the Government of Rwanda and published by the Rwanda Basic Education Board (REB), quoted with credit to REB.",
+  "review": {
+    "status": "developer-test",
+    "reviewed_by": null,
+    "date": null
+  },
+  "files": {
+    "lessons": "lessons.json",
+    "examples": "examples.json",
+    "exercises": "exercises.json"
+  }
+}

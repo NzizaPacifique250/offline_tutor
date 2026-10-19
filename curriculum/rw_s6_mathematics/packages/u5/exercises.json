@@ -1,0 +1,329 @@
+[
+  {
+    "id": "rw-s6-am.u5.q.001",
+    "lesson": "rw-s6-am.u5.l02",
+    "pages": [
+      315
+    ],
+    "source_label": "Activity 5.5",
+    "difficulty": "basic",
+    "prompt": {
+      "text": "Solve dy/dx = x + 4, given that y = 4 when x = 2. Give y as a function of x.",
+      "tex": "\\frac{dy}{dx} = x + 4, \\qquad y(2) = 4"
+    },
+    "answer": {
+      "check": "ode_solution",
+      "expected": "x**2/2 + 4*x - 6",
+      "check_args": {
+        "ode": "Derivative(y(x), x) - (x + 4)",
+        "var": "x",
+        "func": "y",
+        "ic": {
+          "2": 4
+        },
+        "sample": [
+          -1.0,
+          0.5,
+          1.0,
+          2.0,
+          3.0
+        ]
+      },
+      "accepted": [
+        "y = x^2/2 + 4x - 6",
+        "0.5x^2 + 4x - 6",
+        "(x^2 + 8x - 12)/2"
+      ],
+      "display_tex": "y = \\frac{x^2}{2} + 4x - 6",
+      "input": "expression"
+    },
+    "hints": [
+      "The variables are already separate: write dy = (x + 4) dx and integrate both sides.",
+      "The general solution is y = x²/2 + 4x + c. Substitute x = 2 and y = 4 to find c.",
+      "4 = 2 + 8 + c, so c = −6."
+    ],
+    "solution": [
+      {
+        "text": "Integrate both sides.",
+        "tex": "y = \\int (x + 4)\\,dx = \\frac{x^2}{2} + 4x + c"
+      },
+      {
+        "text": "Use y = 4 when x = 2.",
+        "tex": "4 = \\frac{4}{2} + 8 + c \\implies c = -6"
+      },
+      {
+        "text": "Substitute c.",
+        "tex": "y = \\frac{x^2}{2} + 4x - 6"
+      }
+    ],
+    "review": {
+      "status": "developer-test",
+      "reviewed_by": null,
+      "date": null
+    }
+  },
+  {
+    "id": "rw-s6-am.u5.q.002",
+    "lesson": "rw-s6-am.u5.l02",
+    "pages": [
+      316
+    ],
+    "source_label": "Application activity 5.5, question 2",
+    "difficulty": "intermediate",
+    "prompt": {
+      "text": "Find the solution of dy/dx = (1 + y²)/(1 + x²) that satisfies y(0) = 1. Give y as a single fraction in x.",
+      "tex": "\\frac{dy}{dx} = \\frac{1 + y^2}{1 + x^2}, \\qquad y(0) = 1"
+    },
+    "answer": {
+      "check": "ode_solution",
+      "expected": "(1 + x)/(1 - x)",
+      "check_args": {
+        "ode": "Derivative(y(x), x) - (1 + y(x)**2)/(1 + x**2)",
+        "var": "x",
+        "func": "y",
+        "ic": {
+          "0": 1
+        },
+        "sample": [
+          -0.5,
+          -0.2,
+          0.2,
+          0.5,
+          0.7
+        ]
+      },
+      "accepted": [
+        "y = (1 + x)/(1 - x)",
+        "(x + 1)/(1 - x)",
+        "-(x + 1)/(x - 1)"
+      ],
+      "display_tex": "y = \\frac{1 + x}{1 - x}",
+      "input": "expression"
+    },
+    "hints": [
+      "Separate the variables: dy/(1 + y²) = dx/(1 + x²).",
+      "Both sides integrate to inverse tangents: tan⁻¹ y = tan⁻¹ x + c. Use y(0) = 1 to find c.",
+      "c = tan⁻¹ 1 = π/4, so y = tan(tan⁻¹ x + π/4). Expand it with the tangent addition formula."
+    ],
+    "solution": [
+      {
+        "text": "Separate the variables and integrate.",
+        "tex": "\\int \\frac{dy}{1 + y^2} = \\int \\frac{dx}{1 + x^2} \\implies \\tan^{-1} y = \\tan^{-1} x + c"
+      },
+      {
+        "text": "Use y(0) = 1.",
+        "tex": "\\tan^{-1} 1 = 0 + c \\implies c = \\frac{\\pi}{4}"
+      },
+      {
+        "text": "Take the tangent of both sides and use tan(A + B) = (tan A + tan B)/(1 − tan A tan B).",
+        "tex": "y = \\tan\\left(\\tan^{-1} x + \\frac{\\pi}{4}\\right) = \\frac{x + 1}{1 - x}"
+      }
+    ],
+    "review": {
+      "status": "developer-test",
+      "reviewed_by": null,
+      "date": null
+    }
+  },
+  {
+    "id": "rw-s6-am.u5.q.003",
+    "lesson": "rw-s6-am.u5.l02",
+    "pages": [
+      316
+    ],
+    "source_label": "Application activity 5.5, question 3",
+    "difficulty": "intermediate",
+    "prompt": {
+      "text": "Find the solution of xy = (1 − x²) dy/dx that satisfies y(0) = 1, for −1 < x < 1. Give y as a function of x.",
+      "tex": "xy = (1 - x^2)\\frac{dy}{dx}, \\qquad y(0) = 1"
+    },
+    "answer": {
+      "check": "ode_solution",
+      "expected": "1/sqrt(1 - x**2)",
+      "check_args": {
+        "ode": "(1 - x**2)*Derivative(y(x), x) - x*y(x)",
+        "var": "x",
+        "func": "y",
+        "ic": {
+          "0": 1
+        },
+        "sample": [
+          -0.6,
+          -0.3,
+          0.2,
+          0.5,
+          0.8
+        ]
+      },
+      "accepted": [
+        "y = 1/sqrt(1 - x^2)",
+        "(1 - x^2)^(-1/2)",
+        "1/√(1 − x²)"
+      ],
+      "display_tex": "y = \\frac{1}{\\sqrt{1 - x^2}}",
+      "input": "expression"
+    },
+    "hints": [
+      "Separate the variables: dy/y = x dx/(1 − x²).",
+      "Integrate: ln|y| = −½ ln|1 − x²| + c. Use y(0) = 1 to find c.",
+      "y(0) = 1 gives c = 0, so ln y = −½ ln(1 − x²)."
+    ],
+    "solution": [
+      {
+        "text": "Separate the variables.",
+        "tex": "\\frac{dy}{y} = \\frac{x\\,dx}{1 - x^2}"
+      },
+      {
+        "text": "Integrate both sides; the right side is −½ times the derivative of 1 − x² over 1 − x².",
+        "tex": "\\ln|y| = -\\frac{1}{2}\\ln|1 - x^2| + c"
+      },
+      {
+        "text": "Use y(0) = 1: ln 1 = 0 + c, so c = 0.",
+        "tex": "\\ln y = -\\frac{1}{2}\\ln(1 - x^2) = \\ln\\frac{1}{\\sqrt{1 - x^2}}"
+      },
+      {
+        "text": "Remove the logarithms.",
+        "tex": "y = \\frac{1}{\\sqrt{1 - x^2}}"
+      }
+    ],
+    "review": {
+      "status": "developer-test",
+      "reviewed_by": null,
+      "date": null
+    }
+  },
+  {
+    "id": "rw-s6-am.u5.q.004",
+    "lesson": "rw-s6-am.u5.l02",
+    "pages": [
+      317
+    ],
+    "source_label": "Application activity 5.5, question 4",
+    "difficulty": "advanced",
+    "prompt": {
+      "text": "Find the solution of xy dy/dx = x² − 1 that satisfies y(1) = 2, for x > 0. Give y as a function of x.",
+      "tex": "xy\\frac{dy}{dx} = x^2 - 1, \\qquad y(1) = 2"
+    },
+    "answer": {
+      "check": "ode_solution",
+      "expected": "sqrt(x**2 - 2*log(x) + 3)",
+      "check_args": {
+        "ode": "x*y(x)*Derivative(y(x), x) - (x**2 - 1)",
+        "var": "x",
+        "func": "y",
+        "ic": {
+          "1": 2
+        },
+        "sample": [
+          0.5,
+          1.0,
+          1.5,
+          2.0,
+          3.0
+        ]
+      },
+      "accepted": [
+        "y = sqrt(x^2 - 2ln(x) + 3)",
+        "√(x² − 2 ln x + 3)",
+        "(x^2 - 2ln x + 3)^(1/2)"
+      ],
+      "display_tex": "y = \\sqrt{x^2 - 2\\ln x + 3}",
+      "input": "expression"
+    },
+    "hints": [
+      "Separate the variables: y dy = (x − 1/x) dx.",
+      "Integrate: y²/2 = x²/2 − ln x + c. Use y(1) = 2 to find c.",
+      "2 = ½ + c, so c = 3/2 and y² = x² − 2 ln x + 3. Take the positive root, because y(1) = 2 > 0."
+    ],
+    "solution": [
+      {
+        "text": "Separate the variables.",
+        "tex": "y\\,dy = \\frac{x^2 - 1}{x}\\,dx = \\left(x - \\frac{1}{x}\\right)dx"
+      },
+      {
+        "text": "Integrate both sides (x > 0).",
+        "tex": "\\frac{y^2}{2} = \\frac{x^2}{2} - \\ln x + c"
+      },
+      {
+        "text": "Use y(1) = 2.",
+        "tex": "\\frac{4}{2} = \\frac{1}{2} - 0 + c \\implies c = \\frac{3}{2}, \\qquad y^2 = x^2 - 2\\ln x + 3"
+      },
+      {
+        "text": "y(1) = 2 is positive, so take the positive root.",
+        "tex": "y = \\sqrt{x^2 - 2\\ln x + 3}"
+      }
+    ],
+    "review": {
+      "status": "developer-test",
+      "reviewed_by": null,
+      "date": null
+    }
+  },
+  {
+    "id": "rw-s6-am.u5.q.005",
+    "lesson": "rw-s6-am.u5.l02",
+    "pages": [
+      317
+    ],
+    "source_label": "Application activity 5.5, question 5",
+    "difficulty": "advanced",
+    "prompt": {
+      "text": "Find the solution of dy/dx = e^(2x − y) that satisfies y(0) = 0. Give y as a function of x.",
+      "tex": "\\frac{dy}{dx} = e^{2x - y}, \\qquad y(0) = 0"
+    },
+    "answer": {
+      "check": "ode_solution",
+      "expected": "log((exp(2*x) + 1)/2)",
+      "check_args": {
+        "ode": "Derivative(y(x), x) - exp(2*x - y(x))",
+        "var": "x",
+        "func": "y",
+        "ic": {
+          "0": 0
+        },
+        "sample": [
+          -1.0,
+          -0.5,
+          0.5,
+          1.0,
+          1.5
+        ]
+      },
+      "accepted": [
+        "y = ln((e^(2x) + 1)/2)",
+        "ln(e^(2x) + 1) - ln 2",
+        "ln((1 + e^(2x))/2)"
+      ],
+      "display_tex": "y = \\ln\\frac{e^{2x} + 1}{2}",
+      "input": "expression"
+    },
+    "hints": [
+      "Write e^(2x − y) as e^(2x)·e^(−y), then separate: e^y dy = e^(2x) dx.",
+      "Integrate: e^y = ½e^(2x) + c. Use y(0) = 0 to find c.",
+      "1 = ½ + c, so c = ½ and e^y = ½e^(2x) + ½. Take the natural logarithm of both sides."
+    ],
+    "solution": [
+      {
+        "text": "Separate the variables.",
+        "tex": "\\frac{dy}{dx} = e^{2x}e^{-y} \\iff e^{y}\\,dy = e^{2x}\\,dx"
+      },
+      {
+        "text": "Integrate both sides.",
+        "tex": "e^{y} = \\frac{1}{2}e^{2x} + c"
+      },
+      {
+        "text": "Use y(0) = 0.",
+        "tex": "1 = \\frac{1}{2} + c \\implies c = \\frac{1}{2}, \\qquad e^{y} = \\frac{e^{2x} + 1}{2}"
+      },
+      {
+        "text": "Take the natural logarithm.",
+        "tex": "y = \\ln\\frac{e^{2x} + 1}{2}"
+      }
+    ],
+    "review": {
+      "status": "developer-test",
+      "reviewed_by": null,
+      "date": null
+    }
+  }
+]

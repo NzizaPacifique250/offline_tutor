@@ -1,0 +1,134 @@
+[
+  {
+    "id": "rw-s6-am.u4.l19",
+    "title": "Definite integrals and their properties",
+    "tg_lessons": [
+      "4.19",
+      "4.20"
+    ],
+    "objective": "Evaluate a definite integral from an antiderivative, use the properties of definite integrals, and split an integral where the expression inside an absolute value changes sign.",
+    "pages": [
+      254,
+      259
+    ],
+    "topics": [
+      "definite integral",
+      "definite integrals",
+      "integral",
+      "integrals",
+      "integrate",
+      "integrating",
+      "integration",
+      "evaluate the integral",
+      "antiderivative",
+      "anti derivative",
+      "limits of integration",
+      "upper limit",
+      "lower limit",
+      "area under the curve",
+      "area under a curve",
+      "riemann sum",
+      "sum of riemann",
+      "absolute value",
+      "properties of definite integrals",
+      "chasles relation",
+      "permutation of bounds"
+    ],
+    "blocks": [
+      {
+        "kind": "p",
+        "text": "The definite integral of f(x) from a to b is F(b) − F(a), where F is an antiderivative of f. The numbers a and b are the lower and upper limits of integration.",
+        "topics": [
+          "definite integral",
+          "definite integrals",
+          "integral",
+          "integrals",
+          "evaluate the integral",
+          "antiderivative",
+          "anti derivative",
+          "limits of integration",
+          "upper limit",
+          "lower limit"
+        ]
+      },
+      {
+        "kind": "math",
+        "tex": "\\int_a^b f(x)\\,dx = \\Big[F(x)\\Big]_a^b = F(b) - F(a)"
+      },
+      {
+        "kind": "p",
+        "text": "When f(x) lies above the x-axis, the definite integral is the area under the curve between the lines x = a and x = b. It is the limit of the sum of Riemann: the total area of thin strips of width Δx and height f(xᵢ).",
+        "topics": [
+          "area under the curve",
+          "area under a curve",
+          "riemann sum",
+          "sum of riemann"
+        ]
+      },
+      {
+        "kind": "math",
+        "tex": "A = \\lim_{n \\to \\infty} \\sum_{i=1}^{n} f(x_i)\\,\\Delta x = \\int_a^b f(x)\\,dx"
+      },
+      {
+        "kind": "p",
+        "text": "No constant of integration is written in a definite integral, because it cancels: (F(b) + c) − (F(a) + c) = F(b) − F(a). An integral whose two limits are equal is zero.",
+        "topics": [
+          "definite integral",
+          "antiderivative",
+          "integrate",
+          "integration"
+        ]
+      },
+      {
+        "kind": "math",
+        "tex": "\\int_a^a f(x)\\,dx = 0"
+      },
+      {
+        "kind": "example",
+        "ref": "rw-s6-am.u4.ex.01"
+      },
+      {
+        "kind": "p",
+        "text": "Properties. Swapping the limits changes the sign of the integral (permutation of bounds). For any c between a and b, the integral from a to b is the integral from a to c plus the integral from c to b (Chasles relation). If f(x) ≥ 0 on [a, b] with a ≤ b, the integral is not negative, and if f(x) ≤ g(x) there, the integral of f is at most the integral of g.",
+        "topics": [
+          "properties of definite integrals",
+          "permutation of bounds",
+          "chasles relation"
+        ]
+      },
+      {
+        "kind": "math",
+        "tex": "\\int_a^b f(x)\\,dx = -\\int_b^a f(x)\\,dx, \\qquad \\int_a^b f(x)\\,dx = \\int_a^c f(x)\\,dx + \\int_c^b f(x)\\,dx"
+      },
+      {
+        "kind": "p",
+        "text": "To integrate an absolute value such as |x − 1|, find where the expression inside changes sign, split the interval there with the Chasles relation, and on each part replace the absolute value by the expression or by its opposite.",
+        "topics": [
+          "absolute value",
+          "chasles relation",
+          "integrating"
+        ]
+      },
+      {
+        "kind": "math",
+        "tex": "|x - 1| = \\begin{cases} -x + 1, & x \\le 1 \\\\ x - 1, & x \\ge 1 \\end{cases}"
+      },
+      {
+        "kind": "example",
+        "ref": "rw-s6-am.u4.ex.02"
+      }
+    ],
+    "exercises": [
+      "rw-s6-am.u4.q.001",
+      "rw-s6-am.u4.q.002",
+      "rw-s6-am.u4.q.003",
+      "rw-s6-am.u4.q.004",
+      "rw-s6-am.u4.q.005"
+    ],
+    "review": {
+      "status": "developer-test",
+      "reviewed_by": null,
+      "date": null
+    }
+  }
+]

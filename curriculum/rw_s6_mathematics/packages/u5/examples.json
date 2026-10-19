@@ -1,0 +1,71 @@
+[
+  {
+    "id": "rw-s6-am.u5.ex.01",
+    "lesson": "rw-s6-am.u5.l02",
+    "pages": [
+      308,
+      309
+    ],
+    "source_label": "Example 5.5",
+    "question": {
+      "text": "Solve dy/dx = (x² + 1)/4.",
+      "tex": "\\frac{dy}{dx} = \\frac{x^2 + 1}{4}"
+    },
+    "steps": [
+      {
+        "text": "Separate the variables.",
+        "tex": "\\frac{dy}{dx} = \\frac{x^2 + 1}{4} \\iff 4\\,dy = (x^2 + 1)\\,dx"
+      },
+      {
+        "text": "Integrate both sides.",
+        "tex": "\\int 4\\,dy = \\int (x^2 + 1)\\,dx \\implies 4y = \\frac{x^3}{3} + x + c"
+      },
+      {
+        "text": "Divide by 4, writing c for the new constant c/4.",
+        "tex": "y = \\frac{x^3}{12} + \\frac{x}{4} + c \\quad \\text{(general solution)}"
+      }
+    ],
+    "answer_tex": "y = \\frac{x^3}{12} + \\frac{x}{4} + c",
+    "review": {
+      "status": "developer-test",
+      "reviewed_by": null,
+      "date": null
+    }
+  },
+  {
+    "id": "rw-s6-am.u5.ex.02",
+    "lesson": "rw-s6-am.u5.l02",
+    "pages": [
+      309
+    ],
+    "source_label": "Example 5.6",
+    "question": {
+      "text": "Solve the differential equation dy/dx = y/(x − 6).",
+      "tex": "\\frac{dy}{dx} = \\frac{y}{x - 6}"
+    },
+    "steps": [
+      {
+        "text": "Separate the variables.",
+        "tex": "\\frac{dy}{dx} = \\frac{y}{x - 6} \\iff \\frac{dy}{y} = \\frac{dx}{x - 6}"
+      },
+      {
+        "text": "Integrate both sides.",
+        "tex": "\\ln|y| = \\ln|x - 6| + c"
+      },
+      {
+        "text": "Write the constant as ln k, with ln k = c, and combine the logarithms.",
+        "tex": "\\ln|y| = \\ln|x - 6| + \\ln k = \\ln|k(x - 6)|"
+      },
+      {
+        "text": "Remove the logarithms.",
+        "tex": "y = k(x - 6), \\quad k \\text{ a constant (general solution)}"
+      }
+    ],
+    "answer_tex": "y = k(x - 6)",
+    "review": {
+      "status": "developer-test",
+      "reviewed_by": null,
+      "date": null
+    }
+  }
+]

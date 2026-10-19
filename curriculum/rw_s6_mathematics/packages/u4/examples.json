@@ -1,0 +1,62 @@
+[
+  {
+    "id": "rw-s6-am.u4.ex.01",
+    "lesson": "rw-s6-am.u4.l19",
+    "pages": [
+      256
+    ],
+    "source_label": "Example 4.60",
+    "question": {
+      "text": "Determine the value of the definite integral of x³ from 1 to 2.",
+      "tex": "\\int_1^2 x^3\\,dx"
+    },
+    "steps": [
+      {
+        "text": "Find an antiderivative of x³.",
+        "tex": "\\int x^3\\,dx = \\frac{x^4}{4}"
+      },
+      {
+        "text": "Evaluate it at the upper limit and subtract its value at the lower limit.",
+        "tex": "\\int_1^2 x^3\\,dx = \\left[\\frac{x^4}{4}\\right]_1^2 = \\frac{2^4}{4} - \\frac{1^4}{4} = \\frac{16}{4} - \\frac{1}{4} = \\frac{15}{4}"
+      }
+    ],
+    "answer_tex": "\\int_1^2 x^3\\,dx = \\frac{15}{4}",
+    "review": {
+      "status": "developer-test",
+      "reviewed_by": null,
+      "date": null
+    }
+  },
+  {
+    "id": "rw-s6-am.u4.ex.02",
+    "lesson": "rw-s6-am.u4.l19",
+    "pages": [
+      256
+    ],
+    "source_label": "Example 4.62",
+    "question": {
+      "text": "Work out the integral of |x − 1| from −2 to 2.",
+      "tex": "\\int_{-2}^{2} |x - 1|\\,dx"
+    },
+    "steps": [
+      {
+        "text": "x − 1 changes sign at x = 1: |x − 1| = −x + 1 for x ≤ 1 and x − 1 for x ≥ 1. Split the integral there.",
+        "tex": "\\int_{-2}^{2} |x - 1|\\,dx = \\int_{-2}^{1} (-x + 1)\\,dx + \\int_{1}^{2} (x - 1)\\,dx"
+      },
+      {
+        "text": "Integrate each part.",
+        "tex": "= \\left[-\\frac{x^2}{2} + x\\right]_{-2}^{1} + \\left[\\frac{x^2}{2} - x\\right]_{1}^{2}"
+      },
+      {
+        "text": "Substitute the limits.",
+        "tex": "= \\left(-\\frac{1}{2} + 1\\right) - (-2 - 2) + (2 - 2) - \\left(\\frac{1}{2} - 1\\right) = 5"
+      }
+    ],
+    "answer_tex": "\\int_{-2}^{2} |x - 1|\\,dx = 5",
+    "review": {
+      "status": "developer-test",
+      "reviewed_by": null,
+      "date": null
+    }
+  }
+]

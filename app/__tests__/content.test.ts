@@ -15,14 +15,85 @@ const { __makeDb } = require('../jest/opsqlite-mock');
 const u1 = PACKAGES[0];
 const lesson = u1.lessons[0];
 
-describe('bundled package', () => {
-  it('is the Unit 1 package with the expected shape', () => {
-    expect(PACKAGES).toHaveLength(1);
-    expect(u1.manifest.id).toBe('rw-s6-am.u1');
+describe('bundled packages', () => {
+  it('are the four pilot units, Unit 1 first, each with a lesson and five exercises', () => {
+    expect(PACKAGES.map(p => p.manifest.id)).toEqual(['rw-s6-am.u1', 'rw-s6-am.u4', 'rw-s6-am.u5', 'rw-s6-am.u9']);
     expect(u1.lessons).toHaveLength(1);
     expect(u1.examples).toHaveLength(2);
     expect(u1.exercises).toHaveLength(5);
     expect(lesson.exercises).toEqual(u1.exercises.map(q => q.id));
+    for (const p of PACKAGES) {
+      expect(p.lessons).toHaveLength(1);
+      expect(p.examples.length).toBeGreaterThan(0);
+      expect(p.exercises).toHaveLength(5);
+      expect(p.lessons[0].exercises).toEqual(p.exercises.map(q => q.id));
+      expect(p.manifest.review.status).toBe('developer-test');
+    }
+  });
+
+  // The renderer draws every formula with KaTeX inside a WebView; one that
+  // does not parse shows as red source on the tablet, so parse them all here.
+  it('has only formulas KaTeX can render', () => {
+    const katex = require('katex');
+    const all: { where: string; tex: string }[] = [];
+    for (const p of PACKAGES) {
+      for (const l of p.lessons) {
+        l.blocks.forEach((b, i) => b.kind === 'math' && all.push({ where: `${l.id} block ${i}`, tex: b.tex }));
+      }
+      for (const e of p.examples) {
+        if (e.question.tex) {
+          all.push({ where: `${e.id} question`, tex: e.question.tex });
+        }
+        e.steps.forEach((st, i) => st.tex && all.push({ where: `${e.id} step ${i}`, tex: st.tex }));
+        all.push({ where: `${e.id} answer`, tex: e.answer_tex });
+      }
+      for (const q of p.exercises) {
+        if (q.prompt.tex) {
+          all.push({ where: `${q.id} prompt`, tex: q.prompt.tex });
+        }
+        q.solution.forEach((st, i) => st.tex && all.push({ where: `${q.id} solution ${i}`, tex: st.tex }));
+        all.push({ where: `${q.id} display`, tex: q.answer.display_tex });
+      }
+    }
+    expect(all.length).toBeGreaterThan(100);
+    const failures = all.filter(({ tex }) => {
+      try {
+        katex.renderToString(tex, { throwOnError: true, displayMode: true });
+        return false;
+      } catch {
+        return true;
+      }
+    });
+    expect(failures).toEqual([]);
+  });
+});
+
+describe('routeQuestion across the four units', () => {
+  const all = PACKAGES.flatMap(p => p.lessons.map(l => ({ id: l.id, topics: l.topics })));
+
+  it.each([
+    ['How do I multiply (3 + 4i) by (2 - i)?', 'rw-s6-am.u1.l07'],
+    ['Find the product of two complex numbers', 'rw-s6-am.u1.l07'],
+    ['what does conjugate mean?', 'rw-s6-am.u1.l07'],
+    ['How do I evaluate a definite integral?', 'rw-s6-am.u4.l19'],
+    ['what is the area under the curve of x^2 from 0 to 1', 'rw-s6-am.u4.l19'],
+    ['how do I integrate |x - 5| from 0 to 10', 'rw-s6-am.u4.l19'],
+    ['How do I solve a separable differential equation?', 'rw-s6-am.u5.l02'],
+    ['what is a particular solution', 'rw-s6-am.u5.l02'],
+    ['how do I find the constant of integration from an initial condition', 'rw-s6-am.u5.l02'],
+    ['How do I find the expected value of a random variable?', 'rw-s6-am.u9.l03'],
+    ['what is the variance', 'rw-s6-am.u9.l03'],
+    ['standard deviation of the score on a die', 'rw-s6-am.u9.l03'],
+  ])('routes "%s" to %s', (q, id) => {
+    expect(routeQuestion(q, all)?.lessonId).toBe(id);
+  });
+
+  it.each([
+    'Find the equation of the tangent to the parabola y^2 = 8x at (2, 4).',
+    'Explain the light-dependent reactions of photosynthesis.',
+    'What is the capital city of France?',
+  ])('still declines what no unit covers: %s', q => {
+    expect(routeQuestion(q, all)).toBeNull();
   });
 });
 
@@ -131,16 +202,19 @@ describe('lessonHtml (what the WebView draws)', () => {
 });
 
 describe('importPackages', () => {
-  it('imports a fresh package inside a transaction and records its version', async () => {
+  it('imports each fresh package inside a transaction and records its version', async () => {
     const db = __makeDb();
     const reports = await importPackages(db, PACKAGES);
     expect(reports).toEqual([
       { packageId: 'rw-s6-am.u1', version: '0.2.0', action: 'imported', lessons: 1, examples: 2, exercises: 5 },
+      { packageId: 'rw-s6-am.u4', version: '0.1.0', action: 'imported', lessons: 1, examples: 2, exercises: 5 },
+      { packageId: 'rw-s6-am.u5', version: '0.1.0', action: 'imported', lessons: 1, examples: 2, exercises: 5 },
+      { packageId: 'rw-s6-am.u9', version: '0.1.0', action: 'imported', lessons: 1, examples: 1, exercises: 5 },
     ]);
     const inserts = db.__log.filter((e: { sql: string }) => /^\s*INSERT INTO (lessons|examples|exercises)/.test(e.sql));
-    expect(inserts).toHaveLength(1 + 2 + 5);
+    expect(inserts).toHaveLength(4 * (1 + 5) + 2 + 2 + 2 + 1);
     const upsert = db.__log.filter((e: { sql: string }) => /INSERT INTO content_version/.test(e.sql));
-    expect(upsert).toHaveLength(1);
+    expect(upsert).toHaveLength(4);
   });
 
   it('is idempotent: the same version is not imported twice', async () => {
@@ -148,7 +222,7 @@ describe('importPackages', () => {
     await importPackages(db, PACKAGES);
     const before = db.__log.length;
     const again = await importPackages(db, PACKAGES);
-    expect(again[0].action).toBe('up-to-date');
+    expect(again.map(r => r.action)).toEqual(['up-to-date', 'up-to-date', 'up-to-date', 'up-to-date']);
     const newInserts = db.__log.slice(before).filter((e: { sql: string }) => /^\s*INSERT/.test(e.sql));
     expect(newInserts).toHaveLength(0);
   });

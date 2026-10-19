@@ -1,0 +1,247 @@
+[
+  {
+    "id": "rw-s6-am.u9.q.001",
+    "lesson": "rw-s6-am.u9.l03",
+    "pages": [
+      474
+    ],
+    "source_label": "Application activity 3.15 (Unit 9), question 1a",
+    "difficulty": "basic",
+    "prompt": {
+      "text": "Find the mean of this probability distribution.",
+      "tex": "\\begin{array}{c|cccc} x & 0 & 1 & 2 & 3 \\\\ \\hline P(X = x) & 0.1 & 0.2 & 0.4 & 0.3 \\end{array}"
+    },
+    "answer": {
+      "check": "numeric",
+      "expected": "19/10",
+      "check_args": {
+        "tolerance": 1e-09
+      },
+      "accepted": [
+        "1.9",
+        "E(X) = 1.9"
+      ],
+      "display_tex": "E(X) = 1.9",
+      "input": "expression"
+    },
+    "hints": [
+      "The mean is E(X) = Σ x P(X = x): multiply each value by its probability and add.",
+      "The products are 0 × 0.1, 1 × 0.2, 2 × 0.4 and 3 × 0.3.",
+      "0 + 0.2 + 0.8 + 0.9. Add them."
+    ],
+    "solution": [
+      {
+        "text": "Multiply each value by its probability and add.",
+        "tex": "E(X) = 0(0.1) + 1(0.2) + 2(0.4) + 3(0.3)"
+      },
+      {
+        "text": "Add.",
+        "tex": "= 0 + 0.2 + 0.8 + 0.9 = 1.9"
+      }
+    ],
+    "review": {
+      "status": "developer-test",
+      "reviewed_by": null,
+      "date": null
+    }
+  },
+  {
+    "id": "rw-s6-am.u9.q.002",
+    "lesson": "rw-s6-am.u9.l03",
+    "pages": [
+      474
+    ],
+    "source_label": "Application activity 3.15 (Unit 9), question 1c",
+    "difficulty": "basic",
+    "prompt": {
+      "text": "Find the mean of this probability distribution.",
+      "tex": "\\begin{array}{c|cccc} x & -1 & 0 & 1 & 2 \\\\ \\hline P(X = x) & 0.2 & 0.3 & 0.4 & 0.1 \\end{array}"
+    },
+    "answer": {
+      "check": "numeric",
+      "expected": "2/5",
+      "check_args": {
+        "tolerance": 1e-09
+      },
+      "accepted": [
+        "0.4",
+        "E(X) = 0.4"
+      ],
+      "display_tex": "E(X) = 0.4",
+      "input": "expression"
+    },
+    "hints": [
+      "Multiply each value by its probability and add; a negative value gives a negative product.",
+      "The products are (−1) × 0.2, 0 × 0.3, 1 × 0.4 and 2 × 0.1.",
+      "−0.2 + 0 + 0.4 + 0.2. Add them."
+    ],
+    "solution": [
+      {
+        "text": "Multiply each value by its probability and add.",
+        "tex": "E(X) = (-1)(0.2) + 0(0.3) + 1(0.4) + 2(0.1)"
+      },
+      {
+        "text": "Add.",
+        "tex": "= -0.2 + 0 + 0.4 + 0.2 = 0.4"
+      }
+    ],
+    "review": {
+      "status": "developer-test",
+      "reviewed_by": null,
+      "date": null
+    }
+  },
+  {
+    "id": "rw-s6-am.u9.q.003",
+    "lesson": "rw-s6-am.u9.l03",
+    "pages": [
+      474
+    ],
+    "source_label": "Application activity 3.15 (Unit 9), question 2a",
+    "difficulty": "intermediate",
+    "prompt": {
+      "text": "The random variable X has the probability distribution below (x = 2, 4, 6 with P(X = x) = a, 2a² − a, a² + a − 1). Find the value of a, exactly or to three decimal places.",
+      "tex": "\\begin{array}{c|ccc} x & 2 & 4 & 6 \\\\ \\hline P(X = x) & a & 2a^2 - a & a^2 + a - 1 \\end{array}"
+    },
+    "answer": {
+      "check": "numeric",
+      "expected": "2/3",
+      "check_args": {
+        "tolerance": 0.001
+      },
+      "accepted": [
+        "2/3",
+        "0.667",
+        "a = 2/3"
+      ],
+      "display_tex": "a = \\frac{2}{3}",
+      "input": "expression"
+    },
+    "hints": [
+      "The probabilities of a distribution add up to 1: a + (2a² − a) + (a² + a − 1) = 1.",
+      "That simplifies to 3a² + a − 2 = 0, which factorises as (3a − 2)(a + 1) = 0.",
+      "The roots are a = 2/3 and a = −1. A probability cannot be negative: check P(X = 2) = a for each root."
+    ],
+    "solution": [
+      {
+        "text": "The probabilities add up to 1.",
+        "tex": "a + (2a^2 - a) + (a^2 + a - 1) = 1 \\implies 3a^2 + a - 2 = 0"
+      },
+      {
+        "text": "Factorise.",
+        "tex": "(3a - 2)(a + 1) = 0 \\implies a = \\frac{2}{3} \\text{ or } a = -1"
+      },
+      {
+        "text": "a = −1 would make P(X = 2) = −1, which is impossible. With a = 2/3 the probabilities are 2/3, 2/9 and 1/9.",
+        "tex": "a = \\frac{2}{3}"
+      }
+    ],
+    "review": {
+      "status": "developer-test",
+      "reviewed_by": null,
+      "date": null
+    }
+  },
+  {
+    "id": "rw-s6-am.u9.q.004",
+    "lesson": "rw-s6-am.u9.l03",
+    "pages": [
+      474
+    ],
+    "source_label": "Application activity 3.15 (Unit 9), question 2b",
+    "difficulty": "intermediate",
+    "prompt": {
+      "text": "For the same distribution (x = 2, 4, 6 with P(X = x) = a, 2a² − a, a² + a − 1), find E(X), exactly or to three decimal places.",
+      "tex": "\\begin{array}{c|ccc} x & 2 & 4 & 6 \\\\ \\hline P(X = x) & a & 2a^2 - a & a^2 + a - 1 \\end{array}"
+    },
+    "answer": {
+      "check": "numeric",
+      "expected": "26/9",
+      "check_args": {
+        "tolerance": 0.001
+      },
+      "accepted": [
+        "26/9",
+        "2.889",
+        "E(X) = 26/9"
+      ],
+      "display_tex": "E(X) = \\frac{26}{9}",
+      "input": "expression"
+    },
+    "hints": [
+      "First find a from the condition that the probabilities add up to 1 (the previous exercise): a = 2/3.",
+      "With a = 2/3 the probabilities of 2, 4 and 6 are 2/3, 2/9 and 1/9.",
+      "E(X) = 2(2/3) + 4(2/9) + 6(1/9). Add the fractions."
+    ],
+    "solution": [
+      {
+        "text": "With a = 2/3 the probabilities are:",
+        "tex": "P(X = 2) = \\frac{2}{3}, \\quad P(X = 4) = \\frac{2}{9}, \\quad P(X = 6) = \\frac{1}{9}"
+      },
+      {
+        "text": "Multiply each value by its probability and add.",
+        "tex": "E(X) = 2\\cdot\\frac{2}{3} + 4\\cdot\\frac{2}{9} + 6\\cdot\\frac{1}{9} = \\frac{12}{9} + \\frac{8}{9} + \\frac{6}{9} = \\frac{26}{9}"
+      }
+    ],
+    "review": {
+      "status": "developer-test",
+      "reviewed_by": null,
+      "date": null
+    }
+  },
+  {
+    "id": "rw-s6-am.u9.q.005",
+    "lesson": "rw-s6-am.u9.l03",
+    "pages": [
+      475
+    ],
+    "source_label": "Application activity 3.15 (Unit 9), question 3",
+    "difficulty": "intermediate",
+    "prompt": {
+      "text": "A fair die is thrown once and X is the score. Find the standard deviation of X, correct to two decimal places.",
+      "tex": "X \\in \\{1, 2, 3, 4, 5, 6\\}, \\qquad P(X = x) = \\frac{1}{6}"
+    },
+    "answer": {
+      "check": "numeric",
+      "expected": "sqrt(35/12)",
+      "check_args": {
+        "tolerance": 0.006
+      },
+      "accepted": [
+        "1.71",
+        "sqrt(35/12)",
+        "SD(X) = 1.71"
+      ],
+      "display_tex": "SD(X) = \\sqrt{\\frac{35}{12}} \\approx 1.71",
+      "input": "expression"
+    },
+    "hints": [
+      "Each score 1 to 6 has probability 1/6. Find E(X) and E(X²) first.",
+      "E(X) = 21/6 = 3.5 and E(X²) = (1 + 4 + 9 + 16 + 25 + 36)/6 = 91/6.",
+      "Var(X) = 91/6 − 3.5² = 35/12. Take the square root."
+    ],
+    "solution": [
+      {
+        "text": "Expected value.",
+        "tex": "E(X) = \\frac{1 + 2 + 3 + 4 + 5 + 6}{6} = \\frac{21}{6} = 3.5"
+      },
+      {
+        "text": "Expectation of X².",
+        "tex": "E(X^2) = \\frac{1 + 4 + 9 + 16 + 25 + 36}{6} = \\frac{91}{6}"
+      },
+      {
+        "text": "Variance.",
+        "tex": "\\operatorname{Var}(X) = \\frac{91}{6} - (3.5)^2 = \\frac{91}{6} - \\frac{49}{4} = \\frac{35}{12}"
+      },
+      {
+        "text": "Standard deviation.",
+        "tex": "SD(X) = \\sqrt{\\frac{35}{12}} \\approx 1.71"
+      }
+    ],
+    "review": {
+      "status": "developer-test",
+      "reviewed_by": null,
+      "date": null
+    }
+  }
+]

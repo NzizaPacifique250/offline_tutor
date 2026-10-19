@@ -1,0 +1,34 @@
+[
+  {
+    "id": "rw-s6-am.u9.ex.01",
+    "lesson": "rw-s6-am.u9.l03",
+    "pages": [
+      473
+    ],
+    "source_label": "Example 9.5",
+    "question": {
+      "text": "The random variable X has the probability distribution below. Find (a) the expected value, (b) the variance and (c) the standard deviation.",
+      "tex": "\\begin{array}{c|cccccc} x & 0 & 1 & 2 & 3 & 4 & 5 \\\\ \\hline P(X = x) & 0.05 & 0.10 & 0.20 & 0.40 & 0.15 & 0.10 \\end{array}"
+    },
+    "steps": [
+      {
+        "text": "Expected value: multiply each value by its probability and add.",
+        "tex": "E(X) = 0(0.05) + 1(0.10) + 2(0.20) + 3(0.40) + 4(0.15) + 5(0.10) = 2.80"
+      },
+      {
+        "text": "Variance: work out E(X²) the same way, then subtract the square of E(X).",
+        "tex": "\\operatorname{Var}(X) = 0^2(0.05) + 1^2(0.10) + 2^2(0.20) + 3^2(0.40) + 4^2(0.15) + 5^2(0.10) - (2.80)^2 = 9.40 - 7.84 = 1.56"
+      },
+      {
+        "text": "Standard deviation: take the square root of the variance.",
+        "tex": "SD(X) = \\sqrt{1.56} \\approx 1.2490"
+      }
+    ],
+    "answer_tex": "E(X) = 2.80, \\quad \\operatorname{Var}(X) = 1.56, \\quad SD(X) \\approx 1.2490",
+    "review": {
+      "status": "developer-test",
+      "reviewed_by": null,
+      "date": null
+    }
+  }
+]

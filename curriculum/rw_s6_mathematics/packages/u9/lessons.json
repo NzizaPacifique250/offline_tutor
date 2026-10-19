@@ -1,0 +1,112 @@
+[
+  {
+    "id": "rw-s6-am.u9.l03",
+    "title": "Expected value, variance and standard deviation",
+    "tg_lessons": [
+      "9.3"
+    ],
+    "objective": "Given the probability distribution of a discrete random variable, calculate its expected value, variance and standard deviation.",
+    "pages": [
+      472,
+      474
+    ],
+    "topics": [
+      "expected value",
+      "expectation",
+      "mean",
+      "mean of a random variable",
+      "variance",
+      "standard deviation",
+      "random variable",
+      "random variables",
+      "discrete random variable",
+      "probability distribution",
+      "probability distributions"
+    ],
+    "blocks": [
+      {
+        "kind": "p",
+        "text": "The expected value of a discrete random variable X, also called the mean of its probability distribution, is the sum of each value multiplied by its probability. In the same way, the expectation of a function g(X) weights each g(xᵢ) by its probability.",
+        "topics": [
+          "expected value",
+          "expectation",
+          "mean",
+          "mean of a random variable",
+          "random variable",
+          "discrete random variable",
+          "probability distribution"
+        ]
+      },
+      {
+        "kind": "math",
+        "tex": "\\mu = E(X) = \\sum_{i=1}^{n} x_i\\,P(X = x_i), \\qquad E\\big(g(X)\\big) = \\sum_{i=1}^{n} g(x_i)\\,P(X = x_i)"
+      },
+      {
+        "kind": "p",
+        "text": "The variance measures how far the values lie from the mean: it is the expected squared distance from the mean, which simplifies to the expectation of X² minus the square of the expectation of X.",
+        "topics": [
+          "variance",
+          "mean"
+        ]
+      },
+      {
+        "kind": "math",
+        "tex": "\\sigma^2 = \\operatorname{Var}(X) = \\sum_{i=1}^{n} \\big[x_i - E(X)\\big]^2 P(X = x_i) = E(X^2) - \\big[E(X)\\big]^2"
+      },
+      {
+        "kind": "p",
+        "text": "The standard deviation is the square root of the variance.",
+        "topics": [
+          "standard deviation",
+          "variance"
+        ]
+      },
+      {
+        "kind": "math",
+        "tex": "\\sigma = SD(X) = \\sqrt{\\operatorname{Var}(X)}"
+      },
+      {
+        "kind": "example",
+        "ref": "rw-s6-am.u9.ex.01"
+      },
+      {
+        "kind": "p",
+        "text": "For any numbers a and b: E(a) = a, E(aX + b) = aE(X) + b, E(X + Y) = E(X) + E(Y), Var(a) = 0 and Var(aX + b) = a²Var(X). Adding a constant moves the mean but does not change the spread.",
+        "topics": [
+          "expected value",
+          "expectation",
+          "variance"
+        ]
+      },
+      {
+        "kind": "math",
+        "tex": "E(aX + b) = aE(X) + b, \\qquad \\operatorname{Var}(aX + b) = a^2\\operatorname{Var}(X)"
+      },
+      {
+        "kind": "p",
+        "text": "The probabilities of a probability distribution are never negative and add up to 1, which is how an unknown probability in a table is found.",
+        "topics": [
+          "probability distribution",
+          "probability distributions",
+          "discrete random variable"
+        ]
+      },
+      {
+        "kind": "math",
+        "tex": "\\sum_{i=1}^{n} P(X = x_i) = 1, \\qquad 0 \\le P(X = x_i) \\le 1"
+      }
+    ],
+    "exercises": [
+      "rw-s6-am.u9.q.001",
+      "rw-s6-am.u9.q.002",
+      "rw-s6-am.u9.q.003",
+      "rw-s6-am.u9.q.004",
+      "rw-s6-am.u9.q.005"
+    ],
+    "review": {
+      "status": "developer-test",
+      "reviewed_by": null,
+      "date": null
+    }
+  }
+]
