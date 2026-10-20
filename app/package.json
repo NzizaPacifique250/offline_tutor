@@ -11,6 +11,14 @@
     "typecheck": "tsc --noEmit",
     "content:sync": "scripts/sync_content.sh"
   },
+  "codegenConfig": {
+    "name": "OfflineTutorSpec",
+    "type": "modules",
+    "jsSrcsDir": "src/native",
+    "android": {
+      "javaPackageName": "rw.offlinetutor.device"
+    }
+  },
   "dependencies": {
     "@op-engineering/op-sqlite": "18.2.5",
     "@react-native/new-app-screen": "0.87.1",

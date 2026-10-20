@@ -18,6 +18,7 @@ import { importPackages } from './src/content/importer';
 import { PACKAGES } from './src/content/packages';
 import { getContentVersions, listLessons, type ContentVersion, type LessonSummary } from './src/content/service';
 import { getGuidanceService } from './src/guidance';
+import { ensureSharingSchema } from './src/sharing/store';
 import { ensureGuidanceSchema } from './src/guidance/log';
 import { openSession, type ActiveSession } from './src/learner/session';
 import { ensureLearnerSchema } from './src/learner/store';
@@ -27,6 +28,8 @@ import { LearnerScreen } from './src/screens/LearnerScreen';
 import { LessonScreen } from './src/screens/LessonScreen';
 import { PracticeScreen } from './src/screens/PracticeScreen';
 import { ProgressScreen } from './src/screens/ProgressScreen';
+import { ClassScreen } from './src/screens/ClassScreen';
+import { TeacherScreen } from './src/screens/TeacherScreen';
 import { TopicsScreen } from './src/screens/TopicsScreen';
 import { colors } from './src/screens/ui';
 
@@ -36,6 +39,9 @@ type Route =
   | { name: 'lesson'; lessonId: string }
   | { name: 'practice'; lessonId: string; exerciseId: string }
   | { name: 'progress' }
+  | { name: 'teacher' }
+  | { name: 'class' }
+  | { name: 'learnerProgress'; code: string }
   | { name: 'dev' };
 
 type Boot =
@@ -51,6 +57,7 @@ async function bootstrap(): Promise<Extract<Boot, { status: 'ready' }>> {
     log('boot', 'renamed the P2 developer attempts table to dev_storage_check');
   }
   await ensureGuidanceSchema(db);
+  await ensureSharingSchema(db);
   const reports = await importPackages(db, PACKAGES);
   for (const r of reports) {
     log('boot', `content ${r.packageId} v${r.version}: ${r.action} (${r.lessons} lesson, ${r.examples} examples, ${r.exercises} exercises)`);
@@ -73,6 +80,12 @@ function titleFor(route: Route, lessons: LessonSummary[]): string {
       return 'Practice';
     case 'progress':
       return 'Progress';
+    case 'teacher':
+      return 'Teacher tools';
+    case 'class':
+      return 'Class progress';
+    case 'learnerProgress':
+      return `Progress: ${route.code}`;
     case 'dev':
       return 'Developer';
   }
@@ -82,6 +95,7 @@ function App(): React.JSX.Element {
   const [boot, setBoot] = useState<Boot>({ status: 'loading' });
   const [session, setSession] = useState<ActiveSession | null>(null);
   const [stack, setStack] = useState<Route[]>([{ name: 'learner' }]);
+  const [teacherUnlocked, setTeacherUnlocked] = useState(false);
   const db = useMemo(() => getDb(), []);
   const guidance = useMemo(() => getGuidanceService(), []);
 
@@ -95,6 +109,14 @@ function App(): React.JSX.Element {
   }, []);
 
   const route = stack[stack.length - 1];
+
+  // The PIN holds while the teacher moves between teacher screens, and is
+  // asked for again once Teacher tools is left.
+  useEffect(() => {
+    if (!stack.some(r => r.name === 'teacher')) {
+      setTeacherUnlocked(false);
+    }
+  }, [stack]);
   const push = useCallback((r: Route) => setStack(s => [...s, r]), []);
   const replaceTop = useCallback((r: Route) => setStack(s => [...s.slice(0, -1), r]), []);
   const pop = useCallback(() => setStack(s => (s.length > 1 ? s.slice(0, -1) : s)), []);
@@ -140,8 +162,27 @@ function App(): React.JSX.Element {
     body = <Text style={styles.centered}>Opening the local database…</Text>;
   } else if (boot.status === 'error') {
     body = <Text style={[styles.centered, { color: colors.bad }]}>Start-up failed: {boot.message}</Text>;
+  } else if (route.name === 'teacher') {
+    body = (
+      <TeacherScreen
+        db={db}
+        guidance={guidance}
+        versions={versions}
+        lessons={lessons}
+        unlocked={teacherUnlocked}
+        onUnlock={() => setTeacherUnlocked(true)}
+        onClass={() => push({ name: 'class' })}
+        onDeveloper={() => push({ name: 'dev' })}
+      />
+    );
+  } else if (route.name === 'class') {
+    body = <ClassScreen db={db} lessons={lessons} onLearner={code => push({ name: 'learnerProgress', code })} />;
+  } else if (route.name === 'learnerProgress') {
+    body = <ProgressScreen db={db} learnerCode={route.code} lessons={lessons} />;
+  } else if (route.name === 'dev') {
+    body = <DevScreen service={guidance} />;
   } else if (route.name === 'learner' || !session) {
-    body = <LearnerScreen db={db} contentLine={boot.line} onChoose={choose} />;
+    body = <LearnerScreen db={db} contentLine={boot.line} onChoose={choose} onTeacher={() => push({ name: 'teacher' })} />;
   } else if (route.name === 'topics') {
     body = (
       <TopicsScreen
@@ -151,7 +192,6 @@ function App(): React.JSX.Element {
         versions={versions}
         onOpenLesson={lessonId => push({ name: 'lesson', lessonId })}
         onProgress={() => push({ name: 'progress' })}
-        onDeveloper={() => push({ name: 'dev' })}
       />
     );
   } else if (route.name === 'lesson') {
