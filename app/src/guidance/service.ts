@@ -9,6 +9,12 @@
  * Loading is lazy: the model is opened on the first request and kept for
  * the session. A missing or unloadable model is the 'no-model' outcome,
  * and the stored content keeps working without it.
+ *
+ * Warm-ups process a prompt the learner is likely to send next, so its
+ * tokens are in the cache before they ask. A warm-up never makes the
+ * service busy: a request that arrives during one waits for it and then
+ * reuses what it processed, which is the same work the request would have
+ * done itself. Only the newest warm-up asked for while one runs is kept.
  */
 
 import { N_PREDICT, STOP_WORDS, TEMPERATURE, TIMEOUT_MS } from './config';
@@ -67,7 +73,11 @@ export type GuidanceResult = {
   stoppedByWord: boolean;
   /** Plain words for the screen when the outcome is not 'generated'. */
   message: string;
+  /** Time spent waiting for a warm-up in progress, included in firstTokenMs and totalMs. */
+  warmWaitMs: number;
 };
+
+export type WarmUpResult = { ok: boolean; ms: number; promptTokens: number | null; reason?: string };
 
 export type ServiceOptions = {
   modelPath: string;
@@ -91,6 +101,10 @@ export class GuidanceService {
   private loadError: string | null = null;
   private loading: Promise<boolean> | null = null;
   private cancelRequested = false;
+  private warming: Promise<WarmUpResult> | null = null;
+  private pendingWarmKey: string | null = null;
+  /** The warm-up prompt whose tokens head the cache, until a request replaces them. */
+  private cachedKey: string | null = null;
   private readonly listeners = new Set<(s: ServiceState) => void>();
   private readonly now: () => number;
   private readonly setTimer: (fn: () => void, ms: number) => unknown;
@@ -129,6 +143,9 @@ export class GuidanceService {
   }
 
   private setState(s: ServiceState): void {
+    if (s === this.state_) {
+      return;
+    }
     this.state_ = s;
     for (const l of this.listeners) {
       l(s);
@@ -175,6 +192,33 @@ export class GuidanceService {
       throw new BusyError();
     }
     const t0 = this.now();
+    this.pendingWarmKey = null;
+    this.cachedKey = null;
+    this.cancelRequested = false;
+    let warmWaitMs = 0;
+    if (this.warming) {
+      this.setState('busy');
+      await this.warming;
+      warmWaitMs = this.now() - t0;
+      if (this.cancelRequested) {
+        this.setState('ready');
+        return {
+          outcome: 'cancelled',
+          text: '',
+          firstTokenMs: null,
+          totalMs: warmWaitMs,
+          promptTokens: null,
+          generatedTokens: null,
+          cachedTokens: null,
+          promptMs: 0,
+          generatedMs: 0,
+          stoppedByLimit: false,
+          stoppedByWord: false,
+          message: `Cancelled after ${(warmWaitMs / 1000).toFixed(1)} s.`,
+          warmWaitMs,
+        };
+      }
+    }
     const loaded = await this.ensureLoaded();
     if (!loaded || !this.engine) {
       return {
@@ -189,12 +233,12 @@ export class GuidanceService {
         generatedMs: 0,
         stoppedByLimit: false,
         stoppedByWord: false,
-        message: `The tutor model is not available on this tablet (${this.loadError ?? 'unknown reason'}). Stored hints and solutions still work.`,
+        message: 'The tutor model is not available on this tablet, so the tutor cannot answer. Stored hints and solutions still work, and a teacher can install the model from Teacher tools.',
+        warmWaitMs,
       };
     }
     const engine = this.engine;
     this.setState('busy');
-    this.cancelRequested = false;
     let timedOut = false;
     let first: number | null = null;
     let text = '';
@@ -223,6 +267,7 @@ export class GuidanceService {
         generatedMs: r.generatedMs,
         stoppedByLimit: r.stoppedByLimit,
         stoppedByWord: r.stoppedByWord,
+        warmWaitMs,
       };
       if (this.cancelRequested) {
         return { ...base, outcome: 'cancelled', message: `Cancelled after ${(totalMs / 1000).toFixed(1)} s.` };
@@ -246,6 +291,7 @@ export class GuidanceService {
         stoppedByLimit: false,
         stoppedByWord: false,
         message: `Generation failed: ${(e as Error).message}. Stored hints and solutions still work.`,
+        warmWaitMs,
       };
     } finally {
       this.clearTimer(timer);
@@ -254,28 +300,60 @@ export class GuidanceService {
   }
 
   /**
-   * Load the model and process the shared prompt prefix, so it is in the
-   * cache before the first real question. Runs only from 'idle'; anything
-   * else means a request is under way or the model is known to be missing.
+   * Load the model and process `messages` with a one-token completion, so a
+   * request that starts with the same tokens finds them in the cache. Runs
+   * in the background of the learner's reading or typing: the state stays
+   * 'ready', and a request waits for it (see ask). Skipped when the model is
+   * missing, a request is running, or these messages are already cached;
+   * asked for while another warm-up runs, it is queued, and a newer call
+   * replaces it.
    */
-  async warmUp(messages: ChatMessage[]): Promise<{ ok: boolean; ms: number; promptTokens: number | null; reason?: string }> {
+  warmUp(messages: ChatMessage[]): Promise<WarmUpResult> {
+    const key = JSON.stringify(messages);
+    const skip = (reason: string): Promise<WarmUpResult> => Promise.resolve({ ok: false, ms: 0, promptTokens: null, reason });
+    if (this.state_ === 'no-model') {
+      return skip('the model is not available');
+    }
+    if (this.state_ === 'busy') {
+      return skip('a request is running');
+    }
+    if (key === this.cachedKey) {
+      return skip('already cached');
+    }
+    if (this.warming) {
+      this.pendingWarmKey = key;
+      return this.warming.then(() => {
+        if (this.pendingWarmKey !== key) {
+          return { ok: false, ms: 0, promptTokens: null, reason: 'superseded' };
+        }
+        this.pendingWarmKey = null;
+        return this.warmUp(messages);
+      });
+    }
     const t0 = this.now();
-    if (this.state_ !== 'idle') {
-      return { ok: false, ms: 0, promptTokens: null, reason: `state is ${this.state_}` };
-    }
-    const loaded = await this.ensureLoaded();
-    if (!loaded || !this.engine) {
-      return { ok: false, ms: this.now() - t0, promptTokens: null, reason: this.loadError ?? 'not loaded' };
-    }
-    this.setState('busy');
-    try {
-      const r = await this.engine.complete(messages, { nPredict: 1, stop: STOP_WORDS, temperature: TEMPERATURE }, () => undefined);
-      return { ok: true, ms: this.now() - t0, promptTokens: r.promptTokens };
-    } catch (e) {
-      return { ok: false, ms: this.now() - t0, promptTokens: null, reason: (e as Error).message };
-    } finally {
-      this.setState('ready');
-    }
+    const run = (async (): Promise<WarmUpResult> => {
+      const loaded = await this.ensureLoaded();
+      if (!loaded || !this.engine) {
+        return { ok: false, ms: this.now() - t0, promptTokens: null, reason: this.loadError ?? 'not loaded' };
+      }
+      try {
+        const r = await this.engine.complete(messages, { nPredict: 1, stop: STOP_WORDS, temperature: TEMPERATURE }, () => undefined);
+        if (r.interrupted) {
+          return { ok: false, ms: this.now() - t0, promptTokens: r.promptTokens, reason: 'stopped' };
+        }
+        this.cachedKey = key;
+        return { ok: true, ms: this.now() - t0, promptTokens: r.promptTokens };
+      } catch (e) {
+        return { ok: false, ms: this.now() - t0, promptTokens: null, reason: (e as Error).message };
+      }
+    })();
+    const tracked: Promise<WarmUpResult> = run.finally(() => {
+      if (this.warming === tracked) {
+        this.warming = null;
+      }
+    });
+    this.warming = tracked;
+    return tracked;
   }
 
   async cancel(): Promise<void> {
@@ -287,6 +365,12 @@ export class GuidanceService {
   }
 
   async release(): Promise<void> {
+    this.pendingWarmKey = null;
+    if (this.warming && this.engine) {
+      await this.engine.stop();
+      await this.warming;
+    }
+    this.cachedKey = null;
     const e = this.engine;
     this.engine = null;
     if (e) {

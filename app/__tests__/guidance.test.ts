@@ -7,10 +7,10 @@
 
 import { PACKAGES } from '../src/content/packages';
 import { PASSAGE_MAX_CHARS } from '../src/guidance/config';
-import { planExerciseHelp, planFreeQuestion } from '../src/guidance/controller';
+import { planExerciseHelp, planFreeQuestion, planTypingWarmUp } from '../src/guidance/controller';
 import { countOutcomes, ensureGuidanceSchema, listGuidance, recordGuidance, summariseOutcomes } from '../src/guidance/log';
 import { toEngineResult } from '../src/guidance/llamaEngine';
-import { displayCut, dropUnclosedMath, exerciseHelpMessages, freeQuestionMessages, promptTokens, selectPassage, SYSTEM_PROMPT, warmUpMessages } from '../src/guidance/prompt';
+import { displayCut, dropUnclosedMath, exerciseHelpMessages, freeQuestionMessages, passageWarmUpMessages, promptTokens, selectPassage, SYSTEM_PROMPT, warmUpMessages } from '../src/guidance/prompt';
 import { generatedHtml } from '../src/katex/page';
 import { MASK, redactAnswer } from '../src/guidance/redact';
 import { BusyError, GuidanceService, type Engine, type EngineResult } from '../src/guidance/service';
@@ -74,6 +74,16 @@ describe('messages', () => {
     expect(q[1].content.startsWith(w[1].content)).toBe(true);
   });
 
+  it('the passage warm-up is the full question prompt up to the question, split where the tokenizer splits', () => {
+    const passage = selectPassage(lesson, 'How do I multiply two complex numbers?', ['multiply']);
+    const w = passageWarmUpMessages(passage);
+    const q = freeQuestionMessages(passage, 'How do I multiply two complex numbers?');
+    expect(w[0]).toEqual(q[0]);
+    expect(q[1].content.startsWith(w[1].content)).toBe(true);
+    expect(w[1].content.endsWith('Question:')).toBe(true);
+    expect(q[1].content.slice(w[1].content.length)).toBe(' How do I multiply two complex numbers?');
+  });
+
   it('carries the exercise and its hints, asks for the next step, and never the solution', () => {
     const m = exerciseHelpMessages(q1);
     expect(m[1].content).toContain(q1.prompt.text);
@@ -92,6 +102,20 @@ describe('messages', () => {
 
 describe('redactAnswer', () => {
   const key = q1.answer; // 5 + 3i
+
+  it('masks a rounded answer when the key accepts one, and leaves other numbers', () => {
+    const sd = PACKAGES.find(p => p.manifest.id === 'rw-s6-am.u9')!.exercises.find(q => q.id === 'rw-s6-am.u9.q.005')!.answer;
+    const r = redactAnswer('The variance is 35/12, so the standard deviation is about 1.71.', sd);
+    expect(r.masked).toBe(1);
+    expect(r.text).toContain(MASK);
+    expect(r.text).toContain('35/12');
+  });
+
+  it('leaves the text alone when the key is a function it cannot evaluate as a number', () => {
+    const ivp = PACKAGES.find(p => p.manifest.id === 'rw-s6-am.u5')!.exercises[1].answer;
+    const text = 'Separate the variables and integrate both sides.';
+    expect(redactAnswer(text, ivp)).toEqual({ text, masked: 0 });
+  });
 
   it.each(['So the answer is 5 + 3i.', 'You get 3i + 5', 'giving 5+3i as the result', 'z = 5 + 3*i', '\\boxed{5 + 3i}', '$5+3i$'])(
     'masks the answer written as %s',
@@ -250,6 +274,13 @@ describe('controller', () => {
     expect(p.kind === 'generate' && p.route.lessonId).toBe(lesson.id);
   });
 
+  it('warms the passage of a half-typed question only once it has a few words and routes to this lesson', () => {
+    expect(planTypingWarmUp('how do', routable, lesson.id)).toBeNull();
+    expect(planTypingWarmUp('how do I multiply', routable, lesson.id)?.lessonId).toBe(lesson.id);
+    expect(planTypingWarmUp('how do I multiply', routable, 'another-lesson')).toBeNull();
+    expect(planTypingWarmUp('explain photosynthesis to me', routable, lesson.id)).toBeNull();
+  });
+
   it('serves stored hints before generating for an exercise', () => {
     let s = initialPractice(q1.id, 2);
     expect(planExerciseHelp(s)).toEqual({ kind: 'stored', hintIndex: 0 });
@@ -291,10 +322,32 @@ type Script = { tokens: string[]; result?: Partial<EngineResult>; fail?: Error }
 function fakeEngine(script: Script) {
   let stopped = false;
   let resolveStop: (() => void) | null = null;
-  const engine: Engine & { stops: number } = {
+  const engine: Engine & { stops: number; calls: string[]; active: number; maxActive: number } = {
     stops: 0,
+    calls: [],
+    active: 0,
+    maxActive: 0,
     describe: () => 'fake engine',
-    async complete(_m, opts, onToken) {
+    async complete(m, opts, onToken) {
+      engine.calls.push(m.map(x => x.content).join('|'));
+      engine.active += 1;
+      engine.maxActive = Math.max(engine.maxActive, engine.active);
+      try {
+        return await run(opts, onToken);
+      } finally {
+        engine.active -= 1;
+      }
+    },
+    async stop() {
+      stopped = true;
+      engine.stops += 1;
+      await new Promise<void>(r => {
+        resolveStop = r;
+      });
+    },
+    async release() {},
+  };
+  async function run(opts: { nPredict: number }, onToken: (t: string) => void): Promise<EngineResult> {
       if (script.fail) {
         throw script.fail;
       }
@@ -321,16 +374,7 @@ function fakeEngine(script: Script) {
       };
       resolveStop?.();
       return r;
-    },
-    async stop() {
-      stopped = true;
-      engine.stops += 1;
-      await new Promise<void>(r => {
-        resolveStop = r;
-      });
-    },
-    async release() {},
-  };
+  }
   return engine;
 }
 
@@ -413,7 +457,7 @@ describe('GuidanceService', () => {
     expect(svc.state).toBe('ready');
   });
 
-  it('warms up from idle only and leaves the service ready', async () => {
+  it('warms up without making the service busy, and skips a prompt already cached', async () => {
     const engine = fakeEngine({ tokens: ['x'] });
     const svc = new GuidanceService(async () => engine, { modelPath: '/m.gguf' });
     const states: string[] = [];
@@ -421,15 +465,70 @@ describe('GuidanceService', () => {
     const w = await svc.warmUp([{ role: 'system', content: 's' }]);
     expect(w.ok).toBe(true);
     expect(w.promptTokens).toBe(150);
-    expect(states).toEqual(['loading', 'ready', 'busy', 'ready']);
-    const again = await svc.warmUp([]);
-    expect(again.ok).toBe(false);
-    expect(again.reason).toMatch(/state is ready/);
+    expect(states).toEqual(['loading', 'ready']);
+    const again = await svc.warmUp([{ role: 'system', content: 's' }]);
+    expect(again).toMatchObject({ ok: false, reason: 'already cached' });
+    // A request replaces the cache head, so the same warm-up runs again after it.
+    await svc.ask([{ role: 'system', content: 'other' }]);
+    expect((await svc.warmUp([{ role: 'system', content: 's' }])).ok).toBe(true);
     const missing = new GuidanceService(async () => {
       throw new Error('gone');
     }, { modelPath: '/x' });
     expect((await missing.warmUp([])).ok).toBe(false);
     expect(missing.state).toBe('no-model');
+    expect((await missing.warmUp([])).reason).toMatch(/not available/);
+  });
+
+  it('a request during a warm-up waits for it, then runs; the engine never runs two at once', async () => {
+    const engine = fakeEngine({ tokens });
+    const svc = new GuidanceService(async () => engine, { modelPath: '/m.gguf' });
+    await svc.ensureLoaded();
+    const warm = svc.warmUp([{ role: 'user', content: 'passage' }]);
+    expect(svc.state).toBe('ready');
+    const r = await svc.ask([{ role: 'user', content: 'passage q' }]);
+    expect((await warm).ok).toBe(true);
+    expect(r.outcome).toBe('generated');
+    expect(r.warmWaitMs).toBeGreaterThan(0);
+    expect(r.firstTokenMs).toBeGreaterThanOrEqual(r.warmWaitMs);
+    expect(engine.calls).toEqual(['passage', 'passage q']);
+    expect(engine.maxActive).toBe(1);
+    expect(svc.state).toBe('ready');
+  });
+
+  it('cancelling while a request waits for a warm-up stops it and reports cancelled', async () => {
+    const engine = fakeEngine({ tokens: Array(50).fill('x ') });
+    const svc = new GuidanceService(async () => engine, { modelPath: '/m.gguf' });
+    await svc.ensureLoaded();
+    svc.warmUp([{ role: 'user', content: 'passage' }]).catch(() => undefined);
+    const p = svc.ask([{ role: 'user', content: 'passage q' }]);
+    await new Promise<void>(res => setTimeout(() => res(), 5));
+    expect(svc.state).toBe('busy');
+    await svc.cancel();
+    const r = await p;
+    expect(r.outcome).toBe('cancelled');
+    expect(engine.calls).toEqual(['passage']);
+    expect(svc.state).toBe('ready');
+  });
+
+  it('keeps only the newest warm-up asked for while one runs, and none once a request starts', async () => {
+    const engine = fakeEngine({ tokens: ['x'] });
+    const svc = new GuidanceService(async () => engine, { modelPath: '/m.gguf' });
+    await svc.ensureLoaded();
+    const a = svc.warmUp([{ role: 'user', content: 'a' }]);
+    const b = svc.warmUp([{ role: 'user', content: 'b' }]);
+    const c = svc.warmUp([{ role: 'user', content: 'c' }]);
+    expect((await a).ok).toBe(true);
+    expect(await b).toMatchObject({ ok: false, reason: 'superseded' });
+    expect((await c).ok).toBe(true);
+    expect(engine.calls).toEqual(['a', 'c']);
+
+    const d = svc.warmUp([{ role: 'user', content: 'd' }]);
+    const e = svc.warmUp([{ role: 'user', content: 'e' }]);
+    await svc.ask([{ role: 'user', content: 'q' }]);
+    expect((await d).ok).toBe(true);
+    expect((await e).ok).toBe(false);
+    expect(engine.calls).toEqual(['a', 'c', 'd', 'q']);
+    expect(engine.maxActive).toBe(1);
   });
 
   it('releases the engine and returns to idle', async () => {

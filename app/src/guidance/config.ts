@@ -11,6 +11,14 @@ export const APP_ID = 'rw.offlinetutor';
 export const MODEL_FILE = 'qwen25-math-1.5b-Qwen2.5-Math-1.5B-Instruct-Q4_K_M.gguf';
 export const DEFAULT_MODEL_PATH = `/data/data/${APP_ID}/files/models/${MODEL_FILE}`;
 
+// The model file a teacher installs from Teacher tools is accepted only with
+// exactly this size and SHA-256 (sha256sum of bench/models/<MODEL_FILE>), so
+// a truncated copy or a different file is refused before it replaces
+// anything. Qwen2.5-Math-1.5B-Instruct is Apache-2.0; the About screen
+// carries its notice.
+export const MODEL_SHA256 = '9614a50f03c897028920ca0dc4365da570bf587f9ee7768261216fe370b37e8e';
+export const MODEL_BYTES = 986_048_832;
+
 // bench/results/THROUGHPUT_FINDINGS.md: three threads is the optimum on the
 // four Cortex-A53 cores, and the GPU is slower than the CPU.
 export const N_THREADS = 3;
@@ -42,6 +50,12 @@ export const MAX_STEPS = 6;
 // in chunks of N_PREDICT until the next step's heading arrives, at most this
 // many chunks (about 240 tokens, under two minutes) before it is shown as is.
 export const MAX_CHUNKS_PER_STEP = 3;
+
+// While a question is typed, the passage it routes to is warmed once the
+// question has this many words, so the passage is in the cache when it is
+// sent and only the question's own tokens (about 15, some 4 s at 3.4 tokens
+// per second) are processed then.
+export const TYPING_WARM_UP_MIN_WORDS = 3;
 
 export const TEMPERATURE = 0.2;
 export const STOP_WORDS = ['<|im_end|>', '<|endoftext|>', '</s>'];

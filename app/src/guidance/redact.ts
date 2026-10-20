@@ -38,11 +38,15 @@ export function redactAnswer(text: string, key: AnswerKey): { text: string; mask
   if (!want) {
     return { text, masked: 0 };
   }
+  // A key that accepts a rounded answer (a standard deviation to two
+  // decimal places) is masked when written rounded, too.
+  const t = key.check_args?.tolerance;
+  const tol = typeof t === 'number' && t > 1e-6 ? t : 1e-6;
   let masked = 0;
   const stripped = text.replace(/\\boxed\{([^{}]*)\}/g, '$1').replace(/\$+/g, ' ');
   const out = stripped.replace(CANDIDATE, m => {
     const v = value(m);
-    if (v && approxEqual(v, want, 1e-6)) {
+    if (v && approxEqual(v, want, tol)) {
       masked += 1;
       return MASK;
     }

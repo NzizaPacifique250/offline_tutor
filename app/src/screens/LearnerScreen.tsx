@@ -17,10 +17,12 @@ export function LearnerScreen({
   db,
   contentLine,
   onChoose,
+  onTeacher,
 }: {
   db: Executor;
   contentLine: string;
   onChoose: (code: string) => void;
+  onTeacher: () => void;
 }): React.JSX.Element {
   const [learners, setLearners] = useState<Learner[]>([]);
   const [draft, setDraft] = useState('');
@@ -88,6 +90,9 @@ export function LearnerScreen({
       </Card>
 
       <Text style={ui.muted}>{contentLine}</Text>
+      <View style={ui.row}>
+        <Button label="Teacher tools" compact onPress={onTeacher} testID="learner-teacher" />
+      </View>
     </KeyboardScrollView>
   );
 }

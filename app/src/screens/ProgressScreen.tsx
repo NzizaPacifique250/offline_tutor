@@ -27,7 +27,8 @@ export function ProgressScreen({
   db: Executor;
   learnerCode: string;
   lessons: LessonSummary[];
-  onPractice: (lessonId: string, exerciseId: string) => void;
+  /** Absent when a teacher views a learner from Class progress: read-only. */
+  onPractice?: (lessonId: string, exerciseId: string) => void;
 }): React.JSX.Element {
   const [progress, setProgress] = useState<LessonProgress[]>([]);
   const [history, setHistory] = useState<AttemptRecord[]>([]);
@@ -58,7 +59,9 @@ export function ProgressScreen({
   return (
     <ScrollView contentContainerStyle={ui.screen}>
       <Text style={ui.h1}>Progress for {learnerCode}</Text>
-      <Text style={ui.muted}>Computed from the attempts saved on this tablet. Nothing leaves the device.</Text>
+      <Text style={ui.muted}>
+        {onPractice ? 'Computed from the attempts saved on this tablet. Nothing leaves the device.' : 'Viewed from Teacher tools. Computed from the attempts saved on this tablet.'}
+      </Text>
       {error ? <Text style={[ui.body, { color: colors.bad }]}>{error}</Text> : null}
 
       {progress.map(p => (
@@ -86,7 +89,7 @@ export function ProgressScreen({
             </View>
           ))}
           <Text style={[ui.body, ui.bold]}>{p.next.reason}</Text>
-          {p.next.exerciseId ? (
+          {p.next.exerciseId && onPractice ? (
             <Button label={`Practise: ${label(p.next.exerciseId)}`} primary onPress={() => onPractice(p.lessonId, p.next.exerciseId as string)} testID="progress-practice" />
           ) : null}
         </Card>

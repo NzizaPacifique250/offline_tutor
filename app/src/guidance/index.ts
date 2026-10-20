@@ -4,7 +4,7 @@
  * screen, including the developer screen, goes through this instance.
  */
 
-import { DEFAULT_MODEL_PATH } from './config';
+import { modelPath } from '../device/device';
 import { loadLlamaEngine } from './llamaEngine';
 import { GuidanceService } from './service';
 
@@ -12,7 +12,7 @@ let shared: GuidanceService | null = null;
 
 export function getGuidanceService(): GuidanceService {
   if (!shared) {
-    shared = new GuidanceService(loadLlamaEngine, { modelPath: DEFAULT_MODEL_PATH });
+    shared = new GuidanceService(loadLlamaEngine, { modelPath: modelPath() });
   }
   return shared;
 }

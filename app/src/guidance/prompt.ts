@@ -182,10 +182,26 @@ function truncate(s: string, max: number): string {
 
 const PASSAGE_HEADER = "Passage from the REB Student's Book:\n";
 
+const QUESTION_LABEL = '\n\nQuestion:';
+
 export function freeQuestionMessages(passage: string, question: string): ChatMessage[] {
   return [
     { role: 'system', content: SYSTEM_PROMPT },
-    { role: 'user', content: `${PASSAGE_HEADER}${passage}\n\nQuestion: ${question.trim()}` },
+    { role: 'user', content: `${PASSAGE_HEADER}${passage}${QUESTION_LABEL} ${question.trim()}` },
+  ];
+}
+
+/**
+ * Everything of a free question except the question itself, so the passage
+ * a half-typed question routes to can be processed while the learner is
+ * still typing; on sending, only the question's own tokens are new. It
+ * ends before the space so the tokenizer splits it where the full prompt
+ * does (" how" is one token).
+ */
+export function passageWarmUpMessages(passage: string): ChatMessage[] {
+  return [
+    { role: 'system', content: SYSTEM_PROMPT },
+    { role: 'user', content: `${PASSAGE_HEADER}${passage}${QUESTION_LABEL}` },
   ];
 }
 

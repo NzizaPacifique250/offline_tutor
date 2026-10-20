@@ -4,8 +4,9 @@
  * relying on Intl, which Hermes implements only partially.
  */
 
+// Progress files from other tablets carry ISO 8601 UTC ("2026-10-20T08:42:05.123Z"), read the same way.
 export function parseSqliteUtc(stamp: string): Date | null {
-  const m = /^(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})$/.exec(stamp);
+  const m = /^(\d{4})-(\d{2})-(\d{2})[ T](\d{2}):(\d{2}):(\d{2})(?:\.\d+)?Z?$/.exec(stamp);
   if (!m) {
     return null;
   }

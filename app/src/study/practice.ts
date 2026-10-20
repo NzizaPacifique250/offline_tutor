@@ -32,7 +32,8 @@ export type PracticeState = {
 export type Feedback = { tone: 'ok' | 'info' | 'warn' | 'bad'; text: string };
 
 export type PracticeAction =
-  | { type: 'check'; result: CheckResult }
+  /** `instruction` says how to write the answer, shown when it cannot be read (checker/format.ts). */
+  | { type: 'check'; result: CheckResult; instruction?: string }
   | { type: 'hint' }
   | { type: 'solution' };
 
@@ -61,7 +62,9 @@ export function wrongCount(s: PracticeState): number {
   return s.attempts.filter(a => a.verdict === 'wrong').length;
 }
 
-export function feedbackFor(result: CheckResult, s: PracticeState): Feedback {
+const DEFAULT_INSTRUCTION = 'Write it in the form a + bi, for example 5 + 3i.';
+
+export function feedbackFor(result: CheckResult, s: PracticeState, instruction = DEFAULT_INSTRUCTION): Feedback {
   switch (result.verdict) {
     case 'correct': {
       const tries = s.attempts.length;
@@ -72,7 +75,7 @@ export function feedbackFor(result: CheckResult, s: PracticeState): Feedback {
     case 'unsupported':
       return {
         tone: 'info',
-        text: 'That answer could not be checked automatically. Write it in the form a + bi, for example 5 + 3i.',
+        text: `That answer could not be checked automatically. ${instruction}`,
       };
     case 'wrong': {
       const wrong = wrongCount(s);
@@ -95,14 +98,14 @@ export function reduce(s: PracticeState, action: PracticeAction): { state: Pract
         return { state: s, effects: [] };
       }
       if (result.verdict === 'empty') {
-        return { state: { ...s, feedback: feedbackFor(result, s) }, effects: [] };
+        return { state: { ...s, feedback: feedbackFor(result, s, action.instruction) }, effects: [] };
       }
       const next: PracticeState = {
         ...s,
         attempts: [...s.attempts, { input: result.input, verdict: result.verdict }],
         solved: s.solved || result.verdict === 'correct',
       };
-      next.feedback = feedbackFor(result, next);
+      next.feedback = feedbackFor(result, next, action.instruction);
       return {
         state: next,
         effects: [{ type: 'record-attempt', input: result.input, verdict: result.verdict, hintsSeen: s.hintsShown }],

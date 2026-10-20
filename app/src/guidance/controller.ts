@@ -14,6 +14,7 @@
 import { routeQuestion, type RoutableLesson, type RouteResult } from '../content/router';
 import type { PracticeState } from '../study/practice';
 import { canShowHint } from '../study/practice';
+import { TYPING_WARM_UP_MIN_WORDS } from './config';
 
 export type FreeQuestionPlan =
   | { kind: 'declined'; reason: string }
@@ -32,6 +33,20 @@ export function planFreeQuestion(question: string, lessons: RoutableLesson[]): F
     };
   }
   return { kind: 'generate', route };
+}
+
+/**
+ * Whether a half-typed question is worth warming the cache for: once it
+ * has a few words and routes to the lesson on screen, whose paragraphs are
+ * already loaded. A warm-up is not a learner request; nothing is logged.
+ */
+export function planTypingWarmUp(question: string, lessons: RoutableLesson[], lessonId: string): RouteResult | null {
+  const q = question.trim();
+  if (q.split(/\s+/).length < TYPING_WARM_UP_MIN_WORDS) {
+    return null;
+  }
+  const route = routeQuestion(q, lessons);
+  return route && route.lessonId === lessonId ? route : null;
 }
 
 export type ExerciseHelpPlan =

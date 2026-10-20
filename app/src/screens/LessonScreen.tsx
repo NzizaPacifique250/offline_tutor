@@ -7,14 +7,14 @@
  * guidance panel runs the bounded generation. Layout and wiring only.
  */
 
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Text, TextInput, View } from 'react-native';
 import { PACKAGES } from '../content/packages';
 import { getExamples, getExercises, getLesson, type LessonSummary } from '../content/service';
 import { toLesson } from '../content/toLesson';
 import type { PackageExercise, PackageLesson } from '../content/types';
-import { planFreeQuestion } from '../guidance/controller';
-import { freeQuestionMessages, selectPassage, warmUpMessages } from '../guidance/prompt';
+import { planFreeQuestion, planTypingWarmUp } from '../guidance/controller';
+import { freeQuestionMessages, passageWarmUpMessages, selectPassage, warmUpMessages } from '../guidance/prompt';
 import type { GuidanceService, ServiceState } from '../guidance/service';
 import type { Lesson } from '../lesson';
 import type { LessonProgress } from '../learner/progress';
@@ -54,15 +54,12 @@ export function LessonScreen({
   useEffect(() => guidance.subscribe(setServiceState), [guidance]);
 
   // While the learner reads, load the model and cache the prompt prefix so
-  // the first question does not pay for either. No-op unless the service is
-  // idle; nothing is logged as a learner request.
+  // the first question does not pay for either. Nothing is logged as a
+  // learner request.
   useEffect(() => {
-    if (guidance.state !== 'idle') {
-      return;
-    }
     guidance
       .warmUp(warmUpMessages())
-      .then(r => log('guidance', r.ok ? `warm-up done in ${r.ms} ms (${r.promptTokens} prompt tokens cached)` : `warm-up skipped: ${r.reason}`))
+      .then(r => log('guidance', r.ok ? `warm-up done in ${r.ms} ms (${r.promptTokens} prompt tokens processed)` : `warm-up skipped: ${r.reason}`))
       .catch(e => log('guidance', `warm-up error: ${(e as Error).message}`));
   }, [guidance]);
 
@@ -99,6 +96,30 @@ export function LessonScreen({
   }, [db, learnerCode, lessonId, lessons]);
 
   const routable = useMemo(() => lessons.map(l => ({ id: l.id, topics: l.topics })), [lessons]);
+
+  // While the question is typed, cache the passage it routes to, so on
+  // sending only the question's own words are new to the model. Routing and
+  // passage choice are cheap, so this runs on every change; a warm-up starts
+  // only when the chosen passage changes.
+  const warmedPassage = useRef<string | null>(null);
+  useEffect(() => {
+    if (!pkgLesson) {
+      return;
+    }
+    const route = planTypingWarmUp(question, routable, lessonId);
+    if (!route) {
+      return;
+    }
+    const passage = selectPassage(pkgLesson, question.trim(), route.matched);
+    if (passage === warmedPassage.current) {
+      return;
+    }
+    warmedPassage.current = passage;
+    guidance
+      .warmUp(passageWarmUpMessages(passage))
+      .then(r => r.ok && log('guidance', `passage warm-up done in ${r.ms} ms (${r.promptTokens} prompt tokens processed): ${passage.slice(0, 40).replace(/\n/g, ' ')}…`))
+      .catch(e => log('guidance', `warm-up error: ${(e as Error).message}`));
+  }, [guidance, lessonId, pkgLesson, question, routable]);
 
   const ask = useCallback(async () => {
     const q = question.trim();

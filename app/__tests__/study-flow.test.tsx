@@ -27,8 +27,8 @@ const session = { learnerCode: 'A1', sessionId: 1 };
 function fakeService(reply = 'Add the real parts, 3 + 2, and the imaginary parts, 4 - 1: the answer is 5 + 3i.') {
   const engine: Engine = {
     describe: () => 'fake',
-    async complete(_m, _o, onToken) {
-      for (const t of reply.split(/(?<= )/)) {
+    async complete(_m, o, onToken) {
+      for (const t of reply.split(/(?<= )/).slice(0, o.nPredict)) {
         await new Promise<void>(r => setTimeout(() => r(), 1));
         onToken(t);
       }
@@ -103,7 +103,7 @@ describe('practice screen over real SQLite', () => {
     expect(texts(root)).not.toContain(PACKAGES[0].exercises[0].hints[1]);
 
     // Unsupported input is explained, not graded.
-    await act(async () => type(root, 'answer-input', 'sqrt(2)'));
+    await act(async () => type(root, 'answer-input', 'sin(2)'));
     await act(async () => press(root, 'check-button'));
     await flush();
     expect(texts(root)).toContain('could not be checked automatically');
@@ -128,7 +128,7 @@ describe('practice screen over real SQLite', () => {
     const attempts = await listAttempts(db, 'A1');
     expect(attempts.map(a => [a.answer, a.verdict, a.hintsSeen])).toEqual([
       ['5 - 3i', 'wrong', 0],
-      ['sqrt(2)', 'unsupported', 1],
+      ['sin(2)', 'unsupported', 1],
       ['3i+5', 'correct', 1],
     ]);
     const reveals = await listReveals(db, 'A1');

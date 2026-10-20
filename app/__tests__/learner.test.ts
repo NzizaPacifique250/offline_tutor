@@ -36,7 +36,7 @@ describe('content layer on real SQLite', () => {
     const reports = await importPackages(db, PACKAGES);
     expect(reports[0]).toMatchObject({ action: 'imported', lessons: 1, examples: 2, exercises: 5 });
     const lessons = await listLessons(db);
-    expect(lessons).toHaveLength(1);
+    expect(lessons.map(l => l.id)).toEqual(['rw-s6-am.u1.l07', 'rw-s6-am.u4.l19', 'rw-s6-am.u5.l02', 'rw-s6-am.u9.l03']);
     expect(lessons[0]).toMatchObject({ id: 'rw-s6-am.u1.l07', exerciseCount: 5, reviewStatus: 'developer-test' });
     const lesson = await getLesson(db, lessons[0].id);
     expect(lesson?.blocks.length).toBeGreaterThan(5);

@@ -137,7 +137,7 @@ export function GuidancePanel({
       .then(id =>
         log(
           'guidance',
-          `#${id} ${outcome} "${question.slice(0, 40)}" ${r ? `${r.generatedTokens ?? 0} tok in ${r.totalMs} ms, first ${r.firstTokenMs ?? '-'} ms, prompt ${r.promptTokens ?? '-'} tok (cached ${r.cachedTokens ?? '-'})${r.stoppedByWord ? ', stopped at the next step' : r.stoppedByLimit ? ', stopped at the cap' : ''}` : ''}`,
+          `#${id} ${outcome} "${question.slice(0, 40)}" ${r ? `${r.generatedTokens ?? 0} tok in ${r.totalMs} ms, first ${r.firstTokenMs ?? '-'} ms, prompt ${r.promptTokens ?? '-'} tok (cached ${r.cachedTokens ?? '-'})${r.warmWaitMs > 0 ? `, waited ${r.warmWaitMs} ms for the warm-up` : ''}${r.stoppedByWord ? ', stopped at the next step' : r.stoppedByLimit ? ', stopped at the cap' : ''}` : ''}`,
         ),
       )
       .catch(e => setSaveError(`Could not save: ${(e as Error).message}`));

@@ -11,6 +11,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { ScrollView, Text, TextInput, View } from 'react-native';
 import { checkAnswer } from '../checker/check';
+import { answerFormat } from '../checker/format';
 import { getExercises } from '../content/service';
 import type { PackageExercise } from '../content/types';
 import { planExerciseHelp } from '../guidance/controller';
@@ -93,9 +94,22 @@ export function PracticeScreen({
   }, [db, lessonId, exerciseId, session.learnerCode]);
 
   const q = useMemo(() => exercises.find(x => x.id === exerciseId) ?? null, [exercises, exerciseId]);
+
+  // The exercise-help prompt is fixed once the exercise is known: process it
+  // while the learner works, so help after the stored hints starts at once.
+  useEffect(() => {
+    if (!q) {
+      return;
+    }
+    guidance
+      .warmUp(exerciseHelpMessages(q))
+      .then(r => log('guidance', r.ok ? `exercise warm-up done in ${r.ms} ms (${r.promptTokens} prompt tokens processed)` : `exercise warm-up skipped: ${r.reason}`))
+      .catch(e => log('guidance', `warm-up error: ${(e as Error).message}`));
+  }, [guidance, q]);
   const index = useMemo(() => exercises.findIndex(x => x.id === exerciseId), [exercises, exerciseId]);
   const next = index >= 0 && index + 1 < exercises.length ? exercises[index + 1] : null;
   const prompt = useMemo(() => (q ? promptHtml(q) : ''), [q]);
+  const format = useMemo(() => (q ? answerFormat(q.answer) : null), [q]);
   const solution = useMemo(() => (q ? solutionHtml(q) : ''), [q]);
 
   const persist = useCallback(
@@ -137,8 +151,8 @@ export function PracticeScreen({
     if (result.verdict === 'unsupported') {
       log('checker', `unsupported "${result.input}": ${result.reason}`);
     }
-    dispatch({ type: 'check', result });
-  }, [answer, dispatch, q]);
+    dispatch({ type: 'check', result, instruction: format?.instruction });
+  }, [answer, dispatch, format, q]);
 
   const askTutor = useCallback(() => {
     if (!q || !state) {
@@ -192,7 +206,7 @@ export function PracticeScreen({
           style={ui.input}
           value={answer}
           onChangeText={setAnswer}
-          placeholder="in the form a + bi, e.g. 5 + 3i"
+          placeholder={format?.placeholder}
           placeholderTextColor={colors.muted}
           autoCapitalize="none"
           autoCorrect={false}

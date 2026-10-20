@@ -26,7 +26,6 @@ export function TopicsScreen({
   versions,
   onOpenLesson,
   onProgress,
-  onDeveloper,
 }: {
   db: Executor;
   learnerCode: string;
@@ -34,7 +33,6 @@ export function TopicsScreen({
   versions: ContentVersion[];
   onOpenLesson: (lessonId: string) => void;
   onProgress: () => void;
-  onDeveloper: () => void;
 }): React.JSX.Element {
   const [progress, setProgress] = useState<Map<string, LessonProgress>>(new Map());
 
@@ -88,7 +86,6 @@ export function TopicsScreen({
 
       <View style={ui.row}>
         <Button label="My progress" onPress={onProgress} testID="topics-progress" />
-        <Button label="Developer checks" onPress={onDeveloper} testID="topics-dev" />
       </View>
     </ScrollView>
   );
