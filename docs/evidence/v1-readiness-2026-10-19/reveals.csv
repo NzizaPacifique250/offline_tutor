@@ -1,0 +1,8 @@
+id,learner_code,session_id,lesson_id,exercise_id,kind,hint_index,created_at
+1,R1,2,rw-s6-am.u1.l07,rw-s6-am.u1.q.001,hint,0,2026-10-19 18:35:04
+2,R1,2,rw-s6-am.u4.l19,rw-s6-am.u4.q.001,hint,0,2026-10-19 18:36:39
+3,R1,2,rw-s6-am.u5.l02,rw-s6-am.u5.q.001,hint,0,2026-10-19 18:38:11
+4,R1,2,rw-s6-am.u9.l03,rw-s6-am.u9.q.001,hint,0,2026-10-19 18:39:43
+5,R1,2,rw-s6-am.u9.l03,rw-s6-am.u9.q.005,hint,0,2026-10-19 18:44:34
+6,R1,2,rw-s6-am.u9.l03,rw-s6-am.u9.q.005,hint,1,2026-10-19 18:44:46
+7,R1,2,rw-s6-am.u9.l03,rw-s6-am.u9.q.005,hint,2,2026-10-19 18:44:59

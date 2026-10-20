@@ -1,0 +1,123 @@
+10-19 20:30:49.346 I/ReactNativeJS( 1687): [boot] content rw-s6-am.u1 v0.2.0: imported (1 lesson, 2 examples, 5 exercises)
+10-19 20:30:49.346 I/ReactNativeJS( 1687): [boot] content rw-s6-am.u4 v0.1.0: imported (1 lesson, 2 examples, 5 exercises)
+10-19 20:30:49.346 I/ReactNativeJS( 1687): [boot] content rw-s6-am.u5 v0.1.0: imported (1 lesson, 2 examples, 5 exercises)
+10-19 20:30:49.346 I/ReactNativeJS( 1687): [boot] content rw-s6-am.u9 v0.1.0: imported (1 lesson, 1 examples, 5 exercises)
+10-19 20:30:49.349 I/ReactNativeJS( 1687): [boot] ready in 351 ms: Content: rw-s6-am.u1 v0.2.0, rw-s6-am.u4 v0.1.0, rw-s6-am.u5 v0.1.0, rw-s6-am.u9 v0.1.0 · 4 lesson(s) · offline
+10-19 20:30:52.620 I/ReactNativeJS( 1794): [boot] content rw-s6-am.u1 v0.2.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+10-19 20:30:52.620 I/ReactNativeJS( 1794): [boot] content rw-s6-am.u4 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+10-19 20:30:52.620 I/ReactNativeJS( 1794): [boot] content rw-s6-am.u5 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+10-19 20:30:52.620 I/ReactNativeJS( 1794): [boot] content rw-s6-am.u9 v0.1.0: up-to-date (1 lesson, 1 examples, 5 exercises)
+10-19 20:30:52.658 I/ReactNativeJS( 1794): [boot] ready in 70 ms: Content: rw-s6-am.u1 v0.2.0, rw-s6-am.u4 v0.1.0, rw-s6-am.u5 v0.1.0, rw-s6-am.u9 v0.1.0 · 4 lesson(s) · offline
+10-19 20:30:55.976 I/ReactNativeJS( 1880): [boot] content rw-s6-am.u1 v0.2.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+10-19 20:30:55.976 I/ReactNativeJS( 1880): [boot] content rw-s6-am.u4 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+10-19 20:30:55.976 I/ReactNativeJS( 1880): [boot] content rw-s6-am.u5 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+10-19 20:30:55.976 I/ReactNativeJS( 1880): [boot] content rw-s6-am.u9 v0.1.0: up-to-date (1 lesson, 1 examples, 5 exercises)
+10-19 20:30:55.983 I/ReactNativeJS( 1880): [boot] ready in 31 ms: Content: rw-s6-am.u1 v0.2.0, rw-s6-am.u4 v0.1.0, rw-s6-am.u5 v0.1.0, rw-s6-am.u9 v0.1.0 · 4 lesson(s) · offline
+10-19 20:31:26.340 I/ReactNativeJS( 1880): [lesson] rw-s6-am.u5.l02 read from SQLite in 17 ms for R1
+10-19 20:31:26.443 I/ReactNativeJS( 1880): [guidance] warm-up skipped: Failed to load model
+10-19 20:31:27.499 I/ReactNativeJS( 1880): [lesson] KaTeX 0.18.7: rendered 14 of 14 formulas offline; 2 example(s), 0 exercise(s), 0 hint(s)
+10-19 20:31:52.963 I/ReactNativeJS( 1880): [router] "how do I solve a separable differential equation?" -> rw-s6-am.u5.l02 (differential equation, separable)
+10-19 20:31:52.965 I/ReactNativeJS( 1880): [guidance] passage (253 chars): A first-order differential equation can be written F(x, y, d…
+10-19 20:31:53.005 I/ReactNativeJS( 1880): [guidance] ask "how do I solve a separable differential " (~241 prompt tokens; step 1)
+10-19 20:31:53.092 I/ReactNativeJS( 1880): [guidance] #1 no-model "how do I solve a separable differential " 0 tok in 50 ms, first - ms, prompt - tok (cached -)
+10-19 20:32:37.830 I/ReactNativeJS( 1880): [teacher] teacher tools opened
+10-19 20:33:30.663 I/ReactNativeJS( 1880): [teacher] model installed and checked: 986048832 bytes, sha256 9614a50f03c897028920ca0dc4365da570bf587f9ee7768261216fe370b37e8e
+10-19 20:34:21.894 I/ReactNativeJS( 1880): [lesson] rw-s6-am.u1.l07 read from SQLite in 12 ms for R1
+10-19 20:34:22.664 I/ReactNativeJS( 1880): [lesson] KaTeX 0.18.7: rendered 16 of 16 formulas offline; 2 example(s), 0 exercise(s), 0 hint(s)
+10-19 20:34:50.360 I/ReactNativeJS( 1880): [practice] open rw-s6-am.u1.q.001 (3 hints) for R1
+10-19 20:34:51.292 I/ReactNativeJS( 1880): [practice] prompt: KaTeX 0.18.7: rendered 1 of 1 formulas offline
+10-19 20:34:59.546 I/ReactNativeJS( 1880): [guidance] warm-up done in 37664 ms (115 prompt tokens processed)
+10-19 20:35:04.259 I/ReactNativeJS( 1880): [practice] reveal #1 hint 1 on rw-s6-am.u1.q.001
+10-19 20:35:22.474 I/ReactNativeJS( 1880): [practice] attempt #1 rw-s6-am.u1.q.001 "5-3i" -> wrong (hints seen 1)
+10-19 20:35:35.782 I/ReactNativeJS( 1880): [practice] attempt #2 rw-s6-am.u1.q.001 "3i + 5" -> correct (hints seen 1)
+10-19 20:35:41.350 I/ReactNativeJS( 1880): [guidance] warm-up skipped: already cached
+10-19 20:35:41.358 I/ReactNativeJS( 1880): [lesson] rw-s6-am.u1.l07 read from SQLite in 66 ms for R1
+10-19 20:35:42.439 I/ReactNativeJS( 1880): [lesson] KaTeX 0.18.7: rendered 16 of 16 formulas offline; 2 example(s), 0 exercise(s), 0 hint(s)
+10-19 20:35:52.765 I/ReactNativeJS( 1880): [guidance] exercise warm-up done in 53219 ms (168 prompt tokens processed)
+10-19 20:35:59.510 I/ReactNativeJS( 1880): [lesson] rw-s6-am.u4.l19 read from SQLite in 9 ms for R1
+10-19 20:36:00.639 I/ReactNativeJS( 1880): [lesson] KaTeX 0.18.7: rendered 14 of 14 formulas offline; 2 example(s), 0 exercise(s), 0 hint(s)
+10-19 20:36:04.625 I/ReactNativeJS( 1880): [guidance] warm-up done in 5126 ms (15 prompt tokens processed)
+10-19 20:36:25.359 I/ReactNativeJS( 1880): [practice] open rw-s6-am.u4.q.001 (3 hints) for R1
+10-19 20:36:26.152 I/ReactNativeJS( 1880): [practice] prompt: KaTeX 0.18.7: rendered 1 of 1 formulas offline
+10-19 20:36:39.282 I/ReactNativeJS( 1880): [practice] reveal #2 hint 1 on rw-s6-am.u4.q.001
+10-19 20:36:57.141 I/ReactNativeJS( 1880): [practice] attempt #3 rw-s6-am.u4.q.001 "5" -> wrong (hints seen 1)
+10-19 20:37:02.859 I/ReactNativeJS( 1880): [guidance] exercise warm-up done in 37455 ms (121 prompt tokens processed)
+10-19 20:37:09.620 I/ReactNativeJS( 1880): [practice] attempt #4 rw-s6-am.u4.q.001 "9/2" -> correct (hints seen 1)
+10-19 20:37:14.885 I/ReactNativeJS( 1880): [lesson] rw-s6-am.u4.l19 read from SQLite in 13 ms for R1
+10-19 20:37:16.003 I/ReactNativeJS( 1880): [lesson] KaTeX 0.18.7: rendered 14 of 14 formulas offline; 2 example(s), 0 exercise(s), 0 hint(s)
+10-19 20:37:20.175 I/ReactNativeJS( 1880): [guidance] warm-up done in 5303 ms (15 prompt tokens processed)
+10-19 20:37:32.621 I/ReactNativeJS( 1880): [guidance] warm-up skipped: already cached
+10-19 20:37:32.631 I/ReactNativeJS( 1880): [lesson] rw-s6-am.u5.l02 read from SQLite in 12 ms for R1
+10-19 20:37:33.321 I/ReactNativeJS( 1880): [lesson] KaTeX 0.18.7: rendered 14 of 14 formulas offline; 2 example(s), 0 exercise(s), 0 hint(s)
+10-19 20:37:57.416 I/ReactNativeJS( 1880): [practice] open rw-s6-am.u5.q.001 (3 hints) for R1
+10-19 20:37:57.724 I/ReactNativeJS( 1880): [practice] prompt: KaTeX 0.18.7: rendered 1 of 1 formulas offline
+10-19 20:38:11.229 I/ReactNativeJS( 1880): [practice] reveal #3 hint 1 on rw-s6-am.u5.q.001
+10-19 20:38:29.092 I/ReactNativeJS( 1880): [practice] attempt #5 rw-s6-am.u5.q.001 "x^2" -> wrong (hints seen 1)
+10-19 20:38:42.360 I/ReactNativeJS( 1880): [practice] attempt #6 rw-s6-am.u5.q.001 "(x^2+8x-12)/2" -> correct (hints seen 1)
+10-19 20:38:47.766 I/ReactNativeJS( 1880): [guidance] warm-up skipped: already cached
+10-19 20:38:47.775 I/ReactNativeJS( 1880): [lesson] rw-s6-am.u5.l02 read from SQLite in 15 ms for R1
+10-19 20:38:48.824 I/ReactNativeJS( 1880): [lesson] KaTeX 0.18.7: rendered 14 of 14 formulas offline; 2 example(s), 0 exercise(s), 0 hint(s)
+10-19 20:38:49.805 I/ReactNativeJS( 1880): [guidance] exercise warm-up done in 52356 ms (168 prompt tokens processed)
+10-19 20:39:09.668 I/ReactNativeJS( 1880): [lesson] rw-s6-am.u9.l03 read from SQLite in 11 ms for R1
+10-19 20:39:10.697 I/ReactNativeJS( 1880): [lesson] KaTeX 0.18.7: rendered 10 of 10 formulas offline; 1 example(s), 0 exercise(s), 0 hint(s)
+10-19 20:39:14.721 I/ReactNativeJS( 1880): [guidance] warm-up done in 5064 ms (15 prompt tokens processed)
+10-19 20:39:30.160 I/ReactNativeJS( 1880): [practice] open rw-s6-am.u9.q.001 (3 hints) for R1
+10-19 20:39:31.005 I/ReactNativeJS( 1880): [practice] prompt: KaTeX 0.18.7: rendered 1 of 1 formulas offline
+10-19 20:39:44.002 I/ReactNativeJS( 1880): [practice] reveal #4 hint 1 on rw-s6-am.u9.q.001
+10-19 20:40:02.069 I/ReactNativeJS( 1880): [practice] attempt #7 rw-s6-am.u9.q.001 "2" -> wrong (hints seen 1)
+10-19 20:40:15.066 I/ReactNativeJS( 1880): [practice] attempt #8 rw-s6-am.u9.q.001 "19/10" -> correct (hints seen 1)
+10-19 20:40:20.693 I/ReactNativeJS( 1880): [guidance] warm-up skipped: already cached
+10-19 20:40:20.703 I/ReactNativeJS( 1880): [lesson] rw-s6-am.u9.l03 read from SQLite in 62 ms for R1
+10-19 20:40:21.741 I/ReactNativeJS( 1880): [lesson] KaTeX 0.18.7: rendered 10 of 10 formulas offline; 1 example(s), 0 exercise(s), 0 hint(s)
+10-19 20:40:28.763 I/ReactNativeJS( 1880): [guidance] exercise warm-up done in 58553 ms (189 prompt tokens processed)
+10-19 20:41:13.195 I/ReactNativeJS( 1880): [lesson] rw-s6-am.u4.l19 read from SQLite in 11 ms for R1
+10-19 20:41:14.272 I/ReactNativeJS( 1880): [lesson] KaTeX 0.18.7: rendered 14 of 14 formulas offline; 2 example(s), 0 exercise(s), 0 hint(s)
+10-19 20:41:18.379 I/ReactNativeJS( 1880): [guidance] warm-up done in 5195 ms (15 prompt tokens processed)
+10-19 20:41:54.604 I/ReactNativeJS( 1880): [router] "how do I evaluate a definite integral?" -> rw-s6-am.u4.l19 (definite integral, integral)
+10-19 20:41:54.605 I/ReactNativeJS( 1880): [guidance] passage (212 chars): The definite integral of f(x) from a to b is F(b) − F(a), wh…
+10-19 20:41:54.669 I/ReactNativeJS( 1880): [guidance] ask "how do I evaluate a definite integral?" (~226 prompt tokens; step 1)
+10-19 20:42:15.909 I/ReactNativeJS( 1880): [guidance] passage warm-up done in 23429 ms (80 prompt tokens processed): The definite integral of f(x) from a to …
+10-19 20:42:35.564 I/ReactNativeJS( 1880): [guidance] #2 generated "how do I evaluate a definite integral?" 37 tok in 40841 ms, first 25164 ms, prompt 13 tok (cached 185), waited 21239 ms for the warm-up, stopped at the next step
+10-19 20:42:35.699 I/ReactNativeJS( 1880): [guidance] render: KaTeX 0.18.7: rendered 3 of 3 formulas offline
+10-19 20:43:16.051 I/ReactNativeJS( 1880): [lesson] rw-s6-am.u9.l03 read from SQLite in 13 ms for R1
+10-19 20:43:17.212 I/ReactNativeJS( 1880): [lesson] KaTeX 0.18.7: rendered 10 of 10 formulas offline; 1 example(s), 0 exercise(s), 0 hint(s)
+10-19 20:43:18.210 I/ReactNativeJS( 1880): [guidance] warm-up done in 2172 ms (5 prompt tokens processed)
+10-19 20:43:35.535 I/ReactNativeJS( 1880): [practice] open rw-s6-am.u9.q.002 (3 hints) for R1
+10-19 20:43:35.923 I/ReactNativeJS( 1880): [practice] prompt: KaTeX 0.18.7: rendered 1 of 1 formulas offline
+10-19 20:43:49.189 I/ReactNativeJS( 1880): [practice] open rw-s6-am.u9.q.003 (3 hints) for R1
+10-19 20:43:49.545 I/ReactNativeJS( 1880): [practice] prompt: KaTeX 0.18.7: rendered 1 of 1 formulas offline
+10-19 20:44:03.156 I/ReactNativeJS( 1880): [practice] open rw-s6-am.u9.q.004 (3 hints) for R1
+10-19 20:44:03.970 I/ReactNativeJS( 1880): [practice] prompt: KaTeX 0.18.7: rendered 1 of 1 formulas offline
+10-19 20:44:16.910 I/ReactNativeJS( 1880): [practice] open rw-s6-am.u9.q.005 (3 hints) for R1
+10-19 20:44:17.923 I/ReactNativeJS( 1880): [practice] prompt: KaTeX 0.18.7: rendered 1 of 1 formulas offline
+10-19 20:44:32.950 I/ReactNativeJS( 1880): [guidance] exercise warm-up done in 57386 ms (184 prompt tokens processed)
+10-19 20:44:32.950 I/ReactNativeJS( 1880): [guidance] exercise warm-up skipped: superseded
+10-19 20:44:32.950 I/ReactNativeJS( 1880): [guidance] exercise warm-up skipped: superseded
+10-19 20:44:34.153 I/ReactNativeJS( 1880): [practice] reveal #5 hint 1 on rw-s6-am.u9.q.005
+10-19 20:44:34.161 I/ReactNativeJS( 1880): [guidance] #3 stored "help with Application activity 3.15 (Uni" 
+10-19 20:44:46.678 I/ReactNativeJS( 1880): [practice] reveal #6 hint 2 on rw-s6-am.u9.q.005
+10-19 20:44:46.704 I/ReactNativeJS( 1880): [guidance] #4 stored "help with Application activity 3.15 (Uni" 
+10-19 20:44:59.538 I/ReactNativeJS( 1880): [practice] reveal #7 hint 3 on rw-s6-am.u9.q.005
+10-19 20:44:59.548 I/ReactNativeJS( 1880): [guidance] #5 stored "help with Application activity 3.15 (Uni" 
+10-19 20:45:12.152 I/ReactNativeJS( 1880): [guidance] ask "help with Application activity 3.15 (Uni" (~290 prompt tokens, redacting the key; step 1)
+10-19 20:45:35.085 I/ReactNativeJS( 1880): [guidance] exercise warm-up done in 62135 ms (209 prompt tokens processed)
+10-19 20:45:48.286 I/ReactNativeJS( 1880): [guidance] #6 generated "help with Application activity 3.15 (Uni" 30 tok in 36106 ms, first 23387 ms, prompt 1 tok (cached 309), waited 22933 ms for the warm-up, stopped at the next step
+10-19 20:45:48.449 I/ReactNativeJS( 1880): [guidance] render: KaTeX 0.18.7: rendered 2 of 2 formulas offline
+10-19 20:51:49.616 I/ReactNativeJS( 1880): [guidance] step 2 "help with Application activity 3.15 (Uni" (resuming after 114 characters)
+10-19 20:52:11.852 I/ReactNativeJS( 1880): [guidance] #7 generated "(step 2) help with Application activity " 50 tok in 22207 ms, first 515 ms, prompt 1 tok (cached 337), stopped at the next step
+10-19 20:52:12.012 I/ReactNativeJS( 1880): [guidance] render: KaTeX 0.18.7: rendered 5 of 5 formulas offline
+10-19 20:52:42.649 I/ReactNativeJS( 1880): [guidance] step 3 "help with Application activity 3.15 (Uni" (resuming after 243 characters)
+10-19 20:52:54.799 I/ReactNativeJS( 1880): [guidance] #8 cancelled "(step 3) help with Application activity " 26 tok in 12108 ms, first 514 ms, prompt 1 tok (cached 386)
+10-19 20:52:54.967 I/ReactNativeJS( 1880): [guidance] render: KaTeX 0.18.7: rendered 5 of 5 formulas offline
+10-19 20:53:06.142 I/ReactNativeJS( 1880): [lesson] rw-s6-am.u9.l03 read from SQLite in 8 ms for R1
+10-19 20:53:07.237 I/ReactNativeJS( 1880): [lesson] KaTeX 0.18.7: rendered 10 of 10 formulas offline; 1 example(s), 0 exercise(s), 0 hint(s)
+10-19 20:53:11.134 I/ReactNativeJS( 1880): [guidance] warm-up done in 5000 ms (16 prompt tokens processed)
+10-19 20:53:29.742 I/ReactNativeJS( 1880): [router] "explain photosynthesis to me" -> declined, model not called
+10-19 20:53:29.779 I/ReactNativeJS( 1880): [guidance] #9 declined "explain photosynthesis to me" 
+10-19 20:53:46.225 I/ReactNativeJS( 8062): [boot] content rw-s6-am.u1 v0.2.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+10-19 20:53:46.225 I/ReactNativeJS( 8062): [boot] content rw-s6-am.u4 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+10-19 20:53:46.225 I/ReactNativeJS( 8062): [boot] content rw-s6-am.u5 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+10-19 20:53:46.225 I/ReactNativeJS( 8062): [boot] content rw-s6-am.u9 v0.1.0: up-to-date (1 lesson, 1 examples, 5 exercises)
+10-19 20:53:46.232 I/ReactNativeJS( 8062): [boot] ready in 87 ms: Content: rw-s6-am.u1 v0.2.0, rw-s6-am.u4 v0.1.0, rw-s6-am.u5 v0.1.0, rw-s6-am.u9 v0.1.0 · 4 lesson(s) · offline
+10-19 20:55:56.683 I/ReactNativeJS( 8062): [teacher] teacher tools opened
+10-19 20:56:05.398 I/ReactNativeJS( 8062): [teacher] export export-20261019-205604: learners.csv (2), sessions.csv (4), attempts.csv (8), reveals.csv (7), guidance_events.csv (9), content_version.csv (4)

@@ -1,0 +1,64 @@
+{
+  "exportedAt": "2026-10-19T18:56:04.850Z",
+  "folder": "export-20261019-205604",
+  "tables": {
+    "learners": 2,
+    "sessions": 4,
+    "attempts": 8,
+    "reveals": 7,
+    "guidance_events": 9,
+    "content_version": 4
+  },
+  "app": {
+    "versionName": "1.0.0",
+    "versionCode": 2,
+    "buildType": "release",
+    "applicationId": "rw.offlinetutor.pilot",
+    "gitCommit": "b348c17",
+    "filesDir": "/data/user/0/rw.offlinetutor.pilot/files",
+    "pilot": true,
+    "sdkInt": 35,
+    "deviceModel": "ATMPC IT-801B"
+  },
+  "content": [
+    {
+      "packageId": "rw-s6-am.u1",
+      "version": "0.2.0",
+      "unit": 1,
+      "unitTitle": "Complex Numbers",
+      "attribution": "Content prepared from materials that are the property of the Government of Rwanda and published by the Rwanda Basic Education Board (REB), quoted with credit to REB.",
+      "importedAt": "2026-10-19 18:30:49"
+    },
+    {
+      "packageId": "rw-s6-am.u4",
+      "version": "0.1.0",
+      "unit": 4,
+      "unitTitle": "Integration",
+      "attribution": "Content prepared from materials that are the property of the Government of Rwanda and published by the Rwanda Basic Education Board (REB), quoted with credit to REB.",
+      "importedAt": "2026-10-19 18:30:49"
+    },
+    {
+      "packageId": "rw-s6-am.u5",
+      "version": "0.1.0",
+      "unit": 5,
+      "unitTitle": "Differential Equations",
+      "attribution": "Content prepared from materials that are the property of the Government of Rwanda and published by the Rwanda Basic Education Board (REB), quoted with credit to REB.",
+      "importedAt": "2026-10-19 18:30:49"
+    },
+    {
+      "packageId": "rw-s6-am.u9",
+      "version": "0.1.0",
+      "unit": 9,
+      "unitTitle": "Random Variables",
+      "attribution": "Content prepared from materials that are the property of the Government of Rwanda and published by the Rwanda Basic Education Board (REB), quoted with credit to REB.",
+      "importedAt": "2026-10-19 18:30:49"
+    }
+  ],
+  "model": {
+    "file": "qwen25-math-1.5b-Qwen2.5-Math-1.5B-Instruct-Q4_K_M.gguf",
+    "expectedSha256": "9614a50f03c897028920ca0dc4365da570bf587f9ee7768261216fe370b37e8e",
+    "verifiedSha256": "9614a50f03c897028920ca0dc4365da570bf587f9ee7768261216fe370b37e8e",
+    "bytes": 986048832,
+    "exists": true
+  }
+}

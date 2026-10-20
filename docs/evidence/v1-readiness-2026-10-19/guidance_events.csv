@@ -1,0 +1,15 @@
+id,learner_code,session_id,lesson_id,exercise_id,question,outcome,text,prompt_tokens,generated_tokens,first_token_ms,total_ms,created_at
+1,R1,1,rw-s6-am.u5.l02,,how do I solve a separable differential equation?,no-model,,,,,50,2026-10-19 18:31:53
+2,R1,2,rw-s6-am.u4.l19,,how do I evaluate a definite integral?,generated,"To evaluate a definite integral, we follow these steps:
+
+1. Identify the function \( f(x) \) and the limits of integration \( a \) and \( b \).",13,37,25164,40841,2026-10-19 18:42:35
+3,R1,2,rw-s6-am.u9.l03,rw-s6-am.u9.q.005,"help with Application activity 3.15 (Unit 9), question 3",stored,Hint 1 of 3 shown from the book instead of generating. The tutor generates only once every stored hint has been seen.,,,,,2026-10-19 18:44:34
+4,R1,2,rw-s6-am.u9.l03,rw-s6-am.u9.q.005,"help with Application activity 3.15 (Unit 9), question 3",stored,Hint 2 of 3 shown from the book instead of generating. The tutor generates only once every stored hint has been seen.,,,,,2026-10-19 18:44:46
+5,R1,2,rw-s6-am.u9.l03,rw-s6-am.u9.q.005,"help with Application activity 3.15 (Unit 9), question 3",stored,Hint 3 of 3 shown from the book instead of generating. The tutor generates only once every stored hint has been seen.,,,,,2026-10-19 18:44:59
+6,R1,2,rw-s6-am.u9.l03,rw-s6-am.u9.q.005,"help with Application activity 3.15 (Unit 9), question 3",generated,"To find the standard deviation of \(X\), we need to follow these steps:
+
+1. Calculate the expected value \(E(X)\).",1,30,23387,36106,2026-10-19 18:45:48
+7,R1,2,rw-s6-am.u9.l03,rw-s6-am.u9.q.005,"(step 2) help with Application activity 3.15 (Unit 9), question 3",generated," We already know that \(E(X) = 3.5\).
+2. Calculate the expected value \(E(X^2)\). We already know that \(E(X^2) = \frac{91}{6}\).",1,50,515,22207,2026-10-19 18:52:11
+8,R1,2,rw-s6-am.u9.l03,rw-s6-am.u9.q.005,"(step 3) help with Application activity 3.15 (Unit 9), question 3",cancelled," (This can be verified by summing the squares of the outcomes and dividing by 6: \(\frac{1^2",1,26,514,12108,2026-10-19 18:52:54
+9,R1,2,,,explain photosynthesis to me,declined,"Not covered in this course. The tutor answers only questions on the loaded units, so the model is not called.",,,,,2026-10-19 18:53:29

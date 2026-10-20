@@ -1,0 +1,9 @@
+id,learner_code,session_id,lesson_id,exercise_id,answer,verdict,hints_seen,created_at
+1,R1,2,rw-s6-am.u1.l07,rw-s6-am.u1.q.001,5-3i,wrong,1,2026-10-19 18:35:22
+2,R1,2,rw-s6-am.u1.l07,rw-s6-am.u1.q.001,3i + 5,correct,1,2026-10-19 18:35:35
+3,R1,2,rw-s6-am.u4.l19,rw-s6-am.u4.q.001,5,wrong,1,2026-10-19 18:36:57
+4,R1,2,rw-s6-am.u4.l19,rw-s6-am.u4.q.001,9/2,correct,1,2026-10-19 18:37:09
+5,R1,2,rw-s6-am.u5.l02,rw-s6-am.u5.q.001,x^2,wrong,1,2026-10-19 18:38:29
+6,R1,2,rw-s6-am.u5.l02,rw-s6-am.u5.q.001,(x^2+8x-12)/2,correct,1,2026-10-19 18:38:42
+7,R1,2,rw-s6-am.u9.l03,rw-s6-am.u9.q.001,2,wrong,1,2026-10-19 18:40:02
+8,R1,2,rw-s6-am.u9.l03,rw-s6-am.u9.q.001,19/10,correct,1,2026-10-19 18:40:15
