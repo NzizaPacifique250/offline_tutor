@@ -181,7 +181,9 @@ def main(argv: list[str]) -> int:
     elif cmd == "relaunch":
         adb("shell", "am", "force-stop", APP_ID)
         time.sleep(1)
-        adb("shell", "am", "start", "-n", f"{APP_ID}/.MainActivity")
+        # The activity class keeps its name in every build; only the pilot
+        # build changes the application ID (APP_ID=rw.offlinetutor.pilot).
+        adb("shell", "am", "start", "-n", f"{APP_ID}/rw.offlinetutor.MainActivity")
         print("relaunched")
     else:
         print(__doc__)
