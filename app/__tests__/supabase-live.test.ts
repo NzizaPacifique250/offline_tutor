@@ -24,7 +24,9 @@ const { makeSqlDb } = require('../jest/sqljs-db');
 // supabase-js wants a WebSocket, which Node 20 lacks; the tablet's React Native has one.
 (globalThis as { WebSocket?: unknown }).WebSocket ??= require('ws');
 
-const live = process.env.SUPABASE_LIVE === '1' ? describe : describe.skip;
+// The app's TypeScript has no Node types; Jest runs on Node, so process is there.
+const env = (globalThis as { process?: { env: Record<string, string | undefined> } }).process?.env ?? {};
+const live = env.SUPABASE_LIVE === '1' ? describe : describe.skip;
 jest.setTimeout(60000);
 
 const stamp = Date.now();
