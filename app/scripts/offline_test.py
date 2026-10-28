@@ -66,14 +66,16 @@ FIELDS = [
 LOG_LINE = re.compile(r"^\s*(\d+\.\d+)\s+\d+\s+\d+\s+[VDIWEF]\s+ReactNativeJS:\s?(.*)$")
 
 
+def lesson(unit: int) -> dict:
+    with open(os.path.join(PACKAGES, f"u{unit}", "lessons.json")) as f:
+        return json.load(f)[0]
+
+
 def exercises(unit: int) -> list[dict]:
     """The lesson's exercises in lesson order, with their labels and hints."""
-    base = os.path.join(PACKAGES, f"u{unit}")
-    with open(os.path.join(base, "lessons.json")) as f:
-        lesson = json.load(f)[0]
-    with open(os.path.join(base, "exercises.json")) as f:
+    with open(os.path.join(PACKAGES, f"u{unit}", "exercises.json")) as f:
         by_id = {e["id"]: e for e in json.load(f)}
-    return [by_id[i] for i in lesson["exercises"]]
+    return [by_id[i] for i in lesson(unit)["exercises"]]
 
 
 class AppLog:
@@ -401,9 +403,13 @@ class Run:
         p = locate(LESSONS[unit], from_top=True)
         t0, t1 = timed(f"input tap {p[0]} {p[1]}", cut) if p else (0.0, 0.0)
         hit = self.log.wait({"r": r"^\[lesson\] KaTeX \S+: rendered (\d+) of (\d+) formulas"}, t0, 15) if p else None
-        ok = bool(hit) and hit[2].group(1) == hit[2].group(2) and int(hit[2].group(2)) > 0
+        # The lesson that opened must be the one tapped, not only a lesson that rendered.
+        read = self.log.find(r"^\[lesson\] (\S+) read from SQLite", t0, hit[1]) if hit else None
+        opened = read[1].group(1) if read else "?"
+        ok = bool(hit) and opened == lesson(unit)["id"] and hit[2].group(1) == hit[2].group(2) and int(hit[2].group(2)) > 0
         if not done("T1", ok, (hit[1] - t0) * 1000 if hit else None,
-                    f"{hit[2].group(1)} of {hit[2].group(2)} formulas typeset" if hit else "lesson not rendered" if p else "lesson not found",
+                    (f"{hit[2].group(1)} of {hit[2].group(2)} formulas typeset" if opened == lesson(unit)["id"] else f"opened {opened} instead")
+                    if hit else "lesson not rendered" if p else "lesson not found",
                     item=LESSONS[unit], expected="every formula typeset", observed=hit[2].group(0) if hit else "",
                     input_tool_ms=round((t1 - t0) * 1000) if p else "", network=net, device_time=f"{t0:.3f}"):
             self.open_lesson(unit)
@@ -440,7 +446,7 @@ class Run:
 
         # Open the recommended exercise from the lesson (not timed).
         ex_id = self.open_exercise(unit, ex["source_label"])
-        if ex_id is None:
+        if ex_id != ex["id"]:
             for task in ("T3", "T4"):
                 self.record({**base, "task": task, "passed": False, "item": ex["source_label"], "limit_ms": LIMIT_MS[task],
                              "reason": "the lesson did not offer the expected exercise"})
