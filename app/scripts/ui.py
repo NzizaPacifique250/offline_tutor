@@ -42,9 +42,20 @@ def adb(*args: str, capture: bool = True) -> str:
 
 
 def dump() -> ET.Element:
-    adb("shell", "uiautomator", "dump", "/sdcard/ui.xml")
-    xml = adb("exec-out", "cat", "/sdcard/ui.xml")
-    return ET.fromstring(xml)
+    """The screen's view hierarchy. uiautomator refuses to dump while the app
+    keeps redrawing ("could not get idle state") and leaves the previous
+    file in place, so the old file is removed first and a failed dump is
+    retried; after three failures the screen reads as empty, never stale."""
+    for _ in range(3):
+        out = adb("shell", "rm -f /sdcard/ui.xml; uiautomator dump /sdcard/ui.xml")
+        if "dumped" in out:
+            xml = adb("exec-out", "cat", "/sdcard/ui.xml")
+            try:
+                return ET.fromstring(xml)
+            except ET.ParseError:
+                pass
+        time.sleep(1)
+    return ET.Element("hierarchy")
 
 
 def nodes(root: ET.Element):
