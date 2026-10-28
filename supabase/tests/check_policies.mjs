@@ -2,7 +2,7 @@
 // Postgres (PGlite), with stand-ins for the auth schema Supabase provides.
 // Run: cd supabase/tests && npm install && npm test
 import { PGlite } from '@electric-sql/pglite';
-import { readFileSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'node:fs';
 const db = new PGlite();
 // Stand-ins for what Supabase provides.
 await db.exec(`
@@ -15,8 +15,11 @@ await db.exec(`
   alter default privileges in schema public grant all on tables to anon, authenticated;
   alter default privileges in schema public grant all on functions to anon, authenticated;
 `);
-await db.exec(readFileSync(new URL("../migrations/0001_accounts_and_sync.sql", import.meta.url), 'utf8'));
-console.log('migration applied');
+const dir = new URL('../migrations/', import.meta.url);
+for (const f of readdirSync(dir).filter(f => f.endsWith('.sql')).sort()) {
+  await db.exec(readFileSync(new URL(f, dir), 'utf8'));
+  console.log('applied', f);
+}
 const S1 = '11111111-1111-1111-1111-111111111111', S2 = '22222222-2222-2222-2222-222222222222', A = '33333333-3333-3333-3333-333333333333';
 await db.exec(`insert into auth.users values
   ('${S1}', 's1@x', '{"full_name":"Student One","requested_role":"student"}'),
@@ -42,3 +45,8 @@ ok('S1 renames itself', await as(S1, `update public.profiles set full_name = 'S 
 ok('S1 reads overview (own row only)', await as(S1, `select learner_code, attempts, exercises_correct from public.learner_overview`));
 ok('Admin reads overview (all)', await as(A, `select learner_code, role, attempts from public.learner_overview order by learner_code`));
 ok('anon reads attempts (must see none)', await (async () => { await db.exec('set role anon'); try { return (await db.query('select count(*) from public.attempts')).rows; } catch (e) { return 'ERROR: ' + e.message; } finally { await db.exec('reset role'); } })());
+ok('Admin declines a teacher request (S1 asks first)', await (async () => {
+  await db.exec(`update public.profiles set requested_role = 'teacher' where id = '${S1}'`);
+  return as(A, `select public.set_role('${S1}', 'student')`);
+})());
+ok('S1 no longer pending', (await db.query(`select role, requested_role from public.profiles where id = '${S1}'`)).rows);
