@@ -49,7 +49,8 @@ export type PanelRequest = {
   lessonId: string | null;
   exerciseId: string | null;
 } & (
-  | { kind: 'generate'; messages: ChatMessage[]; redactKey?: AnswerKey }
+  /** `source` names the passage behind the prompt (guidance/prompt.ts lessonSource, exerciseSource). */
+  | { kind: 'generate'; messages: ChatMessage[]; source: string; redactKey?: AnswerKey }
   | { kind: 'declined'; reason: string }
   | { kind: 'stored'; note: string }
 );
@@ -324,8 +325,10 @@ export function GuidancePanel({
           {canAskSimpler(steps) ? <Button label="Explain this step more simply" onPress={onSimpler} testID="guidance-simpler-button" /> : null}
         </View>
       ) : null}
-      {kind === 'generate' && (text || isRunning) ? (
-        <Text style={styles.disclaimer}>This text was produced by the on-device model from one passage of the book. It is not reviewed and is never used to mark your answers.</Text>
+      {request?.kind === 'generate' && (text || isRunning) ? (
+        <Text style={styles.disclaimer} testID="guidance-source">
+          This text was produced by the on-device model from {request.source}. It is not reviewed and is never used to mark your answers.
+        </Text>
       ) : null}
       {saveError ? <Text style={[ui.muted, styles.error]}>{saveError}</Text> : null}
       {isRunning ? (

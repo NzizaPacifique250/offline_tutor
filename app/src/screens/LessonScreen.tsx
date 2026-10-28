@@ -14,7 +14,7 @@ import { getExamples, getExercises, getLesson, type LessonSummary } from '../con
 import { toLesson } from '../content/toLesson';
 import type { PackageExercise, PackageLesson } from '../content/types';
 import { planFreeQuestion, planTypingWarmUp } from '../guidance/controller';
-import { freeQuestionMessages, passageWarmUpMessages, selectPassage, warmUpMessages } from '../guidance/prompt';
+import { freeQuestionMessages, lessonSource, passageWarmUpMessages, selectPassage, warmUpMessages } from '../guidance/prompt';
 import type { GuidanceService, ServiceState } from '../guidance/service';
 import type { Lesson } from '../lesson';
 import type { LessonProgress } from '../learner/progress';
@@ -142,7 +142,7 @@ export function LessonScreen({
     }
     const passage = selectPassage(target, q, plan.route.matched);
     log('guidance', `passage (${passage.length} chars): ${passage.slice(0, 60).replace(/\n/g, ' ')}…`);
-    setRequest({ id, kind: 'generate', question: q, lessonId: plan.route.lessonId, exerciseId: null, messages: freeQuestionMessages(passage, q) });
+    setRequest({ id, kind: 'generate', question: q, lessonId: plan.route.lessonId, exerciseId: null, messages: freeQuestionMessages(passage, q), source: lessonSource(target) });
   }, [db, lessonId, pkgLesson, question, routable]);
 
   const askDisabled = !question.trim() || serviceState === 'busy' || serviceState === 'loading';

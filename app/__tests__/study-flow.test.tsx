@@ -180,6 +180,7 @@ describe('practice screen over real SQLite', () => {
     expect(gen).toContain('renderMathInElement');
     expect(t).toContain('Generated 25 tokens');
     expect(t).toContain('not reviewed');
+    expect(t).toContain("produced by the on-device model from the stored hints for Application activity 1.7, question 3 (REB Student's Book, p. 15).");
     const events = await listGuidance(db, 'C3');
     expect(events.map(e => e.outcome)).toEqual(['stored', 'stored', 'stored', 'generated']);
     expect(events[3].text).toContain('[final answer hidden');

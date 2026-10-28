@@ -10,7 +10,7 @@ import { PASSAGE_MAX_CHARS } from '../src/guidance/config';
 import { planExerciseHelp, planFreeQuestion, planTypingWarmUp } from '../src/guidance/controller';
 import { countOutcomes, ensureGuidanceSchema, listGuidance, recordGuidance, summariseOutcomes } from '../src/guidance/log';
 import { toEngineResult } from '../src/guidance/llamaEngine';
-import { displayCut, dropUnclosedMath, exerciseHelpMessages, freeQuestionMessages, passageWarmUpMessages, promptTokens, selectPassage, SYSTEM_PROMPT, warmUpMessages } from '../src/guidance/prompt';
+import { displayCut, dropUnclosedMath, exerciseHelpMessages, exerciseSource, freeQuestionMessages, lessonSource, passageWarmUpMessages, promptTokens, selectPassage, SYSTEM_PROMPT, warmUpMessages } from '../src/guidance/prompt';
 import { generatedHtml } from '../src/katex/page';
 import { MASK, redactAnswer } from '../src/guidance/redact';
 import { BusyError, GuidanceService, type Engine, type EngineResult } from '../src/guidance/service';
@@ -97,6 +97,29 @@ describe('messages', () => {
       }
     }
     expect(m[1].content).not.toContain(q1.answer.display_tex);
+  });
+});
+
+describe('passage source', () => {
+  it('names the routed lesson and its printed page range', () => {
+    expect(lesson.pages).toEqual([13, 19]);
+    expect(lessonSource(lesson)).toBe(`the lesson "${lesson.title}" (REB Student's Book, pp. 13–19)`);
+  });
+
+  it('names the exercise whose hints are the passage, and its single page', () => {
+    expect(q1.pages).toEqual([15]);
+    expect(exerciseSource(q1)).toBe(`the stored hints for ${q1.source_label} (REB Student's Book, p. 15)`);
+  });
+
+  it('gives every lesson and exercise in the four packages a page', () => {
+    for (const pkg of PACKAGES) {
+      for (const l of pkg.lessons) {
+        expect(lessonSource(l)).toMatch(/\(REB Student's Book, pp?\. \d+(–\d+)?\)$/);
+      }
+      for (const e of pkg.exercises) {
+        expect(exerciseSource(e)).toMatch(/\(REB Student's Book, pp?\. \d+(–\d+)?\)$/);
+      }
+    }
   });
 });
 

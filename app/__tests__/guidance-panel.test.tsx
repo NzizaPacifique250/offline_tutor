@@ -81,7 +81,7 @@ describe('GuidancePanel steps', () => {
     };
     const service = new GuidanceService(async () => engine, { modelPath: '/fake.gguf' });
     const session = { learnerCode: 'D4', sessionId: 2 };
-    const request = { id: 1, kind: 'generate' as const, question: 'how do I multiply?', lessonId: 'L', exerciseId: null, messages: freeQuestionMessages('p', 'how do I multiply?') };
+    const request = { id: 1, kind: 'generate' as const, question: 'how do I multiply?', lessonId: 'L', exerciseId: null, messages: freeQuestionMessages('p', 'how do I multiply?'), source: 'the lesson "Multiplication" (REB Student\'s Book, p. 15)' };
     let r!: ReactTestRenderer.ReactTestRenderer;
     await act(async () => {
       r = ReactTestRenderer.create(<GuidancePanel service={service} db={db} session={session} request={request} />);
@@ -103,6 +103,7 @@ describe('GuidancePanel steps', () => {
     expect(page()).not.toContain('Replace i^2');
     let t = texts(r.root);
     expect(t).toContain('Step 1. Try it yourself, then ask for the next step.');
+    expect(t).toContain('produced by the on-device model from the lesson "Multiplication" (REB Student\'s Book, p. 15).');
     expect(t).toContain('Next step (2)');
     expect(has(r.root, 'guidance-simpler-button')).toBe(true);
 

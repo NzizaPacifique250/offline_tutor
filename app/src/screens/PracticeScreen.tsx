@@ -15,7 +15,7 @@ import { answerFormat } from '../checker/format';
 import { getExercises } from '../content/service';
 import type { PackageExercise } from '../content/types';
 import { planExerciseHelp } from '../guidance/controller';
-import { exerciseHelpMessages } from '../guidance/prompt';
+import { exerciseHelpMessages, exerciseSource } from '../guidance/prompt';
 import type { GuidanceService, ServiceState } from '../guidance/service';
 import { KatexView } from '../katex/KatexView';
 import { escapeHtml, pageHtml, pagesLabel, rich, stepsHtml } from '../katex/page';
@@ -165,7 +165,7 @@ export function PracticeScreen({
       dispatch({ type: 'hint' });
       setRequest({ ...base, kind: 'stored', note: `Hint ${plan.hintIndex + 1} of ${q.hints.length} shown from the book instead of generating. The tutor generates only once every stored hint has been seen.` });
     } else if (plan.kind === 'generate') {
-      setRequest({ ...base, kind: 'generate', messages: exerciseHelpMessages(q), redactKey: q.answer });
+      setRequest({ ...base, kind: 'generate', messages: exerciseHelpMessages(q), source: exerciseSource(q), redactKey: q.answer });
     }
   }, [dispatch, lessonId, q, state]);
 

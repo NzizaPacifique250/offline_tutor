@@ -18,6 +18,7 @@
  */
 
 import type { PackageExercise, PackageLesson, PackageLessonBlock } from '../content/types';
+import { pagesLabel } from '../katex/page';
 import { PASSAGE_MAX_CHARS } from './config';
 
 export type ChatMessage = { role: 'system' | 'user' | 'assistant'; content: string };
@@ -233,6 +234,22 @@ export function exerciseHelpMessages(exercise: Pick<PackageExercise, 'prompt' | 
         'Give the next step of the working in one or two sentences. Do not state the final answer.',
     },
   ];
+}
+
+/*
+ * Where the text behind a generated answer came from, shown under it so the
+ * learner can find it in the book (proposal §3.3: generated answers identify
+ * their source). Pages are the printed Student's Book pages the package
+ * carries; the passage of a free question comes from the routed lesson, and
+ * the passage of exercise help is that exercise's stored hints.
+ */
+
+export function lessonSource(lesson: Pick<PackageLesson, 'title' | 'pages'>): string {
+  return `the lesson "${lesson.title}" (REB Student's Book, ${pagesLabel(lesson.pages)})`;
+}
+
+export function exerciseSource(exercise: Pick<PackageExercise, 'source_label' | 'pages'>): string {
+  return `the stored hints for ${exercise.source_label} (REB Student's Book, ${pagesLabel(exercise.pages)})`;
 }
 
 /**
