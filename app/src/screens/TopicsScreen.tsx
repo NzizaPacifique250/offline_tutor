@@ -26,6 +26,8 @@ export function TopicsScreen({
   versions,
   onOpenLesson,
   onProgress,
+  onTeacher,
+  footer,
 }: {
   db: Executor;
   learnerCode: string;
@@ -33,6 +35,10 @@ export function TopicsScreen({
   versions: ContentVersion[];
   onOpenLesson: (lessonId: string) => void;
   onProgress: () => void;
+  /** Given for a teacher or admin account: Teacher tools without the PIN. */
+  onTeacher?: () => void;
+  /** Shown under the list, for example the account's sync card. */
+  footer?: React.ReactNode;
 }): React.JSX.Element {
   // Null until the learner's progress is read, so each card is drawn once at
   // its final size. On the IT-801B, cards below the fold that grew when
@@ -92,7 +98,9 @@ export function TopicsScreen({
 
       <View style={ui.row}>
         <Button label="My progress" onPress={onProgress} testID="topics-progress" />
+        {onTeacher ? <Button label="Teacher tools" onPress={onTeacher} testID="topics-teacher" /> : null}
       </View>
+      {footer}
     </ScrollView>
   );
 }

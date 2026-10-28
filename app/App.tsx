@@ -1,18 +1,20 @@
 /**
- * The application root: start-up, the active session and a small stack
- * navigator (P4 of docs/PROTOTYPE_DEVELOPMENT_PLAN.md).
+ * The application root: start-up, the signed-in account, the active
+ * session, background sync, and a small stack navigator.
  *
  * Start-up opens SQLite, makes sure the learner tables exist, imports any
  * bundled curriculum package whose version is not yet loaded, and reads the
  * lesson list. Everything after that is offline reads and writes of that one
- * database. The navigator is React state plus the Android back button; there
+ * database; sync (src/sync/) copies the records of accounts that switched it
+ * on to Supabase when there is internet, and nothing waits for it. The navigator is React state plus the Android back button; there
  * are no native navigation modules, so the debug APK from P3 runs this code
  * unchanged.
  */
 
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { BackHandler, Pressable, StatusBar, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { ensureAccountSchema, isStaff, type Account } from './src/account/store';
 import { getDb } from './src/content/db';
 import { importPackages } from './src/content/importer';
 import { PACKAGES } from './src/content/packages';
@@ -22,7 +24,9 @@ import { ensureSharingSchema } from './src/sharing/store';
 import { ensureGuidanceSchema } from './src/guidance/log';
 import { openSession, type ActiveSession } from './src/learner/session';
 import { ensureLearnerSchema } from './src/learner/store';
+import { deviceInfo, tabletLabel } from './src/device/device';
 import { log } from './src/log';
+import { AccountScreen } from './src/screens/AccountScreen';
 import { DevScreen } from './src/screens/DevScreen';
 import { LearnerScreen } from './src/screens/LearnerScreen';
 import { LessonScreen } from './src/screens/LessonScreen';
@@ -30,10 +34,15 @@ import { PracticeScreen } from './src/screens/PracticeScreen';
 import { ProgressScreen } from './src/screens/ProgressScreen';
 import { ClassScreen } from './src/screens/ClassScreen';
 import { TeacherScreen } from './src/screens/TeacherScreen';
+import { SyncCard } from './src/screens/SyncCard';
 import { TopicsScreen } from './src/screens/TopicsScreen';
 import { colors } from './src/screens/ui';
+import { SYNC_INTERVAL_MS } from './src/sync/config';
+import { syncAll } from './src/sync/engine';
+import { supabaseAuth, supabaseSync } from './src/sync/supabase';
 
 type Route =
+  | { name: 'account' }
   | { name: 'learner' }
   | { name: 'topics' }
   | { name: 'lesson'; lessonId: string }
@@ -58,6 +67,7 @@ async function bootstrap(): Promise<Extract<Boot, { status: 'ready' }>> {
   }
   await ensureGuidanceSchema(db);
   await ensureSharingSchema(db);
+  await ensureAccountSchema(db);
   const reports = await importPackages(db, PACKAGES);
   for (const r of reports) {
     log('boot', `content ${r.packageId} v${r.version}: ${r.action} (${r.lessons} lesson, ${r.examples} examples, ${r.exercises} exercises)`);
@@ -70,8 +80,10 @@ async function bootstrap(): Promise<Extract<Boot, { status: 'ready' }>> {
 
 function titleFor(route: Route, lessons: LessonSummary[]): string {
   switch (route.name) {
-    case 'learner':
+    case 'account':
       return 'Offline Tutor';
+    case 'learner':
+      return 'Learner code';
     case 'topics':
       return 'Topics';
     case 'lesson':
@@ -94,7 +106,8 @@ function titleFor(route: Route, lessons: LessonSummary[]): string {
 function App(): React.JSX.Element {
   const [boot, setBoot] = useState<Boot>({ status: 'loading' });
   const [session, setSession] = useState<ActiveSession | null>(null);
-  const [stack, setStack] = useState<Route[]>([{ name: 'learner' }]);
+  const [account, setAccount] = useState<Account | null>(null);
+  const [stack, setStack] = useState<Route[]>([{ name: 'account' }]);
   const [teacherUnlocked, setTeacherUnlocked] = useState(false);
   const db = useMemo(() => getDb(), []);
   const guidance = useMemo(() => getGuidanceService(), []);
@@ -141,7 +154,7 @@ function App(): React.JSX.Element {
         const s = await openSession(db, code, boot.versions);
         log('session', `learner ${s.learnerCode} session #${s.sessionId}`);
         setSession(s);
-        setStack([{ name: 'learner' }, { name: 'topics' }]);
+        setStack([{ name: 'account' }, { name: 'topics' }]);
       } catch (e) {
         log('session', `FAIL ${(e as Error).message}`);
       }
@@ -151,8 +164,59 @@ function App(): React.JSX.Element {
 
   const switchLearner = useCallback(() => {
     setSession(null);
-    setStack([{ name: 'learner' }]);
+    setAccount(null);
+    setStack([{ name: 'account' }]);
   }, []);
+
+  // One sync at a time, of every account on this tablet that switched it on.
+  const syncing = useRef(false);
+  const runSync = useCallback(async () => {
+    if (boot.status !== 'ready' || syncing.current) {
+      return;
+    }
+    syncing.current = true;
+    try {
+      const info = deviceInfo();
+      const device = {
+        id: info.installId,
+        label: tabletLabel(info.installId),
+        model: info.deviceModel,
+        appVersion: `${info.versionName} (${info.versionCode})`,
+        content: boot.versions.map(v => `${v.packageId} v${v.version}`).join(', '),
+      };
+      for (const r of await syncAll(db, supabaseSync, device)) {
+        const sent = Object.entries(r.sent)
+          .map(([table, n]) => `${n} ${table}`)
+          .join(', ');
+        log('sync', r.error ? `${r.email}: ${r.error}` : `${r.email}: sent ${sent}`);
+      }
+    } catch (e) {
+      log('sync', `FAIL ${(e as Error).message}`);
+    } finally {
+      syncing.current = false;
+    }
+  }, [boot, db]);
+
+  useEffect(() => {
+    if (boot.status !== 'ready') {
+      return;
+    }
+    runSync();
+    const h = setInterval(runSync, SYNC_INTERVAL_MS);
+    return () => clearInterval(h);
+  }, [boot.status, runSync]);
+
+  const signedIn = useCallback(
+    (a: Account, online: boolean) => {
+      log('account', `${a.email} (${a.role}, ${a.learnerCode}) signed in ${online ? 'online' : 'offline, from this tablet'}`);
+      setAccount(a);
+      choose(a.learnerCode);
+      if (online && a.syncEnabled) {
+        runSync();
+      }
+    },
+    [choose, runSync],
+  );
 
   const lessons = boot.status === 'ready' ? boot.lessons : [];
   const versions = boot.status === 'ready' ? boot.versions : [];
@@ -169,7 +233,7 @@ function App(): React.JSX.Element {
         guidance={guidance}
         versions={versions}
         lessons={lessons}
-        unlocked={teacherUnlocked}
+        unlocked={teacherUnlocked || isStaff(account)}
         onUnlock={() => setTeacherUnlocked(true)}
         onClass={() => push({ name: 'class' })}
         onDeveloper={() => push({ name: 'dev' })}
@@ -181,6 +245,17 @@ function App(): React.JSX.Element {
     body = <ProgressScreen db={db} learnerCode={route.code} lessons={lessons} />;
   } else if (route.name === 'dev') {
     body = <DevScreen service={guidance} />;
+  } else if (route.name === 'account') {
+    body = (
+      <AccountScreen
+        db={db}
+        remote={supabaseAuth}
+        contentLine={boot.line}
+        onSignedIn={signedIn}
+        onWithoutAccount={() => push({ name: 'learner' })}
+        onTeacher={() => push({ name: 'teacher' })}
+      />
+    );
   } else if (route.name === 'learner' || !session) {
     body = <LearnerScreen db={db} contentLine={boot.line} onChoose={choose} onTeacher={() => push({ name: 'teacher' })} />;
   } else if (route.name === 'topics') {
@@ -192,6 +267,8 @@ function App(): React.JSX.Element {
         versions={versions}
         onOpenLesson={lessonId => push({ name: 'lesson', lessonId })}
         onProgress={() => push({ name: 'progress' })}
+        onTeacher={isStaff(account) ? () => push({ name: 'teacher' }) : undefined}
+        footer={account ? <SyncCard db={db} userId={account.userId} syncNow={runSync} /> : null}
       />
     );
   } else if (route.name === 'lesson') {
