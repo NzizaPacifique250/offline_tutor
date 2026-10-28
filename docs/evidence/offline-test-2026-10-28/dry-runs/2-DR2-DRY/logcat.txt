@@ -1,0 +1,45 @@
+--------- beginning of main
+         1793185193.712  6984  7011 I ReactNativeJS: Running "OfflineTutor"
+         1793185193.956  6984  7011 I ReactNativeJS: [boot] content rw-s6-am.u1 v0.2.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793185193.956  6984  7011 I ReactNativeJS: [boot] content rw-s6-am.u4 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793185193.957  6984  7011 I ReactNativeJS: [boot] content rw-s6-am.u5 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793185193.957  6984  7011 I ReactNativeJS: [boot] content rw-s6-am.u9 v0.1.0: up-to-date (1 lesson, 1 examples, 5 exercises)
+         1793185193.959  6984  7011 I ReactNativeJS: [boot] ready in 63 ms: Content: rw-s6-am.u1 v0.2.0, rw-s6-am.u4 v0.1.0, rw-s6-am.u5 v0.1.0, rw-s6-am.u9 v0.1.0 · 4 lesson(s) · offline
+         1793185199.151  6984  7011 I ReactNativeJS: [keyboard] shown: top 284, field 544–591, scroll by 315
+         1793185206.398  6984  7011 I ReactNativeJS: [session] learner DR2-DRY session #16
+         1793185220.609  6984  7011 I ReactNativeJS: [lesson] rw-s6-am.u1.l07 read from SQLite in 21 ms for DR2-DRY
+         1793185221.791  6984  7011 I ReactNativeJS: [lesson] KaTeX 0.18.7: rendered 16 of 16 formulas offline; 2 example(s), 0 exercise(s), 0 hint(s)
+         1793185257.938  6984  7011 I ReactNativeJS: [keyboard] shown: top 284, field 370–418, scroll by 142
+         1793185258.567  6984  7011 I ReactNativeJS: [guidance] warm-up done in 37981 ms (115 prompt tokens processed)
+         1793185265.829  6984  7011 I ReactNativeJS: [router] "How do I add two complex numbers?" -> rw-s6-am.u1.l07 (add, complex numbers)
+         1793185265.830  6984  7011 I ReactNativeJS: [guidance] passage (310 chars): Two complex numbers are added, or subtracted, by adding, or …
+         1793185265.864  6984  7011 I ReactNativeJS: [guidance] ask "How do I add two complex numbers?" (~252 prompt tokens; step 1)
+         1793185291.170  6984  7011 I ReactNativeJS: [guidance] passage warm-up done in 32263 ms (110 prompt tokens processed): Two complex numbers are added, or subtra…
+         1793185329.887  6984  7011 I ReactNativeJS: [guidance] step 1 part 2 (resuming after 308 characters)
+         1793185329.917  6984  7011 I ReactNativeJS: [guidance] #31 generated "How do I add two complex numbers?" 79 tok in 64022 ms, first 29224 ms, prompt 13 tok (cached 215), waited 25306 ms for the warm-up, stopped at the cap
+         1793185345.962  6984  7011 I ReactNativeJS: [guidance] #32 generated "(step 1, part 2) How do I add two comple" 36 tok in 16027 ms, first 470 ms, prompt 1 tok (cached 306), stopped at the next step
+         1793185346.128  6984  7011 I ReactNativeJS: [guidance] render: KaTeX 0.18.7: rendered 6 of 6 formulas offline
+         1793185377.268  6984  7011 I ReactNativeJS: [practice] open rw-s6-am.u1.q.001 (3 hints) for DR2-DRY
+         1793185377.657  6984  7011 I ReactNativeJS: [practice] prompt: KaTeX 0.18.7: rendered 1 of 1 formulas offline
+         1793185381.758  6984  7011 I ReactNativeJS: [practice] reveal #10 hint 1 on rw-s6-am.u1.q.001
+         1793185397.206  6984  7011 I ReactNativeJS: [keyboard] shown: top 284, field 350–396, scroll by 120
+         1793185404.379  6984  7011 I ReactNativeJS: [practice] attempt #12 rw-s6-am.u1.q.001 "5+3i" -> correct (hints seen 1)
+         1793185411.448  6984  7011 I ReactNativeJS: [lesson] rw-s6-am.u1.l07 read from SQLite in 13 ms for DR2-DRY
+         1793185412.624  6984  7011 I ReactNativeJS: [lesson] KaTeX 0.18.7: rendered 16 of 16 formulas offline; 2 example(s), 0 exercise(s), 0 hint(s)
+         1793185429.993  6984  7011 I ReactNativeJS: [guidance] exercise warm-up done in 52668 ms (168 prompt tokens processed)
+         1793185434.707  6984  7011 I ReactNativeJS: [guidance] warm-up done in 4713 ms (15 prompt tokens processed)
+         1793185452.181  8171  8197 I ReactNativeJS: Running "OfflineTutor"
+         1793185452.427  8171  8197 I ReactNativeJS: [boot] content rw-s6-am.u1 v0.2.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793185452.427  8171  8197 I ReactNativeJS: [boot] content rw-s6-am.u4 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793185452.427  8171  8197 I ReactNativeJS: [boot] content rw-s6-am.u5 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793185452.427  8171  8197 I ReactNativeJS: [boot] content rw-s6-am.u9 v0.1.0: up-to-date (1 lesson, 1 examples, 5 exercises)
+         1793185452.430  8171  8197 I ReactNativeJS: [boot] ready in 64 ms: Content: rw-s6-am.u1 v0.2.0, rw-s6-am.u4 v0.1.0, rw-s6-am.u5 v0.1.0, rw-s6-am.u9 v0.1.0 · 4 lesson(s) · offline
+         1793185457.533  8171  8197 I ReactNativeJS: [session] learner DR2-DRY session #17
+         1793185463.146  8280  8305 I ReactNativeJS: Running "OfflineTutor"
+         1793185463.389  8280  8305 I ReactNativeJS: [boot] content rw-s6-am.u1 v0.2.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793185463.390  8280  8305 I ReactNativeJS: [boot] content rw-s6-am.u4 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793185463.390  8280  8305 I ReactNativeJS: [boot] content rw-s6-am.u5 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793185463.390  8280  8305 I ReactNativeJS: [boot] content rw-s6-am.u9 v0.1.0: up-to-date (1 lesson, 1 examples, 5 exercises)
+         1793185463.394  8280  8305 I ReactNativeJS: [boot] ready in 64 ms: Content: rw-s6-am.u1 v0.2.0, rw-s6-am.u4 v0.1.0, rw-s6-am.u5 v0.1.0, rw-s6-am.u9 v0.1.0 · 4 lesson(s) · offline
+         1793185468.518  8280  8305 I ReactNativeJS: [session] learner DR2-DRY session #18
+         1793185484.426  8280  8305 I ReactNativeJS: [progress] DR2-DRY: 1 attempts, rw-s6-am.u1.l07 1/5 in-progress; rw-s6-am.u4.l19 0/5 not-started; rw-s6-am.u5.l02 0/5 not-started; rw-s6-am.u9.l03 0/5 not-started, tutor 2 generated in 7 ms

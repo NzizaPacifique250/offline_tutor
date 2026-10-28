@@ -1,0 +1,7 @@
+condition,case,task,learner,item,expected,observed,passed,reason,latency_ms,limit_ms,input_tool_ms,first_token_ms,record,cpu_temp_c,battery_pct,power,network,device_time
+A,1,T1,DR3-DRY,Operations on complex numbers in algebraic form,every formula typeset,[lesson] KaTeX 0.18.7: rendered 16 of 16 formulas,True,16 of 16 formulas typeset,1369,2000,108,,,56.2,79,USB,off,1793185604.752
+A,1,T2,DR3-DRY,How do I add two complex numbers?,first step of a generated answer,first step shown,True,generated,63896,120000,188,29551,guidance #33,56.2,79,USB,off,1793185653.162
+A,1,T3,DR3-DRY,"Application activity 1.7, question 3",Add the two real parts t,hint text on screen,True,hint shown and saved,103,2000,132,,reveal #11,56.2,79,USB,off,1793185757.031
+A,1,T4,DR3-DRY,"Application activity 1.7, question 3",5+3i -> correct,"""5+3i"" -> correct",True,marked correct and shown,122,2000,139,,attempt #13,56.2,79,USB,off,1793185786.888
+A,1,T5,DR3-DRY,Operations on complex numbers in algebraic form,"Practise: Application activity 1.7, question 7",,False,progress not computed,,2000,,,,56.2,79,USB,off,0.000
+A,1,T6,DR3-DRY,,1 attempts after restart,1 attempts,True,ready; 1 of 1 attempts shown after the restart,801,10000,146,,,56.2,79,USB,off,1793185861.168

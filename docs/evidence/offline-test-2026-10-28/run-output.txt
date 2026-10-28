@@ -1,0 +1,184 @@
+condition A, learner OT2-A
+  A 1 T1 PASS 1444 ms  16 of 16 formulas typeset
+  A 1 T2 PASS 77188 ms  generated
+  A 1 T3 PASS 113 ms  hint shown and saved
+  A 1 T4 PASS 102 ms  marked correct and shown
+  A 1 T5 PASS 113 ms  recommends the next open exercise
+  A 1 T6 PASS 784 ms  ready; 1 of 1 attempts shown after the restart
+  A 2 T1 PASS 1448 ms  14 of 14 formulas typeset
+  A 2 T2 PASS 55715 ms  generated
+  A 2 T3 PASS 107 ms  hint shown and saved
+  A 2 T4 PASS 159 ms  marked correct and shown
+  A 2 T5 PASS 88 ms  recommends the next open exercise
+  A 2 T6 PASS 778 ms  ready; 2 of 2 attempts shown after the restart
+  A 3 T1 PASS 1405 ms  14 of 14 formulas typeset
+  A 3 T2 PASS 90036 ms  generated
+  A 3 T3 PASS 106 ms  hint shown and saved
+  A 3 T4 PASS 114 ms  marked correct and shown
+  A 3 T5 PASS 99 ms  recommends the next open exercise
+  A 3 T6 PASS 883 ms  ready; 3 of 3 attempts shown after the restart
+  A 4 T1 PASS 1384 ms  10 of 10 formulas typeset
+  A 4 T2 PASS 48070 ms  generated
+  A 4 T3 PASS 130 ms  hint shown and saved
+  A 4 T4 PASS 140 ms  marked correct and shown
+  A 4 T5 PASS 92 ms  recommends the next open exercise
+  A 4 T6 PASS 790 ms  ready; 4 of 4 attempts shown after the restart
+  A 5 T1 PASS 1315 ms  16 of 16 formulas typeset
+  A 5 T2 PASS 67743 ms  generated
+  A 5 T3 PASS 137 ms  hint shown and saved
+  A 5 T4 PASS 140 ms  marked correct and shown
+  A 5 T5 PASS 86 ms  recommends the next open exercise
+  A 5 T6 PASS 784 ms  ready; 5 of 5 attempts shown after the restart
+  A 6 T1 PASS 1414 ms  14 of 14 formulas typeset
+  A 6 T2 FAIL 124948 ms  generated; over the 120 s limit
+  A 6 T3 PASS 93 ms  hint shown and saved
+  A 6 T4 PASS 135 ms  marked correct and shown
+  A 6 T5 PASS 81 ms  recommends the next open exercise
+  A 6 T6 PASS 796 ms  ready; 6 of 6 attempts shown after the restart
+  A 7 T1 PASS 1357 ms  14 of 14 formulas typeset
+  A 7 T2 PASS 35380 ms  generated
+  A 7 T3 PASS 131 ms  hint shown and saved
+  A 7 T4 PASS 125 ms  marked correct and shown
+  A 7 T5 PASS 100 ms  recommends the next open exercise
+  A 7 T6 PASS 810 ms  ready; 7 of 7 attempts shown after the restart
+  A 8 T1 PASS 1360 ms  10 of 10 formulas typeset
+  A 8 T2 PASS 76739 ms  generated
+  A 8 T3 PASS 123 ms  hint shown and saved
+  A 8 T4 PASS 121 ms  marked correct and shown
+  A 8 T5 PASS 107 ms  recommends the next open exercise
+  A 8 T6 PASS 790 ms  ready; 8 of 8 attempts shown after the restart
+  A 9 T1 PASS 1360 ms  16 of 16 formulas typeset
+  A 9 T2 PASS 108301 ms  generated
+  A 9 T3 PASS 103 ms  hint shown and saved
+  A 9 T4 PASS 142 ms  marked correct and shown
+  A 9 T5 PASS 105 ms  recommends the next open exercise
+  A 9 T6 PASS 771 ms  ready; 9 of 9 attempts shown after the restart
+  A10 T1 PASS 1397 ms  14 of 14 formulas typeset
+  A10 T2 PASS 35529 ms  generated
+  A10 T3 PASS 99 ms  hint shown and saved
+  A10 T4 PASS 156 ms  marked correct and shown
+  A10 T5 PASS 91 ms  recommends the next open exercise
+  A10 T6 PASS 800 ms  ready; 10 of 10 attempts shown after the restart
+condition B, learner OT2-B
+  network: connected
+  B 1 T1 PASS 1507 ms  16 of 16 formulas typeset
+  B 1 T2 PASS 81612 ms  generated
+  B 1 T3 PASS 123 ms  hint shown and saved
+  B 1 T4 PASS 125 ms  marked correct and shown
+  B 1 T5 PASS 97 ms  recommends the next open exercise
+  B 1 T6 PASS 877 ms  ready; 1 of 1 attempts shown after the restart
+  B 2 T1 PASS 1554 ms  14 of 14 formulas typeset
+  B 2 T2 PASS 40344 ms  generated
+  B 2 T3 PASS 117 ms  hint shown and saved
+  B 2 T4 PASS 88 ms  marked correct and shown
+  B 2 T5 PASS 93 ms  recommends the next open exercise
+  B 2 T6 PASS 828 ms  ready; 2 of 2 attempts shown after the restart
+  B 3 T1 PASS 1503 ms  14 of 14 formulas typeset
+  B 3 T2 PASS 92776 ms  generated
+  B 3 T3 PASS 121 ms  hint shown and saved
+  B 3 T4 PASS 125 ms  marked correct and shown
+  B 3 T5 PASS 99 ms  recommends the next open exercise
+  B 3 T6 PASS 961 ms  ready; 3 of 3 attempts shown after the restart
+  B 4 T1 PASS 1500 ms  10 of 10 formulas typeset
+  B 4 T2 PASS 64812 ms  generated
+  B 4 T3 PASS 107 ms  hint shown and saved
+  B 4 T4 PASS 126 ms  marked correct and shown
+  B 4 T5 PASS 95 ms  recommends the next open exercise
+  B 4 T6 PASS 889 ms  ready; 4 of 4 attempts shown after the restart
+  B 5 T1 PASS 1492 ms  16 of 16 formulas typeset
+  B 5 T2 PASS 83438 ms  generated
+  B 5 T3 PASS 102 ms  hint shown and saved
+  B 5 T4 PASS 133 ms  marked correct and shown
+  B 5 T5 PASS 102 ms  recommends the next open exercise
+  B 5 T6 PASS 977 ms  ready; 5 of 5 attempts shown after the restart
+  B 6 T1 PASS 1519 ms  14 of 14 formulas typeset
+  B 6 T2 PASS 93281 ms  generated
+  B 6 T3 PASS 125 ms  hint shown and saved
+  B 6 T4 PASS 122 ms  marked correct and shown
+  B 6 T5 PASS 81 ms  recommends the next open exercise
+  B 6 T6 PASS 834 ms  ready; 6 of 6 attempts shown after the restart
+  B 7 T1 PASS 1460 ms  14 of 14 formulas typeset
+  B 7 T2 PASS 37174 ms  generated
+  B 7 T3 PASS 136 ms  hint shown and saved
+  B 7 T4 PASS 139 ms  marked correct and shown
+  B 7 T5 PASS 98 ms  recommends the next open exercise
+  B 7 T6 PASS 848 ms  ready; 7 of 7 attempts shown after the restart
+  B 8 T1 PASS 1491 ms  10 of 10 formulas typeset
+  B 8 T2 PASS 77812 ms  generated
+  B 8 T3 PASS 103 ms  hint shown and saved
+  B 8 T4 PASS 119 ms  marked correct and shown
+  B 8 T5 PASS 87 ms  recommends the next open exercise
+  B 8 T6 PASS 897 ms  ready; 8 of 8 attempts shown after the restart
+  B 9 T1 PASS 1517 ms  16 of 16 formulas typeset
+  B 9 T2 FAIL 120564 ms  generated; over the 120 s limit
+  B 9 T3 PASS 116 ms  hint shown and saved
+  B 9 T4 PASS 120 ms  marked correct and shown
+  B 9 T5 PASS 94 ms  recommends the next open exercise
+  B 9 T6 PASS 919 ms  ready; 9 of 9 attempts shown after the restart
+  B10 T1 PASS 1541 ms  14 of 14 formulas typeset
+  B10 T2 PASS 38217 ms  generated
+  B10 T3 PASS 117 ms  hint shown and saved
+  B10 T4 PASS 153 ms  marked correct and shown
+  B10 T5 PASS 110 ms  recommends the next open exercise
+  B10 T6 PASS 909 ms  ready; 10 of 10 attempts shown after the restart
+condition C, learner OT2-C
+  C 1 T1 PASS 1379 ms  16 of 16 formulas typeset
+  C 1 T2 PASS 93862 ms  generated
+  C 1 T3 PASS 122 ms  hint shown and saved
+  C 1 T4 PASS 113 ms  marked correct and shown
+  C 1 T5 PASS 101 ms  recommends the next open exercise
+  C 1 T6 PASS 792 ms  ready; 1 of 1 attempts shown after the restart
+  C 2 T1 PASS 1607 ms  14 of 14 formulas typeset
+  C 2 T2 PASS 43845 ms  generated
+  C 2 T3 PASS 131 ms  hint shown and saved
+  C 2 T4 PASS 128 ms  marked correct and shown
+  C 2 T5 PASS 110 ms  recommends the next open exercise
+  C 2 T6 PASS 820 ms  ready; 2 of 2 attempts shown after the restart
+  C 3 T1 PASS 1358 ms  14 of 14 formulas typeset
+  C 3 T2 PASS 76960 ms  generated
+  C 3 T3 PASS 127 ms  hint shown and saved
+  C 3 T4 PASS 135 ms  marked correct and shown
+  C 3 T5 PASS 96 ms  recommends the next open exercise
+  C 3 T6 PASS 765 ms  ready; 3 of 3 attempts shown after the restart
+  C 4 T1 PASS 1387 ms  10 of 10 formulas typeset
+  C 4 T2 PASS 72398 ms  generated
+  C 4 T3 PASS 141 ms  hint shown and saved
+  C 4 T4 PASS 129 ms  marked correct and shown
+  C 4 T5 PASS 171 ms  recommends the next open exercise
+  C 4 T6 PASS 800 ms  ready; 4 of 4 attempts shown after the restart
+  C 5 T1 PASS 1393 ms  16 of 16 formulas typeset
+  C 5 T2 PASS 109468 ms  generated
+  C 5 T3 PASS 119 ms  hint shown and saved
+  C 5 T4 PASS 136 ms  marked correct and shown
+  C 5 T5 PASS 110 ms  recommends the next open exercise
+  C 5 T6 PASS 809 ms  ready; 5 of 5 attempts shown after the restart
+  C 6 T1 PASS 1501 ms  14 of 14 formulas typeset
+  C 6 T2 PASS 93031 ms  generated
+  C 6 T3 PASS 119 ms  hint shown and saved
+  C 6 T4 PASS 111 ms  marked correct and shown
+  C 6 T5 PASS 98 ms  recommends the next open exercise
+  C 6 T6 PASS 807 ms  ready; 6 of 6 attempts shown after the restart
+  C 7 T1 PASS 1415 ms  14 of 14 formulas typeset
+  C 7 T2 PASS 40511 ms  generated
+  C 7 T3 PASS 145 ms  hint shown and saved
+  C 7 T4 PASS 130 ms  marked correct and shown
+  C 7 T5 PASS 205 ms  recommends the next open exercise
+  C 7 T6 PASS 822 ms  ready; 7 of 7 attempts shown after the restart
+  C 8 T1 PASS 1437 ms  10 of 10 formulas typeset
+  C 8 T2 PASS 85716 ms  generated
+  C 8 T3 PASS 138 ms  hint shown and saved
+  C 8 T4 PASS 131 ms  marked correct and shown
+  C 8 T5 PASS 104 ms  recommends the next open exercise
+  C 8 T6 PASS 810 ms  ready; 8 of 8 attempts shown after the restart
+  C 9 T1 PASS 1414 ms  16 of 16 formulas typeset
+  C 9 T2 PASS 64714 ms  generated
+  C 9 T3 PASS 115 ms  hint shown and saved
+  C 9 T4 PASS 143 ms  marked correct and shown
+  C 9 T5 PASS 105 ms  recommends the next open exercise
+  C 9 T6 PASS 817 ms  ready; 9 of 9 attempts shown after the restart
+  C10 T1 PASS 1442 ms  14 of 14 formulas typeset
+  C10 T2 PASS 39644 ms  generated
+  C10 T3 PASS 132 ms  hint shown and saved
+  C10 T4 PASS 174 ms  marked correct and shown
+  C10 T5 PASS 119 ms  recommends the next open exercise
+  C10 T6 PASS 817 ms  ready; 10 of 10 attempts shown after the restart

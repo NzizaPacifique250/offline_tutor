@@ -1,0 +1,181 @@
+condition,case,task,learner,item,expected,observed,passed,reason,latency_ms,limit_ms,input_tool_ms,first_token_ms,record,cpu_temp_c,battery_pct,power,network,device_time
+A,1,T1,OT2-A,Operations on complex numbers in algebraic form,every formula typeset,[lesson] KaTeX 0.18.7: rendered 16 of 16 formulas,True,16 of 16 formulas typeset,1444,2000,95,,,54.3,73,USB,off,1793188421.058
+A,1,T2,OT2-A,How do I add two complex numbers?,first step of a generated answer,first step shown,True,generated,77188,120000,228,29465,guidance #44,54.3,73,USB,off,1793188470.211
+A,1,T3,OT2-A,"Application activity 1.7, question 3",Add the two real parts t,hint text on screen,True,hint shown and saved,113,2000,115,,reveal #16,54.3,73,USB,off,1793188587.505
+A,1,T4,OT2-A,"Application activity 1.7, question 3",5+3i -> correct,"""5+3i"" -> correct",True,marked correct and shown,102,2000,125,,attempt #18,54.3,73,USB,off,1793188618.108
+A,1,T5,OT2-A,Operations on complex numbers in algebraic form,"Practise: Application activity 1.7, question 7",[progress] OT2-A: 1 attempts,True,recommends the next open exercise,113,2000,96,,,54.3,73,USB,off,1793188650.632
+A,1,T6,OT2-A,,1 attempts after restart,1 attempts,True,ready; 1 of 1 attempts shown after the restart,784,10000,158,,,54.3,73,USB,off,1793188655.836
+A,2,T1,OT2-A,Definite integrals and their properties,every formula typeset,[lesson] KaTeX 0.18.7: rendered 14 of 14 formulas,True,14 of 14 formulas typeset,1448,2000,94,,,61.2,73,USB,off,1793188701.156
+A,2,T2,OT2-A,How do I evaluate a definite integral?,first step of a generated answer,first step shown,True,generated,55715,120000,121,21134,guidance #46,61.2,73,USB,off,1793188754.125
+A,2,T3,OT2-A,"Application activity 4.19, question 1",Find an antiderivative o,hint text on screen,True,hint shown and saved,107,2000,141,,reveal #17,61.2,73,USB,off,1793188855.567
+A,2,T4,OT2-A,"Application activity 4.19, question 1",4.5 -> correct,"""4.5"" -> correct",True,marked correct and shown,159,2000,158,,attempt #19,61.2,73,USB,off,1793188885.930
+A,2,T5,OT2-A,Definite integrals and their properties,"Practise: Application activity 4.19, question 3",[progress] OT2-A: 2 attempts,True,recommends the next open exercise,88,2000,103,,,61.2,73,USB,off,1793188918.247
+A,2,T6,OT2-A,,2 attempts after restart,2 attempts,True,ready; 2 of 2 attempts shown after the restart,778,10000,156,,,61.2,73,USB,off,1793188931.980
+A,3,T1,OT2-A,Separable equations and particular solutions,every formula typeset,[lesson] KaTeX 0.18.7: rendered 14 of 14 formulas,True,14 of 14 formulas typeset,1405,2000,98,,,62.3,72,USB,off,1793188981.781
+A,3,T2,OT2-A,How do I separate the variables in a differential equation?,first step of a generated answer,first step shown,True,generated,90036,120000,203,47024,guidance #47,62.3,72,USB,off,1793189029.924
+A,3,T3,OT2-A,Activity 5.5,The variables are alread,hint text on screen,True,hint shown and saved,106,2000,144,,reveal #18,62.3,72,USB,off,1793189158.885
+A,3,T4,OT2-A,Activity 5.5,x^2/2+4x-6 -> correct,"""x^2/2+4x-6"" -> correct",True,marked correct and shown,114,2000,165,,attempt #20,62.3,72,USB,off,1793189189.624
+A,3,T5,OT2-A,Separable equations and particular solutions,"Practise: Application activity 5.5, question 2",[progress] OT2-A: 3 attempts,True,recommends the next open exercise,99,2000,99,,,62.3,72,USB,off,1793189223.883
+A,3,T6,OT2-A,,3 attempts after restart,3 attempts,True,ready; 3 of 3 attempts shown after the restart,883,10000,131,,,62.3,72,USB,off,1793189242.327
+A,4,T1,OT2-A,"Expected value, variance and standard deviation",every formula typeset,[lesson] KaTeX 0.18.7: rendered 10 of 10 formulas,True,10 of 10 formulas typeset,1384,2000,98,,,62.8,71,USB,off,1793189291.951
+A,4,T2,OT2-A,How do I find the expected value of a random variable?,first step of a generated answer,first step shown,True,generated,48070,120000,151,21832,guidance #49,62.8,71,USB,off,1793189332.675
+A,4,T3,OT2-A,"Application activity 3.15 (Unit 9), question 1a",The mean is E(X) = Σ x P,hint text on screen,True,hint shown and saved,130,2000,143,,reveal #19,62.8,71,USB,off,1793189411.092
+A,4,T4,OT2-A,"Application activity 3.15 (Unit 9), question 1a",1.9 -> correct,"""1.9"" -> correct",True,marked correct and shown,140,2000,199,,attempt #21,62.8,71,USB,off,1793189442.484
+A,4,T5,OT2-A,"Expected value, variance and standard deviation","Practise: Application activity 3.15 (Unit 9), question 1c",[progress] OT2-A: 4 attempts,True,recommends the next open exercise,92,2000,97,,,62.8,71,USB,off,1793189476.955
+A,4,T6,OT2-A,,4 attempts after restart,4 attempts,True,ready; 4 of 4 attempts shown after the restart,790,10000,153,,,62.8,71,USB,off,1793189500.314
+A,5,T1,OT2-A,Operations on complex numbers in algebraic form,every formula typeset,[lesson] KaTeX 0.18.7: rendered 16 of 16 formulas,True,16 of 16 formulas typeset,1315,2000,94,,,64.5,70,USB,off,1793189545.645
+A,5,T2,OT2-A,How do I multiply two complex numbers?,first step of a generated answer,first step shown,True,generated,67743,120000,121,18700,guidance #50,64.5,70,USB,off,1793189594.561
+A,5,T3,OT2-A,"Application activity 1.7, question 7","Subtract the real parts,",hint text on screen,True,hint shown and saved,137,2000,164,,reveal #20,64.5,70,USB,off,1793189702.086
+A,5,T4,OT2-A,"Application activity 1.7, question 7",-9-15i -> correct,"""-9-15i"" -> correct",True,marked correct and shown,140,2000,136,,attempt #22,64.5,70,USB,off,1793189732.741
+A,5,T5,OT2-A,Operations on complex numbers in algebraic form,"Practise: Application activity 1.8, question 7",[progress] OT2-A: 5 attempts,True,recommends the next open exercise,86,2000,99,,,64.5,70,USB,off,1793189767.918
+A,5,T6,OT2-A,,5 attempts after restart,5 attempts,True,ready; 5 of 5 attempts shown after the restart,784,10000,152,,,64.5,70,USB,off,1793189773.088
+A,6,T1,OT2-A,Definite integrals and their properties,every formula typeset,[lesson] KaTeX 0.18.7: rendered 14 of 14 formulas,True,14 of 14 formulas typeset,1414,2000,95,,,64.0,69,USB,off,1793189818.444
+A,6,T2,OT2-A,What are the limits of integration in a definite integral?,first step of a generated answer,first step shown,False,generated; over the 120 s limit,124948,120000,108,22373,guidance #52,64.0,69,USB,off,1793189872.746
+A,6,T3,OT2-A,"Application activity 4.19, question 3",Integrate term by term: ,hint text on screen,True,hint shown and saved,93,2000,143,,reveal #21,64.0,69,USB,off,1793190043.356
+A,6,T4,OT2-A,"Application activity 4.19, question 3",-2 -> correct,"""-2"" -> correct",True,marked correct and shown,135,2000,147,,attempt #23,64.0,69,USB,off,1793190074.085
+A,6,T5,OT2-A,Definite integrals and their properties,"Practise: Application activity 4.19, question 4",[progress] OT2-A: 6 attempts,True,recommends the next open exercise,81,2000,107,,,64.0,69,USB,off,1793190108.425
+A,6,T6,OT2-A,,6 attempts after restart,6 attempts,True,ready; 6 of 6 attempts shown after the restart,796,10000,145,,,64.0,69,USB,off,1793190122.432
+A,7,T1,OT2-A,Separable equations and particular solutions,every formula typeset,[lesson] KaTeX 0.18.7: rendered 14 of 14 formulas,True,14 of 14 formulas typeset,1357,2000,95,,,65.1,68,USB,off,1793190172.191
+A,7,T2,OT2-A,How do I find a particular solution from an initial condition?,first step of a generated answer,first step shown,True,generated,35380,120000,212,15326,guidance #55,65.1,68,USB,off,1793190220.291
+A,7,T3,OT2-A,"Application activity 5.5, question 2",Separate the variables: ,hint text on screen,True,hint shown and saved,131,2000,178,,reveal #22,65.1,68,USB,off,1793190295.372
+A,7,T4,OT2-A,"Application activity 5.5, question 2",(1+x)/(1-x) -> correct,"""(1+x)/(1-x)"" -> correct",True,marked correct and shown,125,2000,128,,attempt #24,65.1,68,USB,off,1793190326.274
+A,7,T5,OT2-A,Separable equations and particular solutions,"Practise: Application activity 5.5, question 3",[progress] OT2-A: 7 attempts,True,recommends the next open exercise,100,2000,204,,,65.1,68,USB,off,1793190361.388
+A,7,T6,OT2-A,,7 attempts after restart,7 attempts,True,ready; 7 of 7 attempts shown after the restart,810,10000,158,,,65.1,68,USB,off,1793190380.852
+A,8,T1,OT2-A,"Expected value, variance and standard deviation",every formula typeset,[lesson] KaTeX 0.18.7: rendered 10 of 10 formulas,True,10 of 10 formulas typeset,1360,2000,104,,,64.5,67,USB,off,1793190430.622
+A,8,T2,OT2-A,How do I calculate the variance of a discrete random variable?,first step of a generated answer,first step shown,True,generated,76739,120000,168,23208,guidance #56,64.5,67,USB,off,1793190471.116
+A,8,T3,OT2-A,"Application activity 3.15 (Unit 9), question 1c",Multiply each value by i,hint text on screen,True,hint shown and saved,123,2000,124,,reveal #23,64.5,67,USB,off,1793190578.719
+A,8,T4,OT2-A,"Application activity 3.15 (Unit 9), question 1c",0.4 -> correct,"""0.4"" -> correct",True,marked correct and shown,121,2000,131,,attempt #25,64.5,67,USB,off,1793190610.048
+A,8,T5,OT2-A,"Expected value, variance and standard deviation","Practise: Application activity 3.15 (Unit 9), question 2a",[progress] OT2-A: 8 attempts,True,recommends the next open exercise,107,2000,104,,,64.5,67,USB,off,1793190644.694
+A,8,T6,OT2-A,,8 attempts after restart,8 attempts,True,ready; 8 of 8 attempts shown after the restart,790,10000,162,,,64.5,67,USB,off,1793190668.553
+A,9,T1,OT2-A,Operations on complex numbers in algebraic form,every formula typeset,[lesson] KaTeX 0.18.7: rendered 16 of 16 formulas,True,16 of 16 formulas typeset,1360,2000,98,,,65.1,66,USB,off,1793190713.974
+A,9,T2,OT2-A,What is the conjugate of a complex number?,first step of a generated answer,first step shown,True,generated,108301,120000,277,28423,guidance #58,65.1,66,USB,off,1793190763.306
+A,9,T3,OT2-A,"Application activity 1.8, question 7",First simplify z by subt,hint text on screen,True,hint shown and saved,103,2000,138,,reveal #24,65.1,66,USB,off,1793190911.815
+A,9,T4,OT2-A,"Application activity 1.8, question 7",3+5i -> correct,"""3+5i"" -> correct",True,marked correct and shown,142,2000,157,,attempt #26,65.1,66,USB,off,1793190942.609
+A,9,T5,OT2-A,Operations on complex numbers in algebraic form,"Practise: Application activity 1.9, question 3",[progress] OT2-A: 9 attempts,True,recommends the next open exercise,105,2000,95,,,65.1,66,USB,off,1793190977.131
+A,9,T6,OT2-A,,9 attempts after restart,9 attempts,True,ready; 9 of 9 attempts shown after the restart,771,10000,198,,,65.1,66,USB,off,1793190982.629
+A,10,T1,OT2-A,Definite integrals and their properties,every formula typeset,[lesson] KaTeX 0.18.7: rendered 14 of 14 formulas,True,14 of 14 formulas typeset,1397,2000,97,,,65.1,65,USB,off,1793191027.946
+A,10,T2,OT2-A,How do I integrate a function term by term between two limits?,first step of a generated answer,first step shown,True,generated,35529,120000,262,20621,guidance #61,65.1,65,USB,off,1793191081.961
+A,10,T3,OT2-A,"Application activity 4.19, question 4",Integrate term by term t,hint text on screen,True,hint shown and saved,99,2000,133,,reveal #25,65.1,65,USB,off,1793191159.203
+A,10,T4,OT2-A,"Application activity 4.19, question 4",0.75 -> correct,"""0.75"" -> correct",True,marked correct and shown,156,2000,184,,attempt #27,65.1,65,USB,off,1793191190.135
+A,10,T5,OT2-A,Definite integrals and their properties,"Practise: Application activity 4.19, question 7",[progress] OT2-A: 10 attempts,True,recommends the next open exercise,91,2000,101,,,65.1,65,USB,off,1793191224.226
+A,10,T6,OT2-A,,10 attempts after restart,10 attempts,True,ready; 10 of 10 attempts shown after the restart,800,10000,153,,,65.1,65,USB,off,1793191238.445
+B,1,T1,OT2-B,Operations on complex numbers in algebraic form,every formula typeset,[lesson] KaTeX 0.18.7: rendered 16 of 16 formulas,True,16 of 16 formulas typeset,1507,2000,96,,,62.8,64,USB,connected,1793191309.553
+B,1,T2,OT2-B,How do I add two complex numbers?,first step of a generated answer,first step shown,True,generated,81612,120000,126,31774,guidance #62,62.8,64,USB,connected,1793191362.369
+B,1,T3,OT2-B,"Application activity 1.7, question 3",Add the two real parts t,hint text on screen,True,hint shown and saved,123,2000,182,,reveal #26,62.8,64,USB,connected,1793191488.413
+B,1,T4,OT2-B,"Application activity 1.7, question 3",5+3i -> correct,"""5+3i"" -> correct",True,marked correct and shown,125,2000,124,,attempt #28,62.8,64,USB,connected,1793191525.023
+B,1,T5,OT2-B,Operations on complex numbers in algebraic form,"Practise: Application activity 1.7, question 7",[progress] OT2-B: 1 attempts,True,recommends the next open exercise,97,2000,101,,,62.8,64,USB,connected,1793191562.995
+B,1,T6,OT2-B,,1 attempts after restart,1 attempts,True,ready; 1 of 1 attempts shown after the restart,877,10000,159,,,62.8,64,USB,connected,1793191572.683
+B,2,T1,OT2-B,Definite integrals and their properties,every formula typeset,[lesson] KaTeX 0.18.7: rendered 14 of 14 formulas,True,14 of 14 formulas typeset,1554,2000,97,,,65.6,63,USB,connected,1793191622.343
+B,2,T2,OT2-B,How do I evaluate a definite integral?,first step of a generated answer,first step shown,True,generated,40344,120000,143,22689,guidance #64,65.6,63,USB,connected,1793191679.956
+B,2,T3,OT2-B,"Application activity 4.19, question 1",Find an antiderivative o,hint text on screen,True,hint shown and saved,117,2000,149,,reveal #27,65.6,63,USB,connected,1793191766.090
+B,2,T4,OT2-B,"Application activity 4.19, question 1",4.5 -> correct,"""4.5"" -> correct",True,marked correct and shown,88,2000,104,,attempt #29,65.6,63,USB,connected,1793191801.826
+B,2,T5,OT2-B,Definite integrals and their properties,"Practise: Application activity 4.19, question 3",[progress] OT2-B: 2 attempts,True,recommends the next open exercise,93,2000,99,,,65.6,63,USB,connected,1793191838.335
+B,2,T6,OT2-B,,2 attempts after restart,2 attempts,True,ready; 2 of 2 attempts shown after the restart,828,10000,175,,,65.6,63,USB,connected,1793191856.772
+B,3,T1,OT2-B,Separable equations and particular solutions,every formula typeset,[lesson] KaTeX 0.18.7: rendered 14 of 14 formulas,True,14 of 14 formulas typeset,1503,2000,94,,,62.8,62,USB,connected,1793191910.797
+B,3,T2,OT2-B,How do I separate the variables in a differential equation?,first step of a generated answer,first step shown,True,generated,92776,120000,206,47164,guidance #65,62.8,62,USB,connected,1793191963.130
+B,3,T3,OT2-B,Activity 5.5,The variables are alread,hint text on screen,True,hint shown and saved,121,2000,145,,reveal #28,62.8,62,USB,connected,1793192099.826
+B,3,T4,OT2-B,Activity 5.5,x^2/2+4x-6 -> correct,"""x^2/2+4x-6"" -> correct",True,marked correct and shown,125,2000,126,,attempt #30,62.8,62,USB,connected,1793192136.643
+B,3,T5,OT2-B,Separable equations and particular solutions,"Practise: Application activity 5.5, question 2",[progress] OT2-B: 3 attempts,True,recommends the next open exercise,99,2000,96,,,62.8,62,USB,connected,1793192174.217
+B,3,T6,OT2-B,,3 attempts after restart,3 attempts,True,ready; 3 of 3 attempts shown after the restart,961,10000,176,,,62.8,62,USB,connected,1793192197.422
+B,4,T1,OT2-B,"Expected value, variance and standard deviation",every formula typeset,[lesson] KaTeX 0.18.7: rendered 10 of 10 formulas,True,10 of 10 formulas typeset,1500,2000,97,,,64.0,61,USB,connected,1793192251.805
+B,4,T2,OT2-B,How do I find the expected value of a random variable?,first step of a generated answer,first step shown,True,generated,64812,120000,118,19779,guidance #67,64.0,61,USB,connected,1793192296.314
+B,4,T3,OT2-B,"Application activity 3.15 (Unit 9), question 1a",The mean is E(X) = Σ x P,hint text on screen,True,hint shown and saved,107,2000,117,,reveal #29,64.0,61,USB,connected,1793192396.628
+B,4,T4,OT2-B,"Application activity 3.15 (Unit 9), question 1a",1.9 -> correct,"""1.9"" -> correct",True,marked correct and shown,126,2000,197,,attempt #31,64.0,61,USB,connected,1793192432.896
+B,4,T5,OT2-B,"Expected value, variance and standard deviation","Practise: Application activity 3.15 (Unit 9), question 1c",[progress] OT2-B: 4 attempts,True,recommends the next open exercise,95,2000,91,,,64.0,61,USB,connected,1793192471.693
+B,4,T6,OT2-B,,4 attempts after restart,4 attempts,True,ready; 4 of 4 attempts shown after the restart,889,10000,150,,,64.0,61,USB,connected,1793192499.792
+B,5,T1,OT2-B,Operations on complex numbers in algebraic form,every formula typeset,[lesson] KaTeX 0.18.7: rendered 16 of 16 formulas,True,16 of 16 formulas typeset,1492,2000,97,,,64.0,60,USB,connected,1793192549.822
+B,5,T2,OT2-B,How do I multiply two complex numbers?,first step of a generated answer,first step shown,True,generated,83438,120000,153,19378,guidance #69,64.0,60,USB,connected,1793192603.466
+B,5,T3,OT2-B,"Application activity 1.7, question 7","Subtract the real parts,",hint text on screen,True,hint shown and saved,102,2000,157,,reveal #30,64.0,60,USB,connected,1793192731.873
+B,5,T4,OT2-B,"Application activity 1.7, question 7",-9-15i -> correct,"""-9-15i"" -> correct",True,marked correct and shown,133,2000,132,,attempt #32,64.0,60,USB,connected,1793192768.872
+B,5,T5,OT2-B,Operations on complex numbers in algebraic form,"Practise: Application activity 1.8, question 7",[progress] OT2-B: 5 attempts,True,recommends the next open exercise,102,2000,103,,,64.0,60,USB,connected,1793192807.532
+B,5,T6,OT2-B,,5 attempts after restart,5 attempts,True,ready; 5 of 5 attempts shown after the restart,977,10000,151,,,64.0,60,USB,connected,1793192817.383
+B,6,T1,OT2-B,Definite integrals and their properties,every formula typeset,[lesson] KaTeX 0.18.7: rendered 14 of 14 formulas,True,14 of 14 formulas typeset,1519,2000,98,,,66.8,59,USB,connected,1793192867.385
+B,6,T2,OT2-B,What are the limits of integration in a definite integral?,first step of a generated answer,first step shown,True,generated,93281,120000,196,23373,guidance #71,66.8,59,USB,connected,1793192925.112
+B,6,T3,OT2-B,"Application activity 4.19, question 3",Integrate term by term: ,hint text on screen,True,hint shown and saved,125,2000,124,,reveal #31,66.8,59,USB,connected,1793193063.426
+B,6,T4,OT2-B,"Application activity 4.19, question 3",-2 -> correct,"""-2"" -> correct",True,marked correct and shown,122,2000,178,,attempt #33,66.8,59,USB,connected,1793193100.377
+B,6,T5,OT2-B,Definite integrals and their properties,"Practise: Application activity 4.19, question 4",[progress] OT2-B: 6 attempts,True,recommends the next open exercise,81,2000,98,,,66.8,59,USB,connected,1793193138.519
+B,6,T6,OT2-B,,6 attempts after restart,6 attempts,True,ready; 6 of 6 attempts shown after the restart,834,10000,194,,,66.8,59,USB,connected,1793193157.258
+B,7,T1,OT2-B,Separable equations and particular solutions,every formula typeset,[lesson] KaTeX 0.18.7: rendered 14 of 14 formulas,True,14 of 14 formulas typeset,1460,2000,100,,,65.1,58,USB,connected,1793193211.536
+B,7,T2,OT2-B,How do I find a particular solution from an initial condition?,first step of a generated answer,first step shown,True,generated,37174,120000,196,16643,guidance #73,65.1,58,USB,connected,1793193264.520
+B,7,T3,OT2-B,"Application activity 5.5, question 2",Separate the variables: ,hint text on screen,True,hint shown and saved,136,2000,175,,reveal #32,65.1,58,USB,connected,1793193345.893
+B,7,T4,OT2-B,"Application activity 5.5, question 2",(1+x)/(1-x) -> correct,"""(1+x)/(1-x)"" -> correct",True,marked correct and shown,139,2000,126,,attempt #34,65.1,58,USB,connected,1793193383.308
+B,7,T5,OT2-B,Separable equations and particular solutions,"Practise: Application activity 5.5, question 3",[progress] OT2-B: 7 attempts,True,recommends the next open exercise,98,2000,107,,,65.1,58,USB,connected,1793193422.971
+B,7,T6,OT2-B,,7 attempts after restart,7 attempts,True,ready; 7 of 7 attempts shown after the restart,848,10000,165,,,65.1,58,USB,connected,1793193446.747
+B,8,T1,OT2-B,"Expected value, variance and standard deviation",every formula typeset,[lesson] KaTeX 0.18.7: rendered 10 of 10 formulas,True,10 of 10 formulas typeset,1491,2000,100,,,66.2,57,USB,connected,1793193501.180
+B,8,T2,OT2-B,How do I calculate the variance of a discrete random variable?,first step of a generated answer,first step shown,True,generated,77812,120000,255,22972,guidance #74,66.2,57,USB,connected,1793193546.566
+B,8,T3,OT2-B,"Application activity 3.15 (Unit 9), question 1c",Multiply each value by i,hint text on screen,True,hint shown and saved,103,2000,144,,reveal #33,66.2,57,USB,connected,1793193660.247
+B,8,T4,OT2-B,"Application activity 3.15 (Unit 9), question 1c",0.4 -> correct,"""0.4"" -> correct",True,marked correct and shown,119,2000,142,,attempt #35,66.2,57,USB,connected,1793193697.112
+B,8,T5,OT2-B,"Expected value, variance and standard deviation","Practise: Application activity 3.15 (Unit 9), question 2a",[progress] OT2-B: 8 attempts,True,recommends the next open exercise,87,2000,103,,,66.2,57,USB,connected,1793193737.081
+B,8,T6,OT2-B,,8 attempts after restart,8 attempts,True,ready; 8 of 8 attempts shown after the restart,897,10000,182,,,66.2,57,USB,connected,1793193765.774
+B,9,T1,OT2-B,Operations on complex numbers in algebraic form,every formula typeset,[lesson] KaTeX 0.18.7: rendered 16 of 16 formulas,True,16 of 16 formulas typeset,1517,2000,100,,,67.4,56,USB,connected,1793193815.918
+B,9,T2,OT2-B,What is the conjugate of a complex number?,first step of a generated answer,first step shown,False,generated; over the 120 s limit,120564,120000,218,31440,guidance #76,67.4,56,USB,connected,1793193870.920
+B,9,T3,OT2-B,"Application activity 1.8, question 7",First simplify z by subt,hint text on screen,True,hint shown and saved,116,2000,146,,reveal #34,67.4,56,USB,connected,1793194037.320
+B,9,T4,OT2-B,"Application activity 1.8, question 7",3+5i -> correct,"""3+5i"" -> correct",True,marked correct and shown,120,2000,162,,attempt #36,67.4,56,USB,connected,1793194074.118
+B,9,T5,OT2-B,Operations on complex numbers in algebraic form,"Practise: Application activity 1.9, question 3",[progress] OT2-B: 9 attempts,True,recommends the next open exercise,94,2000,102,,,67.4,56,USB,connected,1793194111.812
+B,9,T6,OT2-B,,9 attempts after restart,9 attempts,True,ready; 9 of 9 attempts shown after the restart,919,10000,150,,,67.4,56,USB,connected,1793194121.849
+B,10,T1,OT2-B,Definite integrals and their properties,every formula typeset,[lesson] KaTeX 0.18.7: rendered 14 of 14 formulas,True,14 of 14 formulas typeset,1541,2000,102,,,69.3,55,USB,connected,1793194171.994
+B,10,T2,OT2-B,How do I integrate a function term by term between two limits?,first step of a generated answer,first step shown,True,generated,38217,120000,121,22494,guidance #79,69.3,55,USB,connected,1793194232.001
+B,10,T3,OT2-B,"Application activity 4.19, question 4",Integrate term by term t,hint text on screen,True,hint shown and saved,117,2000,127,,reveal #35,69.3,55,USB,connected,1793194326.312
+B,10,T4,OT2-B,"Application activity 4.19, question 4",0.75 -> correct,"""0.75"" -> correct",True,marked correct and shown,153,2000,216,,attempt #37,69.3,55,USB,connected,1793194368.187
+B,10,T5,OT2-B,Definite integrals and their properties,"Practise: Application activity 4.19, question 7",[progress] OT2-B: 10 attempts,True,recommends the next open exercise,110,2000,98,,,69.3,55,USB,connected,1793194405.622
+B,10,T6,OT2-B,,10 attempts after restart,10 attempts,True,ready; 10 of 10 attempts shown after the restart,909,10000,140,,,69.3,55,USB,connected,1793194424.707
+C,1,T1,OT2-C,Operations on complex numbers in algebraic form,every formula typeset,[lesson] KaTeX 0.18.7: rendered 16 of 16 formulas,True,16 of 16 formulas typeset,1379,2000,99,,,67.4,54,USB,off,1793194500.479
+C,1,T2,OT2-C,How do I add two complex numbers?,first step of a generated answer,first step shown,True,generated,93862,120000,214,34510,guidance #80,67.4,54,USB,off,1793194551.791
+C,1,T3,OT2-C,"Application activity 1.7, question 3",Add the two real parts t,hint text on screen,True,hint shown and saved,122,2000,115,,reveal #36,67.4,54,USB,off,1793194686.202
+C,1,T4,OT2-C,"Application activity 1.7, question 3",5+3i -> correct,"""5+3i"" -> correct",True,marked correct and shown,113,2000,123,,attempt #38,67.4,54,USB,off,1793194717.702
+C,1,T5,OT2-C,Operations on complex numbers in algebraic form,"Practise: Application activity 1.7, question 7",[progress] OT2-C: 1 attempts,True,recommends the next open exercise,101,2000,104,,,67.4,54,USB,off,1793194753.318
+C,1,T6,OT2-C,,1 attempts after restart,1 attempts,True,ready; 1 of 1 attempts shown after the restart,792,10000,148,,,67.4,54,USB,off,1793194758.334
+C,2,T1,OT2-C,Definite integrals and their properties,every formula typeset,[lesson] KaTeX 0.18.7: rendered 14 of 14 formulas,True,14 of 14 formulas typeset,1607,2000,100,,,68.7,53,USB,off,1793194806.621
+C,2,T2,OT2-C,How do I evaluate a definite integral?,first step of a generated answer,first step shown,True,generated,43845,120000,128,24894,guidance #82,68.7,53,USB,off,1793194861.498
+C,2,T3,OT2-C,"Application activity 4.19, question 1",Find an antiderivative o,hint text on screen,True,hint shown and saved,131,2000,174,,reveal #37,68.7,53,USB,off,1793194946.142
+C,2,T4,OT2-C,"Application activity 4.19, question 1",4.5 -> correct,"""4.5"" -> correct",True,marked correct and shown,128,2000,145,,attempt #39,68.7,53,USB,off,1793194976.974
+C,2,T5,OT2-C,Definite integrals and their properties,"Practise: Application activity 4.19, question 3",[progress] OT2-C: 2 attempts,True,recommends the next open exercise,110,2000,95,,,68.7,53,USB,off,1793195010.861
+C,2,T6,OT2-C,,2 attempts after restart,2 attempts,True,ready; 2 of 2 attempts shown after the restart,820,10000,168,,,68.7,53,USB,off,1793195024.738
+C,3,T1,OT2-C,Separable equations and particular solutions,every formula typeset,[lesson] KaTeX 0.18.7: rendered 14 of 14 formulas,True,14 of 14 formulas typeset,1358,2000,92,,,70.6,52,USB,off,1793195077.511
+C,3,T2,OT2-C,How do I separate the variables in a differential equation?,first step of a generated answer,first step shown,True,generated,76960,120000,142,29000,guidance #83,70.6,52,USB,off,1793195127.202
+C,3,T3,OT2-C,Activity 5.5,The variables are alread,hint text on screen,True,hint shown and saved,127,2000,170,,reveal #38,70.6,52,USB,off,1793195243.158
+C,3,T4,OT2-C,Activity 5.5,x^2/2+4x-6 -> correct,"""x^2/2+4x-6"" -> correct",True,marked correct and shown,135,2000,151,,attempt #40,70.6,52,USB,off,1793195274.874
+C,3,T5,OT2-C,Separable equations and particular solutions,"Practise: Application activity 5.5, question 2",[progress] OT2-C: 3 attempts,True,recommends the next open exercise,96,2000,102,,,70.6,52,USB,off,1793195310.190
+C,3,T6,OT2-C,,3 attempts after restart,3 attempts,True,ready; 3 of 3 attempts shown after the restart,765,10000,190,,,70.6,52,USB,off,1793195328.730
+C,4,T1,OT2-C,"Expected value, variance and standard deviation",every formula typeset,[lesson] KaTeX 0.18.7: rendered 10 of 10 formulas,True,10 of 10 formulas typeset,1387,2000,101,,,69.3,52,USB,off,1793195381.014
+C,4,T2,OT2-C,How do I find the expected value of a random variable?,first step of a generated answer,first step shown,True,generated,72398,120000,266,24244,guidance #85,69.3,52,USB,off,1793195425.944
+C,4,T3,OT2-C,"Application activity 3.15 (Unit 9), question 1a",The mean is E(X) = Σ x P,hint text on screen,True,hint shown and saved,141,2000,153,,reveal #39,69.3,52,USB,off,1793195529.511
+C,4,T4,OT2-C,"Application activity 3.15 (Unit 9), question 1a",1.9 -> correct,"""1.9"" -> correct",True,marked correct and shown,129,2000,140,,attempt #41,69.3,52,USB,off,1793195561.525
+C,4,T5,OT2-C,"Expected value, variance and standard deviation","Practise: Application activity 3.15 (Unit 9), question 1c",[progress] OT2-C: 4 attempts,True,recommends the next open exercise,171,2000,319,,,69.3,52,USB,off,1793195598.187
+C,4,T6,OT2-C,,4 attempts after restart,4 attempts,True,ready; 4 of 4 attempts shown after the restart,800,10000,169,,,69.3,52,USB,off,1793195622.506
+C,5,T1,OT2-C,Operations on complex numbers in algebraic form,every formula typeset,[lesson] KaTeX 0.18.7: rendered 16 of 16 formulas,True,16 of 16 formulas typeset,1393,2000,101,,,71.2,51,USB,off,1793195670.938
+C,5,T2,OT2-C,How do I multiply two complex numbers?,first step of a generated answer,first step shown,True,generated,109468,120000,230,22143,guidance #87,71.2,51,USB,off,1793195721.631
+C,5,T3,OT2-C,"Application activity 1.7, question 7","Subtract the real parts,",hint text on screen,True,hint shown and saved,119,2000,145,,reveal #40,71.2,51,USB,off,1793195871.774
+C,5,T4,OT2-C,"Application activity 1.7, question 7",-9-15i -> correct,"""-9-15i"" -> correct",True,marked correct and shown,136,2000,176,,attempt #42,71.2,51,USB,off,1793195904.077
+C,5,T5,OT2-C,Operations on complex numbers in algebraic form,"Practise: Application activity 1.8, question 7",[progress] OT2-C: 5 attempts,True,recommends the next open exercise,110,2000,99,,,71.2,51,USB,off,1793195939.896
+C,5,T6,OT2-C,,5 attempts after restart,5 attempts,True,ready; 5 of 5 attempts shown after the restart,809,10000,176,,,71.2,51,USB,off,1793195945.338
+C,6,T1,OT2-C,Definite integrals and their properties,every formula typeset,[lesson] KaTeX 0.18.7: rendered 14 of 14 formulas,True,14 of 14 formulas typeset,1501,2000,104,,,71.2,50,USB,off,1793195993.686
+C,6,T2,OT2-C,What are the limits of integration in a definite integral?,first step of a generated answer,first step shown,True,generated,93031,120000,210,24407,guidance #90,71.2,50,USB,off,1793196049.489
+C,6,T3,OT2-C,"Application activity 4.19, question 3",Integrate term by term: ,hint text on screen,True,hint shown and saved,119,2000,159,,reveal #41,71.2,50,USB,off,1793196184.337
+C,6,T4,OT2-C,"Application activity 4.19, question 3",-2 -> correct,"""-2"" -> correct",True,marked correct and shown,111,2000,140,,attempt #43,71.2,50,USB,off,1793196216.359
+C,6,T5,OT2-C,Definite integrals and their properties,"Practise: Application activity 4.19, question 4",[progress] OT2-C: 6 attempts,True,recommends the next open exercise,98,2000,103,,,71.2,50,USB,off,1793196251.325
+C,6,T6,OT2-C,,6 attempts after restart,6 attempts,True,ready; 6 of 6 attempts shown after the restart,807,10000,149,,,71.2,50,USB,off,1793196265.503
+C,7,T1,OT2-C,Separable equations and particular solutions,every formula typeset,[lesson] KaTeX 0.18.7: rendered 14 of 14 formulas,True,14 of 14 formulas typeset,1415,2000,98,,,69.9,49,USB,off,1793196318.226
+C,7,T2,OT2-C,How do I find a particular solution from an initial condition?,first step of a generated answer,first step shown,True,generated,40511,120000,135,18276,guidance #92,69.9,49,USB,off,1793196368.633
+C,7,T3,OT2-C,"Application activity 5.5, question 2",Separate the variables: ,hint text on screen,True,hint shown and saved,145,2000,195,,reveal #42,69.9,49,USB,off,1793196448.578
+C,7,T4,OT2-C,"Application activity 5.5, question 2",(1+x)/(1-x) -> correct,"""(1+x)/(1-x)"" -> correct",True,marked correct and shown,130,2000,116,,attempt #44,69.9,49,USB,off,1793196480.522
+C,7,T5,OT2-C,Separable equations and particular solutions,"Practise: Application activity 5.5, question 3",[progress] OT2-C: 7 attempts,True,recommends the next open exercise,205,2000,130,,,69.9,49,USB,off,1793196516.947
+C,7,T6,OT2-C,,7 attempts after restart,7 attempts,True,ready; 7 of 7 attempts shown after the restart,822,10000,154,,,69.9,49,USB,off,1793196537.551
+C,8,T1,OT2-C,"Expected value, variance and standard deviation",every formula typeset,[lesson] KaTeX 0.18.7: rendered 10 of 10 formulas,True,10 of 10 formulas typeset,1437,2000,100,,,70.6,48,USB,off,1793196590.364
+C,8,T2,OT2-C,How do I calculate the variance of a discrete random variable?,first step of a generated answer,first step shown,True,generated,85716,120000,238,27994,guidance #93,70.6,48,USB,off,1793196631.911
+C,8,T3,OT2-C,"Application activity 3.15 (Unit 9), question 1c",Multiply each value by i,hint text on screen,True,hint shown and saved,138,2000,168,,reveal #43,70.6,48,USB,off,1793196748.408
+C,8,T4,OT2-C,"Application activity 3.15 (Unit 9), question 1c",0.4 -> correct,"""0.4"" -> correct",True,marked correct and shown,131,2000,143,,attempt #45,70.6,48,USB,off,1793196781.753
+C,8,T5,OT2-C,"Expected value, variance and standard deviation","Practise: Application activity 3.15 (Unit 9), question 2a",[progress] OT2-C: 8 attempts,True,recommends the next open exercise,104,2000,101,,,70.6,48,USB,off,1793196818.575
+C,8,T6,OT2-C,,8 attempts after restart,8 attempts,True,ready; 8 of 8 attempts shown after the restart,810,10000,151,,,70.6,48,USB,off,1793196846.278
+C,9,T1,OT2-C,Operations on complex numbers in algebraic form,every formula typeset,[lesson] KaTeX 0.18.7: rendered 16 of 16 formulas,True,16 of 16 formulas typeset,1414,2000,108,,,70.6,47,USB,off,1793196897.777
+C,9,T2,OT2-C,What is the conjugate of a complex number?,first step of a generated answer,first step shown,True,generated,64714,120000,124,34158,guidance #95,70.6,47,USB,off,1793196947.323
+C,9,T3,OT2-C,"Application activity 1.8, question 7",First simplify z by subt,hint text on screen,True,hint shown and saved,115,2000,121,,reveal #44,70.6,47,USB,off,1793197052.137
+C,9,T4,OT2-C,"Application activity 1.8, question 7",3+5i -> correct,"""3+5i"" -> correct",True,marked correct and shown,143,2000,136,,attempt #46,70.6,47,USB,off,1793197084.887
+C,9,T5,OT2-C,Operations on complex numbers in algebraic form,"Practise: Application activity 1.9, question 3",[progress] OT2-C: 9 attempts,True,recommends the next open exercise,105,2000,97,,,70.6,47,USB,off,1793197120.254
+C,9,T6,OT2-C,,9 attempts after restart,9 attempts,True,ready; 9 of 9 attempts shown after the restart,817,10000,164,,,70.6,47,USB,off,1793197125.802
+C,10,T1,OT2-C,Definite integrals and their properties,every formula typeset,[lesson] KaTeX 0.18.7: rendered 14 of 14 formulas,True,14 of 14 formulas typeset,1442,2000,97,,,70.6,46,USB,off,1793197174.171
+C,10,T2,OT2-C,How do I integrate a function term by term between two limits?,first step of a generated answer,first step shown,True,generated,39644,120000,220,23594,guidance #96,70.6,46,USB,off,1793197230.246
+C,10,T3,OT2-C,"Application activity 4.19, question 4",Integrate term by term t,hint text on screen,True,hint shown and saved,132,2000,166,,reveal #45,70.6,46,USB,off,1793197310.600
+C,10,T4,OT2-C,"Application activity 4.19, question 4",0.75 -> correct,"""0.75"" -> correct",True,marked correct and shown,174,2000,178,,attempt #47,70.6,46,USB,off,1793197342.156
+C,10,T5,OT2-C,Definite integrals and their properties,"Practise: Application activity 4.19, question 7",[progress] OT2-C: 10 attempts,True,recommends the next open exercise,119,2000,100,,,70.6,46,USB,off,1793197377.879
+C,10,T6,OT2-C,,10 attempts after restart,10 attempts,True,ready; 10 of 10 attempts shown after the restart,817,10000,162,,,70.6,46,USB,off,1793197392.499

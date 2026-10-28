@@ -1,0 +1,979 @@
+--------- beginning of main
+         1793188382.838 19762 19789 I ReactNativeJS: Running "OfflineTutor"
+         1793188383.085 19762 19789 I ReactNativeJS: [boot] content rw-s6-am.u1 v0.2.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793188383.085 19762 19789 I ReactNativeJS: [boot] content rw-s6-am.u4 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793188383.085 19762 19789 I ReactNativeJS: [boot] content rw-s6-am.u5 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793188383.085 19762 19789 I ReactNativeJS: [boot] content rw-s6-am.u9 v0.1.0: up-to-date (1 lesson, 1 examples, 5 exercises)
+         1793188383.087 19762 19789 I ReactNativeJS: [boot] ready in 63 ms: Content: rw-s6-am.u1 v0.2.0, rw-s6-am.u4 v0.1.0, rw-s6-am.u5 v0.1.0, rw-s6-am.u9 v0.1.0 · 4 lesson(s) · offline
+         1793188396.093 19762 19789 I ReactNativeJS: [keyboard] shown: top 284, field 403–450, scroll by 174
+         1793188403.459 19762 19789 I ReactNativeJS: [session] learner OT2-A session #32
+         1793188421.190 19762 19789 I ReactNativeJS: [lesson] rw-s6-am.u1.l07 read from SQLite in 15 ms for OT2-A
+         1793188422.502 19762 19789 I ReactNativeJS: [lesson] KaTeX 0.18.7: rendered 16 of 16 formulas offline; 2 example(s), 0 exercise(s), 0 hint(s)
+         1793188459.153 19762 19789 I ReactNativeJS: [guidance] warm-up done in 37980 ms (115 prompt tokens processed)
+         1793188462.394 19762 19789 I ReactNativeJS: [keyboard] shown: top 284, field 370–418, scroll by 142
+         1793188470.297 19762 19789 I ReactNativeJS: [router] "How do I add two complex numbers?" -> rw-s6-am.u1.l07 (add, complex numbers)
+         1793188470.298 19762 19789 I ReactNativeJS: [guidance] passage (310 chars): Two complex numbers are added, or subtracted, by adding, or …
+         1793188470.330 19762 19789 I ReactNativeJS: [guidance] ask "How do I add two complex numbers?" (~252 prompt tokens; step 1)
+         1793188495.853 19762 19789 I ReactNativeJS: [guidance] passage warm-up done in 32504 ms (110 prompt tokens processed): Two complex numbers are added, or subtra…
+         1793188536.046 19762 19789 I ReactNativeJS: [guidance] step 1 part 2 (resuming after 308 characters)
+         1793188536.083 19762 19789 I ReactNativeJS: [guidance] #44 generated "How do I add two complex numbers?" 79 tok in 65714 ms, first 29465 ms, prompt 13 tok (cached 215), waited 25522 ms for the warm-up, stopped at the cap
+         1793188547.227 19762 19789 I ReactNativeJS: [guidance] #45 generated "(step 1, part 2) How do I add two comple" 24 tok in 11141 ms, first 508 ms, prompt 1 tok (cached 306), stopped at the next step
+         1793188547.399 19762 19789 I ReactNativeJS: [guidance] render: KaTeX 0.18.7: rendered 5 of 5 formulas offline
+         1793188582.703 19762 19789 I ReactNativeJS: [practice] open rw-s6-am.u1.q.001 (3 hints) for OT2-A
+         1793188583.634 19762 19789 I ReactNativeJS: [practice] prompt: KaTeX 0.18.7: rendered 1 of 1 formulas offline
+         1793188587.618 19762 19789 I ReactNativeJS: [practice] reveal #16 hint 1 on rw-s6-am.u1.q.001
+         1793188610.810 19762 19789 I ReactNativeJS: [keyboard] shown: top 284, field 351–399, scroll by 123
+         1793188618.210 19762 19789 I ReactNativeJS: [practice] attempt #18 rw-s6-am.u1.q.001 "5+3i" -> correct (hints seen 1)
+         1793188624.886 19762 19789 I ReactNativeJS: [lesson] rw-s6-am.u1.l07 read from SQLite in 28 ms for OT2-A
+         1793188635.282 19762 19789 I ReactNativeJS: [guidance] exercise warm-up done in 52513 ms (168 prompt tokens processed)
+         1793188640.069 19762 19789 I ReactNativeJS: [guidance] warm-up done in 4787 ms (15 prompt tokens processed)
+         1793188650.745 19762 19789 I ReactNativeJS: [progress] OT2-A: 1 attempts, rw-s6-am.u1.l07 1/5 in-progress; rw-s6-am.u4.l19 0/5 not-started; rw-s6-am.u5.l02 0/5 not-started; rw-s6-am.u9.l03 0/5 not-started, tutor 2 generated in 7 ms
+         1793188656.370 21089 21116 I ReactNativeJS: Running "OfflineTutor"
+         1793188656.617 21089 21116 I ReactNativeJS: [boot] content rw-s6-am.u1 v0.2.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793188656.618 21089 21116 I ReactNativeJS: [boot] content rw-s6-am.u4 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793188656.618 21089 21116 I ReactNativeJS: [boot] content rw-s6-am.u5 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793188656.618 21089 21116 I ReactNativeJS: [boot] content rw-s6-am.u9 v0.1.0: up-to-date (1 lesson, 1 examples, 5 exercises)
+         1793188656.620 21089 21116 I ReactNativeJS: [boot] ready in 65 ms: Content: rw-s6-am.u1 v0.2.0, rw-s6-am.u4 v0.1.0, rw-s6-am.u5 v0.1.0, rw-s6-am.u9 v0.1.0 · 4 lesson(s) · offline
+         1793188661.815 21089 21116 I ReactNativeJS: [session] learner OT2-A session #33
+         1793188681.282 21089 21116 I ReactNativeJS: [progress] OT2-A: 1 attempts, rw-s6-am.u1.l07 1/5 in-progress; rw-s6-am.u4.l19 0/5 not-started; rw-s6-am.u5.l02 0/5 not-started; rw-s6-am.u9.l03 0/5 not-started, tutor 2 generated in 8 ms
+         1793188701.309 21089 21116 I ReactNativeJS: [lesson] rw-s6-am.u4.l19 read from SQLite in 33 ms for OT2-A
+         1793188702.604 21089 21116 I ReactNativeJS: [lesson] KaTeX 0.18.7: rendered 14 of 14 formulas offline; 2 example(s), 0 exercise(s), 0 hint(s)
+         1793188739.719 21089 21116 I ReactNativeJS: [guidance] warm-up done in 38445 ms (115 prompt tokens processed)
+         1793188746.261 21089 21116 I ReactNativeJS: [keyboard] shown: top 284, field 371–418, scroll by 143
+         1793188754.208 21089 21116 I ReactNativeJS: [router] "How do I evaluate a definite integral?" -> rw-s6-am.u4.l19 (definite integral, integral)
+         1793188754.209 21089 21116 I ReactNativeJS: [guidance] passage (212 chars): The definite integral of f(x) from a to b is F(b) − F(a), wh…
+         1793188754.239 21089 21116 I ReactNativeJS: [guidance] ask "How do I evaluate a definite integral?" (~226 prompt tokens; step 1)
+         1793188771.426 21089 21116 I ReactNativeJS: [guidance] passage warm-up done in 23743 ms (80 prompt tokens processed): The definite integral of f(x) from a to …
+         1793188809.694 21089 21116 I ReactNativeJS: [guidance] #46 generated "How do I evaluate a definite integral?" 77 tok in 55403 ms, first 21134 ms, prompt 13 tok (cached 185), waited 17187 ms for the warm-up, stopped at the next step
+         1793188809.840 21089 21116 I ReactNativeJS: [guidance] render: KaTeX 0.18.7: rendered 4 of 4 formulas offline
+         1793188851.218 21089 21116 I ReactNativeJS: [practice] open rw-s6-am.u4.q.001 (3 hints) for OT2-A
+         1793188851.570 21089 21116 I ReactNativeJS: [practice] prompt: KaTeX 0.18.7: rendered 1 of 1 formulas offline
+         1793188855.674 21089 21116 I ReactNativeJS: [practice] reveal #17 hint 1 on rw-s6-am.u4.q.001
+         1793188878.561 21089 21116 I ReactNativeJS: [keyboard] shown: top 284, field 378–426, scroll by 150
+         1793188886.089 21089 21116 I ReactNativeJS: [practice] attempt #19 rw-s6-am.u4.q.001 "4.5" -> correct (hints seen 1)
+         1793188889.358 21089 21116 I ReactNativeJS: [guidance] exercise warm-up done in 38088 ms (121 prompt tokens processed)
+         1793188892.575 21089 21116 I ReactNativeJS: [lesson] rw-s6-am.u4.l19 read from SQLite in 12 ms for OT2-A
+         1793188893.832 21089 21116 I ReactNativeJS: [lesson] KaTeX 0.18.7: rendered 14 of 14 formulas offline; 2 example(s), 0 exercise(s), 0 hint(s)
+         1793188898.106 21089 21116 I ReactNativeJS: [guidance] warm-up done in 5543 ms (15 prompt tokens processed)
+         1793188918.335 21089 21116 I ReactNativeJS: [progress] OT2-A: 2 attempts, rw-s6-am.u1.l07 1/5 in-progress; rw-s6-am.u4.l19 1/5 in-progress; rw-s6-am.u5.l02 0/5 not-started; rw-s6-am.u9.l03 0/5 not-started, tutor 3 generated in 9 ms
+         1793188932.523 22511 22537 I ReactNativeJS: Running "OfflineTutor"
+         1793188932.755 22511 22537 I ReactNativeJS: [boot] content rw-s6-am.u1 v0.2.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793188932.755 22511 22537 I ReactNativeJS: [boot] content rw-s6-am.u4 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793188932.755 22511 22537 I ReactNativeJS: [boot] content rw-s6-am.u5 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793188932.755 22511 22537 I ReactNativeJS: [boot] content rw-s6-am.u9 v0.1.0: up-to-date (1 lesson, 1 examples, 5 exercises)
+         1793188932.758 22511 22537 I ReactNativeJS: [boot] ready in 62 ms: Content: rw-s6-am.u1 v0.2.0, rw-s6-am.u4 v0.1.0, rw-s6-am.u5 v0.1.0, rw-s6-am.u9 v0.1.0 · 4 lesson(s) · offline
+         1793188937.946 22511 22537 I ReactNativeJS: [session] learner OT2-A session #34
+         1793188957.499 22511 22537 I ReactNativeJS: [progress] OT2-A: 2 attempts, rw-s6-am.u1.l07 1/5 in-progress; rw-s6-am.u4.l19 1/5 in-progress; rw-s6-am.u5.l02 0/5 not-started; rw-s6-am.u9.l03 0/5 not-started, tutor 3 generated in 8 ms
+         1793188981.923 22511 22537 I ReactNativeJS: [lesson] rw-s6-am.u5.l02 read from SQLite in 14 ms for OT2-A
+         1793188983.186 22511 22537 I ReactNativeJS: [lesson] KaTeX 0.18.7: rendered 14 of 14 formulas offline; 2 example(s), 0 exercise(s), 0 hint(s)
+         1793189020.256 22511 22537 I ReactNativeJS: [guidance] warm-up done in 38348 ms (115 prompt tokens processed)
+         1793189021.545 22511 22537 I ReactNativeJS: [keyboard] shown: top 284, field 371–418, scroll by 143
+         1793189030.016 22511 22537 I ReactNativeJS: [router] "How do I separate the variables in a differential equation?" -> rw-s6-am.u5.l02 (differential equation, separate the variables)
+         1793189030.016 22511 22537 I ReactNativeJS: [guidance] passage (253 chars): A first-order differential equation can be written F(x, y, d…
+         1793189030.049 22511 22537 I ReactNativeJS: [guidance] ask "How do I separate the variables in a dif" (~244 prompt tokens; step 1)
+         1793189048.324 22511 22537 I ReactNativeJS: [guidance] passage warm-up done in 25439 ms (84 prompt tokens processed): To solve it, separate the variables, wit…
+         1793189113.193 22511 22537 I ReactNativeJS: [guidance] step 1 part 2 (resuming after 277 characters)
+         1793189113.226 22511 22537 I ReactNativeJS: [guidance] #47 generated "How do I separate the variables in a dif" 79 tok in 83144 ms, first 47024 ms, prompt 97 tok (cached 110), waited 18275 ms for the warm-up, stopped at the cap
+         1793189119.773 22511 22537 I ReactNativeJS: [guidance] #48 generated "(step 1, part 2) How do I separate the v" 14 tok in 6545 ms, first 500 ms, prompt 1 tok (cached 285), stopped at the next step
+         1793189119.960 22511 22537 I ReactNativeJS: [guidance] render: KaTeX 0.18.7: rendered 6 of 6 formulas offline
+         1793189154.309 22511 22537 I ReactNativeJS: [practice] open rw-s6-am.u5.q.001 (3 hints) for OT2-A
+         1793189155.176 22511 22537 I ReactNativeJS: [practice] prompt: KaTeX 0.18.7: rendered 1 of 1 formulas offline
+         1793189158.991 22511 22537 I ReactNativeJS: [practice] reveal #18 hint 1 on rw-s6-am.u5.q.001
+         1793189182.167 22511 22537 I ReactNativeJS: [keyboard] shown: top 284, field 369–417, scroll by 141
+         1793189189.738 22511 22537 I ReactNativeJS: [practice] attempt #20 rw-s6-am.u5.q.001 "x^2/2+4x-6" -> correct (hints seen 1)
+         1793189196.787 22511 22537 I ReactNativeJS: [lesson] rw-s6-am.u5.l02 read from SQLite in 12 ms for OT2-A
+         1793189197.810 22511 22537 I ReactNativeJS: [lesson] KaTeX 0.18.7: rendered 14 of 14 formulas offline; 2 example(s), 0 exercise(s), 0 hint(s)
+         1793189209.334 22511 22537 I ReactNativeJS: [guidance] exercise warm-up done in 54948 ms (168 prompt tokens processed)
+         1793189214.307 22511 22537 I ReactNativeJS: [guidance] warm-up done in 4973 ms (15 prompt tokens processed)
+         1793189223.982 22511 22537 I ReactNativeJS: [progress] OT2-A: 3 attempts, rw-s6-am.u1.l07 1/5 in-progress; rw-s6-am.u4.l19 1/5 in-progress; rw-s6-am.u5.l02 1/5 in-progress; rw-s6-am.u9.l03 0/5 not-started, tutor 5 generated in 18 ms
+         1793189243.002 23958 23983 I ReactNativeJS: Running "OfflineTutor"
+         1793189243.208 23958 23983 I ReactNativeJS: [boot] content rw-s6-am.u1 v0.2.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793189243.208 23958 23983 I ReactNativeJS: [boot] content rw-s6-am.u4 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793189243.208 23958 23983 I ReactNativeJS: [boot] content rw-s6-am.u5 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793189243.208 23958 23983 I ReactNativeJS: [boot] content rw-s6-am.u9 v0.1.0: up-to-date (1 lesson, 1 examples, 5 exercises)
+         1793189243.210 23958 23983 I ReactNativeJS: [boot] ready in 28 ms: Content: rw-s6-am.u1 v0.2.0, rw-s6-am.u4 v0.1.0, rw-s6-am.u5 v0.1.0, rw-s6-am.u9 v0.1.0 · 4 lesson(s) · offline
+         1793189248.315 23958 23983 I ReactNativeJS: [session] learner OT2-A session #35
+         1793189267.717 23958 23983 I ReactNativeJS: [progress] OT2-A: 3 attempts, rw-s6-am.u1.l07 1/5 in-progress; rw-s6-am.u4.l19 1/5 in-progress; rw-s6-am.u5.l02 1/5 in-progress; rw-s6-am.u9.l03 0/5 not-started, tutor 5 generated in 8 ms
+         1793189292.098 23958 23983 I ReactNativeJS: [lesson] rw-s6-am.u9.l03 read from SQLite in 25 ms for OT2-A
+         1793189293.335 23958 23983 I ReactNativeJS: [lesson] KaTeX 0.18.7: rendered 10 of 10 formulas offline; 1 example(s), 0 exercise(s), 0 hint(s)
+         1793189324.297 23958 23983 I ReactNativeJS: [keyboard] shown: top 284, field 545–592, scroll by 317
+         1793189331.483 23958 23983 I ReactNativeJS: [guidance] warm-up done in 39412 ms (115 prompt tokens processed)
+         1793189332.800 23958 23983 I ReactNativeJS: [router] "How do I find the expected value of a random variable?" -> rw-s6-am.u9.l03 (expected value, random variable)
+         1793189332.800 23958 23983 I ReactNativeJS: [guidance] passage (252 chars): The expected value of a discrete random variable X, also cal…
+         1793189332.838 23958 23983 I ReactNativeJS: [guidance] ask "How do I find the expected value of a ra" (~242 prompt tokens; step 1)
+         1793189349.437 23958 23983 I ReactNativeJS: [guidance] passage warm-up done in 17954 ms (61 prompt tokens processed): The expected value of a discrete random …
+         1793189380.629 23958 23983 I ReactNativeJS: [guidance] #49 generated "How do I find the expected value of a ra" 58 tok in 47704 ms, first 21832 ms, prompt 17 tok (cached 166), waited 16598 ms for the warm-up, stopped at the next step
+         1793189380.745 23958 23983 I ReactNativeJS: [guidance] render: KaTeX 0.18.7: rendered 2 of 2 formulas offline
+         1793189406.702 23958 23983 I ReactNativeJS: [practice] open rw-s6-am.u9.q.001 (3 hints) for OT2-A
+         1793189407.201 23958 23983 I ReactNativeJS: [practice] prompt: KaTeX 0.18.7: rendered 1 of 1 formulas offline
+         1793189411.222 23958 23983 I ReactNativeJS: [practice] reveal #19 hint 1 on rw-s6-am.u9.q.001
+         1793189434.979 23958 23983 I ReactNativeJS: [keyboard] shown: top 284, field 378–426, scroll by 150
+         1793189442.624 23958 23983 I ReactNativeJS: [practice] attempt #21 rw-s6-am.u9.q.001 "1.9" -> correct (hints seen 1)
+         1793189449.783 23958 23983 I ReactNativeJS: [lesson] rw-s6-am.u9.l03 read from SQLite in 15 ms for OT2-A
+         1793189450.321 23958 23983 I ReactNativeJS: [lesson] KaTeX 0.18.7: rendered 10 of 10 formulas offline; 1 example(s), 0 exercise(s), 0 hint(s)
+         1793189468.888 23958 23983 I ReactNativeJS: [guidance] exercise warm-up done in 62129 ms (189 prompt tokens processed)
+         1793189473.942 23958 23983 I ReactNativeJS: [guidance] warm-up done in 5054 ms (15 prompt tokens processed)
+         1793189477.047 23958 23983 I ReactNativeJS: [progress] OT2-A: 4 attempts, rw-s6-am.u1.l07 1/5 in-progress; rw-s6-am.u4.l19 1/5 in-progress; rw-s6-am.u5.l02 1/5 in-progress; rw-s6-am.u9.l03 1/5 in-progress, tutor 6 generated in 15 ms
+         1793189500.856 25299 25326 I ReactNativeJS: Running "OfflineTutor"
+         1793189501.099 25299 25326 I ReactNativeJS: [boot] content rw-s6-am.u1 v0.2.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793189501.099 25299 25326 I ReactNativeJS: [boot] content rw-s6-am.u4 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793189501.099 25299 25326 I ReactNativeJS: [boot] content rw-s6-am.u5 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793189501.099 25299 25326 I ReactNativeJS: [boot] content rw-s6-am.u9 v0.1.0: up-to-date (1 lesson, 1 examples, 5 exercises)
+         1793189501.104 25299 25326 I ReactNativeJS: [boot] ready in 64 ms: Content: rw-s6-am.u1 v0.2.0, rw-s6-am.u4 v0.1.0, rw-s6-am.u5 v0.1.0, rw-s6-am.u9 v0.1.0 · 4 lesson(s) · offline
+         1793189506.276 25299 25326 I ReactNativeJS: [session] learner OT2-A session #36
+         1793189525.768 25299 25326 I ReactNativeJS: [progress] OT2-A: 4 attempts, rw-s6-am.u1.l07 1/5 in-progress; rw-s6-am.u4.l19 1/5 in-progress; rw-s6-am.u5.l02 1/5 in-progress; rw-s6-am.u9.l03 1/5 in-progress, tutor 6 generated in 6 ms
+         1793189545.790 25299 25326 I ReactNativeJS: [lesson] rw-s6-am.u1.l07 read from SQLite in 16 ms for OT2-A
+         1793189546.960 25299 25326 I ReactNativeJS: [lesson] KaTeX 0.18.7: rendered 16 of 16 formulas offline; 2 example(s), 0 exercise(s), 0 hint(s)
+         1793189584.838 25299 25326 I ReactNativeJS: [guidance] warm-up done in 39068 ms (115 prompt tokens processed)
+         1793189586.480 25299 25326 I ReactNativeJS: [keyboard] shown: top 284, field 370–418, scroll by 142
+         1793189594.650 25299 25326 I ReactNativeJS: [router] "How do I multiply two complex numbers?" -> rw-s6-am.u1.l07 (multiply, complex numbers)
+         1793189594.650 25299 25326 I ReactNativeJS: [guidance] passage (172 chars): The multiplication of z₁ = a + bi and z₂ = c + di follows fr…
+         1793189594.686 25299 25326 I ReactNativeJS: [guidance] ask "How do I multiply two complex numbers?" (~214 prompt tokens; step 1)
+         1793189609.261 25299 25326 I ReactNativeJS: [guidance] passage warm-up done in 21658 ms (69 prompt tokens processed): The multiplication of z₁ = a + bi and z₂…
+         1793189650.138 25299 25326 I ReactNativeJS: [guidance] step 1 part 2 (resuming after 288 characters)
+         1793189650.169 25299 25326 I ReactNativeJS: [guidance] #50 generated "How do I multiply two complex numbers?" 79 tok in 55451 ms, first 18700 ms, prompt 13 tok (cached 174), waited 14574 ms for the warm-up, stopped at the cap
+         1793189662.162 25299 25326 I ReactNativeJS: [guidance] #51 generated "(step 1, part 2) How do I multiply two c" 25 tok in 11945 ms, first 523 ms, prompt 1 tok (cached 265), stopped at the next step
+         1793189662.304 25299 25326 I ReactNativeJS: [guidance] render: KaTeX 0.18.7: rendered 6 of 6 formulas offline
+         1793189697.620 25299 25326 I ReactNativeJS: [practice] open rw-s6-am.u1.q.002 (3 hints) for OT2-A
+         1793189698.011 25299 25326 I ReactNativeJS: [practice] prompt: KaTeX 0.18.7: rendered 1 of 1 formulas offline
+         1793189702.223 25299 25326 I ReactNativeJS: [practice] reveal #20 hint 1 on rw-s6-am.u1.q.002
+         1793189725.114 25299 25326 I ReactNativeJS: [keyboard] shown: top 284, field 351–399, scroll by 123
+         1793189732.881 25299 25326 I ReactNativeJS: [practice] attempt #22 rw-s6-am.u1.q.002 "-9-15i" -> correct (hints seen 1)
+         1793189739.767 25299 25326 I ReactNativeJS: [lesson] rw-s6-am.u1.l07 read from SQLite in 15 ms for OT2-A
+         1793189741.080 25299 25326 I ReactNativeJS: [lesson] KaTeX 0.18.7: rendered 16 of 16 formulas offline; 2 example(s), 0 exercise(s), 0 hint(s)
+         1793189757.462 25299 25326 I ReactNativeJS: [guidance] exercise warm-up done in 59780 ms (181 prompt tokens processed)
+         1793189762.562 25299 25326 I ReactNativeJS: [guidance] warm-up done in 5099 ms (15 prompt tokens processed)
+         1793189768.004 25299 25326 I ReactNativeJS: [progress] OT2-A: 5 attempts, rw-s6-am.u1.l07 2/5 in-progress; rw-s6-am.u4.l19 1/5 in-progress; rw-s6-am.u5.l02 1/5 in-progress; rw-s6-am.u9.l03 1/5 in-progress, tutor 8 generated in 7 ms
+         1793189773.617 26638 26665 I ReactNativeJS: Running "OfflineTutor"
+         1793189773.870 26638 26665 I ReactNativeJS: [boot] content rw-s6-am.u1 v0.2.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793189773.870 26638 26665 I ReactNativeJS: [boot] content rw-s6-am.u4 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793189773.870 26638 26665 I ReactNativeJS: [boot] content rw-s6-am.u5 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793189773.870 26638 26665 I ReactNativeJS: [boot] content rw-s6-am.u9 v0.1.0: up-to-date (1 lesson, 1 examples, 5 exercises)
+         1793189773.872 26638 26665 I ReactNativeJS: [boot] ready in 62 ms: Content: rw-s6-am.u1 v0.2.0, rw-s6-am.u4 v0.1.0, rw-s6-am.u5 v0.1.0, rw-s6-am.u9 v0.1.0 · 4 lesson(s) · offline
+         1793189779.065 26638 26665 I ReactNativeJS: [session] learner OT2-A session #37
+         1793189798.537 26638 26665 I ReactNativeJS: [progress] OT2-A: 5 attempts, rw-s6-am.u1.l07 2/5 in-progress; rw-s6-am.u4.l19 1/5 in-progress; rw-s6-am.u5.l02 1/5 in-progress; rw-s6-am.u9.l03 1/5 in-progress, tutor 8 generated in 8 ms
+         1793189818.578 26638 26665 I ReactNativeJS: [lesson] rw-s6-am.u4.l19 read from SQLite in 17 ms for OT2-A
+         1793189819.858 26638 26665 I ReactNativeJS: [lesson] KaTeX 0.18.7: rendered 14 of 14 formulas offline; 2 example(s), 0 exercise(s), 0 hint(s)
+         1793189858.262 26638 26665 I ReactNativeJS: [guidance] warm-up done in 39704 ms (115 prompt tokens processed)
+         1793189864.464 26638 26665 I ReactNativeJS: [keyboard] shown: top 284, field 371–418, scroll by 143
+         1793189872.829 26638 26665 I ReactNativeJS: [router] "What are the limits of integration in a definite integral?" -> rw-s6-am.u4.l19 (definite integral, integral, integration, limits of integration)
+         1793189872.834 26638 26665 I ReactNativeJS: [guidance] passage (212 chars): The definite integral of f(x) from a to b is F(b) − F(a), wh…
+         1793189872.875 26638 26665 I ReactNativeJS: [guidance] ask "What are the limits of integration in a " (~232 prompt tokens; step 1)
+         1793189890.407 26638 26665 I ReactNativeJS: [guidance] passage warm-up done in 24571 ms (80 prompt tokens processed): The definite integral of f(x) from a to …
+         1793189931.253 26638 26665 I ReactNativeJS: [guidance] step 1 part 2 (resuming after 345 characters)
+         1793189931.294 26638 26665 I ReactNativeJS: [guidance] #52 generated "What are the limits of integration in a " 79 tok in 58376 ms, first 22373 ms, prompt 16 tok (cached 185), waited 17532 ms for the warm-up, stopped at the cap
+         1793189969.018 26638 26665 I ReactNativeJS: [guidance] step 1 part 3 (resuming after 725 characters)
+         1793189969.046 26638 26665 I ReactNativeJS: [guidance] #53 generated "(step 1, part 2) What are the limits of " 80 tok in 37765 ms, first 519 ms, prompt 1 tok (cached 279), stopped at the cap
+         1793189997.493 26638 26665 I ReactNativeJS: [guidance] #54 generated "(step 1, part 3) What are the limits of " 59 tok in 28439 ms, first 500 ms, prompt 1 tok (cached 360)
+         1793189997.694 26638 26665 I ReactNativeJS: [guidance] render: KaTeX 0.18.7: rendered 14 of 14 formulas offline
+         1793190038.920 26638 26665 I ReactNativeJS: [practice] open rw-s6-am.u4.q.002 (3 hints) for OT2-A
+         1793190039.350 26638 26665 I ReactNativeJS: [practice] prompt: KaTeX 0.18.7: rendered 1 of 1 formulas offline
+         1793190043.449 26638 26665 I ReactNativeJS: [practice] reveal #21 hint 1 on rw-s6-am.u4.q.002
+         1793190066.665 26638 26665 I ReactNativeJS: [keyboard] shown: top 284, field 377–423, scroll by 147
+         1793190074.220 26638 26665 I ReactNativeJS: [practice] attempt #23 rw-s6-am.u4.q.002 "-2" -> correct (hints seen 1)
+         1793190081.226 26638 26665 I ReactNativeJS: [lesson] rw-s6-am.u4.l19 read from SQLite in 113 ms for OT2-A
+         1793190082.393 26638 26665 I ReactNativeJS: [lesson] KaTeX 0.18.7: rendered 14 of 14 formulas offline; 2 example(s), 0 exercise(s), 0 hint(s)
+         1793190089.280 26638 26665 I ReactNativeJS: [guidance] exercise warm-up done in 50305 ms (150 prompt tokens processed)
+         1793190094.422 26638 26665 I ReactNativeJS: [guidance] warm-up done in 5142 ms (15 prompt tokens processed)
+         1793190108.506 26638 26665 I ReactNativeJS: [progress] OT2-A: 6 attempts, rw-s6-am.u1.l07 2/5 in-progress; rw-s6-am.u4.l19 2/5 in-progress; rw-s6-am.u5.l02 1/5 in-progress; rw-s6-am.u9.l03 1/5 in-progress, tutor 11 generated in 9 ms
+         1793190122.975 28078 28104 I ReactNativeJS: Running "OfflineTutor"
+         1793190123.226 28078 28104 I ReactNativeJS: [boot] content rw-s6-am.u1 v0.2.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793190123.226 28078 28104 I ReactNativeJS: [boot] content rw-s6-am.u4 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793190123.226 28078 28104 I ReactNativeJS: [boot] content rw-s6-am.u5 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793190123.226 28078 28104 I ReactNativeJS: [boot] content rw-s6-am.u9 v0.1.0: up-to-date (1 lesson, 1 examples, 5 exercises)
+         1793190123.228 28078 28104 I ReactNativeJS: [boot] ready in 65 ms: Content: rw-s6-am.u1 v0.2.0, rw-s6-am.u4 v0.1.0, rw-s6-am.u5 v0.1.0, rw-s6-am.u9 v0.1.0 · 4 lesson(s) · offline
+         1793190128.401 28078 28104 I ReactNativeJS: [session] learner OT2-A session #38
+         1793190147.839 28078 28104 I ReactNativeJS: [progress] OT2-A: 6 attempts, rw-s6-am.u1.l07 2/5 in-progress; rw-s6-am.u4.l19 2/5 in-progress; rw-s6-am.u5.l02 1/5 in-progress; rw-s6-am.u9.l03 1/5 in-progress, tutor 11 generated in 7 ms
+         1793190172.326 28078 28104 I ReactNativeJS: [lesson] rw-s6-am.u5.l02 read from SQLite in 17 ms for OT2-A
+         1793190173.548 28078 28104 I ReactNativeJS: [lesson] KaTeX 0.18.7: rendered 14 of 14 formulas offline; 2 example(s), 0 exercise(s), 0 hint(s)
+         1793190211.699 28078 28104 I ReactNativeJS: [keyboard] shown: top 284, field 394–441, scroll by 166
+         1793190211.762 28078 28104 I ReactNativeJS: [guidance] warm-up done in 39457 ms (115 prompt tokens processed)
+         1793190220.382 28078 28104 I ReactNativeJS: [router] "How do I find a particular solution from an initial condition?" -> rw-s6-am.u5.l02 (particular solution, initial condition)
+         1793190220.385 28078 28104 I ReactNativeJS: [guidance] passage (247 chars): A solution that contains an arbitrary constant is the genera…
+         1793190220.416 28078 28104 I ReactNativeJS: [guidance] ask "How do I find a particular solution from" (~243 prompt tokens; step 1)
+         1793190230.603 28078 28104 I ReactNativeJS: [guidance] passage warm-up done in 17549 ms (56 prompt tokens processed): A solution that contains an arbitrary co…
+         1793190255.579 28078 28104 I ReactNativeJS: [guidance] #55 generated "How do I find a particular solution from" 44 tok in 35083 ms, first 15326 ms, prompt 17 tok (cached 161), waited 10187 ms for the warm-up, stopped at the next step
+         1793190255.671 28078 28104 I ReactNativeJS: [guidance] render: KaTeX 0.18.7: rendered 0 of 0 formulas offline
+         1793190290.501 28078 28104 I ReactNativeJS: [practice] open rw-s6-am.u5.q.002 (3 hints) for OT2-A
+         1793190291.430 28078 28104 I ReactNativeJS: [practice] prompt: KaTeX 0.18.7: rendered 1 of 1 formulas offline
+         1793190295.503 28078 28104 I ReactNativeJS: [practice] reveal #22 hint 1 on rw-s6-am.u5.q.002
+         1793190318.866 28078 28104 I ReactNativeJS: [keyboard] shown: top 284, field 374–422, scroll by 146
+         1793190326.399 28078 28104 I ReactNativeJS: [practice] attempt #24 rw-s6-am.u5.q.002 "(1+x)/(1-x)" -> correct (hints seen 1)
+         1793190333.380 28078 28104 I ReactNativeJS: [lesson] rw-s6-am.u5.l02 read from SQLite in 22 ms for OT2-A
+         1793190334.602 28078 28104 I ReactNativeJS: [lesson] KaTeX 0.18.7: rendered 14 of 14 formulas offline; 2 example(s), 0 exercise(s), 0 hint(s)
+         1793190357.679 28078 28104 I ReactNativeJS: [guidance] exercise warm-up done in 67095 ms (202 prompt tokens processed)
+         1793190361.488 28078 28104 I ReactNativeJS: [progress] OT2-A: 7 attempts, rw-s6-am.u1.l07 2/5 in-progress; rw-s6-am.u4.l19 2/5 in-progress; rw-s6-am.u5.l02 2/5 in-progress; rw-s6-am.u9.l03 1/5 in-progress, tutor 12 generated in 9 ms
+         1793190362.890 28078 28104 I ReactNativeJS: [guidance] warm-up done in 5210 ms (15 prompt tokens processed)
+         1793190381.401 29537 29568 I ReactNativeJS: Running "OfflineTutor"
+         1793190381.660 29537 29568 I ReactNativeJS: [boot] content rw-s6-am.u1 v0.2.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793190381.660 29537 29568 I ReactNativeJS: [boot] content rw-s6-am.u4 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793190381.660 29537 29568 I ReactNativeJS: [boot] content rw-s6-am.u5 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793190381.660 29537 29568 I ReactNativeJS: [boot] content rw-s6-am.u9 v0.1.0: up-to-date (1 lesson, 1 examples, 5 exercises)
+         1793190381.662 29537 29568 I ReactNativeJS: [boot] ready in 69 ms: Content: rw-s6-am.u1 v0.2.0, rw-s6-am.u4 v0.1.0, rw-s6-am.u5 v0.1.0, rw-s6-am.u9 v0.1.0 · 4 lesson(s) · offline
+         1793190386.850 29537 29568 I ReactNativeJS: [session] learner OT2-A session #39
+         1793190406.289 29537 29568 I ReactNativeJS: [progress] OT2-A: 7 attempts, rw-s6-am.u1.l07 2/5 in-progress; rw-s6-am.u4.l19 2/5 in-progress; rw-s6-am.u5.l02 2/5 in-progress; rw-s6-am.u9.l03 1/5 in-progress, tutor 12 generated in 9 ms
+         1793190430.747 29537 29568 I ReactNativeJS: [lesson] rw-s6-am.u9.l03 read from SQLite in 17 ms for OT2-A
+         1793190431.982 29537 29568 I ReactNativeJS: [lesson] KaTeX 0.18.7: rendered 10 of 10 formulas offline; 1 example(s), 0 exercise(s), 0 hint(s)
+         1793190462.284 29537 29568 I ReactNativeJS: [keyboard] shown: top 284, field 527–574, scroll by 298
+         1793190470.930 29537 29568 I ReactNativeJS: [guidance] warm-up done in 40206 ms (115 prompt tokens processed)
+         1793190471.197 29537 29568 I ReactNativeJS: [router] "How do I calculate the variance of a discrete random variable?" -> rw-s6-am.u9.l03 (variance, random variable, discrete random variable)
+         1793190471.198 29537 29568 I ReactNativeJS: [guidance] passage (252 chars): The expected value of a discrete random variable X, also cal…
+         1793190471.223 29537 29568 I ReactNativeJS: [guidance] ask "How do I calculate the variance of a dis" (~244 prompt tokens; step 1)
+         1793190489.216 29537 29568 I ReactNativeJS: [guidance] passage warm-up done in 18286 ms (61 prompt tokens processed): The expected value of a discrete random …
+         1793190530.723 29537 29568 I ReactNativeJS: [guidance] step 1 part 2 (resuming after 263 characters)
+         1793190530.743 29537 29568 I ReactNativeJS: [guidance] #56 generated "How do I calculate the variance of a dis" 79 tok in 59499 ms, first 23208 ms, prompt 17 tok (cached 166), waited 17992 ms for the warm-up, stopped at the cap
+         1793190547.672 29537 29568 I ReactNativeJS: [guidance] #57 generated "(step 1, part 2) How do I calculate the " 36 tok in 16912 ms, first 537 ms, prompt 1 tok (cached 261), stopped at the next step
+         1793190547.855 29537 29568 I ReactNativeJS: [guidance] render: KaTeX 0.18.7: rendered 9 of 9 formulas offline
+         1793190573.792 29537 29568 I ReactNativeJS: [practice] open rw-s6-am.u9.q.002 (3 hints) for OT2-A
+         1793190574.740 29537 29568 I ReactNativeJS: [practice] prompt: KaTeX 0.18.7: rendered 1 of 1 formulas offline
+         1793190578.842 29537 29568 I ReactNativeJS: [practice] reveal #23 hint 1 on rw-s6-am.u9.q.002
+         1793190602.419 29537 29568 I ReactNativeJS: [keyboard] shown: top 284, field 378–426, scroll by 150
+         1793190610.169 29537 29568 I ReactNativeJS: [practice] attempt #25 rw-s6-am.u9.q.002 "0.4" -> correct (hints seen 1)
+         1793190617.148 29537 29568 I ReactNativeJS: [lesson] rw-s6-am.u9.l03 read from SQLite in 13 ms for OT2-A
+         1793190618.365 29537 29568 I ReactNativeJS: [lesson] KaTeX 0.18.7: rendered 10 of 10 formulas offline; 1 example(s), 0 exercise(s), 0 hint(s)
+         1793190635.625 29537 29568 I ReactNativeJS: [guidance] exercise warm-up done in 61720 ms (184 prompt tokens processed)
+         1793190640.625 29537 29568 I ReactNativeJS: [guidance] warm-up done in 5000 ms (15 prompt tokens processed)
+         1793190644.801 29537 29568 I ReactNativeJS: [progress] OT2-A: 8 attempts, rw-s6-am.u1.l07 2/5 in-progress; rw-s6-am.u4.l19 2/5 in-progress; rw-s6-am.u5.l02 2/5 in-progress; rw-s6-am.u9.l03 2/5 in-progress, tutor 14 generated in 13 ms
+         1793190669.093 30929 30956 I ReactNativeJS: Running "OfflineTutor"
+         1793190669.340 30929 30956 I ReactNativeJS: [boot] content rw-s6-am.u1 v0.2.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793190669.340 30929 30956 I ReactNativeJS: [boot] content rw-s6-am.u4 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793190669.340 30929 30956 I ReactNativeJS: [boot] content rw-s6-am.u5 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793190669.340 30929 30956 I ReactNativeJS: [boot] content rw-s6-am.u9 v0.1.0: up-to-date (1 lesson, 1 examples, 5 exercises)
+         1793190669.343 30929 30956 I ReactNativeJS: [boot] ready in 63 ms: Content: rw-s6-am.u1 v0.2.0, rw-s6-am.u4 v0.1.0, rw-s6-am.u5 v0.1.0, rw-s6-am.u9 v0.1.0 · 4 lesson(s) · offline
+         1793190674.571 30929 30956 I ReactNativeJS: [session] learner OT2-A session #40
+         1793190694.040 30929 30956 I ReactNativeJS: [progress] OT2-A: 8 attempts, rw-s6-am.u1.l07 2/5 in-progress; rw-s6-am.u4.l19 2/5 in-progress; rw-s6-am.u5.l02 2/5 in-progress; rw-s6-am.u9.l03 2/5 in-progress, tutor 14 generated in 11 ms
+         1793190714.099 30929 30956 I ReactNativeJS: [lesson] rw-s6-am.u1.l07 read from SQLite in 17 ms for OT2-A
+         1793190715.334 30929 30956 I ReactNativeJS: [lesson] KaTeX 0.18.7: rendered 16 of 16 formulas offline; 2 example(s), 0 exercise(s), 0 hint(s)
+         1793190753.934 30929 30956 I ReactNativeJS: [guidance] warm-up done in 39854 ms (115 prompt tokens processed)
+         1793190755.250 30929 30956 I ReactNativeJS: [keyboard] shown: top 284, field 370–418, scroll by 142
+         1793190763.441 30929 30956 I ReactNativeJS: [router] "What is the conjugate of a complex number?" -> rw-s6-am.u1.l07 (conjugate, complex number)
+         1793190763.446 30929 30956 I ReactNativeJS: [guidance] passage (294 chars): The complex conjugate of z = x + yi, written z̄ or z*, is ob…
+         1793190763.478 30929 30956 I ReactNativeJS: [guidance] ask "What is the conjugate of a complex numbe" (~250 prompt tokens; step 1)
+         1793190787.315 30929 30956 I ReactNativeJS: [guidance] passage warm-up done in 30928 ms (100 prompt tokens processed): The complex conjugate of z = x + yi, wri…
+         1793190828.409 30929 30956 I ReactNativeJS: [guidance] step 1 part 2 (resuming after 309 characters)
+         1793190828.432 30929 30956 I ReactNativeJS: [guidance] #58 generated "What is the conjugate of a complex numbe" 79 tok in 64929 ms, first 28423 ms, prompt 15 tok (cached 205), waited 23837 ms for the warm-up, stopped at the cap
+         1793190866.555 30929 30956 I ReactNativeJS: [guidance] step 1 part 3 (resuming after 560 characters)
+         1793190866.577 30929 30956 I ReactNativeJS: [guidance] #59 generated "(step 1, part 2) What is the conjugate o" 80 tok in 38145 ms, first 481 ms, prompt 1 tok (cached 298), stopped at the cap
+         1793190871.421 30929 30956 I ReactNativeJS: [guidance] #60 generated "(step 1, part 3) What is the conjugate o" 10 tok in 4833 ms, first 513 ms, prompt 1 tok (cached 378), stopped at the next step
+         1793190871.607 30929 30956 I ReactNativeJS: [guidance] render: KaTeX 0.18.7: rendered 9 of 9 formulas offline
+         1793190907.050 30929 30956 I ReactNativeJS: [practice] open rw-s6-am.u1.q.003 (3 hints) for OT2-A
+         1793190907.934 30929 30956 I ReactNativeJS: [practice] prompt: KaTeX 0.18.7: rendered 1 of 1 formulas offline
+         1793190911.918 30929 30956 I ReactNativeJS: [practice] reveal #24 hint 1 on rw-s6-am.u1.q.003
+         1793190935.351 30929 30956 I ReactNativeJS: [keyboard] shown: top 284, field 351–399, scroll by 123
+         1793190942.751 30929 30956 I ReactNativeJS: [practice] attempt #26 rw-s6-am.u1.q.003 "3+5i" -> correct (hints seen 1)
+         1793190949.966 30929 30956 I ReactNativeJS: [lesson] rw-s6-am.u1.l07 read from SQLite in 21 ms for OT2-A
+         1793190951.466 30929 30956 I ReactNativeJS: [lesson] KaTeX 0.18.7: rendered 16 of 16 formulas offline; 2 example(s), 0 exercise(s), 0 hint(s)
+         1793190961.603 30929 30956 I ReactNativeJS: [guidance] exercise warm-up done in 54461 ms (161 prompt tokens processed)
+         1793190966.789 30929 30956 I ReactNativeJS: [guidance] warm-up done in 5184 ms (15 prompt tokens processed)
+         1793190977.236 30929 30956 I ReactNativeJS: [progress] OT2-A: 9 attempts, rw-s6-am.u1.l07 3/5 in-progress; rw-s6-am.u4.l19 2/5 in-progress; rw-s6-am.u5.l02 2/5 in-progress; rw-s6-am.u9.l03 2/5 in-progress, tutor 17 generated in 16 ms
+         1793190983.157 32286 32313 I ReactNativeJS: Running "OfflineTutor"
+         1793190983.397 32286 32313 I ReactNativeJS: [boot] content rw-s6-am.u1 v0.2.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793190983.397 32286 32313 I ReactNativeJS: [boot] content rw-s6-am.u4 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793190983.397 32286 32313 I ReactNativeJS: [boot] content rw-s6-am.u5 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793190983.397 32286 32313 I ReactNativeJS: [boot] content rw-s6-am.u9 v0.1.0: up-to-date (1 lesson, 1 examples, 5 exercises)
+         1793190983.400 32286 32313 I ReactNativeJS: [boot] ready in 65 ms: Content: rw-s6-am.u1 v0.2.0, rw-s6-am.u4 v0.1.0, rw-s6-am.u5 v0.1.0, rw-s6-am.u9 v0.1.0 · 4 lesson(s) · offline
+         1793190988.457 32286 32313 I ReactNativeJS: [session] learner OT2-A session #41
+         1793191007.957 32286 32313 I ReactNativeJS: [progress] OT2-A: 9 attempts, rw-s6-am.u1.l07 3/5 in-progress; rw-s6-am.u4.l19 2/5 in-progress; rw-s6-am.u5.l02 2/5 in-progress; rw-s6-am.u9.l03 2/5 in-progress, tutor 17 generated in 10 ms
+         1793191028.079 32286 32313 I ReactNativeJS: [lesson] rw-s6-am.u4.l19 read from SQLite in 18 ms for OT2-A
+         1793191029.343 32286 32313 I ReactNativeJS: [lesson] KaTeX 0.18.7: rendered 14 of 14 formulas offline; 2 example(s), 0 exercise(s), 0 hint(s)
+         1793191068.292 32286 32313 I ReactNativeJS: [guidance] warm-up done in 40234 ms (115 prompt tokens processed)
+         1793191073.368 32286 32313 I ReactNativeJS: [keyboard] shown: top 284, field 371–418, scroll by 143
+         1793191082.068 32286 32313 I ReactNativeJS: [router] "How do I integrate a function term by term between two limits?" -> rw-s6-am.u4.l19 (integrate)
+         1793191082.069 32286 32313 I ReactNativeJS: [guidance] passage (190 chars): No constant of integration is written in a definite integral…
+         1793191082.106 32286 32313 I ReactNativeJS: [guidance] ask "How do I integrate a function term by te" (~226 prompt tokens; step 1)
+         1793191097.001 32286 32313 I ReactNativeJS: [guidance] passage warm-up done in 22529 ms (70 prompt tokens processed): No constant of integration is written in…
+         1793191117.375 32286 32313 I ReactNativeJS: [guidance] #61 generated "How do I integrate a function term by te" 31 tok in 35207 ms, first 20621 ms, prompt 18 tok (cached 175), waited 14889 ms for the warm-up, stopped at the next step
+         1793191117.490 32286 32313 I ReactNativeJS: [guidance] render: KaTeX 0.18.7: rendered 0 of 0 formulas offline
+         1793191154.490 32286 32313 I ReactNativeJS: [practice] open rw-s6-am.u4.q.003 (3 hints) for OT2-A
+         1793191155.415 32286 32313 I ReactNativeJS: [practice] prompt: KaTeX 0.18.7: rendered 1 of 1 formulas offline
+         1793191159.302 32286 32313 I ReactNativeJS: [practice] reveal #25 hint 1 on rw-s6-am.u4.q.003
+         1793191182.684 32286 32313 I ReactNativeJS: [keyboard] shown: top 284, field 382–428, scroll by 152
+         1793191190.291 32286 32313 I ReactNativeJS: [practice] attempt #27 rw-s6-am.u4.q.003 "0.75" -> correct (hints seen 1)
+         1793191197.059 32286 32313 I ReactNativeJS: [lesson] rw-s6-am.u4.l19 read from SQLite in 19 ms for OT2-A
+         1793191198.364 32286 32313 I ReactNativeJS: [lesson] KaTeX 0.18.7: rendered 14 of 14 formulas offline; 2 example(s), 0 exercise(s), 0 hint(s)
+         1793191211.973 32286 32313 I ReactNativeJS: [guidance] exercise warm-up done in 57416 ms (171 prompt tokens processed)
+         1793191217.161 32286 32313 I ReactNativeJS: [guidance] warm-up done in 5188 ms (15 prompt tokens processed)
+         1793191224.317 32286 32313 I ReactNativeJS: [progress] OT2-A: 10 attempts, rw-s6-am.u1.l07 3/5 in-progress; rw-s6-am.u4.l19 3/5 in-progress; rw-s6-am.u5.l02 2/5 in-progress; rw-s6-am.u9.l03 2/5 in-progress, tutor 18 generated in 14 ms
+         1793191238.990  1974  2000 I ReactNativeJS: Running "OfflineTutor"
+         1793191239.242  1974  2000 I ReactNativeJS: [boot] content rw-s6-am.u1 v0.2.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793191239.242  1974  2000 I ReactNativeJS: [boot] content rw-s6-am.u4 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793191239.242  1974  2000 I ReactNativeJS: [boot] content rw-s6-am.u5 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793191239.242  1974  2000 I ReactNativeJS: [boot] content rw-s6-am.u9 v0.1.0: up-to-date (1 lesson, 1 examples, 5 exercises)
+         1793191239.245  1974  2000 I ReactNativeJS: [boot] ready in 64 ms: Content: rw-s6-am.u1 v0.2.0, rw-s6-am.u4 v0.1.0, rw-s6-am.u5 v0.1.0, rw-s6-am.u9 v0.1.0 · 4 lesson(s) · offline
+         1793191244.422  1974  2000 I ReactNativeJS: [session] learner OT2-A session #42
+         1793191263.824  1974  2000 I ReactNativeJS: [progress] OT2-A: 10 attempts, rw-s6-am.u1.l07 3/5 in-progress; rw-s6-am.u4.l19 3/5 in-progress; rw-s6-am.u5.l02 2/5 in-progress; rw-s6-am.u9.l03 2/5 in-progress, tutor 18 generated in 10 ms
+         1793191271.010  2291  2318 I ReactNativeJS: Running "OfflineTutor"
+         1793191271.287  2291  2318 I ReactNativeJS: [boot] content rw-s6-am.u1 v0.2.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793191271.287  2291  2318 I ReactNativeJS: [boot] content rw-s6-am.u4 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793191271.288  2291  2318 I ReactNativeJS: [boot] content rw-s6-am.u5 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793191271.288  2291  2318 I ReactNativeJS: [boot] content rw-s6-am.u9 v0.1.0: up-to-date (1 lesson, 1 examples, 5 exercises)
+         1793191271.294  2291  2318 I ReactNativeJS: [boot] ready in 62 ms: Content: rw-s6-am.u1 v0.2.0, rw-s6-am.u4 v0.1.0, rw-s6-am.u5 v0.1.0, rw-s6-am.u9 v0.1.0 · 4 lesson(s) · offline
+         1793191284.485  2291  2318 I ReactNativeJS: [keyboard] shown: top 284, field 450–497, scroll by 221
+         1793191291.677  2291  2318 I ReactNativeJS: [session] learner OT2-B session #43
+         1793191309.678  2291  2318 I ReactNativeJS: [lesson] rw-s6-am.u1.l07 read from SQLite in 11 ms for OT2-B
+         1793191311.060  2291  2318 I ReactNativeJS: [lesson] KaTeX 0.18.7: rendered 16 of 16 formulas offline; 2 example(s), 0 exercise(s), 0 hint(s)
+         1793191349.986  2291  2318 I ReactNativeJS: [guidance] warm-up done in 40322 ms (115 prompt tokens processed)
+         1793191354.452  2291  2318 I ReactNativeJS: [keyboard] shown: top 284, field 370–418, scroll by 142
+         1793191362.466  2291  2318 I ReactNativeJS: [router] "How do I add two complex numbers?" -> rw-s6-am.u1.l07 (add, complex numbers)
+         1793191362.466  2291  2318 I ReactNativeJS: [guidance] passage (310 chars): Two complex numbers are added, or subtracted, by adding, or …
+         1793191362.510  2291  2318 I ReactNativeJS: [guidance] ask "How do I add two complex numbers?" (~252 prompt tokens; step 1)
+         1793191390.049  2291  2318 I ReactNativeJS: [guidance] passage warm-up done in 34591 ms (110 prompt tokens processed): Two complex numbers are added, or subtra…
+         1793191432.077  2291  2318 I ReactNativeJS: [guidance] step 1 part 2 (resuming after 307 characters)
+         1793191432.109  2291  2318 I ReactNativeJS: [guidance] #62 generated "How do I add two complex numbers?" 79 tok in 69567 ms, first 31774 ms, prompt 13 tok (cached 215), waited 27539 ms for the warm-up, stopped at the cap
+         1793191443.795  2291  2318 I ReactNativeJS: [guidance] #63 generated "(step 1, part 2) How do I add two comple" 24 tok in 11680 ms, first 525 ms, prompt 1 tok (cached 306), stopped at the next step
+         1793191443.981  2291  2318 I ReactNativeJS: [guidance] render: KaTeX 0.18.7: rendered 5 of 5 formulas offline
+         1793191478.991  2291  2318 I ReactNativeJS: [practice] open rw-s6-am.u1.q.001 (3 hints) for OT2-B
+         1793191479.819  2291  2318 I ReactNativeJS: [practice] prompt: KaTeX 0.18.7: rendered 1 of 1 formulas offline
+         1793191488.536  2291  2318 I ReactNativeJS: [practice] reveal #26 hint 1 on rw-s6-am.u1.q.001
+         1793191517.353  2291  2318 I ReactNativeJS: [keyboard] shown: top 284, field 351–399, scroll by 123
+         1793191525.148  2291  2318 I ReactNativeJS: [practice] attempt #28 rw-s6-am.u1.q.001 "5+3i" -> correct (hints seen 1)
+         1793191532.215  2291  2318 I ReactNativeJS: [lesson] rw-s6-am.u1.l07 read from SQLite in 14 ms for OT2-B
+         1793191533.576  2291  2318 I ReactNativeJS: [lesson] KaTeX 0.18.7: rendered 16 of 16 formulas offline; 2 example(s), 0 exercise(s), 0 hint(s)
+         1793191536.029  2291  2318 I ReactNativeJS: [guidance] exercise warm-up done in 56948 ms (168 prompt tokens processed)
+         1793191541.336  2291  2318 I ReactNativeJS: [guidance] warm-up done in 5306 ms (15 prompt tokens processed)
+         1793191563.092  2291  2318 I ReactNativeJS: [progress] OT2-B: 1 attempts, rw-s6-am.u1.l07 1/5 in-progress; rw-s6-am.u4.l19 0/5 not-started; rw-s6-am.u5.l02 0/5 not-started; rw-s6-am.u9.l03 0/5 not-started, tutor 2 generated in 7 ms
+         1793191573.311  3996  4030 I ReactNativeJS: Running "OfflineTutor"
+         1793191573.557  3996  4030 I ReactNativeJS: [boot] content rw-s6-am.u1 v0.2.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793191573.557  3996  4030 I ReactNativeJS: [boot] content rw-s6-am.u4 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793191573.557  3996  4030 I ReactNativeJS: [boot] content rw-s6-am.u5 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793191573.557  3996  4030 I ReactNativeJS: [boot] content rw-s6-am.u9 v0.1.0: up-to-date (1 lesson, 1 examples, 5 exercises)
+         1793191573.560  3996  4030 I ReactNativeJS: [boot] ready in 63 ms: Content: rw-s6-am.u1 v0.2.0, rw-s6-am.u4 v0.1.0, rw-s6-am.u5 v0.1.0, rw-s6-am.u9 v0.1.0 · 4 lesson(s) · offline
+         1793191578.581  3996  4030 I ReactNativeJS: [session] learner OT2-B session #44
+         1793191598.112  3996  4030 I ReactNativeJS: [progress] OT2-B: 1 attempts, rw-s6-am.u1.l07 1/5 in-progress; rw-s6-am.u4.l19 0/5 not-started; rw-s6-am.u5.l02 0/5 not-started; rw-s6-am.u9.l03 0/5 not-started, tutor 2 generated in 7 ms
+         1793191622.482  3996  4030 I ReactNativeJS: [lesson] rw-s6-am.u4.l19 read from SQLite in 17 ms for OT2-B
+         1793191623.897  3996  4030 I ReactNativeJS: [lesson] KaTeX 0.18.7: rendered 14 of 14 formulas offline; 2 example(s), 0 exercise(s), 0 hint(s)
+         1793191662.825  3996  4030 I ReactNativeJS: [guidance] warm-up done in 40381 ms (115 prompt tokens processed)
+         1793191672.136  3996  4030 I ReactNativeJS: [keyboard] shown: top 284, field 371–418, scroll by 143
+         1793191680.068  3996  4030 I ReactNativeJS: [router] "How do I evaluate a definite integral?" -> rw-s6-am.u4.l19 (definite integral, integral)
+         1793191680.075  3996  4030 I ReactNativeJS: [guidance] passage (212 chars): The definite integral of f(x) from a to b is F(b) − F(a), wh…
+         1793191680.111  3996  4030 I ReactNativeJS: [guidance] ask "How do I evaluate a definite integral?" (~226 prompt tokens; step 1)
+         1793191698.609  3996  4030 I ReactNativeJS: [guidance] passage warm-up done in 25058 ms (80 prompt tokens processed): The definite integral of f(x) from a to …
+         1793191720.155  3996  4030 I ReactNativeJS: [guidance] #64 generated "How do I evaluate a definite integral?" 37 tok in 39990 ms, first 22689 ms, prompt 13 tok (cached 185), waited 18498 ms for the warm-up, stopped at the next step
+         1793191720.300  3996  4030 I ReactNativeJS: [guidance] render: KaTeX 0.18.7: rendered 3 of 3 formulas offline
+         1793191756.604  3996  4030 I ReactNativeJS: [practice] open rw-s6-am.u4.q.001 (3 hints) for OT2-B
+         1793191757.482  3996  4030 I ReactNativeJS: [practice] prompt: KaTeX 0.18.7: rendered 1 of 1 formulas offline
+         1793191766.207  3996  4030 I ReactNativeJS: [practice] reveal #27 hint 1 on rw-s6-am.u4.q.001
+         1793191794.853  3996  4030 I ReactNativeJS: [keyboard] shown: top 284, field 378–426, scroll by 150
+         1793191796.751  3996  4030 I ReactNativeJS: [guidance] exercise warm-up done in 40064 ms (121 prompt tokens processed)
+         1793191801.914  3996  4030 I ReactNativeJS: [practice] attempt #29 rw-s6-am.u4.q.001 "4.5" -> correct (hints seen 1)
+         1793191808.298  3996  4030 I ReactNativeJS: [lesson] rw-s6-am.u4.l19 read from SQLite in 10 ms for OT2-B
+         1793191809.529  3996  4030 I ReactNativeJS: [lesson] KaTeX 0.18.7: rendered 14 of 14 formulas offline; 2 example(s), 0 exercise(s), 0 hint(s)
+         1793191813.940  3996  4030 I ReactNativeJS: [guidance] warm-up done in 5652 ms (15 prompt tokens processed)
+         1793191838.428  3996  4030 I ReactNativeJS: [progress] OT2-B: 2 attempts, rw-s6-am.u1.l07 1/5 in-progress; rw-s6-am.u4.l19 1/5 in-progress; rw-s6-am.u5.l02 0/5 not-started; rw-s6-am.u9.l03 0/5 not-started, tutor 3 generated in 7 ms
+         1793191857.385  5797  5828 I ReactNativeJS: Running "OfflineTutor"
+         1793191857.597  5797  5828 I ReactNativeJS: [boot] content rw-s6-am.u1 v0.2.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793191857.597  5797  5828 I ReactNativeJS: [boot] content rw-s6-am.u4 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793191857.597  5797  5828 I ReactNativeJS: [boot] content rw-s6-am.u5 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793191857.597  5797  5828 I ReactNativeJS: [boot] content rw-s6-am.u9 v0.1.0: up-to-date (1 lesson, 1 examples, 5 exercises)
+         1793191857.600  5797  5828 I ReactNativeJS: [boot] ready in 29 ms: Content: rw-s6-am.u1 v0.2.0, rw-s6-am.u4 v0.1.0, rw-s6-am.u5 v0.1.0, rw-s6-am.u9 v0.1.0 · 4 lesson(s) · offline
+         1793191862.671  5797  5828 I ReactNativeJS: [session] learner OT2-B session #45
+         1793191882.048  5797  5828 I ReactNativeJS: [progress] OT2-B: 2 attempts, rw-s6-am.u1.l07 1/5 in-progress; rw-s6-am.u4.l19 1/5 in-progress; rw-s6-am.u5.l02 0/5 not-started; rw-s6-am.u9.l03 0/5 not-started, tutor 3 generated in 8 ms
+         1793191910.930  5797  5828 I ReactNativeJS: [lesson] rw-s6-am.u5.l02 read from SQLite in 10 ms for OT2-B
+         1793191912.300  5797  5828 I ReactNativeJS: [lesson] KaTeX 0.18.7: rendered 14 of 14 formulas offline; 2 example(s), 0 exercise(s), 0 hint(s)
+         1793191950.581  5797  5828 I ReactNativeJS: [guidance] warm-up done in 39664 ms (115 prompt tokens processed)
+         1793191954.720  5797  5828 I ReactNativeJS: [keyboard] shown: top 284, field 371–418, scroll by 143
+         1793191963.248  5797  5828 I ReactNativeJS: [router] "How do I separate the variables in a differential equation?" -> rw-s6-am.u5.l02 (differential equation, separate the variables)
+         1793191963.249  5797  5828 I ReactNativeJS: [guidance] passage (253 chars): A first-order differential equation can be written F(x, y, d…
+         1793191963.294  5797  5828 I ReactNativeJS: [guidance] ask "How do I separate the variables in a dif" (~244 prompt tokens; step 1)
+         1793191982.006  5797  5828 I ReactNativeJS: [guidance] passage warm-up done in 25949 ms (84 prompt tokens processed): To solve it, separate the variables, wit…
+         1793192046.990  5797  5828 I ReactNativeJS: [guidance] step 1 part 2 (resuming after 275 characters)
+         1793192047.015  5797  5828 I ReactNativeJS: [guidance] #65 generated "How do I separate the variables in a dif" 79 tok in 83695 ms, first 47164 ms, prompt 97 tok (cached 110), waited 18711 ms for the warm-up, stopped at the cap
+         1793192055.722  5797  5828 I ReactNativeJS: [guidance] #66 generated "(step 1, part 2) How do I separate the v" 18 tok in 8693 ms, first 496 ms, prompt 1 tok (cached 285), stopped at the next step
+         1793192055.906  5797  5828 I ReactNativeJS: [guidance] render: KaTeX 0.18.7: rendered 6 of 6 formulas offline
+         1793192090.387  5797  5828 I ReactNativeJS: [practice] open rw-s6-am.u5.q.001 (3 hints) for OT2-B
+         1793192091.248  5797  5828 I ReactNativeJS: [practice] prompt: KaTeX 0.18.7: rendered 1 of 1 formulas offline
+         1793192099.947  5797  5828 I ReactNativeJS: [practice] reveal #28 hint 1 on rw-s6-am.u5.q.001
+         1793192128.870  5797  5828 I ReactNativeJS: [keyboard] shown: top 284, field 369–417, scroll by 141
+         1793192136.768  5797  5828 I ReactNativeJS: [practice] attempt #30 rw-s6-am.u5.q.001 "x^2/2+4x-6" -> correct (hints seen 1)
+         1793192144.044  5797  5828 I ReactNativeJS: [lesson] rw-s6-am.u5.l02 read from SQLite in 10 ms for OT2-B
+         1793192144.681  5797  5828 I ReactNativeJS: [lesson] KaTeX 0.18.7: rendered 14 of 14 formulas offline; 2 example(s), 0 exercise(s), 0 hint(s)
+         1793192147.704  5797  5828 I ReactNativeJS: [guidance] exercise warm-up done in 57237 ms (168 prompt tokens processed)
+         1793192152.854  5797  5828 I ReactNativeJS: [guidance] warm-up done in 5150 ms (15 prompt tokens processed)
+         1793192174.316  5797  5828 I ReactNativeJS: [progress] OT2-B: 3 attempts, rw-s6-am.u1.l07 1/5 in-progress; rw-s6-am.u4.l19 1/5 in-progress; rw-s6-am.u5.l02 1/5 in-progress; rw-s6-am.u9.l03 0/5 not-started, tutor 5 generated in 12 ms
+         1793192198.115  7645  7677 I ReactNativeJS: Running "OfflineTutor"
+         1793192198.380  7645  7677 I ReactNativeJS: [boot] content rw-s6-am.u1 v0.2.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793192198.380  7645  7677 I ReactNativeJS: [boot] content rw-s6-am.u4 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793192198.380  7645  7677 I ReactNativeJS: [boot] content rw-s6-am.u5 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793192198.380  7645  7677 I ReactNativeJS: [boot] content rw-s6-am.u9 v0.1.0: up-to-date (1 lesson, 1 examples, 5 exercises)
+         1793192198.383  7645  7677 I ReactNativeJS: [boot] ready in 65 ms: Content: rw-s6-am.u1 v0.2.0, rw-s6-am.u4 v0.1.0, rw-s6-am.u5 v0.1.0, rw-s6-am.u9 v0.1.0 · 4 lesson(s) · offline
+         1793192203.521  7645  7677 I ReactNativeJS: [session] learner OT2-B session #46
+         1793192222.962  7645  7677 I ReactNativeJS: [progress] OT2-B: 3 attempts, rw-s6-am.u1.l07 1/5 in-progress; rw-s6-am.u4.l19 1/5 in-progress; rw-s6-am.u5.l02 1/5 in-progress; rw-s6-am.u9.l03 0/5 not-started, tutor 5 generated in 10 ms
+         1793192251.941  7645  7677 I ReactNativeJS: [lesson] rw-s6-am.u9.l03 read from SQLite in 18 ms for OT2-B
+         1793192253.305  7645  7677 I ReactNativeJS: [lesson] KaTeX 0.18.7: rendered 10 of 10 formulas offline; 1 example(s), 0 exercise(s), 0 hint(s)
+         1793192287.755  7645  7677 I ReactNativeJS: [keyboard] shown: top 284, field 531–578, scroll by 303
+         1793192292.198  7645  7677 I ReactNativeJS: [guidance] warm-up done in 40279 ms (115 prompt tokens processed)
+         1793192296.401  7645  7677 I ReactNativeJS: [router] "How do I find the expected value of a random variable?" -> rw-s6-am.u9.l03 (expected value, random variable)
+         1793192296.401  7645  7677 I ReactNativeJS: [guidance] passage (252 chars): The expected value of a discrete random variable X, also cal…
+         1793192296.447  7645  7677 I ReactNativeJS: [guidance] ask "How do I find the expected value of a ra" (~242 prompt tokens; step 1)
+         1793192310.929  7645  7677 I ReactNativeJS: [guidance] passage warm-up done in 18731 ms (61 prompt tokens processed): The expected value of a discrete random …
+         1793192352.769  7645  7677 I ReactNativeJS: [guidance] step 1 part 2 (resuming after 309 characters)
+         1793192352.795  7645  7677 I ReactNativeJS: [guidance] #67 generated "How do I find the expected value of a ra" 79 tok in 56322 ms, first 19779 ms, prompt 17 tok (cached 166), waited 14482 ms for the warm-up, stopped at the cap
+         1793192360.935  7645  7677 I ReactNativeJS: [guidance] #68 generated "(step 1, part 2) How do I find the expec" 17 tok in 8130 ms, first 488 ms, prompt 1 tok (cached 261), stopped at the next step
+         1793192361.126  7645  7677 I ReactNativeJS: [guidance] render: KaTeX 0.18.7: rendered 3 of 3 formulas offline
+         1793192387.122  7645  7677 I ReactNativeJS: [practice] open rw-s6-am.u9.q.001 (3 hints) for OT2-B
+         1793192387.987  7645  7677 I ReactNativeJS: [practice] prompt: KaTeX 0.18.7: rendered 1 of 1 formulas offline
+         1793192396.735  7645  7677 I ReactNativeJS: [practice] reveal #29 hint 1 on rw-s6-am.u9.q.001
+         1793192425.555  7645  7677 I ReactNativeJS: [keyboard] shown: top 284, field 378–426, scroll by 150
+         1793192433.022  7645  7677 I ReactNativeJS: [practice] attempt #31 rw-s6-am.u9.q.001 "1.9" -> correct (hints seen 1)
+         1793192440.342  7645  7677 I ReactNativeJS: [lesson] rw-s6-am.u9.l03 read from SQLite in 26 ms for OT2-B
+         1793192441.704  7645  7677 I ReactNativeJS: [lesson] KaTeX 0.18.7: rendered 10 of 10 formulas offline; 1 example(s), 0 exercise(s), 0 hint(s)
+         1793192451.759  7645  7677 I ReactNativeJS: [guidance] exercise warm-up done in 64565 ms (189 prompt tokens processed)
+         1793192456.986  7645  7677 I ReactNativeJS: [guidance] warm-up done in 5227 ms (15 prompt tokens processed)
+         1793192471.788  7645  7677 I ReactNativeJS: [progress] OT2-B: 4 attempts, rw-s6-am.u1.l07 1/5 in-progress; rw-s6-am.u4.l19 1/5 in-progress; rw-s6-am.u5.l02 1/5 in-progress; rw-s6-am.u9.l03 1/5 in-progress, tutor 7 generated in 14 ms
+         1793192500.433  9447  9479 I ReactNativeJS: Running "OfflineTutor"
+         1793192500.678  9447  9479 I ReactNativeJS: [boot] content rw-s6-am.u1 v0.2.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793192500.678  9447  9479 I ReactNativeJS: [boot] content rw-s6-am.u4 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793192500.678  9447  9479 I ReactNativeJS: [boot] content rw-s6-am.u5 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793192500.678  9447  9479 I ReactNativeJS: [boot] content rw-s6-am.u9 v0.1.0: up-to-date (1 lesson, 1 examples, 5 exercises)
+         1793192500.681  9447  9479 I ReactNativeJS: [boot] ready in 62 ms: Content: rw-s6-am.u1 v0.2.0, rw-s6-am.u4 v0.1.0, rw-s6-am.u5 v0.1.0, rw-s6-am.u9 v0.1.0 · 4 lesson(s) · offline
+         1793192505.875  9447  9479 I ReactNativeJS: [session] learner OT2-B session #47
+         1793192525.381  9447  9479 I ReactNativeJS: [progress] OT2-B: 4 attempts, rw-s6-am.u1.l07 1/5 in-progress; rw-s6-am.u4.l19 1/5 in-progress; rw-s6-am.u5.l02 1/5 in-progress; rw-s6-am.u9.l03 1/5 in-progress, tutor 7 generated in 8 ms
+         1793192549.970  9447  9479 I ReactNativeJS: [lesson] rw-s6-am.u1.l07 read from SQLite in 17 ms for OT2-B
+         1793192551.314  9447  9479 I ReactNativeJS: [lesson] KaTeX 0.18.7: rendered 16 of 16 formulas offline; 2 example(s), 0 exercise(s), 0 hint(s)
+         1793192590.067  9447  9479 I ReactNativeJS: [guidance] warm-up done in 40117 ms (115 prompt tokens processed)
+         1793192595.405  9447  9479 I ReactNativeJS: [keyboard] shown: top 284, field 370–418, scroll by 142
+         1793192603.558  9447  9479 I ReactNativeJS: [router] "How do I multiply two complex numbers?" -> rw-s6-am.u1.l07 (multiply, complex numbers)
+         1793192603.558  9447  9479 I ReactNativeJS: [guidance] passage (172 chars): The multiplication of z₁ = a + bi and z₂ = c + di follows fr…
+         1793192603.583  9447  9479 I ReactNativeJS: [guidance] ask "How do I multiply two complex numbers?" (~214 prompt tokens; step 1)
+         1793192618.734  9447  9479 I ReactNativeJS: [guidance] passage warm-up done in 22230 ms (69 prompt tokens processed): The multiplication of z₁ = a + bi and z₂…
+         1793192660.648  9447  9479 I ReactNativeJS: [guidance] step 1 part 2 (resuming after 309 characters)
+         1793192660.684  9447  9479 I ReactNativeJS: [guidance] #69 generated "How do I multiply two complex numbers?" 79 tok in 57063 ms, first 19378 ms, prompt 13 tok (cached 174), waited 15151 ms for the warm-up, stopped at the cap
+         1793192686.742  9447  9479 I ReactNativeJS: [guidance] #70 generated "(step 1, part 2) How do I multiply two c" 53 tok in 26032 ms, first 530 ms, prompt 1 tok (cached 265), stopped at the next step
+         1793192686.904  9447  9479 I ReactNativeJS: [guidance] render: KaTeX 0.18.7: rendered 4 of 4 formulas offline
+         1793192722.240  9447  9479 I ReactNativeJS: [practice] open rw-s6-am.u1.q.002 (3 hints) for OT2-B
+         1793192723.134  9447  9479 I ReactNativeJS: [practice] prompt: KaTeX 0.18.7: rendered 1 of 1 formulas offline
+         1793192731.975  9447  9479 I ReactNativeJS: [practice] reveal #30 hint 1 on rw-s6-am.u1.q.002
+         1793192761.456  9447  9479 I ReactNativeJS: [keyboard] shown: top 284, field 351–399, scroll by 123
+         1793192769.005  9447  9479 I ReactNativeJS: [practice] attempt #32 rw-s6-am.u1.q.002 "-9-15i" -> correct (hints seen 1)
+         1793192776.312  9447  9479 I ReactNativeJS: [lesson] rw-s6-am.u1.l07 read from SQLite in 15 ms for OT2-B
+         1793192777.536  9447  9479 I ReactNativeJS: [lesson] KaTeX 0.18.7: rendered 16 of 16 formulas offline; 2 example(s), 0 exercise(s), 0 hint(s)
+         1793192784.631  9447  9479 I ReactNativeJS: [guidance] exercise warm-up done in 62307 ms (181 prompt tokens processed)
+         1793192789.536  9447  9479 I ReactNativeJS: [guidance] warm-up done in 4905 ms (15 prompt tokens processed)
+         1793192807.634  9447  9479 I ReactNativeJS: [progress] OT2-B: 5 attempts, rw-s6-am.u1.l07 2/5 in-progress; rw-s6-am.u4.l19 1/5 in-progress; rw-s6-am.u5.l02 1/5 in-progress; rw-s6-am.u9.l03 1/5 in-progress, tutor 9 generated in 10 ms
+         1793192818.120 11179 11212 I ReactNativeJS: Running "OfflineTutor"
+         1793192818.354 11179 11212 I ReactNativeJS: [boot] content rw-s6-am.u1 v0.2.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793192818.354 11179 11212 I ReactNativeJS: [boot] content rw-s6-am.u4 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793192818.354 11179 11212 I ReactNativeJS: [boot] content rw-s6-am.u5 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793192818.354 11179 11212 I ReactNativeJS: [boot] content rw-s6-am.u9 v0.1.0: up-to-date (1 lesson, 1 examples, 5 exercises)
+         1793192818.360 11179 11212 I ReactNativeJS: [boot] ready in 31 ms: Content: rw-s6-am.u1 v0.2.0, rw-s6-am.u4 v0.1.0, rw-s6-am.u5 v0.1.0, rw-s6-am.u9 v0.1.0 · 4 lesson(s) · offline
+         1793192823.473 11179 11212 I ReactNativeJS: [session] learner OT2-B session #48
+         1793192842.893 11179 11212 I ReactNativeJS: [progress] OT2-B: 5 attempts, rw-s6-am.u1.l07 2/5 in-progress; rw-s6-am.u4.l19 1/5 in-progress; rw-s6-am.u5.l02 1/5 in-progress; rw-s6-am.u9.l03 1/5 in-progress, tutor 9 generated in 9 ms
+         1793192867.520 11179 11212 I ReactNativeJS: [lesson] rw-s6-am.u4.l19 read from SQLite in 16 ms for OT2-B
+         1793192868.904 11179 11212 I ReactNativeJS: [lesson] KaTeX 0.18.7: rendered 14 of 14 formulas offline; 2 example(s), 0 exercise(s), 0 hint(s)
+         1793192908.048 11179 11212 I ReactNativeJS: [guidance] warm-up done in 40546 ms (115 prompt tokens processed)
+         1793192916.707 11179 11212 I ReactNativeJS: [keyboard] shown: top 284, field 371–418, scroll by 143
+         1793192925.207 11179 11212 I ReactNativeJS: [router] "What are the limits of integration in a definite integral?" -> rw-s6-am.u4.l19 (definite integral, integral, integration, limits of integration)
+         1793192925.210 11179 11212 I ReactNativeJS: [guidance] passage (212 chars): The definite integral of f(x) from a to b is F(b) − F(a), wh…
+         1793192925.243 11179 11212 I ReactNativeJS: [guidance] ask "What are the limits of integration in a " (~232 prompt tokens; step 1)
+         1793192943.506 11179 11212 I ReactNativeJS: [guidance] passage warm-up done in 25428 ms (80 prompt tokens processed): The definite integral of f(x) from a to …
+         1793192986.937 11179 11212 I ReactNativeJS: [guidance] step 1 part 2 (resuming after 390 characters)
+         1793192986.968 11179 11212 I ReactNativeJS: [guidance] #71 generated "What are the limits of integration in a " 79 tok in 61692 ms, first 23373 ms, prompt 16 tok (cached 185), waited 18263 ms for the warm-up, stopped at the cap
+         1793193018.261 11179 11212 I ReactNativeJS: [guidance] #72 generated "(step 1, part 2) What are the limits of " 62 tok in 31251 ms, first 529 ms, prompt 1 tok (cached 280)
+         1793193018.393 11179 11212 I ReactNativeJS: [guidance] render: KaTeX 0.18.7: rendered 1 of 1 formulas offline
+         1793193054.132 11179 11212 I ReactNativeJS: [practice] open rw-s6-am.u4.q.002 (3 hints) for OT2-B
+         1793193055.019 11179 11212 I ReactNativeJS: [practice] prompt: KaTeX 0.18.7: rendered 1 of 1 formulas offline
+         1793193063.551 11179 11212 I ReactNativeJS: [practice] reveal #31 hint 1 on rw-s6-am.u4.q.002
+         1793193092.707 11179 11212 I ReactNativeJS: [keyboard] shown: top 284, field 378–426, scroll by 150
+         1793193100.499 11179 11212 I ReactNativeJS: [practice] attempt #33 rw-s6-am.u4.q.002 "-2" -> correct (hints seen 1)
+         1793193105.882 11179 11212 I ReactNativeJS: [guidance] exercise warm-up done in 51674 ms (150 prompt tokens processed)
+         1793193107.957 11179 11212 I ReactNativeJS: [lesson] rw-s6-am.u4.l19 read from SQLite in 14 ms for OT2-B
+         1793193109.166 11179 11212 I ReactNativeJS: [lesson] KaTeX 0.18.7: rendered 14 of 14 formulas offline; 2 example(s), 0 exercise(s), 0 hint(s)
+         1793193113.870 11179 11212 I ReactNativeJS: [guidance] warm-up done in 5927 ms (15 prompt tokens processed)
+         1793193138.600 11179 11212 I ReactNativeJS: [progress] OT2-B: 6 attempts, rw-s6-am.u1.l07 2/5 in-progress; rw-s6-am.u4.l19 2/5 in-progress; rw-s6-am.u5.l02 1/5 in-progress; rw-s6-am.u9.l03 1/5 in-progress, tutor 11 generated in 9 ms
+         1793193157.875 12989 13021 I ReactNativeJS: Running "OfflineTutor"
+         1793193158.087 12989 13021 I ReactNativeJS: [boot] content rw-s6-am.u1 v0.2.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793193158.087 12989 13021 I ReactNativeJS: [boot] content rw-s6-am.u4 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793193158.087 12989 13021 I ReactNativeJS: [boot] content rw-s6-am.u5 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793193158.087 12989 13021 I ReactNativeJS: [boot] content rw-s6-am.u9 v0.1.0: up-to-date (1 lesson, 1 examples, 5 exercises)
+         1793193158.092 12989 13021 I ReactNativeJS: [boot] ready in 29 ms: Content: rw-s6-am.u1 v0.2.0, rw-s6-am.u4 v0.1.0, rw-s6-am.u5 v0.1.0, rw-s6-am.u9 v0.1.0 · 4 lesson(s) · offline
+         1793193163.206 12989 13021 I ReactNativeJS: [session] learner OT2-B session #49
+         1793193182.680 12989 13021 I ReactNativeJS: [progress] OT2-B: 6 attempts, rw-s6-am.u1.l07 2/5 in-progress; rw-s6-am.u4.l19 2/5 in-progress; rw-s6-am.u5.l02 1/5 in-progress; rw-s6-am.u9.l03 1/5 in-progress, tutor 11 generated in 10 ms
+         1793193211.685 12989 13021 I ReactNativeJS: [lesson] rw-s6-am.u5.l02 read from SQLite in 19 ms for OT2-B
+         1793193212.996 12989 13021 I ReactNativeJS: [lesson] KaTeX 0.18.7: rendered 14 of 14 formulas offline; 2 example(s), 0 exercise(s), 0 hint(s)
+         1793193252.462 12989 13021 I ReactNativeJS: [guidance] warm-up done in 40810 ms (115 prompt tokens processed)
+         1793193256.007 12989 13021 I ReactNativeJS: [keyboard] shown: top 284, field 371–418, scroll by 143
+         1793193264.612 12989 13021 I ReactNativeJS: [router] "How do I find a particular solution from an initial condition?" -> rw-s6-am.u5.l02 (particular solution, initial condition)
+         1793193264.612 12989 13021 I ReactNativeJS: [guidance] passage (247 chars): A solution that contains an arbitrary constant is the genera…
+         1793193264.660 12989 13021 I ReactNativeJS: [guidance] ask "How do I find a particular solution from" (~243 prompt tokens; step 1)
+         1793193275.700 12989 13021 I ReactNativeJS: [guidance] passage warm-up done in 18234 ms (56 prompt tokens processed): A solution that contains an arbitrary co…
+         1793193301.529 12989 13021 I ReactNativeJS: [guidance] #73 generated "How do I find a particular solution from" 44 tok in 36836 ms, first 16643 ms, prompt 17 tok (cached 161), waited 11040 ms for the warm-up, stopped at the next step
+         1793193301.694 12989 13021 I ReactNativeJS: [guidance] render: KaTeX 0.18.7: rendered 0 of 0 formulas offline
+         1793193336.277 12989 13021 I ReactNativeJS: [practice] open rw-s6-am.u5.q.002 (3 hints) for OT2-B
+         1793193337.210 12989 13021 I ReactNativeJS: [practice] prompt: KaTeX 0.18.7: rendered 1 of 1 formulas offline
+         1793193346.029 12989 13021 I ReactNativeJS: [practice] reveal #32 hint 1 on rw-s6-am.u5.q.002
+         1793193375.524 12989 13021 I ReactNativeJS: [keyboard] shown: top 284, field 374–422, scroll by 146
+         1793193383.447 12989 13021 I ReactNativeJS: [practice] attempt #34 rw-s6-am.u5.q.002 "(1+x)/(1-x)" -> correct (hints seen 1)
+         1793193390.920 12989 13021 I ReactNativeJS: [lesson] rw-s6-am.u5.l02 read from SQLite in 27 ms for OT2-B
+         1793193392.086 12989 13021 I ReactNativeJS: [lesson] KaTeX 0.18.7: rendered 14 of 14 formulas offline; 2 example(s), 0 exercise(s), 0 hint(s)
+         1793193407.295 12989 13021 I ReactNativeJS: [guidance] exercise warm-up done in 70946 ms (202 prompt tokens processed)
+         1793193412.762 12989 13021 I ReactNativeJS: [guidance] warm-up done in 5466 ms (15 prompt tokens processed)
+         1793193423.069 12989 13021 I ReactNativeJS: [progress] OT2-B: 7 attempts, rw-s6-am.u1.l07 2/5 in-progress; rw-s6-am.u4.l19 2/5 in-progress; rw-s6-am.u5.l02 2/5 in-progress; rw-s6-am.u9.l03 1/5 in-progress, tutor 12 generated in 10 ms
+         1793193447.373 14816 14848 I ReactNativeJS: Running "OfflineTutor"
+         1793193447.591 14816 14848 I ReactNativeJS: [boot] content rw-s6-am.u1 v0.2.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793193447.592 14816 14848 I ReactNativeJS: [boot] content rw-s6-am.u4 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793193447.592 14816 14848 I ReactNativeJS: [boot] content rw-s6-am.u5 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793193447.592 14816 14848 I ReactNativeJS: [boot] content rw-s6-am.u9 v0.1.0: up-to-date (1 lesson, 1 examples, 5 exercises)
+         1793193447.595 14816 14848 I ReactNativeJS: [boot] ready in 31 ms: Content: rw-s6-am.u1 v0.2.0, rw-s6-am.u4 v0.1.0, rw-s6-am.u5 v0.1.0, rw-s6-am.u9 v0.1.0 · 4 lesson(s) · offline
+         1793193452.729 14816 14848 I ReactNativeJS: [session] learner OT2-B session #50
+         1793193472.220 14816 14848 I ReactNativeJS: [progress] OT2-B: 7 attempts, rw-s6-am.u1.l07 2/5 in-progress; rw-s6-am.u4.l19 2/5 in-progress; rw-s6-am.u5.l02 2/5 in-progress; rw-s6-am.u9.l03 1/5 in-progress, tutor 12 generated in 8 ms
+         1793193501.307 14816 14848 I ReactNativeJS: [lesson] rw-s6-am.u9.l03 read from SQLite in 12 ms for OT2-B
+         1793193502.671 14816 14848 I ReactNativeJS: [lesson] KaTeX 0.18.7: rendered 10 of 10 formulas offline; 1 example(s), 0 exercise(s), 0 hint(s)
+         1793193537.759 14816 14848 I ReactNativeJS: [keyboard] shown: top 284, field 544–592, scroll by 316
+         1793193543.737 14816 14848 I ReactNativeJS: [guidance] warm-up done in 42446 ms (115 prompt tokens processed)
+         1793193546.662 14816 14848 I ReactNativeJS: [router] "How do I calculate the variance of a discrete random variable?" -> rw-s6-am.u9.l03 (variance, random variable, discrete random variable)
+         1793193546.662 14816 14848 I ReactNativeJS: [guidance] passage (252 chars): The expected value of a discrete random variable X, also cal…
+         1793193546.703 14816 14848 I ReactNativeJS: [guidance] ask "How do I calculate the variance of a dis" (~244 prompt tokens; step 1)
+         1793193563.937 14816 14848 I ReactNativeJS: [guidance] passage warm-up done in 20199 ms (61 prompt tokens processed): The expected value of a discrete random …
+         1793193608.375 14816 14848 I ReactNativeJS: [guidance] step 1 part 2 (resuming after 260 characters)
+         1793193608.411 14816 14848 I ReactNativeJS: [guidance] #74 generated "How do I calculate the variance of a dis" 79 tok in 61671 ms, first 22972 ms, prompt 17 tok (cached 166), waited 17233 ms for the warm-up, stopped at the cap
+         1793193624.196 14816 14848 I ReactNativeJS: [guidance] #75 generated "(step 1, part 2) How do I calculate the " 31 tok in 15781 ms, first 559 ms, prompt 1 tok (cached 261), stopped at the next step
+         1793193624.378 14816 14848 I ReactNativeJS: [guidance] render: KaTeX 0.18.7: rendered 9 of 9 formulas offline
+         1793193650.459 14816 14848 I ReactNativeJS: [practice] open rw-s6-am.u9.q.002 (3 hints) for OT2-B
+         1793193651.363 14816 14848 I ReactNativeJS: [practice] prompt: KaTeX 0.18.7: rendered 1 of 1 formulas offline
+         1793193660.350 14816 14848 I ReactNativeJS: [practice] reveal #33 hint 1 on rw-s6-am.u9.q.002
+         1793193689.559 14816 14848 I ReactNativeJS: [keyboard] shown: top 284, field 378–426, scroll by 150
+         1793193697.231 14816 14848 I ReactNativeJS: [practice] attempt #35 rw-s6-am.u9.q.002 "0.4" -> correct (hints seen 1)
+         1793193704.560 14816 14848 I ReactNativeJS: [lesson] rw-s6-am.u9.l03 read from SQLite in 16 ms for OT2-B
+         1793193705.946 14816 14848 I ReactNativeJS: [lesson] KaTeX 0.18.7: rendered 10 of 10 formulas offline; 1 example(s), 0 exercise(s), 0 hint(s)
+         1793193716.471 14816 14848 I ReactNativeJS: [guidance] exercise warm-up done in 65913 ms (184 prompt tokens processed)
+         1793193721.904 14816 14848 I ReactNativeJS: [guidance] warm-up done in 5433 ms (15 prompt tokens processed)
+         1793193737.168 14816 14848 I ReactNativeJS: [progress] OT2-B: 8 attempts, rw-s6-am.u1.l07 2/5 in-progress; rw-s6-am.u4.l19 2/5 in-progress; rw-s6-am.u5.l02 2/5 in-progress; rw-s6-am.u9.l03 2/5 in-progress, tutor 14 generated in 11 ms
+         1793193766.406 16605 16637 I ReactNativeJS: Running "OfflineTutor"
+         1793193766.669 16605 16637 I ReactNativeJS: [boot] content rw-s6-am.u1 v0.2.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793193766.669 16605 16637 I ReactNativeJS: [boot] content rw-s6-am.u4 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793193766.669 16605 16637 I ReactNativeJS: [boot] content rw-s6-am.u5 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793193766.669 16605 16637 I ReactNativeJS: [boot] content rw-s6-am.u9 v0.1.0: up-to-date (1 lesson, 1 examples, 5 exercises)
+         1793193766.671 16605 16637 I ReactNativeJS: [boot] ready in 66 ms: Content: rw-s6-am.u1 v0.2.0, rw-s6-am.u4 v0.1.0, rw-s6-am.u5 v0.1.0, rw-s6-am.u9 v0.1.0 · 4 lesson(s) · offline
+         1793193771.879 16605 16637 I ReactNativeJS: [session] learner OT2-B session #51
+         1793193791.298 16605 16637 I ReactNativeJS: [progress] OT2-B: 8 attempts, rw-s6-am.u1.l07 2/5 in-progress; rw-s6-am.u4.l19 2/5 in-progress; rw-s6-am.u5.l02 2/5 in-progress; rw-s6-am.u9.l03 2/5 in-progress, tutor 14 generated in 9 ms
+         1793193816.057 16605 16637 I ReactNativeJS: [lesson] rw-s6-am.u1.l07 read from SQLite in 38 ms for OT2-B
+         1793193817.435 16605 16637 I ReactNativeJS: [lesson] KaTeX 0.18.7: rendered 16 of 16 formulas offline; 2 example(s), 0 exercise(s), 0 hint(s)
+         1793193858.538 16605 16637 I ReactNativeJS: [guidance] warm-up done in 42523 ms (115 prompt tokens processed)
+         1793193862.592 16605 16637 I ReactNativeJS: [keyboard] shown: top 284, field 370–418, scroll by 142
+         1793193871.013 16605 16637 I ReactNativeJS: [router] "What is the conjugate of a complex number?" -> rw-s6-am.u1.l07 (conjugate, complex number)
+         1793193871.015 16605 16637 I ReactNativeJS: [guidance] passage (294 chars): The complex conjugate of z = x + yi, written z̄ or z*, is ob…
+         1793193871.049 16605 16637 I ReactNativeJS: [guidance] ask "What is the conjugate of a complex numbe" (~250 prompt tokens; step 1)
+         1793193897.316 16605 16637 I ReactNativeJS: [guidance] passage warm-up done in 33570 ms (100 prompt tokens processed): The complex conjugate of z = x + yi, wri…
+         1793193943.541 16605 16637 I ReactNativeJS: [guidance] step 1 part 2 (resuming after 309 characters)
+         1793193943.569 16605 16637 I ReactNativeJS: [guidance] #76 generated "What is the conjugate of a complex numbe" 79 tok in 72492 ms, first 31440 ms, prompt 15 tok (cached 205), waited 26267 ms for the warm-up, stopped at the cap
+         1793193985.870 16605 16637 I ReactNativeJS: [guidance] step 1 part 3 (resuming after 560 characters)
+         1793193985.895 16605 16637 I ReactNativeJS: [guidance] #77 generated "(step 1, part 2) What is the conjugate o" 80 tok in 42329 ms, first 578 ms, prompt 1 tok (cached 298), stopped at the cap
+         1793193991.282 16605 16637 I ReactNativeJS: [guidance] #78 generated "(step 1, part 3) What is the conjugate o" 10 tok in 5371 ms, first 554 ms, prompt 1 tok (cached 378), stopped at the next step
+         1793193991.484 16605 16637 I ReactNativeJS: [guidance] render: KaTeX 0.18.7: rendered 9 of 9 formulas offline
+         1793194027.427 16605 16637 I ReactNativeJS: [practice] open rw-s6-am.u1.q.003 (3 hints) for OT2-B
+         1793194028.364 16605 16637 I ReactNativeJS: [practice] prompt: KaTeX 0.18.7: rendered 1 of 1 formulas offline
+         1793194037.436 16605 16637 I ReactNativeJS: [practice] reveal #34 hint 1 on rw-s6-am.u1.q.003
+         1793194066.577 16605 16637 I ReactNativeJS: [keyboard] shown: top 284, field 351–399, scroll by 123
+         1793194074.238 16605 16637 I ReactNativeJS: [practice] attempt #36 rw-s6-am.u1.q.003 "3+5i" -> correct (hints seen 1)
+         1793194081.416 16605 16637 I ReactNativeJS: [lesson] rw-s6-am.u1.l07 read from SQLite in 16 ms for OT2-B
+         1793194082.057 16605 16637 I ReactNativeJS: [lesson] KaTeX 0.18.7: rendered 16 of 16 formulas offline; 2 example(s), 0 exercise(s), 0 hint(s)
+         1793194085.056 16605 16637 I ReactNativeJS: [guidance] exercise warm-up done in 57562 ms (161 prompt tokens processed)
+         1793194090.510 16605 16637 I ReactNativeJS: [guidance] warm-up done in 5454 ms (15 prompt tokens processed)
+         1793194111.906 16605 16637 I ReactNativeJS: [progress] OT2-B: 9 attempts, rw-s6-am.u1.l07 3/5 in-progress; rw-s6-am.u4.l19 2/5 in-progress; rw-s6-am.u5.l02 2/5 in-progress; rw-s6-am.u9.l03 2/5 in-progress, tutor 17 generated in 14 ms
+         1793194122.500 18309 18341 I ReactNativeJS: Running "OfflineTutor"
+         1793194122.765 18309 18341 I ReactNativeJS: [boot] content rw-s6-am.u1 v0.2.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793194122.765 18309 18341 I ReactNativeJS: [boot] content rw-s6-am.u4 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793194122.765 18309 18341 I ReactNativeJS: [boot] content rw-s6-am.u5 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793194122.765 18309 18341 I ReactNativeJS: [boot] content rw-s6-am.u9 v0.1.0: up-to-date (1 lesson, 1 examples, 5 exercises)
+         1793194122.768 18309 18341 I ReactNativeJS: [boot] ready in 66 ms: Content: rw-s6-am.u1 v0.2.0, rw-s6-am.u4 v0.1.0, rw-s6-am.u5 v0.1.0, rw-s6-am.u9 v0.1.0 · 4 lesson(s) · offline
+         1793194127.998 18309 18341 I ReactNativeJS: [session] learner OT2-B session #52
+         1793194147.505 18309 18341 I ReactNativeJS: [progress] OT2-B: 9 attempts, rw-s6-am.u1.l07 3/5 in-progress; rw-s6-am.u4.l19 2/5 in-progress; rw-s6-am.u5.l02 2/5 in-progress; rw-s6-am.u9.l03 2/5 in-progress, tutor 17 generated in 8 ms
+         1793194172.167 18309 18341 I ReactNativeJS: [lesson] rw-s6-am.u4.l19 read from SQLite in 43 ms for OT2-B
+         1793194173.535 18309 18341 I ReactNativeJS: [lesson] KaTeX 0.18.7: rendered 14 of 14 formulas offline; 2 example(s), 0 exercise(s), 0 hint(s)
+         1793194215.435 18309 18341 I ReactNativeJS: [guidance] warm-up done in 43335 ms (115 prompt tokens processed)
+         1793194223.160 18309 18341 I ReactNativeJS: [keyboard] shown: top 284, field 371–418, scroll by 143
+         1793194232.091 18309 18341 I ReactNativeJS: [router] "How do I integrate a function term by term between two limits?" -> rw-s6-am.u4.l19 (integrate)
+         1793194232.092 18309 18341 I ReactNativeJS: [guidance] passage (190 chars): No constant of integration is written in a definite integral…
+         1793194232.131 18309 18341 I ReactNativeJS: [guidance] ask "How do I integrate a function term by te" (~226 prompt tokens; step 1)
+         1793194248.496 18309 18341 I ReactNativeJS: [guidance] passage warm-up done in 24199 ms (70 prompt tokens processed): No constant of integration is written in…
+         1793194270.072 18309 18341 I ReactNativeJS: [guidance] #79 generated "How do I integrate a function term by te" 31 tok in 37902 ms, first 22494 ms, prompt 18 tok (cached 175), waited 16364 ms for the warm-up, stopped at the next step
+         1793194270.218 18309 18341 I ReactNativeJS: [guidance] render: KaTeX 0.18.7: rendered 0 of 0 formulas offline
+         1793194308.301 18309 18341 I ReactNativeJS: [practice] open rw-s6-am.u4.q.003 (3 hints) for OT2-B
+         1793194308.611 18309 18341 I ReactNativeJS: [practice] prompt: KaTeX 0.18.7: rendered 1 of 1 formulas offline
+         1793194326.429 18309 18341 I ReactNativeJS: [practice] reveal #35 hint 1 on rw-s6-am.u4.q.003
+         1793194360.660 18309 18341 I ReactNativeJS: [keyboard] shown: top 284, field 354–402, scroll by 126
+         1793194368.340 18309 18341 I ReactNativeJS: [practice] attempt #37 rw-s6-am.u4.q.003 "0.75" -> correct (hints seen 1)
+         1793194369.081 18309 18341 I ReactNativeJS: [guidance] exercise warm-up done in 60716 ms (171 prompt tokens processed)
+         1793194375.014 18309 18341 I ReactNativeJS: [lesson] rw-s6-am.u4.l19 read from SQLite in 17 ms for OT2-B
+         1793194376.149 18309 18341 I ReactNativeJS: [lesson] KaTeX 0.18.7: rendered 14 of 14 formulas offline; 2 example(s), 0 exercise(s), 0 hint(s)
+         1793194381.067 18309 18341 I ReactNativeJS: [guidance] warm-up done in 6070 ms (15 prompt tokens processed)
+         1793194405.732 18309 18341 I ReactNativeJS: [progress] OT2-B: 10 attempts, rw-s6-am.u1.l07 3/5 in-progress; rw-s6-am.u4.l19 3/5 in-progress; rw-s6-am.u5.l02 2/5 in-progress; rw-s6-am.u9.l03 2/5 in-progress, tutor 18 generated in 19 ms
+         1793194425.355 20163 20195 I ReactNativeJS: Running "OfflineTutor"
+         1793194425.611 20163 20195 I ReactNativeJS: [boot] content rw-s6-am.u1 v0.2.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793194425.611 20163 20195 I ReactNativeJS: [boot] content rw-s6-am.u4 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793194425.611 20163 20195 I ReactNativeJS: [boot] content rw-s6-am.u5 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793194425.611 20163 20195 I ReactNativeJS: [boot] content rw-s6-am.u9 v0.1.0: up-to-date (1 lesson, 1 examples, 5 exercises)
+         1793194425.616 20163 20195 I ReactNativeJS: [boot] ready in 63 ms: Content: rw-s6-am.u1 v0.2.0, rw-s6-am.u4 v0.1.0, rw-s6-am.u5 v0.1.0, rw-s6-am.u9 v0.1.0 · 4 lesson(s) · offline
+         1793194430.827 20163 20195 I ReactNativeJS: [session] learner OT2-B session #53
+         1793194450.452 20163 20195 I ReactNativeJS: [progress] OT2-B: 10 attempts, rw-s6-am.u1.l07 3/5 in-progress; rw-s6-am.u4.l19 3/5 in-progress; rw-s6-am.u5.l02 2/5 in-progress; rw-s6-am.u9.l03 2/5 in-progress, tutor 18 generated in 11 ms
+         1793194454.137 20387 20414 I ReactNativeJS: Running "OfflineTutor"
+         1793194454.359 20387 20414 I ReactNativeJS: [boot] content rw-s6-am.u1 v0.2.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793194454.359 20387 20414 I ReactNativeJS: [boot] content rw-s6-am.u4 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793194454.359 20387 20414 I ReactNativeJS: [boot] content rw-s6-am.u5 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793194454.359 20387 20414 I ReactNativeJS: [boot] content rw-s6-am.u9 v0.1.0: up-to-date (1 lesson, 1 examples, 5 exercises)
+         1793194454.367 20387 20414 I ReactNativeJS: [boot] ready in 36 ms: Content: rw-s6-am.u1 v0.2.0, rw-s6-am.u4 v0.1.0, rw-s6-am.u5 v0.1.0, rw-s6-am.u9 v0.1.0 · 4 lesson(s) · offline
+         1793194467.594 20387 20414 I ReactNativeJS: [keyboard] shown: top 284, field 511–558, scroll by 282
+         1793194474.828 20387 20414 I ReactNativeJS: [session] learner OT2-C session #54
+         1793194480.637 20587 20613 I ReactNativeJS: Running "OfflineTutor"
+         1793194480.882 20587 20613 I ReactNativeJS: [boot] content rw-s6-am.u1 v0.2.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793194480.882 20587 20613 I ReactNativeJS: [boot] content rw-s6-am.u4 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793194480.882 20587 20613 I ReactNativeJS: [boot] content rw-s6-am.u5 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793194480.882 20587 20613 I ReactNativeJS: [boot] content rw-s6-am.u9 v0.1.0: up-to-date (1 lesson, 1 examples, 5 exercises)
+         1793194480.885 20587 20613 I ReactNativeJS: [boot] ready in 64 ms: Content: rw-s6-am.u1 v0.2.0, rw-s6-am.u4 v0.1.0, rw-s6-am.u5 v0.1.0, rw-s6-am.u9 v0.1.0 · 4 lesson(s) · offline
+         1793194485.973 20587 20613 I ReactNativeJS: [session] learner OT2-C session #55
+         1793194500.609 20587 20613 I ReactNativeJS: [lesson] rw-s6-am.u1.l07 read from SQLite in 18 ms for OT2-C
+         1793194501.858 20587 20613 I ReactNativeJS: [lesson] KaTeX 0.18.7: rendered 16 of 16 formulas offline; 2 example(s), 0 exercise(s), 0 hint(s)
+         1793194543.021 20587 20613 I ReactNativeJS: [guidance] warm-up done in 42432 ms (115 prompt tokens processed)
+         1793194543.745 20587 20613 I ReactNativeJS: [keyboard] shown: top 284, field 370–418, scroll by 142
+         1793194551.900 20587 20613 I ReactNativeJS: [router] "How do I add two complex numbers?" -> rw-s6-am.u1.l07 (add, complex numbers)
+         1793194551.900 20587 20613 I ReactNativeJS: [guidance] passage (310 chars): Two complex numbers are added, or subtracted, by adding, or …
+         1793194551.939 20587 20613 I ReactNativeJS: [guidance] ask "How do I add two complex numbers?" (~252 prompt tokens; step 1)
+         1793194581.938 20587 20613 I ReactNativeJS: [guidance] passage warm-up done in 37129 ms (110 prompt tokens processed): Two complex numbers are added, or subtra…
+         1793194626.773 20587 20613 I ReactNativeJS: [guidance] step 1 part 2 (resuming after 308 characters)
+         1793194626.804 20587 20613 I ReactNativeJS: [guidance] #80 generated "How do I add two complex numbers?" 79 tok in 74832 ms, first 34510 ms, prompt 13 tok (cached 215), waited 29999 ms for the warm-up, stopped at the cap
+         1793194645.472 20587 20613 I ReactNativeJS: [guidance] #81 generated "(step 1, part 2) How do I add two comple" 36 tok in 18656 ms, first 559 ms, prompt 1 tok (cached 306), stopped at the next step
+         1793194645.653 20587 20613 I ReactNativeJS: [guidance] render: KaTeX 0.18.7: rendered 6 of 6 formulas offline
+         1793194681.307 20587 20613 I ReactNativeJS: [practice] open rw-s6-am.u1.q.001 (3 hints) for OT2-C
+         1793194682.230 20587 20613 I ReactNativeJS: [practice] prompt: KaTeX 0.18.7: rendered 1 of 1 formulas offline
+         1793194686.324 20587 20613 I ReactNativeJS: [practice] reveal #36 hint 1 on rw-s6-am.u1.q.001
+         1793194710.213 20587 20613 I ReactNativeJS: [keyboard] shown: top 284, field 351–399, scroll by 123
+         1793194717.815 20587 20613 I ReactNativeJS: [practice] attempt #38 rw-s6-am.u1.q.001 "5+3i" -> correct (hints seen 1)
+         1793194724.892 20587 20613 I ReactNativeJS: [lesson] rw-s6-am.u1.l07 read from SQLite in 21 ms for OT2-C
+         1793194726.373 20587 20613 I ReactNativeJS: [lesson] KaTeX 0.18.7: rendered 16 of 16 formulas offline; 2 example(s), 0 exercise(s), 0 hint(s)
+         1793194742.258 20587 20613 I ReactNativeJS: [guidance] exercise warm-up done in 60868 ms (168 prompt tokens processed)
+         1793194747.537 20587 20613 I ReactNativeJS: [guidance] warm-up done in 5279 ms (15 prompt tokens processed)
+         1793194753.419 20587 20613 I ReactNativeJS: [progress] OT2-C: 1 attempts, rw-s6-am.u1.l07 1/5 in-progress; rw-s6-am.u4.l19 0/5 not-started; rw-s6-am.u5.l02 0/5 not-started; rw-s6-am.u9.l03 0/5 not-started, tutor 2 generated in 8 ms
+         1793194758.904 21789 21815 I ReactNativeJS: Running "OfflineTutor"
+         1793194759.124 21789 21815 I ReactNativeJS: [boot] content rw-s6-am.u1 v0.2.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793194759.124 21789 21815 I ReactNativeJS: [boot] content rw-s6-am.u4 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793194759.124 21789 21815 I ReactNativeJS: [boot] content rw-s6-am.u5 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793194759.124 21789 21815 I ReactNativeJS: [boot] content rw-s6-am.u9 v0.1.0: up-to-date (1 lesson, 1 examples, 5 exercises)
+         1793194759.126 21789 21815 I ReactNativeJS: [boot] ready in 31 ms: Content: rw-s6-am.u1 v0.2.0, rw-s6-am.u4 v0.1.0, rw-s6-am.u5 v0.1.0, rw-s6-am.u9 v0.1.0 · 4 lesson(s) · offline
+         1793194764.370 21789 21815 I ReactNativeJS: [session] learner OT2-C session #56
+         1793194783.852 21789 21815 I ReactNativeJS: [progress] OT2-C: 1 attempts, rw-s6-am.u1.l07 1/5 in-progress; rw-s6-am.u4.l19 0/5 not-started; rw-s6-am.u5.l02 0/5 not-started; rw-s6-am.u9.l03 0/5 not-started, tutor 2 generated in 9 ms
+         1793194786.671 22003 22029 I ReactNativeJS: Running "OfflineTutor"
+         1793194786.928 22003 22029 I ReactNativeJS: [boot] content rw-s6-am.u1 v0.2.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793194786.929 22003 22029 I ReactNativeJS: [boot] content rw-s6-am.u4 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793194786.929 22003 22029 I ReactNativeJS: [boot] content rw-s6-am.u5 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793194786.929 22003 22029 I ReactNativeJS: [boot] content rw-s6-am.u9 v0.1.0: up-to-date (1 lesson, 1 examples, 5 exercises)
+         1793194786.932 22003 22029 I ReactNativeJS: [boot] ready in 65 ms: Content: rw-s6-am.u1 v0.2.0, rw-s6-am.u4 v0.1.0, rw-s6-am.u5 v0.1.0, rw-s6-am.u9 v0.1.0 · 4 lesson(s) · offline
+         1793194792.161 22003 22029 I ReactNativeJS: [session] learner OT2-C session #57
+         1793194806.753 22003 22029 I ReactNativeJS: [lesson] rw-s6-am.u4.l19 read from SQLite in 19 ms for OT2-C
+         1793194808.228 22003 22029 I ReactNativeJS: [lesson] KaTeX 0.18.7: rendered 14 of 14 formulas offline; 2 example(s), 0 exercise(s), 0 hint(s)
+         1793194849.606 22003 22029 I ReactNativeJS: [guidance] warm-up done in 42881 ms (115 prompt tokens processed)
+         1793194853.378 22003 22029 I ReactNativeJS: [keyboard] shown: top 284, field 371–418, scroll by 143
+         1793194861.592 22003 22029 I ReactNativeJS: [router] "How do I evaluate a definite integral?" -> rw-s6-am.u4.l19 (definite integral, integral)
+         1793194861.593 22003 22029 I ReactNativeJS: [guidance] passage (212 chars): The definite integral of f(x) from a to b is F(b) − F(a), wh…
+         1793194861.652 22003 22029 I ReactNativeJS: [guidance] ask "How do I evaluate a definite integral?" (~226 prompt tokens; step 1)
+         1793194882.031 22003 22029 I ReactNativeJS: [guidance] passage warm-up done in 27188 ms (80 prompt tokens processed): The definite integral of f(x) from a to …
+         1793194905.211 22003 22029 I ReactNativeJS: [guidance] #82 generated "How do I evaluate a definite integral?" 37 tok in 43496 ms, first 24894 ms, prompt 13 tok (cached 185), waited 20379 ms for the warm-up, stopped at the next step
+         1793194905.343 22003 22029 I ReactNativeJS: [guidance] render: KaTeX 0.18.7: rendered 3 of 3 formulas offline
+         1793194941.415 22003 22029 I ReactNativeJS: [practice] open rw-s6-am.u4.q.001 (3 hints) for OT2-C
+         1793194942.184 22003 22029 I ReactNativeJS: [practice] prompt: KaTeX 0.18.7: rendered 1 of 1 formulas offline
+         1793194946.273 22003 22029 I ReactNativeJS: [practice] reveal #37 hint 1 on rw-s6-am.u4.q.001
+         1793194969.746 22003 22029 I ReactNativeJS: [keyboard] shown: top 284, field 378–426, scroll by 150
+         1793194977.102 22003 22029 I ReactNativeJS: [practice] attempt #39 rw-s6-am.u4.q.001 "4.5" -> correct (hints seen 1)
+         1793194984.485 22003 22029 I ReactNativeJS: [lesson] rw-s6-am.u4.l19 read from SQLite in 22 ms for OT2-C
+         1793194984.936 22003 22029 I ReactNativeJS: [guidance] exercise warm-up done in 43418 ms (121 prompt tokens processed)
+         1793194985.925 22003 22029 I ReactNativeJS: [lesson] KaTeX 0.18.7: rendered 14 of 14 formulas offline; 2 example(s), 0 exercise(s), 0 hint(s)
+         1793194991.021 22003 22029 I ReactNativeJS: [guidance] warm-up done in 6085 ms (15 prompt tokens processed)
+         1793195010.971 22003 22029 I ReactNativeJS: [progress] OT2-C: 2 attempts, rw-s6-am.u1.l07 1/5 in-progress; rw-s6-am.u4.l19 1/5 in-progress; rw-s6-am.u5.l02 0/5 not-started; rw-s6-am.u9.l03 0/5 not-started, tutor 3 generated in 9 ms
+         1793195025.291 23267 23294 I ReactNativeJS: Running "OfflineTutor"
+         1793195025.556 23267 23294 I ReactNativeJS: [boot] content rw-s6-am.u1 v0.2.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793195025.556 23267 23294 I ReactNativeJS: [boot] content rw-s6-am.u4 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793195025.556 23267 23294 I ReactNativeJS: [boot] content rw-s6-am.u5 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793195025.556 23267 23294 I ReactNativeJS: [boot] content rw-s6-am.u9 v0.1.0: up-to-date (1 lesson, 1 examples, 5 exercises)
+         1793195025.558 23267 23294 I ReactNativeJS: [boot] ready in 67 ms: Content: rw-s6-am.u1 v0.2.0, rw-s6-am.u4 v0.1.0, rw-s6-am.u5 v0.1.0, rw-s6-am.u9 v0.1.0 · 4 lesson(s) · offline
+         1793195030.768 23267 23294 I ReactNativeJS: [session] learner OT2-C session #58
+         1793195050.323 23267 23294 I ReactNativeJS: [progress] OT2-C: 2 attempts, rw-s6-am.u1.l07 1/5 in-progress; rw-s6-am.u4.l19 1/5 in-progress; rw-s6-am.u5.l02 0/5 not-started; rw-s6-am.u9.l03 0/5 not-started, tutor 3 generated in 9 ms
+         1793195053.125 23484 23510 I ReactNativeJS: Running "OfflineTutor"
+         1793195053.380 23484 23510 I ReactNativeJS: [boot] content rw-s6-am.u1 v0.2.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793195053.380 23484 23510 I ReactNativeJS: [boot] content rw-s6-am.u4 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793195053.380 23484 23510 I ReactNativeJS: [boot] content rw-s6-am.u5 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793195053.380 23484 23510 I ReactNativeJS: [boot] content rw-s6-am.u9 v0.1.0: up-to-date (1 lesson, 1 examples, 5 exercises)
+         1793195053.384 23484 23510 I ReactNativeJS: [boot] ready in 63 ms: Content: rw-s6-am.u1 v0.2.0, rw-s6-am.u4 v0.1.0, rw-s6-am.u5 v0.1.0, rw-s6-am.u9 v0.1.0 · 4 lesson(s) · offline
+         1793195058.578 23484 23510 I ReactNativeJS: [session] learner OT2-C session #59
+         1793195077.640 23484 23510 I ReactNativeJS: [lesson] rw-s6-am.u5.l02 read from SQLite in 17 ms for OT2-C
+         1793195078.869 23484 23510 I ReactNativeJS: [lesson] KaTeX 0.18.7: rendered 14 of 14 formulas offline; 2 example(s), 0 exercise(s), 0 hint(s)
+         1793195118.779 23484 23510 I ReactNativeJS: [keyboard] shown: top 284, field 377–424, scroll by 148
+         1793195121.397 23484 23510 I ReactNativeJS: [guidance] warm-up done in 43777 ms (115 prompt tokens processed)
+         1793195127.291 23484 23510 I ReactNativeJS: [router] "How do I separate the variables in a differential equation?" -> rw-s6-am.u5.l02 (differential equation, separate the variables)
+         1793195127.292 23484 23510 I ReactNativeJS: [guidance] passage (253 chars): A first-order differential equation can be written F(x, y, d…
+         1793195127.336 23484 23510 I ReactNativeJS: [guidance] ask "How do I separate the variables in a dif" (~244 prompt tokens; step 1)
+         1793195150.790 23484 23510 I ReactNativeJS: [guidance] passage warm-up done in 29392 ms (86 prompt tokens processed): A first-order differential equation can …
+         1793195196.586 23484 23510 I ReactNativeJS: [guidance] step 1 part 2 (resuming after 277 characters)
+         1793195196.624 23484 23510 I ReactNativeJS: [guidance] #83 generated "How do I separate the variables in a dif" 79 tok in 69250 ms, first 29000 ms, prompt 16 tok (cached 191), waited 23455 ms for the warm-up, stopped at the cap
+         1793195204.025 23484 23510 I ReactNativeJS: [guidance] #84 generated "(step 1, part 2) How do I separate the v" 14 tok in 7357 ms, first 567 ms, prompt 1 tok (cached 285), stopped at the next step
+         1793195204.162 23484 23510 I ReactNativeJS: [guidance] render: KaTeX 0.18.7: rendered 6 of 6 formulas offline
+         1793195238.597 23484 23510 I ReactNativeJS: [practice] open rw-s6-am.u5.q.001 (3 hints) for OT2-C
+         1793195239.018 23484 23510 I ReactNativeJS: [practice] prompt: KaTeX 0.18.7: rendered 1 of 1 formulas offline
+         1793195243.285 23484 23510 I ReactNativeJS: [practice] reveal #38 hint 1 on rw-s6-am.u5.q.001
+         1793195267.263 23484 23510 I ReactNativeJS: [keyboard] shown: top 284, field 369–417, scroll by 141
+         1793195275.009 23484 23510 I ReactNativeJS: [practice] attempt #40 rw-s6-am.u5.q.001 "x^2/2+4x-6" -> correct (hints seen 1)
+         1793195282.170 23484 23510 I ReactNativeJS: [lesson] rw-s6-am.u5.l02 read from SQLite in 24 ms for OT2-C
+         1793195283.641 23484 23510 I ReactNativeJS: [lesson] KaTeX 0.18.7: rendered 14 of 14 formulas offline; 2 example(s), 0 exercise(s), 0 hint(s)
+         1793195299.808 23484 23510 I ReactNativeJS: [guidance] exercise warm-up done in 61152 ms (168 prompt tokens processed)
+         1793195305.197 23484 23510 I ReactNativeJS: [guidance] warm-up done in 5389 ms (15 prompt tokens processed)
+         1793195310.286 23484 23510 I ReactNativeJS: [progress] OT2-C: 3 attempts, rw-s6-am.u1.l07 1/5 in-progress; rw-s6-am.u4.l19 1/5 in-progress; rw-s6-am.u5.l02 1/5 in-progress; rw-s6-am.u9.l03 0/5 not-started, tutor 5 generated in 7 ms
+         1793195329.272 24760 24789 I ReactNativeJS: Running "OfflineTutor"
+         1793195329.491 24760 24789 I ReactNativeJS: [boot] content rw-s6-am.u1 v0.2.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793195329.491 24760 24789 I ReactNativeJS: [boot] content rw-s6-am.u4 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793195329.491 24760 24789 I ReactNativeJS: [boot] content rw-s6-am.u5 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793195329.491 24760 24789 I ReactNativeJS: [boot] content rw-s6-am.u9 v0.1.0: up-to-date (1 lesson, 1 examples, 5 exercises)
+         1793195329.495 24760 24789 I ReactNativeJS: [boot] ready in 30 ms: Content: rw-s6-am.u1 v0.2.0, rw-s6-am.u4 v0.1.0, rw-s6-am.u5 v0.1.0, rw-s6-am.u9 v0.1.0 · 4 lesson(s) · offline
+         1793195334.598 24760 24789 I ReactNativeJS: [session] learner OT2-C session #60
+         1793195354.077 24760 24789 I ReactNativeJS: [progress] OT2-C: 3 attempts, rw-s6-am.u1.l07 1/5 in-progress; rw-s6-am.u4.l19 1/5 in-progress; rw-s6-am.u5.l02 1/5 in-progress; rw-s6-am.u9.l03 0/5 not-started, tutor 5 generated in 8 ms
+         1793195356.865 24977 25003 I ReactNativeJS: Running "OfflineTutor"
+         1793195357.077 24977 25003 I ReactNativeJS: [boot] content rw-s6-am.u1 v0.2.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793195357.077 24977 25003 I ReactNativeJS: [boot] content rw-s6-am.u4 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793195357.077 24977 25003 I ReactNativeJS: [boot] content rw-s6-am.u5 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793195357.077 24977 25003 I ReactNativeJS: [boot] content rw-s6-am.u9 v0.1.0: up-to-date (1 lesson, 1 examples, 5 exercises)
+         1793195357.084 24977 25003 I ReactNativeJS: [boot] ready in 35 ms: Content: rw-s6-am.u1 v0.2.0, rw-s6-am.u4 v0.1.0, rw-s6-am.u5 v0.1.0, rw-s6-am.u9 v0.1.0 · 4 lesson(s) · offline
+         1793195362.201 24977 25003 I ReactNativeJS: [session] learner OT2-C session #61
+         1793195381.146 24977 25003 I ReactNativeJS: [lesson] rw-s6-am.u9.l03 read from SQLite in 19 ms for OT2-C
+         1793195382.401 24977 25003 I ReactNativeJS: [lesson] KaTeX 0.18.7: rendered 10 of 10 formulas offline; 1 example(s), 0 exercise(s), 0 hint(s)
+         1793195417.464 24977 25003 I ReactNativeJS: [keyboard] shown: top 284, field 371–418, scroll by 143
+         1793195425.210 24977 25003 I ReactNativeJS: [guidance] warm-up done in 44085 ms (115 prompt tokens processed)
+         1793195426.068 24977 25003 I ReactNativeJS: [router] "How do I find the expected value of a random variable?" -> rw-s6-am.u9.l03 (expected value, random variable)
+         1793195426.069 24977 25003 I ReactNativeJS: [guidance] passage (252 chars): The expected value of a discrete random variable X, also cal…
+         1793195426.113 24977 25003 I ReactNativeJS: [guidance] ask "How do I find the expected value of a ra" (~242 prompt tokens; step 1)
+         1793195444.656 24977 25003 I ReactNativeJS: [guidance] passage warm-up done in 19445 ms (61 prompt tokens processed): The expected value of a discrete random …
+         1793195489.504 24977 25003 I ReactNativeJS: [guidance] step 1 part 2 (resuming after 309 characters)
+         1793195489.528 24977 25003 I ReactNativeJS: [guidance] #85 generated "How do I find the expected value of a ra" 79 tok in 63389 ms, first 24244 ms, prompt 17 tok (cached 166), waited 18541 ms for the warm-up, stopped at the cap
+         1793195498.156 24977 25003 I ReactNativeJS: [guidance] #86 generated "(step 1, part 2) How do I find the expec" 17 tok in 8614 ms, first 527 ms, prompt 1 tok (cached 261), stopped at the next step
+         1793195498.342 24977 25003 I ReactNativeJS: [guidance] render: KaTeX 0.18.7: rendered 3 of 3 formulas offline
+         1793195524.467 24977 25003 I ReactNativeJS: [practice] open rw-s6-am.u9.q.001 (3 hints) for OT2-C
+         1793195525.517 24977 25003 I ReactNativeJS: [practice] prompt: KaTeX 0.18.7: rendered 1 of 1 formulas offline
+         1793195529.652 24977 25003 I ReactNativeJS: [practice] reveal #39 hint 1 on rw-s6-am.u9.q.001
+         1793195554.080 24977 25003 I ReactNativeJS: [keyboard] shown: top 284, field 378–426, scroll by 150
+         1793195561.654 24977 25003 I ReactNativeJS: [practice] attempt #41 rw-s6-am.u9.q.001 "1.9" -> correct (hints seen 1)
+         1793195568.594 24977 25003 I ReactNativeJS: [lesson] rw-s6-am.u9.l03 read from SQLite in 9 ms for OT2-C
+         1793195569.894 24977 25003 I ReactNativeJS: [lesson] KaTeX 0.18.7: rendered 10 of 10 formulas offline; 1 example(s), 0 exercise(s), 0 hint(s)
+         1793195593.896 24977 25003 I ReactNativeJS: [guidance] exercise warm-up done in 69345 ms (189 prompt tokens processed)
+         1793195598.358 24977 25003 I ReactNativeJS: [progress] OT2-C: 4 attempts, rw-s6-am.u1.l07 1/5 in-progress; rw-s6-am.u4.l19 1/5 in-progress; rw-s6-am.u5.l02 1/5 in-progress; rw-s6-am.u9.l03 1/5 in-progress, tutor 7 generated in 41 ms
+         1793195599.658 24977 25003 I ReactNativeJS: [guidance] warm-up done in 5761 ms (15 prompt tokens processed)
+         1793195623.049 26230 26256 I ReactNativeJS: Running "OfflineTutor"
+         1793195623.303 26230 26256 I ReactNativeJS: [boot] content rw-s6-am.u1 v0.2.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793195623.303 26230 26256 I ReactNativeJS: [boot] content rw-s6-am.u4 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793195623.303 26230 26256 I ReactNativeJS: [boot] content rw-s6-am.u5 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793195623.303 26230 26256 I ReactNativeJS: [boot] content rw-s6-am.u9 v0.1.0: up-to-date (1 lesson, 1 examples, 5 exercises)
+         1793195623.306 26230 26256 I ReactNativeJS: [boot] ready in 65 ms: Content: rw-s6-am.u1 v0.2.0, rw-s6-am.u4 v0.1.0, rw-s6-am.u5 v0.1.0, rw-s6-am.u9 v0.1.0 · 4 lesson(s) · offline
+         1793195628.499 26230 26256 I ReactNativeJS: [session] learner OT2-C session #62
+         1793195648.124 26230 26256 I ReactNativeJS: [progress] OT2-C: 4 attempts, rw-s6-am.u1.l07 1/5 in-progress; rw-s6-am.u4.l19 1/5 in-progress; rw-s6-am.u5.l02 1/5 in-progress; rw-s6-am.u9.l03 1/5 in-progress, tutor 7 generated in 7 ms
+         1793195650.942 26443 26469 I ReactNativeJS: Running "OfflineTutor"
+         1793195651.205 26443 26469 I ReactNativeJS: [boot] content rw-s6-am.u1 v0.2.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793195651.205 26443 26469 I ReactNativeJS: [boot] content rw-s6-am.u4 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793195651.205 26443 26469 I ReactNativeJS: [boot] content rw-s6-am.u5 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793195651.205 26443 26469 I ReactNativeJS: [boot] content rw-s6-am.u9 v0.1.0: up-to-date (1 lesson, 1 examples, 5 exercises)
+         1793195651.212 26443 26469 I ReactNativeJS: [boot] ready in 73 ms: Content: rw-s6-am.u1 v0.2.0, rw-s6-am.u4 v0.1.0, rw-s6-am.u5 v0.1.0, rw-s6-am.u9 v0.1.0 · 4 lesson(s) · offline
+         1793195656.414 26443 26469 I ReactNativeJS: [session] learner OT2-C session #63
+         1793195671.071 26443 26469 I ReactNativeJS: [lesson] rw-s6-am.u1.l07 read from SQLite in 18 ms for OT2-C
+         1793195672.331 26443 26469 I ReactNativeJS: [lesson] KaTeX 0.18.7: rendered 16 of 16 formulas offline; 2 example(s), 0 exercise(s), 0 hint(s)
+         1793195713.215 26443 26469 I ReactNativeJS: [keyboard] shown: top 284, field 370–418, scroll by 142
+         1793195714.606 26443 26469 I ReactNativeJS: [guidance] warm-up done in 43557 ms (115 prompt tokens processed)
+         1793195721.739 26443 26469 I ReactNativeJS: [router] "How do I multiply two complex numbers?" -> rw-s6-am.u1.l07 (multiply, complex numbers)
+         1793195721.740 26443 26469 I ReactNativeJS: [guidance] passage (172 chars): The multiplication of z₁ = a + bi and z₂ = c + di follows fr…
+         1793195721.776 26443 26469 I ReactNativeJS: [guidance] ask "How do I multiply two complex numbers?" (~214 prompt tokens; step 1)
+         1793195739.283 26443 26469 I ReactNativeJS: [guidance] passage warm-up done in 24597 ms (69 prompt tokens processed): The multiplication of z₁ = a + bi and z₂…
+         1793195784.304 26443 26469 I ReactNativeJS: [guidance] step 1 part 2 (resuming after 292 characters)
+         1793195784.326 26443 26469 I ReactNativeJS: [guidance] #87 generated "How do I multiply two complex numbers?" 79 tok in 62527 ms, first 22143 ms, prompt 13 tok (cached 174), waited 17507 ms for the warm-up, stopped at the cap
+         1793195826.511 26443 26469 I ReactNativeJS: [guidance] step 1 part 3 (resuming after 528 characters)
+         1793195826.538 26443 26469 I ReactNativeJS: [guidance] #88 generated "(step 1, part 2) How do I multiply two c" 80 tok in 42206 ms, first 556 ms, prompt 1 tok (cached 265), stopped at the cap
+         1793195830.973 26443 26469 I ReactNativeJS: [guidance] #89 generated "(step 1, part 3) How do I multiply two c" 8 tok in 4350 ms, first 581 ms, prompt 1 tok (cached 345), stopped at the next step
+         1793195831.099 26443 26469 I ReactNativeJS: [guidance] render: KaTeX 0.18.7: rendered 5 of 5 formulas offline
+         1793195866.609 26443 26469 I ReactNativeJS: [practice] open rw-s6-am.u1.q.002 (3 hints) for OT2-C
+         1793195867.597 26443 26469 I ReactNativeJS: [practice] prompt: KaTeX 0.18.7: rendered 1 of 1 formulas offline
+         1793195871.893 26443 26469 I ReactNativeJS: [practice] reveal #40 hint 1 on rw-s6-am.u1.q.002
+         1793195896.235 26443 26469 I ReactNativeJS: [keyboard] shown: top 284, field 351–399, scroll by 123
+         1793195904.213 26443 26469 I ReactNativeJS: [practice] attempt #42 rw-s6-am.u1.q.002 "-9-15i" -> correct (hints seen 1)
+         1793195911.529 26443 26469 I ReactNativeJS: [lesson] rw-s6-am.u1.l07 read from SQLite in 25 ms for OT2-C
+         1793195912.872 26443 26469 I ReactNativeJS: [lesson] KaTeX 0.18.7: rendered 16 of 16 formulas offline; 2 example(s), 0 exercise(s), 0 hint(s)
+         1793195933.748 26443 26469 I ReactNativeJS: [guidance] exercise warm-up done in 67075 ms (181 prompt tokens processed)
+         1793195939.220 26443 26469 I ReactNativeJS: [guidance] warm-up done in 5472 ms (15 prompt tokens processed)
+         1793195940.006 26443 26469 I ReactNativeJS: [progress] OT2-C: 5 attempts, rw-s6-am.u1.l07 2/5 in-progress; rw-s6-am.u4.l19 1/5 in-progress; rw-s6-am.u5.l02 1/5 in-progress; rw-s6-am.u9.l03 1/5 in-progress, tutor 10 generated in 9 ms
+         1793195945.876 27650 27677 I ReactNativeJS: Running "OfflineTutor"
+         1793195946.144 27650 27677 I ReactNativeJS: [boot] content rw-s6-am.u1 v0.2.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793195946.144 27650 27677 I ReactNativeJS: [boot] content rw-s6-am.u4 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793195946.144 27650 27677 I ReactNativeJS: [boot] content rw-s6-am.u5 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793195946.144 27650 27677 I ReactNativeJS: [boot] content rw-s6-am.u9 v0.1.0: up-to-date (1 lesson, 1 examples, 5 exercises)
+         1793195946.147 27650 27677 I ReactNativeJS: [boot] ready in 70 ms: Content: rw-s6-am.u1 v0.2.0, rw-s6-am.u4 v0.1.0, rw-s6-am.u5 v0.1.0, rw-s6-am.u9 v0.1.0 · 4 lesson(s) · offline
+         1793195951.385 27650 27677 I ReactNativeJS: [session] learner OT2-C session #64
+         1793195970.888 27650 27677 I ReactNativeJS: [progress] OT2-C: 5 attempts, rw-s6-am.u1.l07 2/5 in-progress; rw-s6-am.u4.l19 1/5 in-progress; rw-s6-am.u5.l02 1/5 in-progress; rw-s6-am.u9.l03 1/5 in-progress, tutor 10 generated in 8 ms
+         1793195973.734 27865 27892 I ReactNativeJS: Running "OfflineTutor"
+         1793195973.987 27865 27892 I ReactNativeJS: [boot] content rw-s6-am.u1 v0.2.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793195973.988 27865 27892 I ReactNativeJS: [boot] content rw-s6-am.u4 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793195973.988 27865 27892 I ReactNativeJS: [boot] content rw-s6-am.u5 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793195973.988 27865 27892 I ReactNativeJS: [boot] content rw-s6-am.u9 v0.1.0: up-to-date (1 lesson, 1 examples, 5 exercises)
+         1793195973.992 27865 27892 I ReactNativeJS: [boot] ready in 67 ms: Content: rw-s6-am.u1 v0.2.0, rw-s6-am.u4 v0.1.0, rw-s6-am.u5 v0.1.0, rw-s6-am.u9 v0.1.0 · 4 lesson(s) · offline
+         1793195979.168 27865 27892 I ReactNativeJS: [session] learner OT2-C session #65
+         1793195993.826 27865 27892 I ReactNativeJS: [lesson] rw-s6-am.u4.l19 read from SQLite in 21 ms for OT2-C
+         1793195995.187 27865 27892 I ReactNativeJS: [lesson] KaTeX 0.18.7: rendered 14 of 14 formulas offline; 2 example(s), 0 exercise(s), 0 hint(s)
+         1793196037.871 27865 27892 I ReactNativeJS: [guidance] warm-up done in 44070 ms (115 prompt tokens processed)
+         1793196040.716 27865 27892 I ReactNativeJS: [keyboard] shown: top 284, field 371–418, scroll by 143
+         1793196049.603 27865 27892 I ReactNativeJS: [router] "What are the limits of integration in a definite integral?" -> rw-s6-am.u4.l19 (definite integral, integral, integration, limits of integration)
+         1793196049.604 27865 27892 I ReactNativeJS: [guidance] passage (212 chars): The definite integral of f(x) from a to b is F(b) − F(a), wh…
+         1793196049.638 27865 27892 I ReactNativeJS: [guidance] ask "What are the limits of integration in a " (~232 prompt tokens; step 1)
+         1793196068.841 27865 27892 I ReactNativeJS: [guidance] passage warm-up done in 26740 ms (80 prompt tokens processed): The definite integral of f(x) from a to …
+         1793196114.237 27865 27892 I ReactNativeJS: [guidance] step 1 part 2 (resuming after 314 characters)
+         1793196114.257 27865 27892 I ReactNativeJS: [guidance] #90 generated "What are the limits of integration in a " 79 tok in 64597 ms, first 24407 ms, prompt 16 tok (cached 185), waited 19203 ms for the warm-up, stopped at the cap
+         1793196142.359 27865 27892 I ReactNativeJS: [guidance] #91 generated "(step 1, part 2) What are the limits of " 54 tok in 28042 ms, first 537 ms, prompt 1 tok (cached 279), stopped at the next step
+         1793196142.520 27865 27892 I ReactNativeJS: [guidance] render: KaTeX 0.18.7: rendered 9 of 9 formulas offline
+         1793196179.434 27865 27892 I ReactNativeJS: [practice] open rw-s6-am.u4.q.002 (3 hints) for OT2-C
+         1793196180.314 27865 27892 I ReactNativeJS: [practice] prompt: KaTeX 0.18.7: rendered 1 of 1 formulas offline
+         1793196184.456 27865 27892 I ReactNativeJS: [practice] reveal #41 hint 1 on rw-s6-am.u4.q.002
+         1793196208.433 27865 27892 I ReactNativeJS: [keyboard] shown: top 284, field 378–426, scroll by 150
+         1793196216.470 27865 27892 I ReactNativeJS: [practice] attempt #43 rw-s6-am.u4.q.002 "-2" -> correct (hints seen 1)
+         1793196223.801 27865 27892 I ReactNativeJS: [lesson] rw-s6-am.u4.l19 read from SQLite in 92 ms for OT2-C
+         1793196225.093 27865 27892 I ReactNativeJS: [lesson] KaTeX 0.18.7: rendered 14 of 14 formulas offline; 2 example(s), 0 exercise(s), 0 hint(s)
+         1793196235.029 27865 27892 I ReactNativeJS: [guidance] exercise warm-up done in 55521 ms (150 prompt tokens processed)
+         1793196240.609 27865 27892 I ReactNativeJS: [guidance] warm-up done in 5580 ms (15 prompt tokens processed)
+         1793196251.423 27865 27892 I ReactNativeJS: [progress] OT2-C: 6 attempts, rw-s6-am.u1.l07 2/5 in-progress; rw-s6-am.u4.l19 2/5 in-progress; rw-s6-am.u5.l02 1/5 in-progress; rw-s6-am.u9.l03 1/5 in-progress, tutor 12 generated in 8 ms
+         1793196266.050 29143 29170 I ReactNativeJS: Running "OfflineTutor"
+         1793196266.307 29143 29170 I ReactNativeJS: [boot] content rw-s6-am.u1 v0.2.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793196266.307 29143 29170 I ReactNativeJS: [boot] content rw-s6-am.u4 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793196266.307 29143 29170 I ReactNativeJS: [boot] content rw-s6-am.u5 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793196266.307 29143 29170 I ReactNativeJS: [boot] content rw-s6-am.u9 v0.1.0: up-to-date (1 lesson, 1 examples, 5 exercises)
+         1793196266.310 29143 29170 I ReactNativeJS: [boot] ready in 68 ms: Content: rw-s6-am.u1 v0.2.0, rw-s6-am.u4 v0.1.0, rw-s6-am.u5 v0.1.0, rw-s6-am.u9 v0.1.0 · 4 lesson(s) · offline
+         1793196271.508 29143 29170 I ReactNativeJS: [session] learner OT2-C session #66
+         1793196291.064 29143 29170 I ReactNativeJS: [progress] OT2-C: 6 attempts, rw-s6-am.u1.l07 2/5 in-progress; rw-s6-am.u4.l19 2/5 in-progress; rw-s6-am.u5.l02 1/5 in-progress; rw-s6-am.u9.l03 1/5 in-progress, tutor 12 generated in 8 ms
+         1793196293.845 29360 29386 I ReactNativeJS: Running "OfflineTutor"
+         1793196294.128 29360 29386 I ReactNativeJS: [boot] content rw-s6-am.u1 v0.2.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793196294.128 29360 29386 I ReactNativeJS: [boot] content rw-s6-am.u4 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793196294.129 29360 29386 I ReactNativeJS: [boot] content rw-s6-am.u5 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793196294.129 29360 29386 I ReactNativeJS: [boot] content rw-s6-am.u9 v0.1.0: up-to-date (1 lesson, 1 examples, 5 exercises)
+         1793196294.134 29360 29386 I ReactNativeJS: [boot] ready in 77 ms: Content: rw-s6-am.u1 v0.2.0, rw-s6-am.u4 v0.1.0, rw-s6-am.u5 v0.1.0, rw-s6-am.u9 v0.1.0 · 4 lesson(s) · offline
+         1793196299.317 29360 29386 I ReactNativeJS: [session] learner OT2-C session #67
+         1793196318.374 29360 29386 I ReactNativeJS: [lesson] rw-s6-am.u5.l02 read from SQLite in 19 ms for OT2-C
+         1793196319.641 29360 29386 I ReactNativeJS: [lesson] KaTeX 0.18.7: rendered 14 of 14 formulas offline; 2 example(s), 0 exercise(s), 0 hint(s)
+         1793196359.716 29360 29386 I ReactNativeJS: [keyboard] shown: top 284, field 373–420, scroll by 144
+         1793196362.728 29360 29386 I ReactNativeJS: [guidance] warm-up done in 44377 ms (115 prompt tokens processed)
+         1793196368.740 29360 29386 I ReactNativeJS: [router] "How do I find a particular solution from an initial condition?" -> rw-s6-am.u5.l02 (particular solution, initial condition)
+         1793196368.740 29360 29386 I ReactNativeJS: [guidance] passage (247 chars): A solution that contains an arbitrary constant is the genera…
+         1793196368.777 29360 29386 I ReactNativeJS: [guidance] ask "How do I find a particular solution from" (~243 prompt tokens; step 1)
+         1793196381.342 29360 29386 I ReactNativeJS: [guidance] passage warm-up done in 18613 ms (56 prompt tokens processed): A solution that contains an arbitrary co…
+         1793196408.970 29360 29386 I ReactNativeJS: [guidance] #92 generated "How do I find a particular solution from" 44 tok in 40161 ms, first 18276 ms, prompt 17 tok (cached 161), waited 12565 ms for the warm-up, stopped at the next step
+         1793196409.144 29360 29386 I ReactNativeJS: [guidance] render: KaTeX 0.18.7: rendered 0 of 0 formulas offline
+         1793196443.734 29360 29386 I ReactNativeJS: [practice] open rw-s6-am.u5.q.002 (3 hints) for OT2-C
+         1793196444.649 29360 29386 I ReactNativeJS: [practice] prompt: KaTeX 0.18.7: rendered 1 of 1 formulas offline
+         1793196448.723 29360 29386 I ReactNativeJS: [practice] reveal #42 hint 1 on rw-s6-am.u5.q.002
+         1793196472.800 29360 29386 I ReactNativeJS: [keyboard] shown: top 284, field 374–422, scroll by 146
+         1793196480.652 29360 29386 I ReactNativeJS: [practice] attempt #44 rw-s6-am.u5.q.002 "(1+x)/(1-x)" -> correct (hints seen 1)
+         1793196488.029 29360 29386 I ReactNativeJS: [lesson] rw-s6-am.u5.l02 read from SQLite in 16 ms for OT2-C
+         1793196489.257 29360 29386 I ReactNativeJS: [lesson] KaTeX 0.18.7: rendered 14 of 14 formulas offline; 2 example(s), 0 exercise(s), 0 hint(s)
+         1793196517.152 29360 29386 I ReactNativeJS: [progress] OT2-C: 7 attempts, rw-s6-am.u1.l07 2/5 in-progress; rw-s6-am.u4.l19 2/5 in-progress; rw-s6-am.u5.l02 2/5 in-progress; rw-s6-am.u9.l03 1/5 in-progress, tutor 13 generated in 32 ms
+         1793196519.420 29360 29386 I ReactNativeJS: [guidance] exercise warm-up done in 75615 ms (202 prompt tokens processed)
+         1793196525.222 29360 29386 I ReactNativeJS: [guidance] warm-up done in 5801 ms (15 prompt tokens processed)
+         1793196538.109 30668 30694 I ReactNativeJS: Running "OfflineTutor"
+         1793196538.368 30668 30694 I ReactNativeJS: [boot] content rw-s6-am.u1 v0.2.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793196538.368 30668 30694 I ReactNativeJS: [boot] content rw-s6-am.u4 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793196538.368 30668 30694 I ReactNativeJS: [boot] content rw-s6-am.u5 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793196538.368 30668 30694 I ReactNativeJS: [boot] content rw-s6-am.u9 v0.1.0: up-to-date (1 lesson, 1 examples, 5 exercises)
+         1793196538.373 30668 30694 I ReactNativeJS: [boot] ready in 72 ms: Content: rw-s6-am.u1 v0.2.0, rw-s6-am.u4 v0.1.0, rw-s6-am.u5 v0.1.0, rw-s6-am.u9 v0.1.0 · 4 lesson(s) · offline
+         1793196543.604 30668 30694 I ReactNativeJS: [session] learner OT2-C session #68
+         1793196563.129 30668 30694 I ReactNativeJS: [progress] OT2-C: 7 attempts, rw-s6-am.u1.l07 2/5 in-progress; rw-s6-am.u4.l19 2/5 in-progress; rw-s6-am.u5.l02 2/5 in-progress; rw-s6-am.u9.l03 1/5 in-progress, tutor 13 generated in 6 ms
+         1793196565.914 30882 30910 I ReactNativeJS: Running "OfflineTutor"
+         1793196566.195 30882 30910 I ReactNativeJS: [boot] content rw-s6-am.u1 v0.2.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793196566.195 30882 30910 I ReactNativeJS: [boot] content rw-s6-am.u4 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793196566.195 30882 30910 I ReactNativeJS: [boot] content rw-s6-am.u5 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793196566.196 30882 30910 I ReactNativeJS: [boot] content rw-s6-am.u9 v0.1.0: up-to-date (1 lesson, 1 examples, 5 exercises)
+         1793196566.201 30882 30910 I ReactNativeJS: [boot] ready in 74 ms: Content: rw-s6-am.u1 v0.2.0, rw-s6-am.u4 v0.1.0, rw-s6-am.u5 v0.1.0, rw-s6-am.u9 v0.1.0 · 4 lesson(s) · offline
+         1793196571.470 30882 30910 I ReactNativeJS: [session] learner OT2-C session #69
+         1793196590.508 30882 30910 I ReactNativeJS: [lesson] rw-s6-am.u9.l03 read from SQLite in 23 ms for OT2-C
+         1793196591.801 30882 30910 I ReactNativeJS: [lesson] KaTeX 0.18.7: rendered 10 of 10 formulas offline; 1 example(s), 0 exercise(s), 0 hint(s)
+         1793196623.000 30882 30910 I ReactNativeJS: [keyboard] shown: top 284, field 541–588, scroll by 312
+         1793196632.019 30882 30910 I ReactNativeJS: [router] "How do I calculate the variance of a discrete random variable?" -> rw-s6-am.u9.l03 (variance, random variable, discrete random variable)
+         1793196632.020 30882 30910 I ReactNativeJS: [guidance] passage (252 chars): The expected value of a discrete random variable X, also cal…
+         1793196632.048 30882 30910 I ReactNativeJS: [guidance] ask "How do I calculate the variance of a dis" (~244 prompt tokens; step 1)
+         1793196635.041 30882 30910 I ReactNativeJS: [guidance] warm-up done in 44558 ms (115 prompt tokens processed)
+         1793196700.225 30882 30910 I ReactNativeJS: [guidance] step 1 part 2 (resuming after 265 characters)
+         1793196700.249 30882 30910 I ReactNativeJS: [guidance] #93 generated "How do I calculate the variance of a dis" 79 tok in 68176 ms, first 27994 ms, prompt 73 tok (cached 110), waited 2993 ms for the warm-up, stopped at the cap
+         1793196717.436 30882 30910 I ReactNativeJS: [guidance] #94 generated "(step 1, part 2) How do I calculate the " 33 tok in 17178 ms, first 563 ms, prompt 1 tok (cached 261), stopped at the next step
+         1793196717.627 30882 30910 I ReactNativeJS: [guidance] render: KaTeX 0.18.7: rendered 9 of 9 formulas offline
+         1793196743.784 30882 30910 I ReactNativeJS: [practice] open rw-s6-am.u9.q.002 (3 hints) for OT2-C
+         1793196744.223 30882 30910 I ReactNativeJS: [practice] prompt: KaTeX 0.18.7: rendered 1 of 1 formulas offline
+         1793196748.546 30882 30910 I ReactNativeJS: [practice] reveal #43 hint 1 on rw-s6-am.u9.q.002
+         1793196773.851 30882 30910 I ReactNativeJS: [keyboard] shown: top 284, field 378–426, scroll by 150
+         1793196781.884 30882 30910 I ReactNativeJS: [practice] attempt #45 rw-s6-am.u9.q.002 "0.4" -> correct (hints seen 1)
+         1793196789.245 30882 30910 I ReactNativeJS: [lesson] rw-s6-am.u9.l03 read from SQLite in 39 ms for OT2-C
+         1793196790.561 30882 30910 I ReactNativeJS: [lesson] KaTeX 0.18.7: rendered 10 of 10 formulas offline; 1 example(s), 0 exercise(s), 0 hint(s)
+         1793196811.680 30882 30910 I ReactNativeJS: [guidance] exercise warm-up done in 67837 ms (184 prompt tokens processed)
+         1793196817.120 30882 30910 I ReactNativeJS: [guidance] warm-up done in 5439 ms (15 prompt tokens processed)
+         1793196818.679 30882 30910 I ReactNativeJS: [progress] OT2-C: 8 attempts, rw-s6-am.u1.l07 2/5 in-progress; rw-s6-am.u4.l19 2/5 in-progress; rw-s6-am.u5.l02 2/5 in-progress; rw-s6-am.u9.l03 2/5 in-progress, tutor 15 generated in 7 ms
+         1793196846.828 32087 32114 I ReactNativeJS: Running "OfflineTutor"
+         1793196847.082 32087 32114 I ReactNativeJS: [boot] content rw-s6-am.u1 v0.2.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793196847.082 32087 32114 I ReactNativeJS: [boot] content rw-s6-am.u4 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793196847.082 32087 32114 I ReactNativeJS: [boot] content rw-s6-am.u5 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793196847.082 32087 32114 I ReactNativeJS: [boot] content rw-s6-am.u9 v0.1.0: up-to-date (1 lesson, 1 examples, 5 exercises)
+         1793196847.088 32087 32114 I ReactNativeJS: [boot] ready in 71 ms: Content: rw-s6-am.u1 v0.2.0, rw-s6-am.u4 v0.1.0, rw-s6-am.u5 v0.1.0, rw-s6-am.u9 v0.1.0 · 4 lesson(s) · offline
+         1793196854.840 32087 32114 I ReactNativeJS: [session] learner OT2-C session #70
+         1793196874.456 32087 32114 I ReactNativeJS: [progress] OT2-C: 8 attempts, rw-s6-am.u1.l07 2/5 in-progress; rw-s6-am.u4.l19 2/5 in-progress; rw-s6-am.u5.l02 2/5 in-progress; rw-s6-am.u9.l03 2/5 in-progress, tutor 15 generated in 7 ms
+         1793196877.795 32302 32328 I ReactNativeJS: Running "OfflineTutor"
+         1793196878.048 32302 32328 I ReactNativeJS: [boot] content rw-s6-am.u1 v0.2.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793196878.048 32302 32328 I ReactNativeJS: [boot] content rw-s6-am.u4 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793196878.049 32302 32328 I ReactNativeJS: [boot] content rw-s6-am.u5 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793196878.049 32302 32328 I ReactNativeJS: [boot] content rw-s6-am.u9 v0.1.0: up-to-date (1 lesson, 1 examples, 5 exercises)
+         1793196878.053 32302 32328 I ReactNativeJS: [boot] ready in 70 ms: Content: rw-s6-am.u1 v0.2.0, rw-s6-am.u4 v0.1.0, rw-s6-am.u5 v0.1.0, rw-s6-am.u9 v0.1.0 · 4 lesson(s) · offline
+         1793196883.287 32302 32328 I ReactNativeJS: [session] learner OT2-C session #71
+         1793196897.907 32302 32328 I ReactNativeJS: [lesson] rw-s6-am.u1.l07 read from SQLite in 21 ms for OT2-C
+         1793196899.191 32302 32328 I ReactNativeJS: [lesson] KaTeX 0.18.7: rendered 16 of 16 formulas offline; 2 example(s), 0 exercise(s), 0 hint(s)
+         1793196938.819 32302 32328 I ReactNativeJS: [keyboard] shown: top 284, field 370–418, scroll by 142
+         1793196941.825 32302 32328 I ReactNativeJS: [guidance] warm-up done in 43942 ms (115 prompt tokens processed)
+         1793196947.415 32302 32328 I ReactNativeJS: [router] "What is the conjugate of a complex number?" -> rw-s6-am.u1.l07 (conjugate, complex number)
+         1793196947.422 32302 32328 I ReactNativeJS: [guidance] passage (294 chars): The complex conjugate of z = x + yi, written z̄ or z*, is ob…
+         1793196947.463 32302 32328 I ReactNativeJS: [guidance] ask "What is the conjugate of a complex numbe" (~250 prompt tokens; step 1)
+         1793196976.319 32302 32328 I ReactNativeJS: [guidance] passage warm-up done in 34494 ms (100 prompt tokens processed): The complex conjugate of z = x + yi, wri…
+         1793197011.859 32302 32328 I ReactNativeJS: [guidance] #95 generated "What is the conjugate of a complex numbe" 59 tok in 64356 ms, first 34158 ms, prompt 15 tok (cached 205), waited 28857 ms for the warm-up, stopped at the next step
+         1793197012.037 32302 32328 I ReactNativeJS: [guidance] render: KaTeX 0.18.7: rendered 4 of 4 formulas offline
+         1793197047.384 32302 32328 I ReactNativeJS: [practice] open rw-s6-am.u1.q.003 (3 hints) for OT2-C
+         1793197048.223 32302 32328 I ReactNativeJS: [practice] prompt: KaTeX 0.18.7: rendered 1 of 1 formulas offline
+         1793197052.252 32302 32328 I ReactNativeJS: [practice] reveal #44 hint 1 on rw-s6-am.u1.q.003
+         1793197077.201 32302 32328 I ReactNativeJS: [keyboard] shown: top 284, field 351–399, scroll by 123
+         1793197085.030 32302 32328 I ReactNativeJS: [practice] attempt #46 rw-s6-am.u1.q.003 "3+5i" -> correct (hints seen 1)
+         1793197092.310 32302 32328 I ReactNativeJS: [lesson] rw-s6-am.u1.l07 read from SQLite in 50 ms for OT2-C
+         1793197093.680 32302 32328 I ReactNativeJS: [lesson] KaTeX 0.18.7: rendered 16 of 16 formulas offline; 2 example(s), 0 exercise(s), 0 hint(s)
+         1793197106.867 32302 32328 I ReactNativeJS: [guidance] exercise warm-up done in 59400 ms (161 prompt tokens processed)
+         1793197112.222 32302 32328 I ReactNativeJS: [guidance] warm-up done in 5355 ms (15 prompt tokens processed)
+         1793197120.359 32302 32328 I ReactNativeJS: [progress] OT2-C: 9 attempts, rw-s6-am.u1.l07 3/5 in-progress; rw-s6-am.u4.l19 2/5 in-progress; rw-s6-am.u5.l02 2/5 in-progress; rw-s6-am.u9.l03 2/5 in-progress, tutor 16 generated in 8 ms
+         1793197126.362  1728  1773 I ReactNativeJS: Running "OfflineTutor"
+         1793197126.615  1728  1773 I ReactNativeJS: [boot] content rw-s6-am.u1 v0.2.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793197126.616  1728  1773 I ReactNativeJS: [boot] content rw-s6-am.u4 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793197126.616  1728  1773 I ReactNativeJS: [boot] content rw-s6-am.u5 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793197126.616  1728  1773 I ReactNativeJS: [boot] content rw-s6-am.u9 v0.1.0: up-to-date (1 lesson, 1 examples, 5 exercises)
+         1793197126.619  1728  1773 I ReactNativeJS: [boot] ready in 64 ms: Content: rw-s6-am.u1 v0.2.0, rw-s6-am.u4 v0.1.0, rw-s6-am.u5 v0.1.0, rw-s6-am.u9 v0.1.0 · 4 lesson(s) · offline
+         1793197131.803  1728  1773 I ReactNativeJS: [session] learner OT2-C session #72
+         1793197151.410  1728  1773 I ReactNativeJS: [progress] OT2-C: 9 attempts, rw-s6-am.u1.l07 3/5 in-progress; rw-s6-am.u4.l19 2/5 in-progress; rw-s6-am.u5.l02 2/5 in-progress; rw-s6-am.u9.l03 2/5 in-progress, tutor 16 generated in 9 ms
+         1793197154.266  1983  2010 I ReactNativeJS: Running "OfflineTutor"
+         1793197154.490  1983  2010 I ReactNativeJS: [boot] content rw-s6-am.u1 v0.2.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793197154.490  1983  2010 I ReactNativeJS: [boot] content rw-s6-am.u4 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793197154.490  1983  2010 I ReactNativeJS: [boot] content rw-s6-am.u5 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793197154.490  1983  2010 I ReactNativeJS: [boot] content rw-s6-am.u9 v0.1.0: up-to-date (1 lesson, 1 examples, 5 exercises)
+         1793197154.527  1983  2010 I ReactNativeJS: [boot] ready in 68 ms: Content: rw-s6-am.u1 v0.2.0, rw-s6-am.u4 v0.1.0, rw-s6-am.u5 v0.1.0, rw-s6-am.u9 v0.1.0 · 4 lesson(s) · offline
+         1793197159.703  1983  2010 I ReactNativeJS: [session] learner OT2-C session #73
+         1793197174.308  1983  2010 I ReactNativeJS: [lesson] rw-s6-am.u4.l19 read from SQLite in 19 ms for OT2-C
+         1793197175.613  1983  2010 I ReactNativeJS: [lesson] KaTeX 0.18.7: rendered 14 of 14 formulas offline; 2 example(s), 0 exercise(s), 0 hint(s)
+         1793197218.444  1983  2010 I ReactNativeJS: [guidance] warm-up done in 44158 ms (115 prompt tokens processed)
+         1793197221.718  1983  2010 I ReactNativeJS: [keyboard] shown: top 284, field 371–418, scroll by 143
+         1793197230.333  1983  2010 I ReactNativeJS: [router] "How do I integrate a function term by term between two limits?" -> rw-s6-am.u4.l19 (integrate)
+         1793197230.334  1983  2010 I ReactNativeJS: [guidance] passage (190 chars): No constant of integration is written in a definite integral…
+         1793197230.361  1983  2010 I ReactNativeJS: [guidance] ask "How do I integrate a function term by te" (~226 prompt tokens; step 1)
+         1793197247.660  1983  2010 I ReactNativeJS: [guidance] passage warm-up done in 24828 ms (70 prompt tokens processed): No constant of integration is written in…
+         1793197269.735  1983  2010 I ReactNativeJS: [guidance] #96 generated "How do I integrate a function term by te" 31 tok in 39330 ms, first 23594 ms, prompt 18 tok (cached 175), waited 17299 ms for the warm-up, stopped at the next step
+         1793197269.890  1983  2010 I ReactNativeJS: [guidance] render: KaTeX 0.18.7: rendered 0 of 0 formulas offline
+         1793197306.086  1983  2010 I ReactNativeJS: [practice] open rw-s6-am.u4.q.003 (3 hints) for OT2-C
+         1793197306.526  1983  2010 I ReactNativeJS: [practice] prompt: KaTeX 0.18.7: rendered 1 of 1 formulas offline
+         1793197310.732  1983  2010 I ReactNativeJS: [practice] reveal #45 hint 1 on rw-s6-am.u4.q.003
+         1793197334.786  1983  2010 I ReactNativeJS: [keyboard] shown: top 284, field 378–426, scroll by 150
+         1793197342.330  1983  2010 I ReactNativeJS: [practice] attempt #47 rw-s6-am.u4.q.003 "0.75" -> correct (hints seen 1)
+         1793197349.652  1983  2010 I ReactNativeJS: [lesson] rw-s6-am.u4.l19 read from SQLite in 15 ms for OT2-C
+         1793197351.121  1983  2010 I ReactNativeJS: [lesson] KaTeX 0.18.7: rendered 14 of 14 formulas offline; 2 example(s), 0 exercise(s), 0 hint(s)
+         1793197368.433  1983  2010 I ReactNativeJS: [guidance] exercise warm-up done in 62298 ms (171 prompt tokens processed)
+         1793197373.999  1983  2010 I ReactNativeJS: [guidance] warm-up done in 5566 ms (15 prompt tokens processed)
+         1793197377.998  1983  2010 I ReactNativeJS: [progress] OT2-C: 10 attempts, rw-s6-am.u1.l07 3/5 in-progress; rw-s6-am.u4.l19 3/5 in-progress; rw-s6-am.u5.l02 2/5 in-progress; rw-s6-am.u9.l03 2/5 in-progress, tutor 17 generated in 8 ms
+         1793197393.055  3295  3321 I ReactNativeJS: Running "OfflineTutor"
+         1793197393.313  3295  3321 I ReactNativeJS: [boot] content rw-s6-am.u1 v0.2.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793197393.313  3295  3321 I ReactNativeJS: [boot] content rw-s6-am.u4 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793197393.313  3295  3321 I ReactNativeJS: [boot] content rw-s6-am.u5 v0.1.0: up-to-date (1 lesson, 2 examples, 5 exercises)
+         1793197393.313  3295  3321 I ReactNativeJS: [boot] content rw-s6-am.u9 v0.1.0: up-to-date (1 lesson, 1 examples, 5 exercises)
+         1793197393.316  3295  3321 I ReactNativeJS: [boot] ready in 70 ms: Content: rw-s6-am.u1 v0.2.0, rw-s6-am.u4 v0.1.0, rw-s6-am.u5 v0.1.0, rw-s6-am.u9 v0.1.0 · 4 lesson(s) · offline
+         1793197398.540  3295  3321 I ReactNativeJS: [session] learner OT2-C session #74
+         1793197418.245  3295  3321 I ReactNativeJS: [progress] OT2-C: 10 attempts, rw-s6-am.u1.l07 3/5 in-progress; rw-s6-am.u4.l19 3/5 in-progress; rw-s6-am.u5.l02 2/5 in-progress; rw-s6-am.u9.l03 2/5 in-progress, tutor 17 generated in 10 ms

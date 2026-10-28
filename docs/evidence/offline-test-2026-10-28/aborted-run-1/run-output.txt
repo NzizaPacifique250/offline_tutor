@@ -1,0 +1,28 @@
+condition A, learner OT-A
+  A 1 T1 PASS 1359 ms  16 of 16 formulas typeset
+  A 1 T2 PASS 78892 ms  generated
+  A 1 T3 PASS 103 ms  hint shown and saved
+  A 1 T4 PASS 126 ms  marked correct and shown
+  A 1 T5 PASS 108 ms  recommends the next open exercise
+  A 1 T6 PASS 794 ms  ready; 1 of 1 attempts shown after the restart
+  A 2 T1 PASS 1379 ms  14 of 14 formulas typeset
+  A 2 T2 PASS 39214 ms  generated
+  A 2 T3 PASS 121 ms  hint shown and saved
+  A 2 T4 PASS 130 ms  marked correct and shown
+  A 2 T5 PASS 100 ms  recommends the next open exercise
+  A 2 T6 FAIL 763 ms  ready; no of 2 attempts shown after the restart
+  A 3 T1 PASS 1410 ms  10 of 10 formulas typeset
+  A 3 T2 PASS 74673 ms  generated
+    could not find 'Practise: Activity 5.5' (0 unreadable screen reads)
+  A 3 T3 FAIL  ms  the lesson did not offer the expected exercise
+  A 3 T4 FAIL  ms  the lesson did not offer the expected exercise
+    could not find 'Practise: Application activity 5.5, question 2' (0 unreadable screen reads)
+  A 3 T5 FAIL 105 ms  recommendation missing or wrong
+  A 3 T6 FAIL 827 ms  ready; no of 2 attempts shown after the restart
+  A 4 T1 PASS 1378 ms  10 of 10 formulas typeset
+  A 4 T2 PASS 49035 ms  generated
+  A 4 T3 PASS 124 ms  hint shown and saved
+  A 4 T4 PASS 138 ms  marked correct and shown
+  A 4 T5 PASS 115 ms  recommends the next open exercise
+  A 4 T6 FAIL 774 ms  ready; no of 3 attempts shown after the restart
+  A 5 T1 PASS 1411 ms  16 of 16 formulas typeset

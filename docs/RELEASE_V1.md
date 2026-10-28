@@ -179,6 +179,22 @@ prepared exactly as the installation guide says.
 The automated checks: 244 app tests, the typecheck and the lint pass;
 the four packages validate; the grader's self-test passes.
 
+## Offline reliability test (28 October)
+
+The proposal's offline test (§3.7.1): six tasks, ten cases and three
+network conditions, 180 timed attempts on 1.2.2, driven by
+`app/scripts/offline_test.py` ([protocol and results](evidence/offline-test-2026-10-28/)).
+
+**178 of 180 passed (98.9%; target 95%).** No crash, no lost record, no
+task that needed the network, including 60 attempts during which the
+Wi-Fi connection was cut. Stored content answered in 0.10 to 0.20 s,
+lessons opened in 1.4 to 1.6 s and the app was ready 0.8 to 1.0 s after a
+restart. The two failures are generated explanations that finished at
+124.9 s and 120.6 s against the 120 s limit; the median was 76.7 s and the
+first token came after a median of 23.2 s.
+
+An earlier attempt at the run, on 1.2.1, found the fault fixed in 1.2.2.
+
 ## Known issues
 
 - **Content is a starter set and is not yet teacher-reviewed.** One
@@ -188,7 +204,9 @@ the four packages validate; the grader's self-test passes.
   The book also labels the Random Variables activity "3.15" and the
   Teacher's Guide numbers activities differently from the Student's Book.
 - **The tutor is slow.** A first answer takes about 15–40 s to start and a
-  step 20–90 s to finish. The tutor is labelled, can be cancelled, and
+  step 20–90 s to finish. In the offline test 2 of 30 first steps took just
+  over 120 s: the question waited for the lesson's warm-up and the model
+  wrote a long first step. The tutor is labelled, can be cancelled, and
   never marks answers; stored hints and solutions are instant.
 - **Preparing exercises costs work the learner may not use:** about a
   minute of processing per exercise opened, which also warms the tablet.
