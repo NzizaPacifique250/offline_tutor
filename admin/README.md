@@ -10,7 +10,7 @@ Only `teacher` and `admin` accounts can use it. Teachers read everything; only a
 
 Requires Node 20.9 or newer.
 
-1. Run the files in `../supabase/migrations/` once each, in order (`0001_…`, then `0002_…`), in the Supabase SQL Editor. Until then every page shows "The database is not set up yet".
+1. Run the files in `../supabase/migrations/` once each, in order (`0001_…`, `0002_…`, then `0003_…`), in the Supabase SQL Editor. Until then every page shows "The database is not set up yet".
 2. Create `.env.local` from `.env.example` and fill in your project URL and publishable key.
 3. Install and start:
 

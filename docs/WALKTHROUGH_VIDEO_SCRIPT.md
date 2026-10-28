@@ -241,7 +241,7 @@ Then show `docs/images/p8-tablet-topics-stale-cards.png` beside
   they waited fixed times. They now wait for the result itself, and they
   pass under load."
 - Policies: "Second, the security rules, run on an in-process Postgres as
-  different accounts: 20 checks, for example that a student cannot read
+  different accounts: 23 checks, for example that a student cannot read
   another student's rows or make itself a teacher. At first this script
   only printed its results; now it fails if any rule is wrong, and I
   checked that by breaking a rule on purpose."

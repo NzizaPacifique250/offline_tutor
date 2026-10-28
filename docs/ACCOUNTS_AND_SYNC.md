@@ -46,7 +46,7 @@ for the network.
 ## Setting up Supabase
 
 1. In the SQL Editor, run `supabase/migrations/0001_accounts_and_sync.sql`,
-   then `0002_decline_teacher_request.sql`.
+   then `0002_decline_teacher_request.sql`, then `0003_shared_tablets.sql`.
 2. Authentication → Sign In / Providers → Email: switch off "Confirm email"
    for the pilot, so students without a reachable inbox can sign in.
 3. Create the first admin (Authentication → Users → Add user), then:
@@ -59,7 +59,7 @@ for the network.
 |---|---|---|
 | `app/__tests__/account-sync.test.ts` (12 tests, sql.js, fake server) | Offline password check; sign-in online then offline; account creation; sync sends each account's rows once, only its own, mapped to the Supabase columns, and keeps its place when the connection drops | Pass |
 | `app/__tests__/account-screen.test.tsx` (4 tests) | The sign-in screen: signing in, the offline message, a teacher request, the routes without an account | Pass |
-| `supabase/tests/check_policies.mjs` (PGlite) | Both migrations apply; a student cannot write as another, read others' rows, or make itself a teacher; a teacher cannot change roles or write as a student; an admin approves and declines; anonymous users read nothing. Each of the 20 checks states its expected result, and any mismatch exits with status 1 | Pass, 20 of 20 |
+| `supabase/tests/check_policies.mjs` (PGlite) | The three migrations apply; two accounts sync from the same tablet; a student cannot write as another, read others' rows, or make itself a teacher; a teacher cannot change roles or write as a student; an admin approves and declines; anonymous users read nothing. Each of the 23 checks states its expected result, and any mismatch exits with status 1 | Pass, 23 of 23 |
 | `app/__tests__/supabase-live.test.ts` (`SUPABASE_LIVE=1`) | The app's own sign-in and sync code against the live project: a new student syncs a study session and reads back exactly its rows; a teacher request stays a student and cannot promote itself | Pass, 28 October |
 | On the IT-801B, 1.3.0 | Below | Pass |
 | Admin portal | `npm run lint` and `npm run build` pass; signed out, every page redirects to sign-in in Chrome 154 and Firefox 142 at desktop and phone widths (`docs/evidence/portal-browsers/`); a signed-in student is sent to "no access" | Pass; pages behind a staff sign-in need the first admin account |
@@ -81,8 +81,11 @@ nothing new.
 - Refresh tokens and records sit unencrypted in the app's private storage,
   as the learner records always have.
 - Teachers see every student; there are no classes yet.
-- Any signed-in account can update a tablet's row (needed because several
-  accounts share a tablet), so a tablet's label is not trustworthy.
+- Any signed-in account can read and update a tablet's row (needed because
+  several accounts share a tablet), so a tablet's label is not trustworthy.
+  Until migration 0003 (28 October) only the account that synced a tablet
+  last could read its row, so every other account on a shared tablet was
+  refused and sent nothing, while the tablet still looked synced.
 - `received_progress` (summaries imported over Bluetooth) is not synced;
   each tablet syncs its own records instead.
 - The laptop used for the demo resolved Supabase's address in 15 to 30 s at
