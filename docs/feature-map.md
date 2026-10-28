@@ -1,6 +1,6 @@
 # Feature Map
 
-Every major feature, the directory that owns it, its status at v1.2.2
+Every major feature, the directory that owns it, its status at v1.3.0
 (28 October 2026), and the tests or records that show it works. Check this
 before touching code so a change lands in the right place, and keep each
 feature's logic inside its directory.
@@ -25,10 +25,14 @@ feature's logic inside its directory.
 | Device module: build identity, model installation from a picked file with a checksum, writing to Downloads, sharing a file | `app/src/native/NativeTutorDevice.ts` (codegen spec), `app/android/app/src/main/java/rw/offlinetutor/device/`, wrapped by `app/src/device/device.ts` | Done; checked on the IT-801B | `app/__tests__/teacher.test.tsx` (mocked module); `docs/RELEASE_V1.md` |
 | Teacher tools: PIN, class progress, model installation, research export, about and notices, developer checks | `app/src/teacher/` (`classProgress.ts`, `teacher.ts`), `app/src/export/`, `app/src/screens/TeacherScreen.tsx`, `ClassScreen.tsx` | Done; readiness run on 19 October | `app/__tests__/teacher.test.tsx`, `class.test.tsx`; `docs/evidence/v1-readiness-2026-10-19/` |
 | Progress collection between tablets: the summary file, its checks, merging by learner code, received tablets | `app/src/sharing/` (`summary.ts`, `store.ts`); share and import in `TutorDeviceModule.kt` | Done in 1.2.0; checked between the IT-801B and an Infinix Smart 8 phone | `app/__tests__/sharing.test.ts`, `class.test.tsx`; `docs/RELEASE_V1.md` |
+| Accounts: sign-in online and then offline, the offline password check, accounts kept on the tablet | `app/src/account/` (`auth.ts`, `password.ts`, `store.ts`), `app/src/screens/AccountScreen.tsx` | Done in 1.3.0 | `app/__tests__/account-sync.test.ts`, `account-screen.test.tsx` |
+| Sync to Supabase: per-account upserts by tablet and local id, marks, the schedule, the switch | `app/src/sync/` (`engine.ts`, `supabase.ts`, `config.ts`), `app/src/screens/SyncCard.tsx`, scheduling in `app/App.tsx` | Done in 1.3.0; checked on the IT-801B | `app/__tests__/account-sync.test.ts`, `supabase-live.test.ts`; `docs/ACCOUNTS_AND_SYNC.md` |
+| Online database and its security rules | `supabase/migrations/` | Applied to the project on 28 October | `supabase/tests/check_policies.mjs` |
+| Admin portal: accounts and roles, progress, tablets, activity, tutor timings | `admin/` (Next.js) | Done in 1.3.0 | `admin/README.md`; `npm run lint`, `npm run build` |
 | Android build, toolchain pinning, device scripts | `app/android/`, `app/scripts/env.sh`, `run_debug.sh`, `stage_model.sh` | Debug build for development; signed pilot release `rw.offlinetutor.pilot` without the internet permission | `docs/INSTALLATION_GUIDE.md` |
 | Tablet UI driver: dump, tap by text, type, wait, screenshot, airplane mode | `app/scripts/ui.py` | Done; drives the tablet checks | `docs/TABLET_TEST_CHECKLIST.md` |
 | Offline reliability test: six tasks, ten cases, three network conditions | `app/scripts/offline_test.py` | Run on 28 October | `docs/evidence/offline-test-2026-10-28/` |
-| App tests, native-module mocks, real-SQLite adapter | `app/__tests__/`, `app/jest/` (`opsqlite-mock.js`, `sqljs-db.js`), `app/jest.config.js` | 269 tests in 12 suites pass at v1.2.2 | `cd app && npm test` |
+| App tests, native-module mocks, real-SQLite adapter | `app/__tests__/`, `app/jest/` (`opsqlite-mock.js`, `sqljs-db.js`), `app/jest.config.js` | 285 tests in 14 suites pass at v1.3.0, and a live Supabase suite run on demand | `cd app && npm test` |
 
 ## Placement rules
 

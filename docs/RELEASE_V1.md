@@ -1,7 +1,7 @@
 # Offline Tutor v1: Release Notes
 
 **Released:** 19 October 2026, for submission on 23 October 2026
-**Current build:** version 1.2.2 (build 6), release, commit `6fd5e84`, application ID `rw.offlinetutor.pilot`. Version 1.0.0 (build 2) is the build the readiness run below was made with; 1.1.0 added class progress, 1.2.0 collecting it from other tablets, 1.2.1 the book pages under generated text, and 1.2.2 a fix the offline test found. Builds before 1.2.1 were made from the development repository this one was cleaned from, so their commit ids (`b348c17` for 1.0.0, `a0790e3` for 1.2.0) are not in this history.
+**Current build:** version 1.3.0 (build 7), release, commit `e0fed27`, application ID `rw.offlinetutor.pilot`. Version 1.0.0 (build 2) is the build the readiness run below was made with; 1.1.0 added class progress, 1.2.0 collecting it from other tablets, 1.2.1 the book pages under generated text, 1.2.2 a fix the offline test found, and 1.3.0 accounts, sync and the admin portal. The offline test ran on 1.2.2; for the study, build with `-PofflineOnly`, which gives the same offline-only guarantee. Builds before 1.2.1 were made from the development repository this one was cleaned from, so their commit ids (`b348c17` for 1.0.0, `a0790e3` for 1.2.0) are not in this history.
 **Device:** ATMPC IT-801B, Android 15, airplane mode on throughout
 **Status:** ready for structured testing with teachers; testing with students waits for the approvals and teacher review below
 
@@ -21,13 +21,37 @@ tools, behind a PIN.
 
 | File | Size | SHA-256 |
 |---|---|---|
-| `OfflineTutor-1.2.2.apk` | 100,401,394 bytes | `1f9643ba09f348467cd1f9f92252e1bc7a19141ea4c6783e6735572235f9955f` |
+| `OfflineTutor-1.3.0.apk` | 101,099,686 bytes | `33b5298a0f4c54930524474448255c0d62a758501abe75ee062db15f143dbd8e` |
+| `OfflineTutor-1.2.2.apk` (offline only, the build the offline test ran on) | 100,401,394 bytes | `1f9643ba09f348467cd1f9f92252e1bc7a19141ea4c6783e6735572235f9955f` |
 | `qwen25-math-1.5b-Qwen2.5-Math-1.5B-Instruct-Q4_K_M.gguf` | 986,048,832 bytes | `9614a50f03c897028920ca0dc4365da570bf587f9ee7768261216fe370b37e8e` |
 
-The APK and `SHA256SUMS` are in `dist/v1.2.2/` (not in Git). The model is in
+The APKs and their `SHA256SUMS` are in `dist/v1.3.0/` and `dist/v1.2.2/` (not in Git). The model is in
 `bench/models/` (not in Git), fetched by `tools/fetch_models.py`.
 Installation: `docs/INSTALLATION_GUIDE.md`. Checks before a session:
 `docs/TABLET_TEST_CHECKLIST.md`.
+
+## New in 1.3.0: accounts, sync and the admin portal
+
+- **Personal accounts.** The first screen signs in or creates an account
+  (email and password). After its first online sign-in on a tablet, an
+  account signs in there again with no internet. A teacher request waits
+  for an admin; an approved teacher or admin opens Teacher tools without
+  the PIN. Studying under a learner code without an account, and Teacher
+  tools by PIN, remain.
+- **Sync to Supabase.** Off until the account holder turns it on under the
+  topic list. While on, the tablet sends that account's records whenever
+  it has internet, each row once, and studying never waits for it.
+- **The admin portal** (`admin/`), a web app where teachers and admins
+  follow accounts, progress per lesson, tablets and their last sync, recent
+  activity, and the tutor's response times; an admin approves or declines
+  teacher requests.
+- **The study build.** `-PofflineOnly` removes the INTERNET permission, so
+  that build cannot send anything, as in 1.2.2.
+
+Design, setup, security and tests: [ACCOUNTS_AND_SYNC.md](ACCOUNTS_AND_SYNC.md).
+Checked on the IT-801B on 28 October: an account created in the app synced
+its work, signed in again offline, studied offline, and its offline work
+reached the server after Wi-Fi returned.
 
 ## New in 1.2.2: topic cards drawn at their final size
 

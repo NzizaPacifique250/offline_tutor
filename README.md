@@ -36,9 +36,11 @@ Design, implement, and evaluate an offline-first intelligent tutoring prototype 
 
 ## Setting up the environment and the project
 
-The repository has three parts: `tools/` and `bench/` (Python, run on the
-laptop), `curriculum/` (the curriculum packages), and `app/` (the React
-Native application for the tablet). Everything was developed on Linux; the
+The repository has five parts: `tools/` and `bench/` (Python, run on the
+laptop), `curriculum/` (the curriculum packages), `app/` (the React Native
+application for the tablet), `supabase/` (the online database the tablets
+sync to, with its security rules and their tests) and `admin/` (the web
+portal for teachers and admins). Everything was developed on Linux; the
 commands below assume a Linux or macOS shell.
 
 ### Prerequisites
@@ -74,10 +76,13 @@ cd app && npm install && cd ..
 for u in u1 u4 u5 u9; do ./.venv/bin/python tools/validate_package.py curriculum/rw_s6_mathematics/packages/$u; done
 cd app && scripts/sync_content.sh && scripts/sync_katex_assets.sh   # generated inputs the tests need
 npm test && npm run typecheck && npm run lint && cd ..
+cd supabase/tests && npm install && npm test && cd ../..       # row-level security checks (PGlite)
+cd admin && npm ci && npm run lint && npm run build && cd ..    # the admin portal
 ```
 
 The grader and validator should end with `[ok]` lines, and the app should
-pass 269 tests in 12 suites with no type or lint errors.
+pass 285 tests in 14 suites with no type or lint errors (a 15th suite, the
+live Supabase test, runs only with `SUPABASE_LIVE=1`).
 
 ### 3. Get the model onto the tablet
 
@@ -109,6 +114,22 @@ reloads edits live instead.
 To install the signed pilot build on a tablet without any developer tools
 (the APK from the Files app, then the model from Teacher tools with its
 checksum checked), follow [docs/INSTALLATION_GUIDE.md](docs/INSTALLATION_GUIDE.md).
+The release build can sync for accounts that switch it on; for the study,
+build with `./gradlew :app:assembleRelease -PofflineOnly`, which removes the
+INTERNET permission.
+
+### 4a. Accounts, sync and the admin portal
+
+Run the two SQL files in `supabase/migrations/` in the Supabase SQL Editor,
+switch off email confirmation, make the first admin, then start the portal:
+
+```bash
+cd admin && cp .env.example .env.local    # then put the project URL and publishable key in it
+npm ci && npm run dev                     # http://localhost:3000
+```
+
+The steps, the security model and how it was tested are in
+[docs/ACCOUNTS_AND_SYNC.md](docs/ACCOUNTS_AND_SYNC.md).
 
 ### 5. Reproduce the benchmark (optional)
 
@@ -148,6 +169,8 @@ below are the interface as built. The data model the app implements is in
 | Stored hint served before any generation | ![Stored hint](docs/images/p5-tablet-stored-hint.png) |
 | Model missing: stored content still works | ![No model](docs/images/p5-tablet-no-model.png) |
 | App launched with no laptop attached | ![Untethered](docs/images/p6-tablet-untethered.png) |
+| Sign in with an account (works offline after the first time) | ![Sign in](docs/images/p9-tablet-sign-in.png) |
+| The account's sync switch and status under the topic list | ![Sync](docs/images/p9-tablet-sync-card.png) |
 
 ## Deployment plan
 
@@ -186,7 +209,7 @@ no network. The plan, from the state today to the school pilot:
 
 ## Current status
 
-**v1.2.2, the pilot build, is ready for structured testing: four units, an on-device tutor, and teacher tools with class progress, collected from every student tablet over Bluetooth without a network, and research export; installed without developer tools.** See [docs/RELEASE_V1.md](docs/RELEASE_V1.md). Testing with students waits for teacher review of the content and the institutional approvals.
+**v1.3.0: four units, an on-device tutor, teacher tools with class progress and research export, personal accounts that sign in offline, sync to Supabase when there is internet, and a web admin portal.** The offline study build (`-PofflineOnly`, as 1.2.2) passed the proposal's 180-attempt offline test with 178 passes. See [docs/RELEASE_V1.md](docs/RELEASE_V1.md) and [docs/ACCOUNTS_AND_SYNC.md](docs/ACCOUNTS_AND_SYNC.md). Testing with students waits for teacher review of the content and the institutional approvals.
 
 The pilot scope is fixed: Rwanda REB curriculum, Senior Six Advanced
 Mathematics, four pilot units, an ATMPC IT-801B Android tablet, React Native
@@ -234,6 +257,8 @@ across restarts, and equations render offline.
 ## Documentation
 
 - [Release notes and the readiness run](docs/RELEASE_V1.md)
+- [Offline reliability test: protocol and results, 178 of 180](docs/evidence/offline-test-2026-10-28/)
+- [Accounts, sync and the admin portal](docs/ACCOUNTS_AND_SYNC.md) and [the portal's README](admin/README.md)
 - [Installation guide](docs/INSTALLATION_GUIDE.md) and [tablet test checklist](docs/TABLET_TEST_CHECKLIST.md)
 - [Readiness run evidence: exported records, app log, temperature](docs/evidence/v1-readiness-2026-10-19/)
 - [System architecture](docs/ARCHITECTURE.md)
