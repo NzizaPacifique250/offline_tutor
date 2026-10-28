@@ -34,13 +34,18 @@ export function TopicsScreen({
   onOpenLesson: (lessonId: string) => void;
   onProgress: () => void;
 }): React.JSX.Element {
-  const [progress, setProgress] = useState<Map<string, LessonProgress>>(new Map());
+  // Null until the learner's progress is read, so each card is drawn once at
+  // its final size. On the IT-801B, cards below the fold that grew when
+  // progress arrived kept their old size on screen, and a tap on one lesson
+  // could open another (offline test, 28 October).
+  const [progress, setProgress] = useState<Map<string, LessonProgress> | null>(null);
 
   useEffect(() => {
     let live = true;
+    setProgress(null);
     loadProgress(db, learnerCode, lessons)
       .then(p => live && setProgress(new Map(p.map(x => [x.lessonId, x]))))
-      .catch(() => undefined);
+      .catch(() => live && setProgress(new Map()));
     return () => {
       live = false;
     };
@@ -54,7 +59,8 @@ export function TopicsScreen({
       <Text style={ui.muted}>Senior Six Advanced Mathematics, from the REB Student's Book. Everything below works offline.</Text>
 
       {lessons.length === 0 ? <Text style={ui.body}>No lessons are loaded.</Text> : null}
-      {lessons.map(l => {
+      {progress === null && lessons.length > 0 ? <Text style={ui.muted}>Reading your progress…</Text> : null}
+      {progress !== null && lessons.map(l => {
         const unit = unitTitle(l.packageId);
         const p = progress.get(l.id);
         return (

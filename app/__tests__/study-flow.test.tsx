@@ -12,9 +12,10 @@ import { importPackages } from '../src/content/importer';
 import { PACKAGES } from '../src/content/packages';
 import { ensureGuidanceSchema, listGuidance } from '../src/guidance/log';
 import { GuidanceService, type Engine } from '../src/guidance/service';
-import { ensureLearnerSchema, listAttempts, listReveals } from '../src/learner/store';
+import { ensureLearnerSchema, listAttempts, listReveals, type Executor } from '../src/learner/store';
 import { PracticeScreen } from '../src/screens/PracticeScreen';
 import { ProgressScreen } from '../src/screens/ProgressScreen';
+import { TopicsScreen } from '../src/screens/TopicsScreen';
 
 const { makeSqlDb } = require('../jest/sqljs-db');
 
@@ -213,6 +214,33 @@ describe('practice screen over real SQLite', () => {
     expect(t).toContain('Tutor requests');
     await act(async () => press(r.root, 'progress-practice'));
     expect(onPractice).toHaveBeenCalledWith(LESSON, 'rw-s6-am.u1.q.002');
+  });
+
+  it('topic list draws each card once, after the progress is read', async () => {
+    // A card that grew after it was drawn kept its old size on the tablet, so
+    // no card may be drawn before its progress is known.
+    const lessons = [{ id: LESSON, packageId: 'rw-s6-am.u1', title: 'Operations', objective: '', topics: [], exerciseCount: 5, reviewStatus: 'developer-test' as const }];
+    let open!: () => void;
+    const gate = new Promise<void>(res => (open = res));
+    const gated: Executor = {
+      execute: async (query, params) => {
+        await gate;
+        return db.execute(query, params);
+      },
+    };
+    let r!: ReactTestRenderer.ReactTestRenderer;
+    await act(async () => {
+      r = ReactTestRenderer.create(<TopicsScreen db={gated} learnerCode="A1" lessons={lessons} versions={[]} onOpenLesson={() => {}} onProgress={() => {}} />);
+    });
+    await flush();
+    expect(r.root.findAllByProps({ testID: `topic-${LESSON}` })).toHaveLength(0);
+    expect(texts(r.root)).toContain('Reading your progress…');
+    await act(async () => open());
+    await flush();
+    expect(r.root.findAllByProps({ testID: `topic-${LESSON}` }).length).toBeGreaterThan(0);
+    const t = texts(r.root);
+    expect(t).toContain('1 of 5 exercises correct');
+    expect(t).not.toContain('Reading your progress');
   });
 
   it('keeps another learner code empty', async () => {
