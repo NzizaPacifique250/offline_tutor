@@ -45,3 +45,6 @@ docs/demo/
 
 # Release files handed to testers (APK, checksums, PDFs); built, never committed
 dist/
+
+# Supabase test dependencies
+supabase/tests/node_modules/

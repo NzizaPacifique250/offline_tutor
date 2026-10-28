@@ -1,0 +1,8 @@
+{
+  "name": "offline-tutor-supabase-tests",
+  "private": true,
+  "type": "module",
+  "description": "Applies the migrations to an in-process Postgres (PGlite) with stand-ins for Supabase's auth schema, then checks the row-level security rules.",
+  "scripts": { "test": "node check_policies.mjs" },
+  "devDependencies": { "@electric-sql/pglite": "0.3.7" }
+}
