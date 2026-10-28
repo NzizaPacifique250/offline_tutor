@@ -1,7 +1,7 @@
 # Feature Map
 
-Every major feature, the directory that owns it, its status at v1.2.0
-(20 October 2026), and the tests or records that show it works. Check this
+Every major feature, the directory that owns it, its status at v1.2.1
+(28 October 2026), and the tests or records that show it works. Check this
 before touching code so a change lands in the right place, and keep each
 feature's logic inside its directory.
 
@@ -21,13 +21,14 @@ feature's logic inside its directory.
 | Practice rules: hint order, solution gate, attempt effects, feedback | `app/src/study/practice.ts` | Done, pure reducer | `app/__tests__/checker.test.ts`, `progress.test.ts`, `study-flow.test.tsx` |
 | Study flow screens: learner code, topic list, lesson, practice, progress, developer | `app/src/screens/`, navigator in `app/App.tsx`; `KeyboardScrollView.tsx` and `keyboard.ts` keep the focused field above the keyboard | Done, with the tutor wired into lesson and practice | `app/__tests__/App.test.tsx`, `study-flow.test.tsx`, `keyboard.test.ts`; screenshots in `docs/images/` |
 | Demonstration: screen recorder, the cuts, presenting the tablet on a laptop | `app/scripts/record_demo.sh`, `demo_cut.sh`, `demo_v1_take.sh`, `demo_v1_cut.py`, `present_tablet.sh`; recordings are kept out of the repository | Done | — |
-| Generated guidance: prompt assembly, passage selection, redaction, controller, single-flight service, timeout, cancel, warm-ups (lesson prefix, exercise-help prompt on opening, the passage of a half-typed question), step pacing with simpler explanations, outcome log | `app/src/guidance/`; shown through `app/src/screens/GuidancePanel.tsx` | Done, measured on the tablet | `app/__tests__/guidance.test.ts`, `guidance-panel.test.tsx`; `docs/RELEASE_V1.md` readiness run |
+| Generated guidance: prompt assembly, passage selection, redaction, controller, single-flight service, timeout, cancel, warm-ups (lesson prefix, exercise-help prompt on opening, the passage of a half-typed question), step pacing with simpler explanations, outcome log, the book pages behind each answer | `app/src/guidance/`; shown through `app/src/screens/GuidancePanel.tsx` | Done, measured on the tablet | `app/__tests__/guidance.test.ts`, `guidance-panel.test.tsx`; `docs/RELEASE_V1.md` readiness run |
 | Device module: build identity, model installation from a picked file with a checksum, writing to Downloads, sharing a file | `app/src/native/NativeTutorDevice.ts` (codegen spec), `app/android/app/src/main/java/rw/offlinetutor/device/`, wrapped by `app/src/device/device.ts` | Done; checked on the IT-801B | `app/__tests__/teacher.test.tsx` (mocked module); `docs/RELEASE_V1.md` |
 | Teacher tools: PIN, class progress, model installation, research export, about and notices, developer checks | `app/src/teacher/` (`classProgress.ts`, `teacher.ts`), `app/src/export/`, `app/src/screens/TeacherScreen.tsx`, `ClassScreen.tsx` | Done; readiness run on 19 October | `app/__tests__/teacher.test.tsx`, `class.test.tsx`; `docs/evidence/v1-readiness-2026-10-19/` |
 | Progress collection between tablets: the summary file, its checks, merging by learner code, received tablets | `app/src/sharing/` (`summary.ts`, `store.ts`); share and import in `TutorDeviceModule.kt` | Done in 1.2.0; checked between the IT-801B and an Infinix Smart 8 phone | `app/__tests__/sharing.test.ts`, `class.test.tsx`; `docs/RELEASE_V1.md` |
 | Android build, toolchain pinning, device scripts | `app/android/`, `app/scripts/env.sh`, `run_debug.sh`, `stage_model.sh` | Debug build for development; signed pilot release `rw.offlinetutor.pilot` without the internet permission | `docs/INSTALLATION_GUIDE.md` |
 | Tablet UI driver: dump, tap by text, type, wait, screenshot, airplane mode | `app/scripts/ui.py` | Done; drives the tablet checks | `docs/TABLET_TEST_CHECKLIST.md` |
-| App tests, native-module mocks, real-SQLite adapter | `app/__tests__/`, `app/jest/` (`opsqlite-mock.js`, `sqljs-db.js`), `app/jest.config.js` | 265 tests in 12 suites pass at v1.2.0 | `cd app && npm test` |
+| Offline reliability test: six tasks, ten cases, three network conditions | `app/scripts/offline_test.py` | Run on 28 October | `docs/evidence/offline-test-2026-10-28/` |
+| App tests, native-module mocks, real-SQLite adapter | `app/__tests__/`, `app/jest/` (`opsqlite-mock.js`, `sqljs-db.js`), `app/jest.config.js` | 268 tests in 12 suites pass at v1.2.1 | `cd app && npm test` |
 
 ## Placement rules
 

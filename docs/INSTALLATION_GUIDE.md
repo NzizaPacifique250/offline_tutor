@@ -7,7 +7,7 @@ No programming tools are needed. Allow about 15 minutes per tablet.
 
 | Item | Details |
 |---|---|
-| The app file | `OfflineTutor-1.2.0.apk` (about 100 MB) |
+| The app file | `OfflineTutor-1.2.1.apk` (about 100 MB) |
 | The tutor model file | `qwen25-math-1.5b-Qwen2.5-Math-1.5B-Instruct-Q4_K_M.gguf` (986 MB). Keep the name exactly as it is. |
 | A tablet | Tested on the ATMPC IT-801B with Android 15. It needs about 2.5 GB of free storage. |
 | A way to copy files | A USB cable and a computer, or a memory card |
@@ -31,7 +31,7 @@ copy is refused.
 ## 2. Install the app
 
 1. On the tablet, open **Files** and go to **Download**.
-2. Tap `OfflineTutor-1.2.0.apk`.
+2. Tap `OfflineTutor-1.2.1.apk`.
 3. If Android says that installing unknown apps is not allowed, tap
    **Settings**, switch on **Allow from this source**, and go back.
 4. Tap **Install**, then **Open**.
@@ -68,7 +68,7 @@ other apps and updates from interrupting a session.
 ## 5. Check the tablet before a session
 
 1. Under **About this build** in Teacher tools, check that it says
-   **Offline Tutor 1.2.0 (build 4, release …)**.
+   **Offline Tutor 1.2.1 (build 5, release …)**.
 2. Go back, type the learner code `TEST`, and tap **Start**.
 3. Open a lesson. The formulas must appear typeset, not as code.
 4. Scroll to **Ask about this topic**, type a question such as
