@@ -1,7 +1,7 @@
 # Offline Tutor v1: Release Notes
 
 **Released:** 19 October 2026, for submission on 23 October 2026
-**Current build:** version 1.2.1 (build 5), release, commit `37c5196`, application ID `rw.offlinetutor.pilot`. Version 1.0.0 (build 2) is the build the readiness run below was made with; 1.1.0 added class progress, 1.2.0 collecting it from other tablets, and 1.2.1 the book pages under generated text. Builds before 1.2.1 were made from the development repository this one was cleaned from, so their commit ids (`b348c17` for 1.0.0, `a0790e3` for 1.2.0) are not in this history.
+**Current build:** version 1.2.2 (build 6), release, commit `6fd5e84`, application ID `rw.offlinetutor.pilot`. Version 1.0.0 (build 2) is the build the readiness run below was made with; 1.1.0 added class progress, 1.2.0 collecting it from other tablets, 1.2.1 the book pages under generated text, and 1.2.2 a fix the offline test found. Builds before 1.2.1 were made from the development repository this one was cleaned from, so their commit ids (`b348c17` for 1.0.0, `a0790e3` for 1.2.0) are not in this history.
 **Device:** ATMPC IT-801B, Android 15, airplane mode on throughout
 **Status:** ready for structured testing with teachers; testing with students waits for the approvals and teacher review below
 
@@ -21,13 +21,29 @@ tools, behind a PIN.
 
 | File | Size | SHA-256 |
 |---|---|---|
-| `OfflineTutor-1.2.1.apk` | 100,401,234 bytes | `6321efa95ed37aca88ae6a697925a905f4effacf0db617067713ed732e671161` |
+| `OfflineTutor-1.2.2.apk` | 100,401,394 bytes | `1f9643ba09f348467cd1f9f92252e1bc7a19141ea4c6783e6735572235f9955f` |
 | `qwen25-math-1.5b-Qwen2.5-Math-1.5B-Instruct-Q4_K_M.gguf` | 986,048,832 bytes | `9614a50f03c897028920ca0dc4365da570bf587f9ee7768261216fe370b37e8e` |
 
-The APK and `SHA256SUMS` are in `dist/v1.2.1/` (not in Git). The model is in
+The APK and `SHA256SUMS` are in `dist/v1.2.2/` (not in Git). The model is in
 `bench/models/` (not in Git), fetched by `tools/fetch_models.py`.
 Installation: `docs/INSTALLATION_GUIDE.md`. Checks before a session:
 `docs/TABLET_TEST_CHECKLIST.md`.
+
+## New in 1.2.2: topic cards drawn at their final size
+
+The offline reliability test of 28 October
+([evidence/offline-test-2026-10-28/](evidence/offline-test-2026-10-28/))
+found a fault in 1.2.1 on the IT-801B. After the app restarted, the topic
+cards below the fold, which grow when the learner's progress arrives, kept
+their old size on screen: "Open lesson ›" sat outside its card
+(`docs/images/p8-tablet-topics-stale-cards.png`), and Android placed taps
+by the old sizes, so a tap on the Differential Equations lesson opened
+Random Variables and a tap on "My progress" did nothing. The topic list
+now reads the progress first, which takes milliseconds, and draws each
+card once at its final size (`docs/images/p8-tablet-topics-fixed.png`).
+A new test holds the database back and checks that no card is drawn
+before its progress is known; it fails on 1.2.1 and passes on 1.2.2
+(269 tests in 12 suites).
 
 ## New in 1.2.1: the book pages behind generated text
 

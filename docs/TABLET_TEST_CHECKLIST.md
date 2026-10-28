@@ -13,7 +13,7 @@ Tablet: ________  Date: ________  Checked by: ________  Battery: ____ %
 | 1 | Airplane mode is on | The airplane icon shows in the status bar | ☐ |
 | 2 | Open the app | "Who is studying?" appears within 10 seconds | ☐ |
 | 3 | The content line at the bottom | Four packages: `rw-s6-am.u1`, `u4`, `u5`, `u9` · 4 lesson(s) · offline | ☐ |
-| 4 | Teacher tools → About this build | Offline Tutor 1.2.1 (build 5, release …) | ☐ |
+| 4 | Teacher tools → About this build | Offline Tutor 1.2.2 (build 6, release …) | ☐ |
 | 5 | Teacher tools → Tutor model | **ready**: Installed and checked: 986 MB | ☐ |
 
 ## The study flow (learner code `TEST`)

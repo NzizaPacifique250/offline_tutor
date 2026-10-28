@@ -77,7 +77,7 @@ npm test && npm run typecheck && npm run lint && cd ..
 ```
 
 The grader and validator should end with `[ok]` lines, and the app should
-pass 268 tests in 12 suites with no type or lint errors.
+pass 269 tests in 12 suites with no type or lint errors.
 
 ### 3. Get the model onto the tablet
 
@@ -186,7 +186,7 @@ no network. The plan, from the state today to the school pilot:
 
 ## Current status
 
-**v1.2.1, the pilot build, is ready for structured testing: four units, an on-device tutor, and teacher tools with class progress, collected from every student tablet over Bluetooth without a network, and research export; installed without developer tools.** See [docs/RELEASE_V1.md](docs/RELEASE_V1.md). Testing with students waits for teacher review of the content and the institutional approvals.
+**v1.2.2, the pilot build, is ready for structured testing: four units, an on-device tutor, and teacher tools with class progress, collected from every student tablet over Bluetooth without a network, and research export; installed without developer tools.** See [docs/RELEASE_V1.md](docs/RELEASE_V1.md). Testing with students waits for teacher review of the content and the institutional approvals.
 
 The pilot scope is fixed: Rwanda REB curriculum, Senior Six Advanced
 Mathematics, four pilot units, an ATMPC IT-801B Android tablet, React Native

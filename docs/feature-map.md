@@ -1,6 +1,6 @@
 # Feature Map
 
-Every major feature, the directory that owns it, its status at v1.2.1
+Every major feature, the directory that owns it, its status at v1.2.2
 (28 October 2026), and the tests or records that show it works. Check this
 before touching code so a change lands in the right place, and keep each
 feature's logic inside its directory.
@@ -28,7 +28,7 @@ feature's logic inside its directory.
 | Android build, toolchain pinning, device scripts | `app/android/`, `app/scripts/env.sh`, `run_debug.sh`, `stage_model.sh` | Debug build for development; signed pilot release `rw.offlinetutor.pilot` without the internet permission | `docs/INSTALLATION_GUIDE.md` |
 | Tablet UI driver: dump, tap by text, type, wait, screenshot, airplane mode | `app/scripts/ui.py` | Done; drives the tablet checks | `docs/TABLET_TEST_CHECKLIST.md` |
 | Offline reliability test: six tasks, ten cases, three network conditions | `app/scripts/offline_test.py` | Run on 28 October | `docs/evidence/offline-test-2026-10-28/` |
-| App tests, native-module mocks, real-SQLite adapter | `app/__tests__/`, `app/jest/` (`opsqlite-mock.js`, `sqljs-db.js`), `app/jest.config.js` | 268 tests in 12 suites pass at v1.2.1 | `cd app && npm test` |
+| App tests, native-module mocks, real-SQLite adapter | `app/__tests__/`, `app/jest/` (`opsqlite-mock.js`, `sqljs-db.js`), `app/jest.config.js` | 269 tests in 12 suites pass at v1.2.2 | `cd app && npm test` |
 
 ## Placement rules
 
