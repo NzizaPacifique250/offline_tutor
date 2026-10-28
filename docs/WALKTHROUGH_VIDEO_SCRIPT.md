@@ -187,9 +187,9 @@ tap **Sync now**.
 ### 7. The admin portal (9:50, 120 s) — A, B
 
 **Do:** In Chrome, sign in at http://localhost:3000 with the admin account.
-Show **Overview**, **Users** (approve or decline the pending teacher request
-of `demo.teacher.1029@example.com`), open `demo.student.1029@example.com`,
-then **Tablets**, **Activity** and **Tutor performance**.
+Show **Overview**, **Users** (press **Approve as teacher** or **Decline** on
+the pending request of `demo.teacher.1029@example.com`), open
+`demo.student.1029@example.com`, then **Tablets**, **Activity** and **Tutor**.
 
 **Say:**
 - "This is the web portal for teachers and admins, built with Next.js. It
@@ -200,7 +200,7 @@ then **Tablets**, **Activity** and **Tutor performance**.
   role, and the database enforces that, not just the page."
 - On the student: "Here is the work I just did on the tablet, including the
   exercise answered offline."
-- On Tablets and Tutor performance: "Each tablet's last sync, and the
+- On Tablets and Tutor: "Each tablet's last sync, and the
   tutor's response times and outcomes, from the same log the offline test
   used."
 
