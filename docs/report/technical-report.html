@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<title>Offline Mathematics Tutor: Technical Report</title>
+<style>
+  @page { size: A4; margin: 13mm 14mm 14mm 14mm;
+    @bottom-right { content: counter(page) " / " counter(pages); font: 7.5pt "Noto Sans", sans-serif; color: #667; } 
+    @bottom-left { content: "Offline Mathematics Tutor · Technical report · Nziza Aime Pacifique"; font: 7.5pt "Noto Sans", sans-serif; color: #667; } }
+  :root { --ink: #16202a; --muted: #4c5866; --rule: #c9d1da; --head: #eef2f6; --accent: #12507a; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 9.3pt/1.38 "Noto Sans", "Liberation Sans", sans-serif; color: var(--ink); background: #fff; }
+  h1 { font-size: 15pt; margin: 0 0 1mm; line-height: 1.2; color: var(--accent); }
+  h2 { font-size: 10.8pt; margin: 3.2mm 0 1.2mm; color: var(--accent); border-bottom: 0.4pt solid var(--rule); padding-bottom: 0.6mm; }
+  h3 { font-size: 9.2pt; margin: 2.2mm 0 0.8mm; }
+  p { margin: 0 0 1.5mm; }
+  ul { margin: 0 0 1.5mm; padding-left: 4.5mm; }
+  li { margin: 0 0 0.6mm; }
+  .meta { color: var(--muted); font-size: 8.2pt; margin-bottom: 2mm; }
+  code, .mono { font-family: "DejaVu Sans Mono", monospace; font-size: 7.4pt; }
+  table { width: 100%; border-collapse: collapse; margin: 0.8mm 0 2mm; font-size: 7.85pt; line-height: 1.3; }
+  th, td { border: 0.4pt solid var(--rule); padding: 0.7mm 1.2mm; vertical-align: top; text-align: left; }
+  th { background: var(--head); font-weight: 600; }
+  tr { break-inside: avoid; }
+  .ok { color: #17663a; font-weight: 600; } .part { color: #8a5a00; font-weight: 600; } .no { color: #a1261d; font-weight: 600; } .add { color: #12507a; font-weight: 600; }
+  .caption { font-size: 7.4pt; color: var(--muted); margin: 0.6mm 0 2mm; }
+  .shots { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5mm 4mm; margin-top: 1.5mm; }
+  .shots figure { margin: 0; } .shots img { width: 100%; border: 0.4pt solid var(--rule); display: block; }
+  .shots figcaption { font-size: 7.6pt; color: var(--muted); margin-top: 0.5mm; line-height: 1.2; }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; }
+  .num { text-align: right; white-space: nowrap; }
+  .nowrap { white-space: nowrap; }
+  svg text { font-family: "Noto Sans", sans-serif; }
+  .avoid { break-inside: avoid; }
+</style>
+</head>
+<body>
+
+<h1>Offline Mathematics Tutor for Senior Six: Technical Report on the Final Version</h1>
+<div class="meta">Nziza Aime Pacifique · BSc Software Engineering, African Leadership University · Supervisor: Elvira Immaculate Khwatenge · 29&nbsp;October&nbsp;2026<br>
+Release 1.3.0 (build 7) · Repository <span class="mono">github.com/NzizaPacifique250/offline_tutor</span> · The walkthrough video is linked from the repository's README.</div>
+
+<h2>1. The product</h2>
+<p>The product is an Android tutor for Senior Six Advanced Mathematics in the Rwanda Education Board (REB) curriculum that works with no internet connection. A learner reads lessons taken from the REB Student's Book with typeset formulas, practises exercises that the tablet marks, opens the book's hints in order before the worked solution, and asks a language model that runs on the tablet (Qwen2.5-Math-1.5B-Instruct, 4-bit, through <span class="mono">llama.rn</span>) for help one step at a time. Progress is computed from saved attempts and recommends the next exercise. Behind a PIN, teachers install the model, follow class progress and export research records. Release 1.3.0 adds personal accounts that sign in offline after their first online sign-in, opt-in synchronisation to Supabase, and a web portal for teachers and admins.</p>
+
+<svg viewBox="0 0 720 150" width="100%" role="img" aria-label="Architecture: tablet, Supabase and admin portal">
+  <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#12507a"/></marker></defs>
+  <rect x="2" y="2" width="430" height="146" rx="6" fill="#f5f8fb" stroke="#9fb3c6"/>
+  <text x="12" y="18" font-size="10.5" font-weight="700" fill="#12507a">Tablet: React Native 0.87, Hermes, TypeScript; works fully offline</text>
+  <rect x="12" y="26" width="410" height="24" rx="4" fill="#fff" stroke="#c9d1da"/>
+  <text x="20" y="42" font-size="9">Screens: sign-in · topics · lesson · practice · tutor · progress · teacher · class</text>
+  <rect x="12" y="56" width="410" height="40" rx="4" fill="#fff" stroke="#c9d1da"/>
+  <text x="20" y="71" font-size="9">Feature modules, pure and unit-tested: content, router, checker, study rules,</text>
+  <text x="20" y="86" font-size="9">learner, progress, guidance, account, sync, sharing, teacher, export</text>
+  <rect x="12" y="102" width="130" height="38" rx="4" fill="#fff" stroke="#c9d1da"/><text x="20" y="117" font-size="9">SQLite (op-sqlite)</text><text x="20" y="131" font-size="8" fill="#4c5866">content, learner records</text>
+  <rect x="150" y="102" width="136" height="38" rx="4" fill="#fff" stroke="#c9d1da"/><text x="158" y="117" font-size="9">llama.rn / llama.cpp</text><text x="158" y="131" font-size="8" fill="#4c5866">Qwen2.5-Math 1.5B, 986 MB</text>
+  <rect x="294" y="102" width="128" height="38" rx="4" fill="#fff" stroke="#c9d1da"/><text x="302" y="117" font-size="9">Kotlin device module</text><text x="302" y="131" font-size="8" fill="#4c5866">model install, SHA-256</text>
+  <line x1="434" y1="76" x2="510" y2="76" stroke="#12507a" stroke-width="1.5" marker-end="url(#a)"/>
+  <text x="440" y="68" font-size="8.5" fill="#12507a">sync, opt-in</text><text x="440" y="90" font-size="8.5" fill="#12507a">own rows only</text>
+  <rect x="512" y="40" width="94" height="72" rx="6" fill="#f5f8fb" stroke="#9fb3c6"/>
+  <text x="520" y="58" font-size="10" font-weight="700" fill="#12507a">Supabase</text>
+  <text x="520" y="74" font-size="8.5">Auth, Postgres,</text><text x="520" y="88" font-size="8.5">row-level</text><text x="520" y="101" font-size="8.5">security</text>
+  <line x1="636" y1="76" x2="608" y2="76" stroke="#12507a" stroke-width="1.5" marker-end="url(#a)"/>
+  <text x="611" y="68" font-size="8" fill="#12507a">read</text>
+  <rect x="638" y="40" width="80" height="72" rx="6" fill="#f5f8fb" stroke="#9fb3c6"/>
+  <text x="646" y="58" font-size="10" font-weight="700" fill="#12507a">Portal</text>
+  <text x="646" y="74" font-size="8.5">Next.js 16,</text><text x="646" y="88" font-size="8.5">teachers</text><text x="646" y="101" font-size="8.5">and admins</text>
+</svg>
+<div class="caption">Figure 1. Architecture. The tablet is the source of truth; Supabase holds copies of each account's rows; the portal reads them as the signed-in user, so the database's security rules decide what each person sees.</div>
+
+<h2>2. Scope alignment with the approved proposal</h2>
+<table>
+<thead><tr><th style="width:23%">Planned feature (proposal section)</th><th style="width:19%">Intended purpose</th><th style="width:13%">Status</th><th>Evidence</th></tr></thead>
+<tbody>
+<tr><td>Comparison of four quantised models on the tablet (Objective 2, §3.4.2)</td><td>Choose a model on correctness, speed and memory</td><td class="ok">Completed</td><td>Correct on 24 maths probes: Qwen2.5-Math-1.5B 23, Qwen2.5-1.5B 14, Qwen3-1.7B 8, Llama-3.2-1B 4; Qwen3 peaked at 1,467 MB. <span class="mono">docs/FEASIBILITY_FINDINGS.md</span>, <span class="mono">bench/</span></td></tr>
+<tr><td>Installable Android prototype (Objective 3)</td><td>Study with no internet</td><td class="ok">Completed</td><td>Signed APK 1.3.0, checksummed; <span class="mono">docs/INSTALLATION_GUIDE.md</span>; <span class="mono">-PofflineOnly</span> gives the study build</td></tr>
+<tr><td>Lessons from the REB books, readable notation (§3.3)</td><td>Curriculum content offline</td><td class="ok">Completed</td><td>4 lessons and 7 worked examples rendered with KaTeX from local assets; <span class="mono">app/src/katex/</span>; Fig. 2</td></tr>
+<tr><td>Practice package of 80 exercises and 240 hints (§1.5)</td><td>Bounded practice per unit</td><td class="part">Partial: 20 and 60</td><td>Five exercises with three hints per unit, from the book with page numbers; every key proven with SymPy. <span class="mono">curriculum/rw_s6_mathematics/packages/</span></td></tr>
+<tr><td>Answer checking against reviewed keys (§3.4)</td><td>Immediate, reliable feedback</td><td class="ok">Completed</td><td>On-device evaluator for a + bi, π, e, √, ln and functions of x; 111 tests. <span class="mono">app/src/checker/</span></td></tr>
+<tr><td>Progressive hints before the worked solution (§2.3.1)</td><td>Scaffold; discourage answer-seeking</td><td class="ok">Completed</td><td>Hints one at a time in the book's order; the solution opens after all hints or a correct answer, and checking then stops. <span class="mono">app/src/study/practice.ts</span></td></tr>
+<tr><td>Local model with one retrieved passage, streamed and cancellable, 120 s timeout (§3.4, §3.5.4)</td><td>Flexible follow-up help without blocking study</td><td class="ok">Completed</td><td><span class="mono">app/src/guidance/</span>; offline test: median 76.7 s, first token 23.2 s; cancel stopped in 12.1 s</td></tr>
+<tr><td>Generated text names its source and is labelled as not reviewed (§3.3)</td><td>Let learners check the model</td><td class="ok">Completed</td><td>Book pages under every answer since 1.2.1; <span class="mono">docs/images/p7-tablet-tutor-source.png</span></td></tr>
+<tr><td>Out-of-scope questions declined (§3.3)</td><td>No unsupported answers</td><td class="ok">Completed</td><td>Topic router declines before the model is called; <span class="mono">app/src/content/router.ts</span></td></tr>
+<tr><td>Next-exercise recommendation from recent attempts (§2.3.4)</td><td>Simple, explainable personalisation</td><td class="ok">Completed</td><td><span class="mono">app/src/learner/progress.ts</span>; offline test task T5 30/30</td></tr>
+<tr><td>Saved progress under learner codes; interaction log (§3.5.3)</td><td>Resume work; research measures</td><td class="ok">Completed</td><td>SQLite tables incl. <span class="mono">guidance_events</span> (the proposal's InteractionEvent); T6 30/30</td></tr>
+<tr><td>Offline reliability ≥ 171 of 180 attempts (Objective 3, §3.7.1)</td><td>Show the tutor works offline</td><td class="ok">Completed: 178</td><td><span class="mono">docs/evidence/offline-test-2026-10-28/</span></td></tr>
+<tr><td>Peak application memory below 2 GB (Table 8)</td><td>Fit a 3.79 GB tablet</td><td class="ok">Completed</td><td>About 1.2 GB with the model loaded (<span class="mono">docs/RELEASE_V1.md</span>)</td></tr>
+<tr><td>Research export of approved fields (§3.8)</td><td>Manual transfer of study data</td><td class="ok">Completed</td><td>CSV and manifest from Teacher tools; <span class="mono">app/src/export/</span></td></tr>
+<tr><td>Teacher-checked evaluation set of 100 held-out questions (Objective 1, §3.2.2)</td><td>Unbiased measure of correctness</td><td class="part">Partial</td><td>Objectives, device limits and 28 development probes done; held-out set not yet written; teacher review pending</td></tr>
+<tr><td>Retrieval comparison A/B/C with McNemar test (Objective 4)</td><td>Test hypothesis H1</td><td class="no">Not done</td><td>Needs the held-out set and two teacher raters</td></tr>
+<tr><td>Student pilot: SUS and pre/post tests (Objective 5)</td><td>Usability, learning indications</td><td class="no">Not started</td><td>Waits for ALU ethics approval and school permission; instruments prepared</td></tr>
+<tr><td><em>Added:</em> class progress and Bluetooth progress files (1.1, 1.2)</td><td>A teacher sees a class spread over tablets, offline</td><td class="add">Added</td><td><span class="mono">app/src/sharing/</span>; tablet to Infinix Smart 8 phone transfer, 20 Oct</td></tr>
+<tr><td><em>Added:</em> accounts, opt-in sync, admin portal (1.3)</td><td>Monitoring across tablets and over time</td><td class="add">Added</td><td><span class="mono">app/src/account/</span>, <span class="mono">app/src/sync/</span>, <span class="mono">supabase/</span>, <span class="mono">admin/</span>; <span class="mono">docs/ACCOUNTS_AND_SYNC.md</span></td></tr>
+</tbody></table>
+<p><b>Justified changes.</b></p>
+<ul>
+<li><b>Fewer exercises.</b> Each item is copied from the Student's Book with its page, and its key is proven by SymPy and compared with the Teacher's Guide. I chose 20 verified items over 80 unverified ones; the proposal did not promise complete units.</li>
+<li><b>One short passage, chosen by keywords.</b> The tablet processes prompts at 3.7 tokens per second, so each 100-token passage adds about 28 s. The proposal's cap of one passage of at most 100 tokens (320 characters here) is kept, and keyword search is the proposal's own first baseline.</li>
+<li><b>Rules in the application, not the prompt.</b> No candidate model declined an out-of-scope question or held back an answer (0 of 4), so the router declines, stored hints come first and the final answer is masked in generated text.</li>
+<li><b>Accounts and sync go beyond §1.5,</b> which excluded cloud accounts from the pilot. They are opt-in per account, studying never waits for them, and the study build made with <span class="mono">-PofflineOnly</span> has no INTERNET permission, so the pilot can run exactly as proposed. No participant data will be synced before the ethics committee approves an amendment.</li>
+<li><b>Objectives 1, 4 and 5</b> depend on teacher review and ethics approval, both pending. As §1.5 provides, this report presents the technical evaluation and makes no learning claims.</li>
+</ul>
+
+<h2>3. Technical functionality</h2>
+<p><b>Content and checking.</b> Each unit is a versioned JSON package. <span class="mono">tools/validate_package.py</span> checks its structure and proves every answer key with SymPy; the app bundles the packages and imports them into SQLite on first launch. Because SymPy cannot run on the tablet, <span class="mono">app/src/checker/</span> re-implements the needed part: a tokenizer and recursive-descent parser over complex numbers with π, e, √, ln and exp. A typed answer is evaluated and compared with the key within a tolerance; a function of x, such as a particular solution of a differential equation, is compared at sample points of its domain. Input outside the grammar is reported as "could not be checked automatically", never guessed.</p>
+<p><b>The tutor pipeline.</b> A question passes through four stages. (1) The router matches it against each lesson's topic keywords as whole words; no match means the question is declined and the model is never loaded. (2) On an exercise, the controller serves the next stored hint while any remain. (3) The prompt has a fixed system message, so llama.cpp reuses its cached prefix, plus one passage: the lesson paragraph that best overlaps the question, or the exercise and its hints. (4) <span class="mono">GuidanceService</span> loads the model lazily, runs one request at a time, stops it at 120 s or on Cancel, and pre-processes likely prompts while the learner reads. Output is paced one step at a time: each generation stops at the next step's heading or after 80 tokens, and a long step continues in further chunks. A numeric or complex final answer in the text is masked. The outcome and its timings go to <span class="mono">guidance_events</span>.</p>
+<p><b>Accounts, sync and the portal.</b> The first sign-in is checked online by Supabase Auth. The tablet then keeps the profile, a salted PBKDF2-SHA256 hash of the password (3,000 rounds, sized for Hermes, which has no JIT) and the refresh token, so the account signs in again offline. When sync is switched on, <span class="mono">app/src/sync/engine.ts</span> runs at start-up, every two minutes and on demand. It upserts the account's rows keyed by tablet and local id, so a repeat changes nothing, in batches of 200. A per-account, per-table high-water mark means each run sends only new rows; a failure leaves the mark, and the next run resends. Row-level security in <span class="mono">supabase/migrations/</span> lets an account write and read only its own rows; staff read all; roles change only through <span class="mono">set_role</span>, which only an admin may call. The Next.js portal renders on the server and queries as the signed-in user with the publishable key only; <span class="mono">proxy.ts</span> sends signed-out visitors to the sign-in page.</p>
+
+<div class="shots avoid">
+<figure><img src="../images/p4-tablet-practice-correct.png" alt="Practice screen with a correct answer"><figcaption>(a) An answer in another spelling marked correct on the tablet.</figcaption></figure>
+<figure><img src="../images/p5-tablet-steps.png" alt="Tutor answering step by step"><figcaption>(b) The on-device tutor, one step at a time, with its timings.</figcaption></figure>
+<figure><img src="../images/p8-tablet-topics-stale-cards.png" alt="Topic cards with stale size"><figcaption>(c) Fault found by the offline test in 1.2.1: "Open lesson" outside its card.</figcaption></figure>
+<figure><img src="../images/p9-tablet-sign-in.png" alt="Sign-in screen"><figcaption>(d) Sign-in in 1.3.0; studying under a learner code still needs no account.</figcaption></figure>
+</div>
+<div class="caption">Figure 2. Screens from the ATMPC IT-801B in airplane mode (more in <span class="mono">docs/images/</span>).</div>
+
+<h2>4. Testing strategies, results and improvements</h2>
+<table>
+<thead><tr><th style="width:15%">Strategy</th><th style="width:22%">Why and how</th><th style="width:31%">Result</th><th>Improvement made afterwards</th></tr></thead>
+<tbody>
+<tr><td><b>Unit and integration tests</b> (Jest)</td><td>Logic is kept out of screens so it can be tested without a tablet. Real SQLite (sql.js), fake model engines and a fake server; screens rendered and driven by test id.</td><td>285 tests in 14 suites pass; TypeScript and ESLint report 0 problems. Checker 111, guidance 49, content 38, sync and accounts 16, sharing 14, learner 14, progress 13, class 7, study flow 5.</td><td>Under CPU load the tests failed 4 runs out of 4 (5 to 8 tests each): fixed sleeps and Jest's 5 s limit. Tests now wait for conditions and have 30 s; 4 of 4 loaded runs pass. An App test that kept a timer alive was fixed.</td></tr>
+<tr><td><b>Device test:</b> offline reliability (§3.7.1)</td><td>Only the real tablet shows offline behaviour, timing and heat. Six tasks × ten cases × three network conditions, driven by <span class="mono">app/scripts/offline_test.py</span> through the UI.</td><td><b>178 of 180 passed (98.9%; target 95%).</b> No crash, lost record or network use, including 60 attempts with Wi-Fi cut mid-task. The two failures were tutor answers at 124.9 s and 120.6 s.</td><td>A first run on 1.2.1 found topic cards keeping a stale size after a restart, so taps opened the wrong lesson (Fig. 2c). 1.2.2 reads progress before drawing; a regression test fails on 1.2.1 and passes on 1.2.2. Next: cap the first step at two chunks.</td></tr>
+<tr><td><b>Security tests</b> of row-level security</td><td>The rules, not the app, protect the data. Both migrations run on an in-process Postgres (PGlite); statements run as different accounts.</td><td>20 of 20 checks pass: a student cannot write as another, read others' rows, or promote itself; a teacher cannot change roles; anonymous users read nothing.</td><td>The script printed results but always exited 0. Each check now states its expected result. With the read rule opened to everyone in a copy, it failed with exit status 1.</td></tr>
+<tr><td><b>Live integration</b> and end-to-end sync</td><td>Checks the app's own code against the real project and the real network.</td><td>A new student synced a session and read back exactly its rows; a teacher request stayed a student (28 Oct). On the tablet, work done in airplane mode reached the server once Wi-Fi returned, exactly once.</td><td>Found that a sync can fail for about a minute after the network returns; the two-minute retry covers it, so it is documented as a known limit.</td></tr>
+<tr><td><b>Content and grader validation</b></td><td>Wrong keys would mark learners wrongly.</td><td>4 packages valid, 20 keys proven; the grader passes 24 probes and 17 regression cases.</td><td>An audit found two grader defects that inflated scores; fixing them changed Llama-3.2-1B from 6 to 4.</td></tr>
+</tbody></table>
+
+<p><b>Different inputs and error handling.</b> The same component was given valid, invalid and edge inputs:</p>
+<table>
+<thead><tr><th style="width:42%">Input</th><th>System response (tests or tablet)</th></tr></thead>
+<tbody>
+<tr><td>Answer "3i+5", "5 − 3i", "sin(2)" or nothing, for the key 5 + 3i</td><td>"Correct, after 3 tries"; "Not quite"; "could not be checked automatically"; "Type an answer first." (not counted as an attempt)</td></tr>
+<tr><td>Question outside the four units; tutor asked with no model installed</td><td>Declined at once, model not called; plain message in 50 ms, stored hints and solutions still work</td></tr>
+<tr><td>Tutor answer longer than 120 s; Cancel pressed</td><td>Stopped, partial text kept and logged as timed-out; stopped after 12.1 s and logged as cancelled</td></tr>
+<tr><td>Account never used on this tablet, signing in offline; wrong password</td><td>"has not signed in on this tablet before"; "Wrong email or password"</td></tr>
+<tr><td>Network lost during sync; a student writing a row as another account</td><td>"No internet connection", marks unchanged, rows sent on the next run; refused by row-level security</td></tr>
+</tbody></table>
+
+<h2>5. Performance and compatibility</h2>
+<div class="cols">
+<div>
+<table>
+<thead><tr><th>Measure (IT-801B, 1.2.2, offline test)</th><th class="num">Median</th><th class="num">95th pct.</th><th class="num">Limit</th></tr></thead>
+<tbody>
+<tr><td>Stored hint shown</td><td class="num">0.12 s</td><td class="num">0.14 s</td><td class="num">2 s</td></tr>
+<tr><td>Exercise checked, with feedback</td><td class="num">0.13 s</td><td class="num">0.16 s</td><td class="num">2 s</td></tr>
+<tr><td>Topic opened</td><td class="num">1.44 s</td><td class="num">1.55 s</td><td class="num">2 s</td></tr>
+<tr><td>Restart, progress reopened</td><td class="num">0.81 s</td><td class="num">0.96 s</td><td class="num">10 s</td></tr>
+<tr><td>Tutor: first token</td><td class="num">23.2 s</td><td class="num">47.0 s</td><td class="num">—</td></tr>
+<tr><td>Tutor: complete first step</td><td class="num">76.7 s</td><td class="num">120.6 s</td><td class="num">120 s</td></tr>
+</tbody></table>
+<p>Other measures: cold launch shown in 768–788 ms; about 1.2 GB of memory with the model loaded; APK 101 MB plus the 986 MB model; CPU mean 61 °C and peak 82.3 °C over a 26-minute session; battery 73% to 46% over the 2.5-hour test on USB power.</p>
+</div>
+<div>
+<table>
+<thead><tr><th>Configuration (llama-bench, 1.5B Q4_K_M)</th><th class="num">Prompt tok/s</th><th class="num">Output tok/s</th></tr></thead>
+<tbody>
+<tr><td>CPU, 1 / 2 / 3 threads</td><td class="num">1.28 / 2.52 / 3.71</td><td class="num">0.99 / 1.80 / 2.60</td></tr>
+<tr><td>CPU, 4 threads</td><td class="num">3.74</td><td class="num">1.61</td></tr>
+<tr><td>Mali-G52 GPU (Vulkan), all layers</td><td class="num">0.64</td><td class="num">0.81</td></tr>
+<tr><td>Q4_0 / IQ4_XS instead of Q4_K_M</td><td class="num">3.82 / 4.04</td><td class="num">2.74 / 2.82</td></tr>
+</tbody></table>
+<p>The tablet's CPU (4 × Cortex-A53) lacks the dot-product instructions that fast quantised kernels need. A build that uses them stops with an illegal instruction on this CPU, so llama.cpp is built for plain ARMv8-A, uses three threads (four starve the system) and no GPU (four to six times slower).</p>
+</div>
+</div>
+<table>
+<thead><tr><th style="width:30%">Environment</th><th>Result</th></tr></thead>
+<tbody>
+<tr><td>ATMPC IT-801B, Android 15 (API 35), 3.79 GB RAM: the low-end target</td><td>All features and every test above; 1.2.2 offline-only and 1.3.0 release builds</td></tr>
+<tr><td>Infinix Smart 8 phone, as a teacher's device</td><td>1.2.0 installed; received a progress file over Bluetooth and showed the class; ran without the model</td></tr>
+<tr><td>Android versions</td><td>Built for API 24 to 36 (Android 7 to 16); only Android 15 was tested on a device</td></tr>
+<tr><td>Portal in Chrome 154 and Firefox 142, at 1280 px and 390 px wide (Linux)</td><td>Signed out, every page redirects to sign-in; the form fits without horizontal scrolling. Chrome requests a missing favicon (404). WebKit could not start without two system libraries.</td></tr>
+<tr><td>Development: Linux, Node 20.20 (the app asks for 22)</td><td>All tests, typecheck and builds pass; the version gap is a known, documented mismatch</td></tr>
+</tbody></table>
+
+<h2>6. Code quality, object-oriented design and algorithms</h2>
+<p><b>Structure.</b> Each feature owns a directory (<span class="mono">docs/feature-map.md</span>): screens hold layout and event wiring, and the logic sits in pure modules tested without React, a WebView or a tablet. The app's 7,704 lines of TypeScript are in 57 files; the largest is 381 lines. TypeScript runs in strict mode, ESLint reports no warnings, and the history has 112 focused commits from 1 September to 28 October 2026.</p>
+<ul>
+<li><b>Encapsulation.</b> <span class="mono">GuidanceService</span> hides the engine, its state machine (idle, loading, ready, busy, no-model), the cancel flag, the timeout and the warm-up queue behind <span class="mono">ask</span>, <span class="mono">warmUp</span>, <span class="mono">cancel</span> and <span class="mono">subscribe</span>, the last an observer list that screens follow.</li>
+<li><b>Abstraction and polymorphism.</b> Small interfaces separate logic from the outside world: <span class="mono">Engine</span> (llama.rn on the tablet, scripted fakes in tests), <span class="mono">AuthRemote</span> and <span class="mono">SyncRemote</span> (Supabase or a fake server), <span class="mono">Executor</span> (op-sqlite or sql.js). The service also takes its clock and timers as parameters. This dependency inversion is what lets 285 tests run in seconds without a device or network.</li>
+<li><b>Inheritance.</b> Errors carry meaning: <span class="mono">DomainError</span> extends <span class="mono">UnsupportedInput</span>, so a sampler skips a point outside a function's domain while other input is reported as unsupported; <span class="mono">BusyError</span>, <span class="mono">OfflineError</span> and <span class="mono">AuthError</span> decide fallbacks. The Kotlin <span class="mono">TutorDeviceModule</span> extends the spec class generated from <span class="mono">app/src/native/</span>.</li>
+<li><b>Reuse.</b> One KaTeX view renders lessons, solutions and generated text; the progress engine serves the learner, the class view and the Bluetooth summaries; the portal shares its table, statistic and notice components.</li>
+</ul>
+<table>
+<thead><tr><th style="width:27%">Problem</th><th>Algorithm or technique</th><th style="width:20%">Where</th></tr></thead>
+<tbody>
+<tr><td>Mark answers without SymPy</td><td>Tokenizer and recursive-descent parser over complex numbers; comparison within a tolerance; functions compared at sample points, skipping domain errors</td><td class="mono">app/src/checker/</td></tr>
+<tr><td>Keep the model in scope</td><td>Normalised whole-word keyword matching per lesson, best score wins, else decline</td><td class="mono">content/router.ts</td></tr>
+<tr><td>Ground answers in one passage</td><td>A paragraph tagged with the matched topic, else the best overlap of word stems, rarer words weighted more (1/df²) and topic words doubled; with its formula, cut to 320 characters</td><td class="mono">guidance/prompt.ts</td></tr>
+<tr><td>Wait less for the model</td><td>Byte-stable system prompt for llama.cpp's prefix cache; prompts processed while the learner reads, only the newest pending one kept, none once a request starts</td><td class="mono">guidance/service.ts</td></tr>
+<tr><td>Hint first, never the answer</td><td>Candidate numbers found by pattern, evaluated, and masked when equal to the key; step pacing as a small state machine with chunking</td><td class="mono">guidance/redact.ts, steps.ts</td></tr>
+<tr><td>Explainable progress</td><td>Mastery = share of exercises correct; next exercise is the first not yet correct, or the worked example after two wrong answers</td><td class="mono">learner/progress.ts</td></tr>
+<tr><td>One class across tablets, offline</td><td>Validated summary files; newest file per tablet kept (importing twice changes nothing); learners merged by code</td><td class="mono">app/src/sharing/</td></tr>
+<tr><td>Sync that survives bad networks</td><td>Idempotent upserts keyed by tablet and local id; per-table high-water marks; batches of 200</td><td class="mono">sync/engine.ts</td></tr>
+<tr><td>Offline sign-in</td><td>Salted PBKDF2-SHA256; comparison of the stored hash</td><td class="mono">account/password.ts</td></tr>
+</tbody></table>
+<p><b>Known limits.</b> The tutor is slow on this hardware, and 2 of 30 first steps missed 120 s. The content is a starter set awaiting teacher review. Records on the tablet are not encrypted; the teacher PIN is shared. Teachers see every student, as there are no classes yet.</p>
+
+</body>
+</html>
