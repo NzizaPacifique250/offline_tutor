@@ -20,13 +20,16 @@
     }
   },
   "dependencies": {
+    "@noble/hashes": "1.8.0",
     "@op-engineering/op-sqlite": "18.2.5",
     "@react-native/new-app-screen": "0.87.1",
+    "@supabase/supabase-js": "2.109.0",
     "katex": "0.18.7",
     "llama.rn": "0.12.9",
     "react": "19.2.3",
     "react-native": "0.87.1",
     "react-native-safe-area-context": "^5.5.2",
+    "react-native-url-polyfill": "3.0.0",
     "react-native-webview": "14.0.1"
   },
   "devDependencies": {
