@@ -28,27 +28,26 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
         <span className="text-base font-semibold">Tutor admin</span>
       </div>
 
-      <aside className="on-primary hidden flex-col justify-between bg-primary p-12 text-white lg:flex">
-        <div className="flex items-center gap-3">
+      <aside className="on-primary relative hidden flex-col justify-between overflow-hidden bg-primary p-12 text-white lg:flex">
+        {/* The illustration covers the panel; navy fades in at the top and bottom so the white text stays readable. Already compressed (740 px WebP, 22 KB), so Next serves it as it is; lazy, so phones, which never show this panel, do not download it. */}
+        <Image
+          src="/images/login-illustration.webp"
+          alt=""
+          fill
+          unoptimized
+          loading="lazy"
+          className="object-cover"
+        />
+        <div aria-hidden className="absolute inset-x-0 top-0 h-1/3 bg-linear-to-b from-primary via-primary/70 to-transparent" />
+        <div aria-hidden className="absolute inset-x-0 bottom-0 h-3/5 bg-linear-to-t from-primary from-40% via-primary/85 to-transparent" />
+        <div className="relative flex items-center gap-3">
           <Logo />
           <div>
             <p className="text-base font-semibold">Tutor admin</p>
             <p className="text-xs text-white/75">Senior Six Advanced Mathematics</p>
           </div>
         </div>
-        <div className="flex flex-1 items-center justify-center py-10">
-          {/* Already compressed (640 px WebP, 18 KB), so Next serves it as it is; lazy, so phones, which never show this panel, do not download it. */}
-          <Image
-            src="/images/login-illustration.webp"
-            alt=""
-            width={640}
-            height={640}
-            unoptimized
-            loading="lazy"
-            className="w-full max-w-xs rounded-2xl bg-white p-4 shadow-card xl:max-w-sm"
-          />
-        </div>
-        <div className="max-w-md">
+        <div className="relative max-w-md">
           <p className="text-title font-semibold tracking-tight">Follow your class, tablet by tablet.</p>
           <ul className="mt-6 space-y-4 text-base text-white/85">
             {points.map((p) => (
