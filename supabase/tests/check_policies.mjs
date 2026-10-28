@@ -26,27 +26,56 @@ await db.exec(`insert into auth.users values
   ('${S2}', 's2@x', '{"full_name":"Wants Teacher","requested_role":"teacher"}'),
   ('${A}',  'a@x',  '{"full_name":"Admin","requested_role":"admin"}');
   update public.profiles set role = 'admin' where id = '${A}';`);
-console.log((await db.query('select learner_code, role, requested_role, full_name from public.profiles order by full_name')).rows);
+// Runs a statement as a signed-in account, the way PostgREST does: the
+// authenticated role with the account's id as the JWT subject.
 async function as(uid, sql) {
   await db.exec(`set role authenticated; select set_config('request.jwt.sub', '${uid}', false);`);
   try { return (await db.query(sql)).rows; } catch (e) { return 'ERROR: ' + e.message; } finally { await db.exec('reset role;'); }
 }
-const ok = (label, v) => console.log(label.padEnd(58), JSON.stringify(v));
-ok('S1 registers its tablet', await as(S1, `insert into public.devices (id, label, last_user) values ('dev1', 'Tablet DEV1', '${S1}') returning id`));
-ok('S1 inserts own attempt', await as(S1, `insert into public.attempts values ('dev1', 1, '${S1}', 'S-111111', 1, 'L', 'E', '5+3i', 'correct', 0, now()) returning local_id`));
-ok('S1 upserts it again (no duplicate)', await as(S1, `insert into public.attempts values ('dev1', 1, '${S1}', 'S-111111', 1, 'L', 'E', '5+3i', 'correct', 1, now()) on conflict (device_id, local_id) do update set hints_seen = excluded.hints_seen returning hints_seen`));
-ok('S1 writes a row as S2 (must fail)', await as(S1, `insert into public.attempts values ('dev1', 2, '${S2}', 'S-222222', 1, 'L', 'E', 'x', 'wrong', 0, now())`));
-ok('S2 reads attempts (must see none)', await as(S2, `select count(*) from public.attempts`));
-ok('S2 makes self teacher directly (must fail)', await as(S2, `update public.profiles set role = 'teacher' where id = '${S2}' returning role`));
-ok('S2 calls set_role (must fail)', await as(S2, `select public.set_role('${S2}', 'teacher')`));
-ok('Admin approves S2 as teacher', await as(A, `select public.set_role('${S2}', 'teacher')`));
-ok('S2, now teacher, reads attempts (sees 1)', await as(S2, `select count(*) from public.attempts`));
-ok('S1 renames itself', await as(S1, `update public.profiles set full_name = 'S One' where id = '${S1}' returning full_name`));
-ok('S1 reads overview (own row only)', await as(S1, `select learner_code, attempts, exercises_correct from public.learner_overview`));
-ok('Admin reads overview (all)', await as(A, `select learner_code, role, attempts from public.learner_overview order by learner_code`));
-ok('anon reads attempts (must see none)', await (async () => { await db.exec('set role anon'); try { return (await db.query('select count(*) from public.attempts')).rows; } catch (e) { return 'ERROR: ' + e.message; } finally { await db.exec('reset role'); } })());
-ok('Admin declines a teacher request (S1 asks first)', await (async () => {
-  await db.exec(`update public.profiles set requested_role = 'teacher' where id = '${S1}'`);
-  return as(A, `select public.set_role('${S1}', 'student')`);
-})());
-ok('S1 no longer pending', (await db.query(`select role, requested_role from public.profiles where id = '${S1}'`)).rows);
+
+// Each check runs a statement as one account and states what must come back:
+// rows (compared as JSON) or an error matching a pattern. Any mismatch is
+// printed as FAIL and the script exits with status 1.
+let failures = 0;
+function check(label, got, expected) {
+  const pass = expected instanceof RegExp ? typeof got === 'string' && expected.test(got) : JSON.stringify(got) === JSON.stringify(expected);
+  failures += pass ? 0 : 1;
+  console.log(`${pass ? 'pass' : 'FAIL'}  ${label.padEnd(56)} ${JSON.stringify(got)}${pass ? '' : `\n      expected ${expected}`}`);
+}
+const count = rows => (typeof rows === 'string' ? rows : Number(rows[0].count));
+
+check('new accounts are students; a teacher request waits', (await db.query('select learner_code, role, requested_role from public.profiles order by learner_code')).rows, [
+  { learner_code: 'S-111111', role: 'student', requested_role: 'student' },
+  { learner_code: 'S-333333', role: 'admin', requested_role: 'student' },
+  { learner_code: 'T-222222', role: 'student', requested_role: 'teacher' },
+]);
+check('S1 registers its tablet', await as(S1, `insert into public.devices (id, label, last_user) values ('dev1', 'Tablet DEV1', '${S1}') returning id`), [{ id: 'dev1' }]);
+check('S1 inserts own attempt', await as(S1, `insert into public.attempts values ('dev1', 1, '${S1}', 'S-111111', 1, 'L', 'E', '5+3i', 'correct', 0, now()) returning local_id`), [{ local_id: 1 }]);
+check('S1 upserts it again (updated, not duplicated)', await as(S1, `insert into public.attempts values ('dev1', 1, '${S1}', 'S-111111', 1, 'L', 'E', '5+3i', 'correct', 1, now()) on conflict (device_id, local_id) do update set hints_seen = excluded.hints_seen returning hints_seen`), [{ hints_seen: 1 }]);
+check('S1 has exactly one attempt', count(await as(S1, `select count(*) from public.attempts`)), 1);
+check('S1 writes a row as S2 (refused)', await as(S1, `insert into public.attempts values ('dev1', 2, '${S2}', 'S-222222', 1, 'L', 'E', 'x', 'wrong', 0, now())`), /row-level security/);
+check('S2 reads attempts (sees none)', count(await as(S2, `select count(*) from public.attempts`)), 0);
+check('S2 makes itself teacher directly (refused)', await as(S2, `update public.profiles set role = 'teacher' where id = '${S2}' returning role`), /permission denied/);
+check('S2 calls set_role (refused)', await as(S2, `select public.set_role('${S2}', 'teacher')`), /only an admin/);
+check('admin approves S2 as teacher', await as(A, `select public.set_role('${S2}', 'teacher')`), [{ set_role: '' }]);
+check('S2, now a teacher, reads attempts (sees 1)', count(await as(S2, `select count(*) from public.attempts`)), 1);
+check('S2, a teacher, promotes S1 (refused)', await as(S2, `select public.set_role('${S1}', 'admin')`), /only an admin/);
+check('S2, a teacher, writes a row as S1 (refused)', await as(S2, `insert into public.attempts values ('dev1', 3, '${S1}', 'S-111111', 1, 'L', 'E', 'x', 'wrong', 0, now())`), /row-level security/);
+check('S1 renames itself', await as(S1, `update public.profiles set full_name = 'S One' where id = '${S1}' returning full_name`), [{ full_name: 'S One' }]);
+check('S1 renames S2 (no row changed)', await as(S1, `update public.profiles set full_name = 'X' where id = '${S2}' returning full_name`), []);
+check('S1 reads the overview (own row only)', await as(S1, `select learner_code, attempts, exercises_correct from public.learner_overview`), [{ learner_code: 'S-111111', attempts: 1, exercises_correct: 1 }]);
+check('admin reads the overview (all three)', await as(A, `select learner_code, role, attempts from public.learner_overview order by learner_code`), [
+  { learner_code: 'S-111111', role: 'student', attempts: 1 },
+  { learner_code: 'S-333333', role: 'admin', attempts: 0 },
+  { learner_code: 'T-222222', role: 'teacher', attempts: 0 },
+]);
+check('anon reads attempts (sees none)', await (async () => {
+  await db.exec('set role anon');
+  try { return Number((await db.query('select count(*) from public.attempts')).rows[0].count); } catch (e) { return 'ERROR: ' + e.message; } finally { await db.exec('reset role'); }
+})(), 0);
+await db.exec(`update public.profiles set requested_role = 'teacher' where id = '${S1}'`);
+check('admin declines S1\'s teacher request', await as(A, `select public.set_role('${S1}', 'student')`), [{ set_role: '' }]);
+check('S1 is a student and no longer pending', (await db.query(`select role, requested_role from public.profiles where id = '${S1}'`)).rows, [{ role: 'student', requested_role: 'student' }]);
+
+console.log(failures ? `\n${failures} check(s) failed` : '\nall checks passed');
+process.exit(failures ? 1 : 0);
