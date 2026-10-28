@@ -1,8 +1,7 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- The pilot build works offline only: without this permission Android
-         itself stops it from sending learner data anywhere. Debug builds keep
-         it for Metro. -->
-    <uses-permission android:name="android.permission.INTERNET" tools:node="remove" />
+    <!-- The release build keeps the INTERNET permission from the main
+         manifest, so accounts that switch sync on can reach Supabase. The
+         study build is made with -PofflineOnly, which uses
+         src/offlineOnly/AndroidManifest.xml instead and removes it. -->
 </manifest>

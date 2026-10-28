@@ -1,0 +1,8 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- The study build (-PofflineOnly) works offline only: without this
+         permission Android itself stops it from sending learner data
+         anywhere, whatever the app's sync setting. -->
+    <uses-permission android:name="android.permission.INTERNET" tools:node="remove" />
+</manifest>

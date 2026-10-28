@@ -154,6 +154,15 @@ android {
             proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
         }
     }
+
+    // `-PofflineOnly` makes the study build: the same release, with the
+    // INTERNET permission removed (src/offlineOnly), so nothing can leave the
+    // tablet whatever the sync setting. Without it the release can sync.
+    sourceSets {
+        release {
+            manifest.srcFile(project.hasProperty("offlineOnly") ? "src/offlineOnly/AndroidManifest.xml" : "src/release/AndroidManifest.xml")
+        }
+    }
 }
 
 dependencies {
