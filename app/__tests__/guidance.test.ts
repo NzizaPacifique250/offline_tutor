@@ -401,6 +401,13 @@ function fakeEngine(script: Script) {
   return engine;
 }
 
+/** A one-shot event a test can wait for, instead of sleeping. */
+function signal() {
+  let fire!: () => void;
+  const seen = new Promise<void>(res => (fire = res));
+  return { fire: () => fire(), seen };
+}
+
 describe('GuidanceService', () => {
   const tokens = 'Add the real parts first, then the imaginary parts.'.split(/(?<= )/);
 
@@ -425,8 +432,9 @@ describe('GuidanceService', () => {
 
   it('is single-flight: a second request while busy throws BusyError', async () => {
     const svc = new GuidanceService(async () => fakeEngine({ tokens }), { modelPath: '/m.gguf' });
-    const first = svc.ask([]);
-    await new Promise<void>(r => setTimeout(() => r(), 2));
+    const firstToken = signal();
+    const first = svc.ask([], firstToken.fire);
+    await firstToken.seen;
     await expect(svc.ask([])).rejects.toBeInstanceOf(BusyError);
     await first;
     expect(svc.state).toBe('ready');
@@ -435,8 +443,10 @@ describe('GuidanceService', () => {
   it('cancels: stops the engine and reports the partial text as cancelled', async () => {
     const engine = fakeEngine({ tokens });
     const svc = new GuidanceService(async () => engine, { modelPath: '/m.gguf' });
-    const p = svc.ask([]);
-    await new Promise<void>(r => setTimeout(() => r(), 5));
+    // Cancel once the first token has arrived, whatever the time it took.
+    const firstToken = signal();
+    const p = svc.ask([], firstToken.fire);
+    await firstToken.seen;
     await svc.cancel();
     const r = await p;
     expect(r.outcome).toBe('cancelled');
@@ -523,8 +533,10 @@ describe('GuidanceService', () => {
     const svc = new GuidanceService(async () => engine, { modelPath: '/m.gguf' });
     await svc.ensureLoaded();
     svc.warmUp([{ role: 'user', content: 'passage' }]).catch(() => undefined);
+    const busy = signal();
+    svc.subscribe(s => s === 'busy' && busy.fire());
     const p = svc.ask([{ role: 'user', content: 'passage q' }]);
-    await new Promise<void>(res => setTimeout(() => res(), 5));
+    await busy.seen;
     expect(svc.state).toBe('busy');
     await svc.cancel();
     const r = await p;

@@ -12,13 +12,9 @@ import { freeQuestionMessages } from '../src/guidance/prompt';
 import { GuidanceService, type ChatMessageLike, type CompleteOptions, type Engine } from '../src/guidance/service';
 import { SIMPLER_LEAD_IN } from '../src/guidance/steps';
 import { GuidancePanel } from '../src/screens/GuidancePanel';
+import { waitUntil } from '../jest/waitUntil';
 
 const { makeSqlDb } = require('../jest/sqljs-db');
-
-const flush = () =>
-  act(async () => {
-    await new Promise<void>(r => setTimeout(() => r(), 30));
-  });
 
 function texts(root: ReactTestRenderer.ReactTestInstance): string {
   return root
@@ -86,12 +82,12 @@ describe('GuidancePanel steps', () => {
     await act(async () => {
       r = ReactTestRenderer.create(<GuidancePanel service={service} db={db} session={session} request={request} />);
     });
-    await flush();
     const page = () => r.root.findAllByProps({ testID: 'webview' }).map(w => (w.props.source?.html ?? '') as string).find(h => h.includes('class="gen"')) ?? '';
 
     // Step 1 is longer than the cap: several chunks, each resumed from the
     // text so far, all stopping at the heading of step 2; shown once complete.
     const step1 = '1. Expand the brackets: multiply each term of the first number by each term of the second.';
+    await waitUntil(() => expect(texts(r.root)).toContain('Next step (2)'));
     const chunks = calls.length;
     expect(chunks).toBeGreaterThanOrEqual(2);
     expect(calls[0].o.prefill).toBeUndefined();
@@ -110,7 +106,7 @@ describe('GuidancePanel steps', () => {
     // A simpler explanation of step 1: the turn resumed with the lead-in,
     // ended at the line break; the main text is unchanged.
     await act(async () => press(r.root, 'guidance-simpler-button'));
-    await flush();
+    await waitUntil(() => expect(has(r.root, 'guidance-simpler')).toBe(true));
     const simplerCall = calls[chunks];
     expect(simplerCall.m).toEqual(request.messages);
     expect(simplerCall.o.prefill).toBe(`${step1}${SIMPLER_LEAD_IN}`);
@@ -121,7 +117,7 @@ describe('GuidancePanel steps', () => {
 
     // Step 2 resumes the main turn from the raw text and stops before step 3.
     await act(async () => press(r.root, 'guidance-next-step'));
-    await flush();
+    await waitUntil(() => expect(texts(r.root)).toContain('Step 2. Try it yourself'));
     const step2Call = calls[chunks + 1];
     expect(step2Call.m).toEqual(request.messages);
     expect(step2Call.o.prefill).toBe(step1);
@@ -134,12 +130,14 @@ describe('GuidancePanel steps', () => {
 
     // Step 3 is the model's last: it finishes on its own and no button remains.
     await act(async () => press(r.root, 'guidance-next-step'));
-    await flush();
+    await waitUntil(() => expect(texts(r.root)).toContain('The tutor finished in 3 steps.'));
     expect(page()).toContain('3. Collect the real and imaginary parts.');
     t = texts(r.root);
     expect(t).toContain('The tutor finished in 3 steps.');
     expect(has(r.root, 'guidance-next-step')).toBe(false);
 
+    // The last log entry is written as the step ends; wait for it.
+    await waitUntil(async () => expect((await listGuidance(db, 'D4')).map(e => e.question)).toContain('(step 3) how do I multiply?'));
     const events = await listGuidance(db, 'D4');
     const questions = events.map(e => e.question);
     // Step 1 took `chunks` chunks; a later step may need more than one too.

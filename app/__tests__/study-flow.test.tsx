@@ -16,6 +16,7 @@ import { ensureLearnerSchema, listAttempts, listReveals, type Executor } from '.
 import { PracticeScreen } from '../src/screens/PracticeScreen';
 import { ProgressScreen } from '../src/screens/ProgressScreen';
 import { TopicsScreen } from '../src/screens/TopicsScreen';
+import { waitUntil } from '../jest/waitUntil';
 
 const { makeSqlDb } = require('../jest/sqljs-db');
 
@@ -163,11 +164,10 @@ describe('practice screen over real SQLite', () => {
     }
     expect(texts(root)).toContain('Ask the tutor (generated)');
     await act(async () => press(root, 'ask-tutor'));
-    await flush();
-    await act(async () => {
-      await new Promise<void>(res => setTimeout(() => res(), 80));
-    });
-    await flush();
+    // The fake model writes one token per timer tick: wait for the finished
+    // answer and its log entry rather than for a fixed time.
+    await waitUntil(() => expect(texts(root)).toContain('Generated 25 tokens'));
+    await waitUntil(async () => expect(await listGuidance(db, 'C3')).toHaveLength(4));
     const t = texts(root);
     // The finished text is drawn by the KaTeX WebView, so read its page.
     const gen = root
