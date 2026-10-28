@@ -1,16 +1,234 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --color-brand-50: #f0fdfa;
-  --color-brand-600: #0f766e;
-  --color-brand-700: #115e59;
+  /* System font stack, matches the tablet's native text rendering. No download. */
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "Cascadia Mono", "Roboto Mono", Menlo, Consolas, monospace;
+
+  /* Colour: tablet palette. */
+  --color-bg: #f4f6f8;
+  --color-surface: #ffffff;
+  --color-tint: #edf2f8;
+  --color-tint-strong: #dce7f4;
+  --color-line: #d3dce6;
+  --color-field: #7c8b99;
+  --color-ink: #16202b;
+  --color-ink-2: #3a4856;
+  --color-muted: #566573;
+  --color-primary: #14467e;
+  --color-primary-hover: #0f3a68;
+  --color-primary-press: #0b2e54;
+  --color-ok: #1d6b45;
+  --color-ok-soft: #e6f4ec;
+  --color-warn: #8a5a00;
+  --color-warn-soft: #fff6e5;
+  --color-bad: #8a2e2e;
+  --color-bad-soft: #fbe9e9;
+  --color-chart-ok: #1d6b45;
+  --color-chart-warn: #b7791f;
+  --color-chart-bad: #a63d3d;
+  --color-chart-info: #14467e;
+  --color-chart-neutral: #7c8b99;
+  --color-chart-violet: #6b4fa3;
+  --color-chart-dark: #3a4856;
+  --color-chart-info-soft: #5f89b8;
+
+  /* Radius scale: 0, 4, 8, 12, 16, full. */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+
+  --shadow-card: 0 1px 2px rgb(22 32 43 / 0.06), 0 0 0 1px rgb(22 32 43 / 0.02);
+  --shadow-pop: 0 8px 24px rgb(22 32 43 / 0.12);
+
+  --text-xs: 0.75rem;
+  --text-xs--line-height: 1rem;
+  --text-sm: 0.875rem;
+  --text-sm--line-height: 1.25rem;
+  --text-base: 1rem;
+  --text-base--line-height: 1.5rem;
+  --text-lg: 1.25rem;
+  --text-lg--line-height: 1.75rem;
+  --text-xl: 1.5rem;
+  --text-xl--line-height: 1.75rem;
+  --text-title: 1.75rem;
+  --text-title--line-height: 1.2;
+  --text-display: 3rem;
+  --text-display--line-height: 1;
+
+  --ease-enter: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-exit: ease-out;
 }
 
-body {
-  @apply bg-slate-50 text-slate-900 antialiased;
+@layer base {
+  html {
+    color-scheme: light;
+  }
+  body {
+    @apply bg-bg text-ink font-sans antialiased;
+  }
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+    border-radius: inherit;
+  }
+  .on-primary :focus-visible {
+    outline-color: #fff;
+  }
+  ::selection {
+    background: var(--color-tint-strong);
+  }
 }
 
-:focus-visible {
-  @apply outline-2 outline-offset-2 outline-brand-700;
+@layer components {
+  .btn {
+    @apply inline-flex h-9 items-center justify-center gap-2 rounded-md px-4 text-sm font-medium transition-colors duration-150 disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .btn-primary {
+    @apply bg-primary text-white hover:bg-primary-hover active:bg-primary-press;
+  }
+  .btn-secondary {
+    @apply border border-field bg-surface text-ink hover:bg-tint active:bg-tint-strong;
+  }
+  .btn-lg {
+    @apply h-11 text-base;
+  }
+  .field {
+    @apply block h-11 w-full rounded-md border border-field bg-surface px-3 text-base text-ink placeholder:text-muted hover:border-ink-2 focus:border-primary disabled:bg-tint disabled:text-muted;
+  }
+  .field-sm {
+    @apply h-9 px-2 text-sm;
+  }
+  .link {
+    @apply font-medium text-primary underline decoration-primary/30 underline-offset-4 transition-colors duration-150 hover:decoration-primary;
+  }
+  .data-table tbody tr {
+    @apply border-t border-line transition-colors duration-150 first:border-t-0 hover:bg-bg;
+  }
+  .data-table tbody :is(td, th[scope="row"]) {
+    @apply px-4 py-3 align-middle;
+  }
+  .data-table tbody th[scope="row"] {
+    @apply text-left font-normal;
+  }
+  .skeleton {
+    @apply rounded-md bg-tint;
+    animation: skeleton-pulse 1.6s ease-in-out infinite;
+  }
+}
+
+/* Below 640 px the first column stays visible while the table scrolls sideways. */
+@media (max-width: 639px) {
+  .data-table thead th:first-child,
+  .data-table tbody :is(td, th[scope="row"]):first-child {
+    position: sticky;
+    left: 0;
+    z-index: 10;
+  }
+  .data-table tbody :is(td, th[scope="row"]):first-child {
+    background: var(--color-surface);
+  }
+  .data-table tbody tr:hover :is(td, th[scope="row"]):first-child {
+    background: var(--color-bg);
+  }
+  .data-table thead th:first-child {
+    background: var(--color-tint);
+  }
+}
+
+/* Soft edge on a side that has more to scroll to. */
+.scroll-hint {
+  background:
+    linear-gradient(to right, var(--color-surface) 30%, transparent) left center / 24px 100% no-repeat local,
+    linear-gradient(to left, var(--color-surface) 30%, transparent) right center / 24px 100% no-repeat local,
+    linear-gradient(to right, rgb(22 32 43 / 0.16), transparent) left center / 12px 100% no-repeat scroll,
+    linear-gradient(to left, rgb(22 32 43 / 0.16), transparent) right center / 12px 100% no-repeat scroll;
+  background-color: var(--color-surface);
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes grow {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+@keyframes ring {
+  from {
+    stroke-dasharray: 0 251.33;
+  }
+  to {
+    stroke-dasharray: var(--dash) 251.33;
+  }
+}
+@keyframes skeleton-pulse {
+  50% {
+    opacity: 0.6;
+  }
+}
+@keyframes menu {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.rise {
+  animation: rise 240ms var(--ease-enter) both;
+}
+.fade {
+  animation: fade 200ms var(--ease-enter) both;
+}
+.bar-grow {
+  transform-origin: left;
+  animation: grow 300ms var(--ease-enter) 80ms both;
+}
+.ring-fill {
+  animation: ring 300ms var(--ease-enter) both;
+}
+.menu-panel {
+  animation: menu 150ms var(--ease-enter) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .skeleton {
+    animation: none;
+  }
 }

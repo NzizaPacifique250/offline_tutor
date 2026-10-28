@@ -2,30 +2,65 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Icon, type IconName } from "@/components/icons";
 
-const links = [
-  { href: "/", label: "Overview" },
-  { href: "/users", label: "Users" },
-  { href: "/devices", label: "Tablets" },
-  { href: "/activity", label: "Activity" },
-  { href: "/tutor", label: "Tutor" },
+const links: { href: string; label: string; icon: IconName }[] = [
+  { href: "/", label: "Overview", icon: "overview" },
+  { href: "/users", label: "Users", icon: "users" },
+  { href: "/devices", label: "Tablets", icon: "tablet" },
+  { href: "/activity", label: "Activity", icon: "activity" },
+  { href: "/tutor", label: "Tutor", icon: "tutor" },
 ];
 
-export function Nav() {
+// One link list, two layouts: the sidebar on wide screens, the tab bar below 1024 px.
+export function Nav({ variant }: { variant: "sidebar" | "tabs" }) {
   const pathname = usePathname();
+  const isCurrent = (href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
+
+  if (variant === "sidebar") {
+    return (
+      <nav aria-label="Main" className="mt-8 flex flex-col gap-1">
+        {links.map(({ href, label, icon }) => {
+          const current = isCurrent(href);
+          return (
+            <Link
+              key={href}
+              href={href}
+              aria-current={current ? "page" : undefined}
+              className={`relative flex h-10 items-center gap-3 rounded-md px-3 text-sm transition-colors duration-150 active:bg-white/20 ${
+                current
+                  ? "bg-white/15 font-semibold text-white before:absolute before:inset-y-2.5 before:-left-4 before:w-1 before:rounded-full before:bg-white before:content-['']"
+                  : "font-medium text-white/80 hover:bg-white/10 hover:text-white"
+              }`}
+            >
+              <Icon name={icon} />
+              {label}
+            </Link>
+          );
+        })}
+      </nav>
+    );
+  }
+
   return (
-    <nav aria-label="Main" className="flex flex-wrap gap-1">
-      {links.map(({ href, label }) => {
-        const current = href === "/" ? pathname === "/" : pathname.startsWith(href);
+    <nav
+      aria-label="Main"
+      className="pb-[env(safe-area-inset-bottom)] fixed inset-x-0 bottom-0 z-30 grid h-16 grid-cols-5 border-t border-line bg-surface lg:hidden"
+    >
+      {links.map(({ href, label, icon }) => {
+        const current = isCurrent(href);
         return (
           <Link
             key={href}
             href={href}
             aria-current={current ? "page" : undefined}
-            className={`rounded-md px-3 py-1.5 text-sm font-medium ${
-              current ? "bg-brand-600 text-white" : "text-slate-700 hover:bg-slate-200"
+            className={`relative flex h-full min-h-12 min-w-16 flex-col items-center justify-center gap-1 text-xs transition-colors duration-150 active:bg-tint ${
+              current
+                ? "font-semibold text-primary before:absolute before:top-0 before:h-1 before:w-6 before:rounded-full before:bg-primary before:content-['']"
+                : "font-medium text-muted hover:text-ink"
             }`}
           >
+            <Icon name={icon} size={24} />
             {label}
           </Link>
         );
