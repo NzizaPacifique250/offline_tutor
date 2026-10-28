@@ -7,6 +7,19 @@
 **Repository:** [github.com/NzizaPacifique250/offline_tutor](https://github.com/NzizaPacifique250/offline_tutor)
 **Student:** Nziza Aime Pacifique · **Target device:** ATMPC IT-801B Android tablet · **Pilot:** Rwanda REB Senior Six Advanced Mathematics
 
+## Final submission
+
+- **Walkthrough video:** link added once the video is uploaded. Its script is
+  [docs/WALKTHROUGH_VIDEO_SCRIPT.md](docs/WALKTHROUGH_VIDEO_SCRIPT.md).
+- **Technical report (PDF, 5 pages):** [docs/report/Technical_Report.pdf](docs/report/Technical_Report.pdf):
+  scope against the proposal, how the product works, testing and results,
+  performance and compatibility, code quality.
+- **Installable app:** `OfflineTutor-1.3.0.apk` (release 1.3.0, build 7,
+  SHA-256 `33b5298a0f4c54930524474448255c0d62a758501abe75ee062db15f143dbd8e`),
+  in the submission ZIP; the APK is not in Git. Install it with
+  [docs/INSTALLATION_GUIDE.md](docs/INSTALLATION_GUIDE.md), or build it as
+  described below.
+
 ## Overview
 
 This capstone project proposes an edge-computing tutoring platform that provides personalized, AI-driven academic support without requiring continuous internet connectivity. It is intended to support students in low-connectivity environments by running a language model locally on their device and storing essential curriculum resources and learning data offline.
@@ -33,6 +46,46 @@ Design, implement, and evaluate an offline-first intelligent tutoring prototype 
 2. Evaluate educational quality, offline reliability, performance, resource consumption, and usability.
 3. Improve the prototype based on evaluation results.
 4. Expand to other high-school grades and subjects using modular curriculum packages.
+
+## Repository structure
+
+```
+offline_tutor/
+├── app/                        React Native application for the tablet (TypeScript)
+│   ├── App.tsx                 start-up, navigation between screens, sync schedule
+│   ├── src/
+│   │   ├── account/            accounts that sign in offline after the first time
+│   │   ├── checker/            on-device answer checker: complex-number parser and evaluator
+│   │   ├── content/            curriculum import into SQLite, keyed reads, topic router
+│   │   ├── device/, native/    bridge to the Kotlin module: build info, model install, files
+│   │   ├── export/             research export (CSV and manifest)
+│   │   ├── guidance/           the tutor: prompts, model service, step pacing, answer masking, log
+│   │   ├── katex/              formulas rendered offline in a WebView
+│   │   ├── learner/            learner records, sessions and the progress engine
+│   │   ├── screens/            screens and UI components (layout and events only)
+│   │   ├── sharing/            progress files passed between tablets
+│   │   ├── study/              practice rules: hint order, solution gate, feedback
+│   │   ├── sync/               sync to Supabase and its settings
+│   │   └── teacher/            teacher PIN and class progress
+│   ├── __tests__/              Jest suites: 285 tests, plus a live Supabase suite on demand
+│   ├── jest/                   test helpers: real SQLite (sql.js), native mocks, waitUntil
+│   ├── android/                Android project; Kotlin device module in app/src/main/java/rw/offlinetutor/device/
+│   └── scripts/                build and install, tablet UI driver (ui.py), offline test, demo recording
+├── admin/                      web portal for teachers and admins (Next.js 16)
+│   ├── app/                    pages: sign-in, overview, users, tablets, activity, tutor performance
+│   ├── components/, lib/       shared UI; Supabase clients, queries and statistics
+│   └── proxy.ts                sends signed-out visitors to the sign-in page
+├── supabase/
+│   ├── migrations/             tables, row-level security and roles, run in the SQL Editor
+│   └── tests/                  row-level security checks on an in-process Postgres (PGlite)
+├── curriculum/rw_s6_mathematics/packages/
+│                               one package per unit: u1, u4, u5, u9 (lessons, exercises, hints, keys)
+├── tools/                      Python: SymPy grader, package validator, corpus extractor,
+│                               model fetcher, benchmark driver
+├── bench/                      llama.cpp benchmark kit for the tablet, probes and results
+└── docs/                       report, video script, architecture, release notes,
+                                installation guide, test evidence, screenshots
+```
 
 ## Setting up the environment and the project
 
@@ -256,9 +309,11 @@ across restarts, and equations render offline.
 
 ## Documentation
 
+- [Technical report (PDF)](docs/report/Technical_Report.pdf), built from [its HTML source](docs/report/technical-report.html) by `docs/report/build.sh`
+- [Script of the walkthrough video](docs/WALKTHROUGH_VIDEO_SCRIPT.md)
 - [Release notes and the readiness run](docs/RELEASE_V1.md)
 - [Offline reliability test: protocol and results, 178 of 180](docs/evidence/offline-test-2026-10-28/)
-- [Accounts, sync and the admin portal](docs/ACCOUNTS_AND_SYNC.md) and [the portal's README](admin/README.md)
+- [Accounts, sync and the admin portal](docs/ACCOUNTS_AND_SYNC.md), [the portal's README](admin/README.md) and [the portal in Chrome and Firefox](docs/evidence/portal-browsers/)
 - [Installation guide](docs/INSTALLATION_GUIDE.md) and [tablet test checklist](docs/TABLET_TEST_CHECKLIST.md)
 - [Readiness run evidence: exported records, app log, temperature](docs/evidence/v1-readiness-2026-10-19/)
 - [System architecture](docs/ARCHITECTURE.md)
