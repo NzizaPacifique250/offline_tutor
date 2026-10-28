@@ -85,6 +85,9 @@ nothing new.
   accounts share a tablet), so a tablet's label is not trustworthy.
 - `received_progress` (summaries imported over Bluetooth) is not synced;
   each tablet syncs its own records instead.
-- The laptop used for the demo resolved Supabase's address in 15 to 25 s at
-  times (its router's DNS), which made the portal's first sign-in time out;
-  a public DNS server or a phone hotspot avoids it.
+- The laptop used for the demo resolved Supabase's address in 15 to 30 s at
+  times (its router's DNS). Since 28 October the portal's server keeps its
+  connections to Supabase for a minute and remembers the address
+  (`admin/lib/connections.ts`), so only the first request after the server
+  starts waits for DNS; a public DNS server or a phone hotspot still helps
+  the tablet's sync.

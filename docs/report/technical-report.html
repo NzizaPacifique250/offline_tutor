@@ -170,6 +170,7 @@ Release 1.3.0 (build 7) · Repository <span class="mono">github.com/NzizaPacifiq
 <tr><td>Infinix Smart 8 phone, as a teacher's device</td><td>1.2.0 installed; received a progress file over Bluetooth and showed the class; ran without the model</td></tr>
 <tr><td>Android versions</td><td>Built for API 24 to 36 (Android 7 to 16); only Android 15 was tested on a device</td></tr>
 <tr><td>Portal in Chrome 154 and Firefox 142, at 1280 px and 390 px wide (Linux)</td><td>Signed out, every page redirects to sign-in; the form fits without horizontal scrolling; no console errors after the site icon was served to signed-out visitors. WebKit could not start without two system libraries.</td></tr>
+<tr><td>Portal behind a slow router DNS (lookups of 5 to 30 s)</td><td>The server now keeps connections to Supabase for 60 s, remembers its address and checks the session token locally: a page after 15 s idle answered in 0.36 to 0.50 s, against 5.5 to 5.9 s in four of six tries before; the overview's requests in 0.32 to 0.48 s instead of failing in two of three (<span class="mono">docs/evidence/portal-speed/</span>)</td></tr>
 <tr><td>Development: Linux, Node 20.20 (the app asks for 22)</td><td>All tests, typecheck and builds pass; the version gap is a known, documented mismatch</td></tr>
 </tbody></table>
 

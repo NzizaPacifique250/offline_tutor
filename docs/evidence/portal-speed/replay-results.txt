@@ -1,0 +1,24 @@
+== new, started 22:02:58
+new first: 4873 ms
+new back to back: 567 ms
+new back to back: 629 ms
+new back to back: 314 ms
+new back to back: 635 ms
+new back to back: 636 ms
+new after 15 s idle: 345 ms
+new after 15 s idle: 317 ms
+new after 15 s idle: 480 ms
+{"label":"new","first":4873,"warmMedian":629,"warm":[567,629,314,635,636],"afterIdle":[345,317,480]}
+exit 0 at 22:03:53
+== old, started 22:03:53
+old first: failed after 10908 ms (UND_ERR_CONNECT_TIMEOUT)
+old back to back: 6644 ms
+old back to back: 1306 ms
+old back to back: 922 ms
+old back to back: 935 ms
+old back to back: 991 ms
+old after 15 s idle: failed after 10511 ms (UND_ERR_CONNECT_TIMEOUT)
+old after 15 s idle: 4863 ms
+old after 15 s idle: failed after 10506 ms (UND_ERR_CONNECT_TIMEOUT)
+{"label":"old","first":"failed after 10908 ms (UND_ERR_CONNECT_TIMEOUT)","warmMedian":991,"warm":[6644,1306,922,935,991],"afterIdle":["failed after 10511 ms (UND_ERR_CONNECT_TIMEOUT)",4863,"failed after 10506 ms (UND_ERR_CONNECT_TIMEOUT)"]}
+exit 0 at 22:05:31

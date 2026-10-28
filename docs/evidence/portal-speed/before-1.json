@@ -1,0 +1,132 @@
+{
+  "summary": {
+    "signIn": {
+      "ms": 1264,
+      "landed": "/"
+    },
+    "backToBack": {
+      "median": 467,
+      "slowest": 10828
+    },
+    "afterIdle": [
+      5613,
+      525,
+      5722
+    ],
+    "statuses": [
+      "307 /no-access"
+    ]
+  },
+  "rounds": [
+    {
+      "path": "/",
+      "status": 307,
+      "ms": 10828,
+      "to": "/no-access"
+    },
+    {
+      "path": "/users",
+      "status": 307,
+      "ms": 564,
+      "to": "/no-access"
+    },
+    {
+      "path": "/devices",
+      "status": 307,
+      "ms": 462,
+      "to": "/no-access"
+    },
+    {
+      "path": "/activity",
+      "status": 307,
+      "ms": 466,
+      "to": "/no-access"
+    },
+    {
+      "path": "/tutor",
+      "status": 307,
+      "ms": 474,
+      "to": "/no-access"
+    },
+    {
+      "path": "/",
+      "status": 307,
+      "ms": 467,
+      "to": "/no-access"
+    },
+    {
+      "path": "/users",
+      "status": 307,
+      "ms": 450,
+      "to": "/no-access"
+    },
+    {
+      "path": "/devices",
+      "status": 307,
+      "ms": 440,
+      "to": "/no-access"
+    },
+    {
+      "path": "/activity",
+      "status": 307,
+      "ms": 475,
+      "to": "/no-access"
+    },
+    {
+      "path": "/tutor",
+      "status": 307,
+      "ms": 478,
+      "to": "/no-access"
+    },
+    {
+      "path": "/",
+      "status": 307,
+      "ms": 460,
+      "to": "/no-access"
+    },
+    {
+      "path": "/users",
+      "status": 307,
+      "ms": 454,
+      "to": "/no-access"
+    },
+    {
+      "path": "/devices",
+      "status": 307,
+      "ms": 457,
+      "to": "/no-access"
+    },
+    {
+      "path": "/activity",
+      "status": 307,
+      "ms": 511,
+      "to": "/no-access"
+    },
+    {
+      "path": "/tutor",
+      "status": 307,
+      "ms": 509,
+      "to": "/no-access"
+    }
+  ],
+  "idle": [
+    {
+      "path": "/",
+      "status": 307,
+      "ms": 5613,
+      "to": "/no-access"
+    },
+    {
+      "path": "/",
+      "status": 307,
+      "ms": 525,
+      "to": "/no-access"
+    },
+    {
+      "path": "/",
+      "status": 307,
+      "ms": 5722,
+      "to": "/no-access"
+    }
+  ]
+}

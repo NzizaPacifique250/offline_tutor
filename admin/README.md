@@ -54,4 +54,5 @@ Sign in at `/login`. Further teachers and admins are managed on the Users page.
 
 - `proxy.ts` is the Next.js 16 name for middleware. It refreshes the session and redirects signed-out visitors to `/login`.
 - Timestamps show in UTC for the first render, then in the viewer's local time.
+- Speed: `instrumentation.ts` installs `lib/connections.ts` when the server starts, which keeps connections to Supabase open for 60 s and remembers Supabase's address, refreshing it in the background. `lib/auth.ts` checks the session token locally (`getClaims`, the project signs with ES256), and each page starts its queries together with the staff check. Measurements: `../docs/evidence/portal-speed/`.
 - Tutor statistics read up to 20,000 events (20 pages of 1,000); the activity feed shows the latest 100.
