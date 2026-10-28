@@ -1,0 +1,144 @@
+[
+  {
+    "browser": "chrome",
+    "version": "154.0.8037.97",
+    "viewport": "desktop",
+    "checks": [
+      {
+        "step": "signed out /",
+        "url": "/login",
+        "ms": 846
+      },
+      {
+        "step": "signed out /users",
+        "url": "/login",
+        "ms": 274
+      },
+      {
+        "step": "signed out /tutor",
+        "url": "/login",
+        "ms": 196
+      },
+      {
+        "step": "sign-in form visible and inside the width",
+        "ok": true,
+        "title": "Tutor admin",
+        "overflowX": false,
+        "problem": null
+      },
+      {
+        "step": "empty form is not sent",
+        "url": "/login"
+      }
+    ],
+    "errors": [
+      "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    ]
+  },
+  {
+    "browser": "chrome",
+    "version": "154.0.8037.97",
+    "viewport": "phone",
+    "checks": [
+      {
+        "step": "signed out /",
+        "url": "/login",
+        "ms": 638
+      },
+      {
+        "step": "signed out /users",
+        "url": "/login",
+        "ms": 252
+      },
+      {
+        "step": "signed out /tutor",
+        "url": "/login",
+        "ms": 200
+      },
+      {
+        "step": "sign-in form visible and inside the width",
+        "ok": true,
+        "title": "Tutor admin",
+        "overflowX": false,
+        "problem": null
+      },
+      {
+        "step": "empty form is not sent",
+        "url": "/login"
+      }
+    ],
+    "errors": []
+  },
+  {
+    "browser": "firefox",
+    "version": "142.0.1",
+    "viewport": "desktop",
+    "checks": [
+      {
+        "step": "signed out /",
+        "url": "/login",
+        "ms": 1783
+      },
+      {
+        "step": "signed out /users",
+        "url": "/login",
+        "ms": 686
+      },
+      {
+        "step": "signed out /tutor",
+        "url": "/login",
+        "ms": 659
+      },
+      {
+        "step": "sign-in form visible and inside the width",
+        "ok": true,
+        "title": "Tutor admin",
+        "overflowX": false,
+        "problem": null
+      },
+      {
+        "step": "empty form is not sent",
+        "url": "/login"
+      }
+    ],
+    "errors": []
+  },
+  {
+    "browser": "firefox",
+    "version": "142.0.1",
+    "viewport": "phone",
+    "checks": [
+      {
+        "step": "signed out /",
+        "url": "/login",
+        "ms": 709
+      },
+      {
+        "step": "signed out /users",
+        "url": "/login",
+        "ms": 632
+      },
+      {
+        "step": "signed out /tutor",
+        "url": "/login",
+        "ms": 613
+      },
+      {
+        "step": "sign-in form visible and inside the width",
+        "ok": true,
+        "title": "Tutor admin",
+        "overflowX": false,
+        "problem": null
+      },
+      {
+        "step": "empty form is not sent",
+        "url": "/login"
+      }
+    ],
+    "errors": []
+  },
+  {
+    "browser": "webkit",
+    "error": "could not start: browserType.launch: "
+  }
+]
