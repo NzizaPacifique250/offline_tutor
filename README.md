@@ -71,12 +71,13 @@ cd app && npm install && cd ..
 
 ```bash
 ./.venv/bin/python tools/grade.py --self-test
-./.venv/bin/python tools/validate_package.py curriculum/rw_s6_mathematics/packages/u1
-cd app && npm test && npm run typecheck && cd ..
+for u in u1 u4 u5 u9; do ./.venv/bin/python tools/validate_package.py curriculum/rw_s6_mathematics/packages/$u; done
+cd app && scripts/sync_content.sh && scripts/sync_katex_assets.sh   # generated inputs the tests need
+npm test && npm run typecheck && npm run lint && cd ..
 ```
 
-All three should end with `[ok]` lines and passing tests (142 Jest tests
-at the time of writing).
+The grader and validator should end with `[ok]` lines, and the app should
+pass 265 tests in 12 suites with no type or lint errors.
 
 ### 3. Get the model onto the tablet
 
@@ -104,6 +105,10 @@ the build is deliberately capped at three compilers; later builds take
 under a minute. The APK bundles its JavaScript, so once installed the app
 runs with the cable removed and the network off; with Metro running it
 reloads edits live instead.
+
+To install the signed pilot build on a tablet without any developer tools
+(the APK from the Files app, then the model from Teacher tools with its
+checksum checked), follow [docs/INSTALLATION_GUIDE.md](docs/INSTALLATION_GUIDE.md).
 
 ### 5. Reproduce the benchmark (optional)
 
@@ -155,16 +160,20 @@ no network. The plan, from the state today to the school pilot:
    the curriculum package is bundled in the APK and imported into SQLite on
    first launch, and KaTeX is packaged as an asset. Nothing is fetched at
    run time.
-2. **Release build and model installation (next).** A release-signed APK,
-   and a way to install the 935 MB model without the developer tooling:
-   bundled in an expansion file, or copied from external storage on first
-   launch with a checksum. The weights' redistribution terms are checked
-   before bundling.
-3. **Diagnostics and result export.** Build id, model checksum, content
-   version, timings, memory and errors recorded on the device and exported
-   with test learner codes, so a pilot session can be reproduced.
-4. **Installation guide and tablet test script.** Written for the school
-   contact, with the known-issues list and readiness checks.
+2. **Release build and model installation (done, v1.0.0).** A signed
+   release APK installed from the tablet's Files app, with no internet
+   permission; the 986 MB model is copied onto the tablet and installed
+   from Teacher tools, which checks its size and SHA-256
+   ([docs/RELEASE_V1.md](docs/RELEASE_V1.md)). The weights are Apache-2.0
+   and the app shows the notice.
+3. **Diagnostics and result export (done).** Teacher tools export the
+   learner records as CSV with a manifest of the build, commit, content
+   versions and model checksum; tutor timings are in the records.
+4. **Installation guide and tablet test script (done).**
+   [docs/INSTALLATION_GUIDE.md](docs/INSTALLATION_GUIDE.md) and
+   [docs/TABLET_TEST_CHECKLIST.md](docs/TABLET_TEST_CHECKLIST.md); the
+   readiness checks passed on 19 October
+   ([docs/evidence/v1-readiness-2026-10-19/](docs/evidence/v1-readiness-2026-10-19/)).
 5. **School pilot at Agahozo Shalom Youth Village.** After teacher review
    of the content and the institutional approvals: tablets prepared
    offline, learner codes rather than names, data kept on the device,
@@ -177,7 +186,7 @@ no network. The plan, from the state today to the school pilot:
 
 ## Current status
 
-**The offline study flow, with bounded model guidance behind the topic router, runs on the target tablet with no laptop attached.** Updated 2026-09-30.
+**v1.2.0, the pilot build, is ready for structured testing: four units, an on-device tutor, and teacher tools with class progress, collected from every student tablet over Bluetooth without a network, and research export; installed without developer tools.** See [docs/RELEASE_V1.md](docs/RELEASE_V1.md). Testing with students waits for teacher review of the content and the institutional approvals.
 
 The pilot scope is fixed: Rwanda REB curriculum, Senior Six Advanced
 Mathematics, four pilot units, an ATMPC IT-801B Android tablet, React Native
@@ -188,13 +197,14 @@ What exists now:
 - `bench/`: a benchmark kit that cross-compiles llama.cpp for the tablet's CPU,
   pushes models over adb, measures throughput and answer quality, and grades answers
   deterministically. See [bench/README.md](bench/README.md).
-- `curriculum/rw_s6_mathematics/packages/u1/`: the first curriculum package, one
-  Complex Numbers lesson with worked examples and exercises taken from the REB
-  Student's Book, checked by `tools/validate_package.py`.
+- `curriculum/rw_s6_mathematics/packages/`: four curriculum packages, one lesson
+  each for Complex Numbers, Integration, Differential Equations and Random
+  Variables, with worked examples and exercises taken from the REB Student's
+  Book, checked by `tools/validate_package.py`.
 - `tools/`: model fetcher, benchmark driver, symbolic grader (audited and
   corrected on 2026-09-21), package validator and corpus extractor.
-- `app/`: the React Native application. A learner chooses a code, opens the
-  Unit 1 lesson rendered with KaTeX from local assets, practises the book's
+- `app/`: the React Native application. A learner chooses a code, opens a
+  lesson in any of the four units rendered with KaTeX from local assets, practises the book's
   exercises with answers checked on the device against the proven keys, reveals
   hints in order before the solution, and reviews progress computed from saved
   attempts; all of it in airplane mode, surviving a restart, with learner codes
@@ -203,7 +213,9 @@ What exists now:
   time, cancellable, paced one step at a time with "Next step" and "Explain
   this step more simply", with the text labelled as generated and never used
   for marking; on an exercise the stored hints come first and the model's
-  text is masked wherever it states the answer.
+  text is masked wherever it states the answer. Behind a PIN, teacher tools
+  install the model, show class progress (including progress files received
+  from other tablets over Bluetooth), and export the records for research.
 - `bench/results/THROUGHPUT_FINDINGS.md`: measured tokens per second on the tablet's
   CPU and GPU and what that means for response time.
 
@@ -219,7 +231,12 @@ The application bridge is proven on the device: the correct `armv8-a` native
 library loads, the model answers in-app at benchmark speed, records persist
 across restarts, and equations render offline.
 
-Next:
+## Documentation
 
-1. Content: the remaining Unit 1 objectives, then Units 4, 5 and 9, with teacher review.
-2. Model installation without `run-as`, diagnostics, the installation guide and the tablet test script.
+- [Release notes and the readiness run](docs/RELEASE_V1.md)
+- [Installation guide](docs/INSTALLATION_GUIDE.md) and [tablet test checklist](docs/TABLET_TEST_CHECKLIST.md)
+- [Readiness run evidence: exported records, app log, temperature](docs/evidence/v1-readiness-2026-10-19/)
+- [System architecture](docs/ARCHITECTURE.md)
+- [Feature map: which directory owns what, and its tests](docs/feature-map.md)
+- [Feasibility findings: model selection and the grading audit](docs/FEASIBILITY_FINDINGS.md)
+- [Benchmark kit](bench/README.md) and [throughput findings](bench/results/THROUGHPUT_FINDINGS.md)

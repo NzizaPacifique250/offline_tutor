@@ -42,3 +42,6 @@ docs/demo/
 .env
 .env.*
 !.env.example
+
+# Release files handed to testers (APK, checksums, PDFs); built, never committed
+dist/
