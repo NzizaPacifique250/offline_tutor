@@ -1,35 +1,102 @@
+import { Icon } from "@/components/icons";
 import { Notice } from "@/components/notice";
+import { Logo } from "@/components/shell";
+import { SubmitButton } from "@/components/submit-button";
 import { signIn } from "./actions";
 
-const field =
-  "mt-1 block w-full rounded-md border border-slate-400 bg-white px-3 py-2 text-base text-slate-900";
+const points = [
+  "See who has been working and how far each student has got.",
+  "Check which tablets have synced.",
+  "Approve teacher accounts and change roles.",
+];
+
+const ERRORS: Record<string, string> = {
+  missing: "Enter your email and password.",
+  invalid: "That email or password is not right.",
+  unavailable: "Sign-in is not available right now. Try again in a minute.",
+};
 
 export default async function LoginPage({ searchParams }: { searchParams: Promise<{ error?: string }> }) {
-  const { error } = await searchParams;
+  const { error: code } = await searchParams;
+  const error = code ? (ERRORS[code] ?? ERRORS.invalid) : null;
+  const describedBy = error ? "login-error" : undefined;
   return (
-    <main className="mx-auto flex min-h-screen max-w-sm flex-col justify-center gap-6 px-4">
-      <div>
-        <h1 className="text-2xl font-semibold tracking-tight">Tutor admin</h1>
-        <p className="mt-1 text-slate-600">Sign in with a teacher or admin account.</p>
+    <div className="min-h-screen lg:grid lg:grid-cols-2">
+      <div className="on-primary flex h-16 items-center gap-3 bg-primary px-4 text-white lg:hidden">
+        <Logo />
+        <span className="text-base font-semibold">Tutor admin</span>
       </div>
-      {error ? <Notice tone="problem">{error}</Notice> : null}
-      <form action={signIn} className="space-y-4">
-        <div>
-          <label htmlFor="email" className="text-sm font-medium">
-            Email
-          </label>
-          <input id="email" name="email" type="email" autoComplete="email" required className={field} />
+
+      <aside className="on-primary hidden flex-col justify-between bg-primary p-12 text-white lg:flex">
+        <div className="flex items-center gap-3">
+          <Logo />
+          <div>
+            <p className="text-base font-semibold">Tutor admin</p>
+            <p className="text-xs text-white/75">Senior Six Advanced Mathematics</p>
+          </div>
         </div>
-        <div>
-          <label htmlFor="password" className="text-sm font-medium">
-            Password
-          </label>
-          <input id="password" name="password" type="password" autoComplete="current-password" required className={field} />
+        <div className="max-w-md">
+          <p className="text-title font-semibold tracking-tight">Follow your class, tablet by tablet.</p>
+          <ul className="mt-6 space-y-4 text-base text-white/85">
+            {points.map((p) => (
+              <li key={p} className="flex gap-3">
+                <Icon name="check" className="mt-0.5 shrink-0" />
+                {p}
+              </li>
+            ))}
+          </ul>
         </div>
-        <button type="submit" className="w-full rounded-md bg-brand-600 px-4 py-2 font-medium text-white hover:bg-brand-700">
-          Sign in
-        </button>
-      </form>
-    </main>
+      </aside>
+
+      <main className="flex items-start justify-center bg-bg px-4 py-8 lg:items-center lg:py-12">
+        <div className="w-full max-w-sm rounded-xl border border-line bg-surface p-6 shadow-card lg:p-8">
+          <h1 className="text-xl font-semibold tracking-tight">Sign in</h1>
+          <p className="mt-1 text-sm text-muted">Use your teacher or admin account.</p>
+          {error ? (
+            <div className="mt-6">
+              <Notice tone="problem" id="login-error">
+                {error}
+              </Notice>
+            </div>
+          ) : null}
+          <form action={signIn} className="mt-6 space-y-4">
+            <div>
+              <label htmlFor="email" className="text-sm font-medium">
+                Email
+              </label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                autoComplete="email"
+                required
+                aria-describedby={describedBy}
+                aria-invalid={error ? true : undefined}
+                autoFocus={Boolean(error)}
+                className="field mt-1"
+              />
+            </div>
+            <div>
+              <label htmlFor="password" className="text-sm font-medium">
+                Password
+              </label>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                autoComplete="current-password"
+                required
+                aria-describedby={describedBy}
+                aria-invalid={error ? true : undefined}
+                className="field mt-1"
+              />
+            </div>
+            <SubmitButton pendingLabel="Signing in…" className="btn btn-primary btn-lg w-full">
+              Sign in
+            </SubmitButton>
+          </form>
+        </div>
+      </main>
+    </div>
   );
 }

@@ -21,6 +21,14 @@ npm run dev
 
 Open http://localhost:3000. Other scripts: `npm run lint`, `npm run typecheck`, `npm run build`.
 
+To present or demonstrate the portal, run the production build instead: it is
+faster and has no development badge in the corner.
+
+```
+npm run build
+npm run start
+```
+
 ## Make the first admin
 
 Create an account (for example in Supabase Authentication, Add user, with a password). Then in the SQL Editor:
