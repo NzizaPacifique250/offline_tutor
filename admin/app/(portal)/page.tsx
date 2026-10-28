@@ -9,33 +9,37 @@ import { Rise } from "@/components/rise";
 import { Ring } from "@/components/ring";
 import { StatCard } from "@/components/stat";
 import { WeekBars } from "@/components/week-bars";
-import { requireStaff } from "@/lib/auth";
+import { getClient, requireStaff } from "@/lib/auth";
 import { allRows, count, firstProblem, rows } from "@/lib/query";
 import { countByDay, daysAgoIso, syncStatus, timeAgo } from "@/lib/stats";
 import { OUTCOMES, type Device, type Profile } from "@/lib/types";
 import { OUTCOME_META } from "@/lib/ui";
 
 export default async function OverviewPage() {
-  const { supabase, profile: me } = await requireStaff();
-  const isAdmin = me.role === "admin";
+  const supabase = await getClient();
   const since = daysAgoIso(7);
   const head = { count: "exact", head: true } as const;
 
-  const [profiles, devices, attempts, correct, attempts7, tutor7, sessions7, week, outcomes] = await Promise.all([
-    rows<Pick<Profile, "role" | "requested_role">>(supabase.from("profiles").select("role, requested_role")),
-    rows<Device>(supabase.from("devices").select("*").order("last_sync_at", { ascending: false })),
-    count(supabase.from("attempts").select("*", head)),
-    count(supabase.from("attempts").select("*", head).eq("verdict", "correct")),
-    count(supabase.from("attempts").select("*", head).gte("created_at", since)),
-    count(supabase.from("guidance_events").select("*", head).gte("created_at", since)),
-    count(supabase.from("sessions").select("*", head).gte("started_at", since)),
-    allRows<{ created_at: string }>(
-      (from, to) =>
-        supabase.from("attempts").select("created_at").gte("created_at", since).order("created_at").range(from, to),
-      5,
-    ),
-    allRows<{ outcome: string }>((from, to) => supabase.from("guidance_events").select("outcome").order("created_at").order("device_id").order("local_id").range(from, to)),
+  // The queries start together with the staff check, not after it.
+  const [{ profile: me }, [profiles, devices, attempts, correct, attempts7, tutor7, sessions7, week, outcomes]] = await Promise.all([
+    requireStaff(),
+    Promise.all([
+      rows<Pick<Profile, "role" | "requested_role">>(supabase.from("profiles").select("role, requested_role")),
+      rows<Device>(supabase.from("devices").select("*").order("last_sync_at", { ascending: false })),
+      count(supabase.from("attempts").select("*", head)),
+      count(supabase.from("attempts").select("*", head).eq("verdict", "correct")),
+      count(supabase.from("attempts").select("*", head).gte("created_at", since)),
+      count(supabase.from("guidance_events").select("*", head).gte("created_at", since)),
+      count(supabase.from("sessions").select("*", head).gte("started_at", since)),
+      allRows<{ created_at: string }>(
+        (from, to) =>
+          supabase.from("attempts").select("created_at").gte("created_at", since).order("created_at").range(from, to),
+        5,
+      ),
+      allRows<{ outcome: string }>((from, to) => supabase.from("guidance_events").select("outcome").order("created_at").order("device_id").order("local_id").range(from, to)),
+    ]),
   ]);
+  const isAdmin = me.role === "admin";
 
   const problem = firstProblem(profiles, devices, attempts, correct, attempts7, tutor7, sessions7, week, outcomes);
   const roleCount = (role: string) => profiles.data.filter((p) => p.role === role).length;

@@ -5,7 +5,7 @@ import { PageHeader } from "@/components/page-header";
 import { Rise } from "@/components/rise";
 import { Section } from "@/components/section";
 import { Table, Td } from "@/components/table";
-import { requireStaff } from "@/lib/auth";
+import { getClient, requireStaff } from "@/lib/auth";
 import { lessonTitle } from "@/lib/curriculum";
 import { allRows } from "@/lib/query";
 import { formatMs, percentile } from "@/lib/stats";
@@ -49,14 +49,18 @@ function TimingCells({ t }: { t: ReturnType<typeof timings> }) {
 const NO_REPLIES = { title: "No generated replies yet", body: "Response times appear after the tutor writes its first answer on a tablet." };
 
 export default async function TutorPage() {
-  const { supabase } = await requireStaff();
-  const events = await allRows<Row>((from, to) =>
-    supabase
-      .from("guidance_events")
-      .select("lesson_id, outcome, first_token_ms, total_ms")
-      .order("created_at", { ascending: true })
-      .range(from, to),
-  );
+  const supabase = await getClient();
+  // The query starts together with the staff check, not after it.
+  const [, events] = await Promise.all([
+    requireStaff(),
+    allRows<Row>((from, to) =>
+      supabase
+        .from("guidance_events")
+        .select("lesson_id, outcome, first_token_ms, total_ms")
+        .order("created_at", { ascending: true })
+        .range(from, to),
+    ),
+  ]);
 
   const generated = events.data.filter((e) => e.outcome === "generated");
   const lessonIds = [...new Set(generated.map((e) => e.lesson_id))];

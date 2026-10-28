@@ -10,7 +10,7 @@ import { PageHeader } from "@/components/page-header";
 import { RoleChangeButton } from "@/components/role-change-button";
 import { Rise } from "@/components/rise";
 import { Table, Td } from "@/components/table";
-import { requireStaff } from "@/lib/auth";
+import { getClient, requireStaff } from "@/lib/auth";
 import { rows } from "@/lib/query";
 import { kigaliDateTime, timeAgo } from "@/lib/stats";
 import type { OverviewRow, Role } from "@/lib/types";
@@ -41,13 +41,14 @@ const EMPTY_BODY: Record<Filter, string> = {
 
 export default async function UsersPage({ searchParams }: Props) {
   const { role: roleParam, notice: noticeCode, error: errorCode, id: changedId, to } = await searchParams;
-  const { supabase, profile, user } = await requireStaff();
+  const supabase = await getClient();
+  // The query starts together with the staff check, not after it.
+  const [{ profile, user }, overview] = await Promise.all([
+    requireStaff(),
+    rows<OverviewRow>(supabase.from("learner_overview").select("*").order("created_at", { ascending: false })),
+  ]);
   const isAdmin = profile.role === "admin";
   const filter = FILTERS.find((f) => f === roleParam) ?? "all";
-
-  const overview = await rows<OverviewRow>(
-    supabase.from("learner_overview").select("*").order("created_at", { ascending: false }),
-  );
   // The account is looked up by its id, so the message never repeats text from the address bar.
   const changed = overview.data.find((u) => u.user_id === changedId);
   const notice =

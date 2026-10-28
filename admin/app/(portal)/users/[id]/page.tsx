@@ -12,7 +12,7 @@ import { Ring } from "@/components/ring";
 import { Section } from "@/components/section";
 import { StatCard } from "@/components/stat";
 import { Table, Td } from "@/components/table";
-import { requireStaff } from "@/lib/auth";
+import { getClient, requireStaff } from "@/lib/auth";
 import { LESSONS, exerciseLabel, lessonTitle } from "@/lib/curriculum";
 import { allRows, firstProblem, rows } from "@/lib/query";
 import { TOTAL_EXERCISES, formatMs } from "@/lib/stats";
@@ -25,16 +25,20 @@ const RECENT = 20;
 export default async function UserPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   if (!UUID.test(id)) notFound();
-  const { supabase } = await requireStaff();
+  const supabase = await getClient();
 
-  const [overview, attempts, tutor] = await Promise.all([
-    rows<OverviewRow>(supabase.from("learner_overview").select("*").eq("user_id", id)),
-    allRows<Attempt>((from, to) =>
-      supabase.from("attempts").select("*").eq("user_id", id).order("created_at", { ascending: false }).range(from, to),
-    ),
-    rows<GuidanceEvent>(
-      supabase.from("guidance_events").select("*").eq("user_id", id).order("created_at", { ascending: false }).limit(RECENT),
-    ),
+  // The queries start together with the staff check, not after it.
+  const [, [overview, attempts, tutor]] = await Promise.all([
+    requireStaff(),
+    Promise.all([
+      rows<OverviewRow>(supabase.from("learner_overview").select("*").eq("user_id", id)),
+      allRows<Attempt>((from, to) =>
+        supabase.from("attempts").select("*").eq("user_id", id).order("created_at", { ascending: false }).range(from, to),
+      ),
+      rows<GuidanceEvent>(
+        supabase.from("guidance_events").select("*").eq("user_id", id).order("created_at", { ascending: false }).limit(RECENT),
+      ),
+    ]),
   ]);
 
   const problem = firstProblem(overview, attempts, tutor);

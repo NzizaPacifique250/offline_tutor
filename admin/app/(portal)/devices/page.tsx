@@ -6,14 +6,16 @@ import { Icon } from "@/components/icons";
 import { LocalTime } from "@/components/local-time";
 import { PageHeader } from "@/components/page-header";
 import { Rise } from "@/components/rise";
-import { requireStaff } from "@/lib/auth";
+import { getClient, requireStaff } from "@/lib/auth";
 import { rows } from "@/lib/query";
 import { syncStatus, timeAgo } from "@/lib/stats";
 import type { Device, Profile } from "@/lib/types";
 
 export default async function DevicesPage() {
-  const { supabase } = await requireStaff();
-  const [devices, profiles] = await Promise.all([
+  const supabase = await getClient();
+  // The queries start together with the staff check, not after it.
+  const [, devices, profiles] = await Promise.all([
+    requireStaff(),
     rows<Device>(supabase.from("devices").select("*").order("last_sync_at", { ascending: false })),
     rows<Pick<Profile, "id" | "learner_code">>(supabase.from("profiles").select("id, learner_code")),
   ]);

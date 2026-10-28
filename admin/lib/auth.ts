@@ -3,18 +3,32 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import type { Profile } from "@/lib/types";
 
+// One Supabase client per request, shared by the layout, the page and the
+// session check below.
+export const getClient = cache(createClient);
+
+// Who is signed in, read from the session token. getClaims checks the token's
+// signature against the project's public signing key, which the client keeps
+// for the whole server process, so this asks Supabase nothing; every query
+// still sends the token, and the database checks it again under row-level
+// security. A page starts its own queries alongside requireStaff (see the
+// pages' Promise.all), so the profile and the page's data arrive together;
+// for an account that is not staff the redirect wins and the rows, which
+// row-level security has already limited, are thrown away.
 export const getSession = cache(async () => {
-  const supabase = await createClient();
-  const { data } = await supabase.auth.getUser();
-  if (!data.user) return { supabase, user: null, profile: null, error: null };
+  const supabase = await getClient();
+  const { data } = await supabase.auth.getClaims();
+  const claims = data?.claims;
+  if (!claims?.sub) return { supabase, user: null, profile: null, error: null };
+  const user = { id: claims.sub, email: typeof claims.email === "string" ? claims.email : "" };
   const { data: profile, error } = await supabase
     .from("profiles")
     .select("id, role, requested_role, full_name, learner_code, created_at")
-    .eq("id", data.user.id)
+    .eq("id", user.id)
     .maybeSingle();
   return {
     supabase,
-    user: data.user,
+    user,
     profile: (profile as Profile | null) ?? null,
     error: error ? { code: error.code, message: error.message } : null,
   };

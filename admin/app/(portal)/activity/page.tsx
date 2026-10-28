@@ -5,7 +5,7 @@ import type { IconName } from "@/components/icons";
 import { PageHeader } from "@/components/page-header";
 import { Rise } from "@/components/rise";
 import { Table, Td } from "@/components/table";
-import { requireStaff } from "@/lib/auth";
+import { getClient, requireStaff } from "@/lib/auth";
 import { exerciseLabel, lessonTitle } from "@/lib/curriculum";
 import { firstProblem, rows } from "@/lib/query";
 import { kigaliClock, kigaliDayKey, kigaliDayLabel } from "@/lib/stats";
@@ -44,8 +44,10 @@ type Props = { searchParams: Promise<{ kind?: string }> };
 
 export default async function ActivityPage({ searchParams }: Props) {
   const { kind } = await searchParams;
-  const { supabase } = await requireStaff();
-  const [sessions, attempts, reveals, guidance, devices] = await Promise.all([
+  const supabase = await getClient();
+  // The queries start together with the staff check, not after it.
+  const [, sessions, attempts, reveals, guidance, devices] = await Promise.all([
+    requireStaff(),
     rows<Session>(supabase.from("sessions").select("*").order("started_at", { ascending: false }).limit(LIMIT)),
     rows<Attempt>(supabase.from("attempts").select("*").order("created_at", { ascending: false }).limit(LIMIT)),
     rows<Reveal>(supabase.from("reveals").select("*").order("created_at", { ascending: false }).limit(LIMIT)),
