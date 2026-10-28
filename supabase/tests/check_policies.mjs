@@ -50,6 +50,12 @@ check('new accounts are students; a teacher request waits', (await db.query('sel
   { learner_code: 'T-222222', role: 'student', requested_role: 'teacher' },
 ]);
 check('S1 registers its tablet', await as(S1, `insert into public.devices (id, label, last_user) values ('dev1', 'Tablet DEV1', '${S1}') returning id`), [{ id: 'dev1' }]);
+// A tablet shared by two accounts: each sync starts by upserting the tablet's
+// row, as the app does (PostgREST: insert ... on conflict (id) do update).
+const syncTablet = uid => as(uid, `insert into public.devices (id, label, last_user, last_sync_at) values ('dev1', 'Tablet DEV1', '${uid}', now())
+  on conflict (id) do update set label = excluded.label, last_user = excluded.last_user, last_sync_at = excluded.last_sync_at`);
+check('S2 syncs from the tablet S1 registered', await syncTablet(S2), []);
+check('S1 syncs from it again', await syncTablet(S1), []);
 check('S1 inserts own attempt', await as(S1, `insert into public.attempts values ('dev1', 1, '${S1}', 'S-111111', 1, 'L', 'E', '5+3i', 'correct', 0, now()) returning local_id`), [{ local_id: 1 }]);
 check('S1 upserts it again (updated, not duplicated)', await as(S1, `insert into public.attempts values ('dev1', 1, '${S1}', 'S-111111', 1, 'L', 'E', '5+3i', 'correct', 1, now()) on conflict (device_id, local_id) do update set hints_seen = excluded.hints_seen returning hints_seen`), [{ hints_seen: 1 }]);
 check('S1 has exactly one attempt', count(await as(S1, `select count(*) from public.attempts`)), 1);
@@ -72,6 +78,10 @@ check('admin reads the overview (all three)', await as(A, `select learner_code, 
 check('anon reads attempts (sees none)', await (async () => {
   await db.exec('set role anon');
   try { return Number((await db.query('select count(*) from public.attempts')).rows[0].count); } catch (e) { return 'ERROR: ' + e.message; } finally { await db.exec('reset role'); }
+})(), 0);
+check('anon reads tablets (sees none)', await (async () => {
+  await db.exec('set role anon');
+  try { return Number((await db.query('select count(*) from public.devices')).rows[0].count); } catch (e) { return 'ERROR: ' + e.message; } finally { await db.exec('reset role'); }
 })(), 0);
 await db.exec(`update public.profiles set requested_role = 'teacher' where id = '${S1}'`);
 check('admin declines S1\'s teacher request', await as(A, `select public.set_role('${S1}', 'student')`), [{ set_role: '' }]);
