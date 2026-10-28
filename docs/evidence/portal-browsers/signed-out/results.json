@@ -7,17 +7,17 @@
       {
         "step": "signed out /",
         "url": "/login",
-        "ms": 737
+        "ms": 933
       },
       {
         "step": "signed out /users",
         "url": "/login",
-        "ms": 316
+        "ms": 315
       },
       {
         "step": "signed out /tutor",
         "url": "/login",
-        "ms": 215
+        "ms": 293
       },
       {
         "step": "sign-in form visible and inside the width",
@@ -41,17 +41,17 @@
       {
         "step": "signed out /",
         "url": "/login",
-        "ms": 613
+        "ms": 647
       },
       {
         "step": "signed out /users",
         "url": "/login",
-        "ms": 276
+        "ms": 336
       },
       {
         "step": "signed out /tutor",
         "url": "/login",
-        "ms": 205
+        "ms": 241
       },
       {
         "step": "sign-in form visible and inside the width",
@@ -75,17 +75,17 @@
       {
         "step": "signed out /",
         "url": "/login",
-        "ms": 1818
+        "ms": 1773
       },
       {
         "step": "signed out /users",
         "url": "/login",
-        "ms": 647
+        "ms": 843
       },
       {
         "step": "signed out /tutor",
         "url": "/login",
-        "ms": 748
+        "ms": 668
       },
       {
         "step": "sign-in form visible and inside the width",
@@ -114,12 +114,12 @@
       {
         "step": "signed out /users",
         "url": "/login",
-        "ms": 646
+        "ms": 601
       },
       {
         "step": "signed out /tutor",
         "url": "/login",
-        "ms": 593
+        "ms": 596
       },
       {
         "step": "sign-in form visible and inside the width",
