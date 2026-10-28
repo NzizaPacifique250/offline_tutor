@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Icon } from "@/components/icons";
 import { Notice } from "@/components/notice";
 import { Logo } from "@/components/shell";
@@ -34,6 +35,18 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
             <p className="text-base font-semibold">Tutor admin</p>
             <p className="text-xs text-white/75">Senior Six Advanced Mathematics</p>
           </div>
+        </div>
+        <div className="flex flex-1 items-center justify-center py-10">
+          {/* Already compressed (640 px WebP, 18 KB), so Next serves it as it is; lazy, so phones, which never show this panel, do not download it. */}
+          <Image
+            src="/images/login-illustration.webp"
+            alt=""
+            width={640}
+            height={640}
+            unoptimized
+            loading="lazy"
+            className="w-full max-w-xs rounded-2xl bg-white p-4 shadow-card xl:max-w-sm"
+          />
         </div>
         <div className="max-w-md">
           <p className="text-title font-semibold tracking-tight">Follow your class, tablet by tablet.</p>

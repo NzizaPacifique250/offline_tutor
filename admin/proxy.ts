@@ -32,7 +32,7 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  // Static files a signed-out visitor needs too: the site icon is shown on
-  // the sign-in page.
-  matcher: ["/((?!_next/static|_next/image|favicon.ico|icon.svg).*)"],
+  // Static files a signed-out visitor needs too: the site icon and the
+  // pictures on the sign-in page.
+  matcher: ["/((?!_next/static|_next/image|favicon.ico|icon.svg|images/).*)"],
 };
