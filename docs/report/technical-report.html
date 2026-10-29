@@ -195,7 +195,7 @@ Release 1.3.0 (build 7) · Repository <span class="mono">github.com/NzizaPacifiq
 <tr><td>Sync that survives bad networks</td><td>Idempotent upserts keyed by tablet and local id; per-table high-water marks; batches of 200</td><td class="mono">sync/engine.ts</td></tr>
 <tr><td>Offline sign-in</td><td>Salted PBKDF2-SHA256; comparison of the stored hash</td><td class="mono">account/password.ts</td></tr>
 </tbody></table>
-<p><b>Known limits.</b> The tutor is slow on this hardware, and 2 of 30 first steps missed 120 s. The content is a starter set awaiting teacher review. Records on the tablet are not encrypted; the teacher PIN is shared. A student in no class is visible only to admins.</p>
+<p><b>Known limits.</b> The tutor is slow on this hardware, and 2 of 30 first steps missed 120 s. The content is a starter set awaiting teacher review. Records on the tablet are not encrypted; the teacher PIN is shared. A student in no class is visible only to admins. Lessons travel inside the APK, so a new lesson or version is installed by hand on each tablet (a tablet re-imports changed packages and keeps its records); delivering packages over the network is future work.</p>
 
 </body>
 </html>
