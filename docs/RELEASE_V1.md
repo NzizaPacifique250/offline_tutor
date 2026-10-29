@@ -1,7 +1,7 @@
-# Offline Tutor v1: Release Notes
+# Clevo AI v1: Release Notes
 
 **Released:** 19 October 2026, for submission on 23 October 2026
-**Current build:** version 1.4.1 (build 9), release, commit `eed8b6b`, application ID `rw.offlinetutor.pilot`. Version 1.0.0 (build 2) is the build the readiness run below was made with; 1.1.0 added class progress, 1.2.0 collecting it from other tablets, 1.2.1 the book pages under generated text, 1.2.2 a fix the offline test found, 1.3.0 accounts, sync and the admin portal (commit `e0fed27`), 1.4.0 lesson updates published from the portal (commit `de0502a`), and 1.4.1 the app's logo. The offline test ran on 1.2.2; for the study, build with `-PofflineOnly`, which gives the same offline-only guarantee. Builds before 1.2.1 were made from the development repository this one was cleaned from, so their commit ids (`b348c17` for 1.0.0, `a0790e3` for 1.2.0) are not in this history.
+**Current build:** Clevo AI version 1.5.0 (build 10), release, commit `3b52eba`, application ID `rw.offlinetutor.pilot`. Version 1.0.0 (build 2) is the build the readiness run below was made with; 1.1.0 added class progress, 1.2.0 collecting it from other tablets, 1.2.1 the book pages under generated text, 1.2.2 a fix the offline test found, 1.3.0 accounts, sync and the admin portal (commit `e0fed27`), 1.4.0 lesson updates published from the portal (commit `de0502a`), 1.4.1 the app's logo (commit `eed8b6b`), and 1.5.0 the name Clevo AI; until then the app was called Offline Tutor. The offline test ran on 1.2.2; for the study, build with `-PofflineOnly`, which gives the same offline-only guarantee. Builds before 1.2.1 were made from the development repository this one was cleaned from, so their commit ids (`b348c17` for 1.0.0, `a0790e3` for 1.2.0) are not in this history.
 **Device:** ATMPC IT-801B, Android 15, airplane mode on throughout
 **Status:** ready for structured testing with teachers; testing with students waits for the approvals and teacher review below
 
@@ -21,8 +21,10 @@ tools, behind a PIN.
 
 | File | Size | SHA-256 |
 |---|---|---|
+| `ClevoAI-1.5.0.apk` (connected: accounts, sync and lesson updates) | 101,141,586 bytes | `60639bff1876acf26700618b6a091e943f00a93f59e217b09f27e40de8e6d0eb` |
+| `ClevoAI-1.5.0-offline.apk` (built with `-PofflineOnly`: no internet permission; the study build) | 101,141,562 bytes | `5b15ea5a58a52e9ddc0735ed145c6cf118d60b3c791557dfbd9c593f6583187b` |
 | `OfflineTutor-1.4.1.apk` (connected: accounts, sync and lesson updates) | 101,141,658 bytes | `59c17870af5c3e832e98084407ecaaf3f2632a963abcea1c802907b9c95a70bb` |
-| `OfflineTutor-1.4.1-offline.apk` (built with `-PofflineOnly`: no internet permission; the study build) | 101,141,622 bytes | `a5908bf0176a78d906fcff14c6aab31912c53da0e48f92fad8c7258e62826876` |
+| `OfflineTutor-1.4.1-offline.apk` (1.4.1 built with `-PofflineOnly`) | 101,141,622 bytes | `a5908bf0176a78d906fcff14c6aab31912c53da0e48f92fad8c7258e62826876` |
 | `OfflineTutor-1.4.0.apk` (connected: accounts, sync and lesson updates) | 101,135,886 bytes | `ee25003548816241beebd283938bf24e3af5235b73e207895d35b6e8738e11e5` |
 | `OfflineTutor-1.4.0-offline.apk` (1.4.0 built with `-PofflineOnly`) | 101,135,858 bytes | `84b70313947c20073a550e862c26397974b8b5667ff8fd993965c6ce62e7afda` |
 | `OfflineTutor-1.3.0.apk` (connected: accounts and sync) | 101,099,686 bytes | `33b5298a0f4c54930524474448255c0d62a758501abe75ee062db15f143dbd8e` |
@@ -30,10 +32,19 @@ tools, behind a PIN.
 | `OfflineTutor-1.2.2.apk` (offline only, the build the offline test ran on) | 100,401,394 bytes | `1f9643ba09f348467cd1f9f92252e1bc7a19141ea4c6783e6735572235f9955f` |
 | `qwen25-math-1.5b-Qwen2.5-Math-1.5B-Instruct-Q4_K_M.gguf` | 986,048,832 bytes | `9614a50f03c897028920ca0dc4365da570bf587f9ee7768261216fe370b37e8e` |
 
-The APKs and their `SHA256SUMS` are in `dist/v1.4.1/`, `dist/v1.4.0/`, `dist/v1.3.0/` and `dist/v1.2.2/` (not in Git). The model is in
+The APKs and their `SHA256SUMS` are in `dist/v1.5.0/`, `dist/v1.4.1/`, `dist/v1.4.0/`, `dist/v1.3.0/` and `dist/v1.2.2/` (not in Git). The model is in
 `bench/models/` (not in Git), fetched by `tools/fetch_models.py`.
 Installation: `docs/INSTALLATION_GUIDE.md`. Checks before a session:
 `docs/TABLET_TEST_CHECKLIST.md`.
+
+## New in 1.5.0: the name Clevo AI
+
+The app is now called Clevo AI: under its icon, on its first screen and in
+About this build. The admin portal carries the same name. Research exports go
+to `Download/ClevoAI`, and progress files are named `ClevoAI-progress-…`. The
+application ID, the signing key and the file formats are unchanged, so a
+tablet with an earlier 1.x build updates in place and keeps its records, and
+tablets on different versions still read each other's progress files.
 
 ## New in 1.4.1: the logo
 

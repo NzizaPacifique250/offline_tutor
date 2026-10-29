@@ -1,6 +1,6 @@
-<p align="center"><img src="docs/images/logo.png" width="96" alt="Offline Tutor logo: an open book with a spark, under a crossed-out Wi-Fi signal"></p>
+<p align="center"><img src="docs/images/logo.png" width="96" alt="Clevo AI logo: an open book with a spark, under a crossed-out Wi-Fi signal"></p>
 
-# Offline-First Intelligent Tutoring Platform
+# Clevo AI: Offline-First Intelligent Tutoring Platform
 
 ## Project title
 
@@ -15,12 +15,11 @@
 - **Technical report (PDF, 5 pages):** [docs/report/Technical_Report.pdf](docs/report/Technical_Report.pdf):
   scope against the proposal, how the product works, testing and results,
   performance and compatibility, code quality.
-- **Installable app:** release 1.4.1 (build 9) in two builds, both in the
-  submission ZIP and not in Git: `OfflineTutor-1.4.1-offline.apk`, the study
-  build with no internet permission (SHA-256 `a5908bf0…62826876`), and
-  `OfflineTutor-1.4.1.apk`, the connected build with accounts, sync and lesson
-  updates (SHA-256 `59c17870…c95a70bb`); the full checksums are in the release
-  notes. Install either by hand with
+- **Installable app:** Clevo AI release 1.5.0 (build 10) in two builds, both
+  in the submission ZIP and not in Git: `ClevoAI-1.5.0-offline.apk`, the study build with no
+  internet permission (SHA-256 `5b15ea5a…6583187b`), and `ClevoAI-1.5.0.apk`, the
+  connected build with accounts, sync and lesson updates (SHA-256
+  `60639bff…e8e6d0eb`); the full checksums are in the release notes. Install either by hand with
   [docs/INSTALLATION_GUIDE.md](docs/INSTALLATION_GUIDE.md), or build them as
   described below.
 
@@ -231,6 +230,13 @@ below are the interface as built. The data model the app implements is in
 | Sign in with an account (works offline after the first time) | ![Sign in](docs/images/p9-tablet-sign-in.png) |
 | The account's sync switch and status under the topic list | ![Sync](docs/images/p9-tablet-sync-card.png) |
 
+### Web portal (Chrome, on the demo data)
+
+| Screen | Screenshot |
+|---|---|
+| Admin: accounts by type, each student's class, wrong answers and struggles | ![Admin users](docs/images/p10-portal-admin-users.png) |
+| Teacher: only their own classes and students, the stuck ones marked | ![Teacher classes](docs/images/p10-portal-teacher-classes.png) |
+
 ## Deployment plan
 
 The platform deploys to tablets that are prepared once and then used with
@@ -275,7 +281,7 @@ no network. The plan, from the state today to the school pilot:
 
 ## Current status
 
-**v1.4.1: four units, an on-device tutor, teacher tools with class progress and research export, personal accounts that sign in offline, sync to Supabase when there is internet, a web admin portal, and lesson updates published from the portal.** The offline study build (`-PofflineOnly`, as 1.2.2) passed the proposal's 180-attempt offline test with 178 passes. See [docs/RELEASE_V1.md](docs/RELEASE_V1.md) and [docs/ACCOUNTS_AND_SYNC.md](docs/ACCOUNTS_AND_SYNC.md). Testing with students waits for teacher review of the content and the institutional approvals.
+**Clevo AI 1.5.0: four units, an on-device tutor, teacher tools with class progress and research export, personal accounts that sign in offline, sync to Supabase when there is internet, a web admin portal, and lesson updates published from the portal.** The offline study build (`-PofflineOnly`, as 1.2.2) passed the proposal's 180-attempt offline test with 178 passes. See [docs/RELEASE_V1.md](docs/RELEASE_V1.md) and [docs/ACCOUNTS_AND_SYNC.md](docs/ACCOUNTS_AND_SYNC.md). Testing with students waits for teacher review of the content and the institutional approvals.
 
 The pilot scope is fixed: Rwanda REB curriculum, Senior Six Advanced
 Mathematics, four pilot units, an ATMPC IT-801B Android tablet, React Native
