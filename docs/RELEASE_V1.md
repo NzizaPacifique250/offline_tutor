@@ -1,7 +1,7 @@
 # Offline Tutor v1: Release Notes
 
 **Released:** 19 October 2026, for submission on 23 October 2026
-**Current build:** version 1.3.0 (build 7), release, commit `e0fed27`, application ID `rw.offlinetutor.pilot`. Version 1.0.0 (build 2) is the build the readiness run below was made with; 1.1.0 added class progress, 1.2.0 collecting it from other tablets, 1.2.1 the book pages under generated text, 1.2.2 a fix the offline test found, and 1.3.0 accounts, sync and the admin portal. The offline test ran on 1.2.2; for the study, build with `-PofflineOnly`, which gives the same offline-only guarantee. Builds before 1.2.1 were made from the development repository this one was cleaned from, so their commit ids (`b348c17` for 1.0.0, `a0790e3` for 1.2.0) are not in this history.
+**Current build:** version 1.4.0 (build 8), release, commit `de0502a`, application ID `rw.offlinetutor.pilot`. Version 1.0.0 (build 2) is the build the readiness run below was made with; 1.1.0 added class progress, 1.2.0 collecting it from other tablets, 1.2.1 the book pages under generated text, 1.2.2 a fix the offline test found, 1.3.0 accounts, sync and the admin portal (commit `e0fed27`), and 1.4.0 lesson updates published from the portal. The offline test ran on 1.2.2; for the study, build with `-PofflineOnly`, which gives the same offline-only guarantee. Builds before 1.2.1 were made from the development repository this one was cleaned from, so their commit ids (`b348c17` for 1.0.0, `a0790e3` for 1.2.0) are not in this history.
 **Device:** ATMPC IT-801B, Android 15, airplane mode on throughout
 **Status:** ready for structured testing with teachers; testing with students waits for the approvals and teacher review below
 
@@ -21,15 +21,45 @@ tools, behind a PIN.
 
 | File | Size | SHA-256 |
 |---|---|---|
+| `OfflineTutor-1.4.0.apk` (connected: accounts, sync and lesson updates) | 101,135,886 bytes | `ee25003548816241beebd283938bf24e3af5235b73e207895d35b6e8738e11e5` |
+| `OfflineTutor-1.4.0-offline.apk` (built with `-PofflineOnly`: no internet permission; the study build) | 101,135,858 bytes | `84b70313947c20073a550e862c26397974b8b5667ff8fd993965c6ce62e7afda` |
 | `OfflineTutor-1.3.0.apk` (connected: accounts and sync) | 101,099,686 bytes | `33b5298a0f4c54930524474448255c0d62a758501abe75ee062db15f143dbd8e` |
-| `OfflineTutor-1.3.0-offline.apk` (built with `-PofflineOnly`: no internet permission; the study build) | 101,099,658 bytes | `319f2f0c5e581ebaa428a1af19c02838d3c6e55f84456e90494365622230d237` |
+| `OfflineTutor-1.3.0-offline.apk` (1.3.0 built with `-PofflineOnly`) | 101,099,658 bytes | `319f2f0c5e581ebaa428a1af19c02838d3c6e55f84456e90494365622230d237` |
 | `OfflineTutor-1.2.2.apk` (offline only, the build the offline test ran on) | 100,401,394 bytes | `1f9643ba09f348467cd1f9f92252e1bc7a19141ea4c6783e6735572235f9955f` |
 | `qwen25-math-1.5b-Qwen2.5-Math-1.5B-Instruct-Q4_K_M.gguf` | 986,048,832 bytes | `9614a50f03c897028920ca0dc4365da570bf587f9ee7768261216fe370b37e8e` |
 
-The APKs and their `SHA256SUMS` are in `dist/v1.3.0/` and `dist/v1.2.2/` (not in Git). The model is in
+The APKs and their `SHA256SUMS` are in `dist/v1.4.0/`, `dist/v1.3.0/` and `dist/v1.2.2/` (not in Git). The model is in
 `bench/models/` (not in Git), fetched by `tools/fetch_models.py`.
 Installation: `docs/INSTALLATION_GUIDE.md`. Checks before a session:
 `docs/TABLET_TEST_CHECKLIST.md`.
+
+## New in 1.4.0: lesson updates from the portal
+
+- **Publishing.** A new or corrected unit is exported as a release file by
+  `tools/export_package.py`, which runs the package validator first, and
+  an admin publishes it on the portal's new **Content** page for every
+  tablet or chosen ones. The database reads the unit and version from the
+  file, computes its SHA-256 and accepts only a newer version
+  (migration 0006).
+- **On a connected tablet.** The app looks for releases at start-up and
+  every ten minutes. A newer one appears in a pop-up, **New lessons are
+  ready**, when no lesson is open; **Update now** downloads it, checks its
+  checksum and structure, and replaces that unit's lessons and exercises
+  while keeping every learner's records. Teacher tools list the same
+  updates, with **Check for updates**.
+- **Without internet.** The portal's **Download file** gives the same
+  file; Teacher tools → **Import lessons from a file** installs it with the
+  same checks. This is how the offline-only study build is updated.
+- **Rules.** Only a newer version installs, and reinstalling an app file
+  with an older bundled version keeps the newer installed one. Each install
+  is recorded on the tablet with its source and checksum.
+
+Design, security and tests: [ACCOUNTS_AND_SYNC.md](ACCOUNTS_AND_SYNC.md#lesson-updates-140-migration-0006).
+Checked on the IT-801B on 29 October with the live project: a test release
+of Unit 1 published for the tablet was offered at start-up and installed in
+about 4 s, and in airplane mode the file downloaded from the portal was
+imported from Teacher tools
+([evidence](evidence/lesson-updates-2026-10-29/)).
 
 ## New in 1.3.0: accounts, sync and the admin portal
 

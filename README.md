@@ -13,11 +13,11 @@
 - **Technical report (PDF, 5 pages):** [docs/report/Technical_Report.pdf](docs/report/Technical_Report.pdf):
   scope against the proposal, how the product works, testing and results,
   performance and compatibility, code quality.
-- **Installable app:** release 1.3.0 (build 7) in two builds, both in the
-  submission ZIP and not in Git: `OfflineTutor-1.3.0-offline.apk`, the study
-  build with no internet permission (SHA-256 `319f2f0c…2230d237`), and
-  `OfflineTutor-1.3.0.apk`, the connected build with accounts and sync
-  (SHA-256 `33b5298a…143dbd8e`); the full checksums are in the release
+- **Installable app:** release 1.4.0 (build 8) in two builds, both in the
+  submission ZIP and not in Git: `OfflineTutor-1.4.0-offline.apk`, the study
+  build with no internet permission (SHA-256 `84b70313…62e7afda`), and
+  `OfflineTutor-1.4.0.apk`, the connected build with accounts, sync and lesson
+  updates (SHA-256 `ee250035…738e11e5`); the full checksums are in the release
   notes. Install either by hand with
   [docs/INSTALLATION_GUIDE.md](docs/INSTALLATION_GUIDE.md), or build them as
   described below.
@@ -54,7 +54,7 @@ Design, implement, and evaluate an offline-first intelligent tutoring prototype 
 ```
 offline_tutor/
 ├── app/                        React Native application for the tablet (TypeScript)
-│   ├── App.tsx                 start-up, navigation between screens, sync schedule
+│   ├── App.tsx                 start-up, navigation between screens, sync and update schedules
 │   ├── src/
 │   │   ├── account/            accounts that sign in offline after the first time
 │   │   ├── checker/            on-device answer checker: complex-number parser and evaluator
@@ -68,13 +68,15 @@ offline_tutor/
 │   │   ├── sharing/            progress files passed between tablets
 │   │   ├── study/              practice rules: hint order, solution gate, feedback
 │   │   ├── sync/               sync to Supabase and its settings
-│   │   └── teacher/            teacher PIN and class progress
-│   ├── __tests__/              Jest suites: 285 tests, plus a live Supabase suite on demand
+│   │   ├── teacher/            teacher PIN and class progress
+│   │   └── updates/            lesson updates: release files checked, offered and installed
+│   ├── __tests__/              Jest suites: 306 tests, plus a live Supabase suite on demand
 │   ├── jest/                   test helpers: real SQLite (sql.js), native mocks, waitUntil
 │   ├── android/                Android project; Kotlin device module in app/src/main/java/rw/offlinetutor/device/
 │   └── scripts/                build and install, tablet UI driver (ui.py), offline test, demo recording
 ├── admin/                      web portal for teachers and admins (Next.js 16)
-│   ├── app/                    pages: sign-in, overview, users, tablets, activity, tutor performance
+│   ├── app/                    pages: sign-in, overview, users, classes, tablets, content
+│   │                           (lesson releases), activity, tutor performance
 │   ├── components/, lib/       shared UI; Supabase clients, queries and statistics
 │   └── proxy.ts                sends signed-out visitors to the sign-in page
 ├── supabase/
@@ -82,8 +84,8 @@ offline_tutor/
 │   └── tests/                  row-level security checks on an in-process Postgres (PGlite)
 ├── curriculum/rw_s6_mathematics/packages/
 │                               one package per unit: u1, u4, u5, u9 (lessons, exercises, hints, keys)
-├── tools/                      Python: SymPy grader, package validator, corpus extractor,
-│                               model fetcher, benchmark driver
+├── tools/                      Python: SymPy grader, package validator, release exporter,
+│                               corpus extractor, model fetcher, benchmark driver
 ├── bench/                      llama.cpp benchmark kit for the tablet, probes and results
 └── docs/                       report, architecture, release notes,
                                 installation guide, test evidence, screenshots
@@ -136,7 +138,7 @@ cd admin && npm ci && npm run lint && npm run build && cd ..    # the admin port
 ```
 
 The grader and validator should end with `[ok]` lines, and the app should
-pass 285 tests in 14 suites with no type or lint errors (a 15th suite, the
+pass 306 tests in 15 suites with no type or lint errors (a 16th suite, the
 live Supabase test, runs only with `SUPABASE_LIVE=1`).
 
 ### 3. Get the model onto the tablet
@@ -175,7 +177,7 @@ INTERNET permission.
 
 ### 4a. Accounts, sync and the admin portal
 
-Run the five SQL files in `supabase/migrations/`, in order and once each, in the Supabase SQL Editor,
+Run the six SQL files in `supabase/migrations/`, in order and once each, in the Supabase SQL Editor,
 switch off email confirmation, make the first admin, then start the portal:
 
 ```bash
@@ -256,18 +258,22 @@ no network. The plan, from the state today to the school pilot:
    of the content and the institutional approvals: tablets prepared
    offline, learner codes rather than names, data kept on the device,
    results exported by the researcher.
-6. **Updates.** Curriculum packages are versioned and travel inside the
-   APK; a tablet re-imports a package whose version changed at its next
-   launch, keeping the learners' records. New lessons and new versions are
-   therefore installed by hand, tablet by tablet, as the installation guide
-   describes; delivering packages over the network is future work.
-   Synchronization stays optional and never on the tutoring path.
+6. **Updates (done, v1.4.0).** Curriculum packages are versioned. A new
+   or corrected unit is exported as a release file
+   (`tools/export_package.py`, which validates it first) and published on
+   the portal's Content page, for every tablet or chosen ones. A connected
+   tablet offers it in a pop-up and installs it on request, after checking
+   its SHA-256 and structure, keeping the learners' records; a tablet with
+   no internet imports the same file from Teacher tools. New versions of
+   the app itself are still installed by hand, as the installation guide
+   describes. Synchronization stays optional and never on the tutoring
+   path.
 7. **After the capstone.** More units and grades through the package
    format, one subject at a time.
 
 ## Current status
 
-**v1.3.0: four units, an on-device tutor, teacher tools with class progress and research export, personal accounts that sign in offline, sync to Supabase when there is internet, and a web admin portal.** The offline study build (`-PofflineOnly`, as 1.2.2) passed the proposal's 180-attempt offline test with 178 passes. See [docs/RELEASE_V1.md](docs/RELEASE_V1.md) and [docs/ACCOUNTS_AND_SYNC.md](docs/ACCOUNTS_AND_SYNC.md). Testing with students waits for teacher review of the content and the institutional approvals.
+**v1.4.0: four units, an on-device tutor, teacher tools with class progress and research export, personal accounts that sign in offline, sync to Supabase when there is internet, a web admin portal, and lesson updates published from the portal.** The offline study build (`-PofflineOnly`, as 1.2.2) passed the proposal's 180-attempt offline test with 178 passes. See [docs/RELEASE_V1.md](docs/RELEASE_V1.md) and [docs/ACCOUNTS_AND_SYNC.md](docs/ACCOUNTS_AND_SYNC.md). Testing with students waits for teacher review of the content and the institutional approvals.
 
 The pilot scope is fixed: Rwanda REB curriculum, Senior Six Advanced
 Mathematics, four pilot units, an ATMPC IT-801B Android tablet, React Native
@@ -317,7 +323,8 @@ across restarts, and equations render offline.
 - [Technical report (PDF)](docs/report/Technical_Report.pdf), built from [its HTML source](docs/report/technical-report.html) by `docs/report/build.sh`
 - [Release notes and the readiness run](docs/RELEASE_V1.md)
 - [Offline reliability test: protocol and results, 178 of 180](docs/evidence/offline-test-2026-10-28/)
-- [Accounts, sync and the admin portal](docs/ACCOUNTS_AND_SYNC.md), [the portal's README](admin/README.md) and [the portal in Chrome and Firefox](docs/evidence/portal-browsers/)
+- [Lesson updates on the tablet: the pop-up, the offline import, and the portal](docs/evidence/lesson-updates-2026-10-29/)
+- [Accounts, sync, lesson updates and the admin portal](docs/ACCOUNTS_AND_SYNC.md), [the portal's README](admin/README.md) and [the portal in Chrome and Firefox](docs/evidence/portal-browsers/)
 - [Installation guide](docs/INSTALLATION_GUIDE.md) and [tablet test checklist](docs/TABLET_TEST_CHECKLIST.md)
 - [Readiness run evidence: exported records, app log, temperature](docs/evidence/v1-readiness-2026-10-19/)
 - [System architecture](docs/ARCHITECTURE.md)
