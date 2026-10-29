@@ -38,7 +38,7 @@
 
 <h1>Offline Mathematics Tutor for Senior Six: Technical Report on the Final Version</h1>
 <div class="meta">Nziza Aime Pacifique · BSc Software Engineering, African Leadership University · Supervisor: Elvira Immaculate Khwatenge · 29&nbsp;October&nbsp;2026<br>
-Release 1.4.0 (build 8) · Repository <span class="mono">github.com/NzizaPacifique250/offline_tutor</span> · The walkthrough video is linked from the repository's README.</div>
+Release 1.4.1 (build 9) · Repository <span class="mono">github.com/NzizaPacifique250/offline_tutor</span> · The walkthrough video is linked from the repository's README.</div>
 
 <h2>1. The product</h2>
 <p>The product is an Android tutor for Senior Six Advanced Mathematics in the Rwanda Education Board (REB) curriculum that works with no internet connection. A learner reads lessons taken from the REB Student's Book with typeset formulas, practises exercises that the tablet marks, opens the book's hints in order before the worked solution, and asks a language model that runs on the tablet (Qwen2.5-Math-1.5B-Instruct, 4-bit, through <span class="mono">llama.rn</span>) for help one step at a time. Progress is computed from saved attempts and recommends the next exercise. Behind a PIN, teachers install the model, follow class progress and export research records. Release 1.3.0 added personal accounts that sign in offline after their first online sign-in, opt-in synchronisation to Supabase, and a web portal for teachers and admins; in 1.4.0 an admin publishes new or corrected lessons from the portal, and connected tablets offer to install them.</p>
@@ -73,7 +73,7 @@ Release 1.4.0 (build 8) · Repository <span class="mono">github.com/NzizaPacifiq
 <thead><tr><th style="width:23%">Planned feature (proposal section)</th><th style="width:19%">Intended purpose</th><th style="width:13%">Status</th><th>Evidence</th></tr></thead>
 <tbody>
 <tr><td>Comparison of four quantised models on the tablet (Objective 2, §3.4.2)</td><td>Choose a model on correctness, speed and memory</td><td class="ok">Completed</td><td>Correct on 24 maths probes: Qwen2.5-Math-1.5B 23, Qwen2.5-1.5B 14, Qwen3-1.7B 8, Llama-3.2-1B 4; Qwen3 peaked at 1,467 MB. <span class="mono">docs/FEASIBILITY_FINDINGS.md</span>, <span class="mono">bench/</span></td></tr>
-<tr><td>Installable Android prototype (Objective 3)</td><td>Study with no internet</td><td class="ok">Completed</td><td>Signed APK 1.4.0, checksummed; <span class="mono">docs/INSTALLATION_GUIDE.md</span>; <span class="mono">-PofflineOnly</span> gives the study build</td></tr>
+<tr><td>Installable Android prototype (Objective 3)</td><td>Study with no internet</td><td class="ok">Completed</td><td>Signed APK 1.4.1, checksummed; <span class="mono">docs/INSTALLATION_GUIDE.md</span>; <span class="mono">-PofflineOnly</span> gives the study build</td></tr>
 <tr><td>Lessons from the REB books, readable notation (§3.3)</td><td>Curriculum content offline</td><td class="ok">Completed</td><td>4 lessons and 7 worked examples rendered with KaTeX from local assets; <span class="mono">app/src/katex/</span>; Fig. 2</td></tr>
 <tr><td>Practice package of 80 exercises and 240 hints (§1.5)</td><td>Bounded practice per unit</td><td class="part">Partial: 20 and 60</td><td>Five exercises with three hints per unit, from the book with page numbers; every key proven with SymPy. <span class="mono">curriculum/rw_s6_mathematics/packages/</span></td></tr>
 <tr><td>Answer checking against reviewed keys (§3.4)</td><td>Immediate, reliable feedback</td><td class="ok">Completed</td><td>On-device evaluator for a + bi, π, e, √, ln and functions of x; 111 tests. <span class="mono">app/src/checker/</span></td></tr>
@@ -166,7 +166,7 @@ Release 1.4.0 (build 8) · Repository <span class="mono">github.com/NzizaPacifiq
 <table>
 <thead><tr><th style="width:30%">Environment</th><th>Result</th></tr></thead>
 <tbody>
-<tr><td>ATMPC IT-801B, Android 15 (API 35), 3.79 GB RAM: the low-end target</td><td>All features and every test above; 1.2.2 offline-only, 1.3.0 and 1.4.0 release builds; a lesson update offered and installed, and imported offline</td></tr>
+<tr><td>ATMPC IT-801B, Android 15 (API 35), 3.79 GB RAM: the low-end target</td><td>All features and every test above; 1.2.2 offline-only, 1.3.0, 1.4.0 and 1.4.1 release builds; a lesson update offered and installed, and imported offline</td></tr>
 <tr><td>Infinix Smart 8 phone, as a teacher's device</td><td>1.2.0 installed; received a progress file over Bluetooth and showed the class; ran without the model</td></tr>
 <tr><td>Android versions</td><td>Built for API 24 to 36 (Android 7 to 16); only Android 15 was tested on a device</td></tr>
 <tr><td>Portal in Chrome 154 and Firefox 142, at 1280 px and 390 px wide (Linux)</td><td>Signed out, every page redirects to sign-in; the form fits without horizontal scrolling; no console errors after the site icon was served to signed-out visitors. WebKit could not start without two system libraries.</td></tr>
@@ -175,7 +175,7 @@ Release 1.4.0 (build 8) · Repository <span class="mono">github.com/NzizaPacifiq
 </tbody></table>
 
 <h2>6. Code quality, object-oriented design and algorithms</h2>
-<p><b>Structure.</b> Each feature owns a directory (<span class="mono">docs/feature-map.md</span>): screens hold layout and event wiring, and the logic sits in pure modules tested without React, a WebView or a tablet. The app's 8,460 lines of TypeScript are in 63 files; the largest, <span class="mono">App.tsx</span>, which wires the screens and schedules together, is 502 lines. TypeScript runs in strict mode, ESLint reports no warnings, and the history holds more than 150 focused commits made between 1 September and 29 October 2026.</p>
+<p><b>Structure.</b> Each feature owns a directory (<span class="mono">docs/feature-map.md</span>): screens hold layout and event wiring, and the logic sits in pure modules tested without React, a WebView or a tablet. The app's 8,469 lines of TypeScript are in 63 files; the largest, <span class="mono">App.tsx</span>, which wires the screens and schedules together, is 511 lines. TypeScript runs in strict mode, ESLint reports no warnings, and the history holds more than 150 focused commits made between 1 September and 29 October 2026.</p>
 <ul>
 <li><b>Encapsulation.</b> <span class="mono">GuidanceService</span> hides the engine, its state machine (idle, loading, ready, busy, no-model), the cancel flag, the timeout and the warm-up queue behind <span class="mono">ask</span>, <span class="mono">warmUp</span>, <span class="mono">cancel</span> and <span class="mono">subscribe</span>, the last an observer list that screens follow.</li>
 <li><b>Abstraction and polymorphism.</b> Small interfaces separate logic from the outside world: <span class="mono">Engine</span> (llama.rn on the tablet, scripted fakes in tests), <span class="mono">AuthRemote</span> and <span class="mono">SyncRemote</span> (Supabase or a fake server), <span class="mono">Executor</span> (op-sqlite or sql.js). The service also takes its clock and timers as parameters. This dependency inversion is what lets 306 tests run in seconds without a device or network.</li>
