@@ -9,15 +9,16 @@ import { Notice } from "@/components/notice";
 import { PageHeader } from "@/components/page-header";
 import { RoleChangeButton } from "@/components/role-change-button";
 import { Rise } from "@/components/rise";
+import { SubmitButton } from "@/components/submit-button";
 import { Table, Td } from "@/components/table";
 import { getClient, requireStaff } from "@/lib/auth";
 import { rows } from "@/lib/query";
 import { kigaliDateTime, timeAgo } from "@/lib/stats";
 import type { OverviewRow, Role } from "@/lib/types";
 import { capitalise, initials, roleTone } from "@/lib/ui";
-import { setRole } from "./actions";
+import { createAccount, setRole } from "./actions";
 
-const FILTERS = ["all", "student", "teacher", "admin"] as const;
+const FILTERS = ["all", "student", "teacher", "admin", "needs-help"] as const;
 type Filter = (typeof FILTERS)[number];
 const ROLES: Role[] = ["student", "teacher", "admin"];
 
@@ -25,11 +26,17 @@ type Props = {
   searchParams: Promise<{ role?: string; notice?: string; error?: string; id?: string; to?: string }>;
 };
 
-// The role-change action redirects here with short codes; the copy lives in this file.
+// The actions redirect here with short codes; the copy lives in this file.
 const ERRORS: Record<string, string> = {
   invalid: "That request was not valid.",
   self: "You cannot change your own role.",
   failed: "The role was not changed. Try again, or check that you are still an admin.",
+  "invalid-account": "Enter a name, a valid email address and a role.",
+  "short-password": "The password needs at least 8 characters.",
+  "email-taken": "An account with that email already exists.",
+  unreachable: "The account was not created: the server could not be reached. Try again in a minute.",
+  "create-failed": "The account was not created. Try again, or check the email address.",
+  "created-not-promoted": "The account was created as a student, but its role was not changed. Change it in the table below.",
 };
 
 const EMPTY_BODY: Record<Filter, string> = {
@@ -37,7 +44,10 @@ const EMPTY_BODY: Record<Filter, string> = {
   student: "Students appear here after they create an account in the tablet app and it syncs.",
   teacher: "Approve a teacher request to add one.",
   admin: "",
+  "needs-help": "No student is stuck: nobody has two or more wrong answers on an exercise they have not yet solved.",
 };
+
+const stuck = (u: OverviewRow) => (u.exercises_stuck ?? 0) > 0;
 
 export default async function UsersPage({ searchParams }: Props) {
   const { role: roleParam, notice: noticeCode, error: errorCode, id: changedId, to } = await searchParams;
@@ -51,23 +61,33 @@ export default async function UsersPage({ searchParams }: Props) {
   const filter = FILTERS.find((f) => f === roleParam) ?? "all";
   // The account is looked up by its id, so the message never repeats text from the address bar.
   const changed = overview.data.find((u) => u.user_id === changedId);
+  const changedName = changed ? changed.full_name || changed.learner_code : "The account";
   const notice =
     noticeCode === "role-changed" && ROLES.some((r) => r === to)
-      ? `${changed ? changed.full_name || changed.learner_code : "The account"} is now ${to}.`
-      : null;
+      ? `${changedName} is now ${to}.`
+      : noticeCode === "account-created"
+        ? `${changed ? `${changedName} (${changed.email || changed.learner_code})` : "The new account"} can now sign in, in the tablet app or here.`
+        : noticeCode === "account-deleted"
+          ? "The account and everything it synced were deleted."
+          : null;
   const error = errorCode ? (ERRORS[errorCode] ?? "That did not work. Try again.") : null;
 
   const pending = overview.data.filter((u) => u.role === "student" && u.requested_role === "teacher");
-  const shown = filter === "all" ? overview.data : overview.data.filter((u) => u.role === filter);
+  const matches = (f: Filter) => (u: OverviewRow) => (f === "all" ? true : f === "needs-help" ? stuck(u) : u.role === f);
+  const shown = overview.data.filter(matches(filter));
   // Students includes people who have asked to become teachers, as on the Overview.
-  const countFor = (f: Filter) => (f === "all" ? overview.data.length : overview.data.filter((u) => u.role === f).length);
-  const filterLabel = (f: Filter) => (f === "all" ? "All" : capitalise(f) + "s");
+  const countFor = (f: Filter) => overview.data.filter(matches(f)).length;
+  const filterLabel = (f: Filter) => (f === "all" ? "All" : f === "needs-help" ? "Needs help" : capitalise(f) + "s");
 
   return (
     <>
       <PageHeader
         title="Users"
-        description={isAdmin ? "Approve teacher requests and change roles." : "Accounts and their progress. Only an admin can change roles."}
+        description={
+          isAdmin
+            ? "Create accounts, approve teacher requests and change roles. Open an account to rename it, set a new password or delete it."
+            : "Accounts and their progress. Only an admin can create or change accounts."
+        }
         problem={overview.problem}
         kigaliTime
       />
@@ -140,7 +160,13 @@ export default async function UsersPage({ searchParams }: Props) {
         </Rise>
       ) : null}
 
-      <Rise i={1}>
+      {isAdmin ? (
+        <Rise i={1}>
+          <CreateAccount />
+        </Rise>
+      ) : null}
+
+      <Rise i={2}>
         <h2 className="sr-only">All accounts</h2>
         <nav aria-label="Filter by role" className="mb-4 max-w-full overflow-x-auto">
           <div className="inline-flex gap-1 rounded-md bg-tint p-1">
@@ -168,6 +194,8 @@ export default async function UsersPage({ searchParams }: Props) {
             "Role",
             { label: "Attempts", numeric: true },
             { label: "Exercises correct", numeric: true },
+            { label: "Wrong answers", numeric: true },
+            "Needs help",
             { label: "Tutor requests", numeric: true },
             "Last activity",
             ...(isAdmin ? ["Change role"] : []),
@@ -175,7 +203,9 @@ export default async function UsersPage({ searchParams }: Props) {
           empty={
             filter === "all"
               ? { title: "No accounts to show", body: EMPTY_BODY.all }
-              : {
+              : filter === "needs-help"
+                ? { title: "No one needs help right now", body: EMPTY_BODY["needs-help"], link: { href: "/users", label: "Show all accounts" } }
+                : {
                   title: `No ${filter}s yet`,
                   body: EMPTY_BODY[filter],
                   link: { href: "/users", label: "Show all accounts" },
@@ -194,7 +224,10 @@ export default async function UsersPage({ searchParams }: Props) {
                     <Link href={`/users/${u.user_id}`} className="link block max-w-56 truncate" title={u.full_name || undefined}>
                       {u.full_name || "(no name)"}
                     </Link>
-                    <p className="text-xs text-muted">{u.learner_code}</p>
+                    <p className="max-w-64 truncate text-xs text-muted" title={u.email || undefined}>
+                      {u.learner_code}
+                      {u.email ? ` · ${u.email}` : ""}
+                    </p>
                   </div>
                 </div>
               </Td>
@@ -206,6 +239,18 @@ export default async function UsersPage({ searchParams }: Props) {
               <Td numeric>{u.attempts}</Td>
               <Td numeric>
                 <MiniProgress done={u.exercises_correct} />
+              </Td>
+              <Td numeric>{u.wrong_answers ?? "–"}</Td>
+              <Td>
+                {stuck(u) ? (
+                  <span className="whitespace-nowrap">
+                    <Badge tone="warn" icon="alert">
+                      Stuck on {u.exercises_stuck}
+                    </Badge>
+                  </span>
+                ) : (
+                  <span className="text-muted">–</span>
+                )}
               </Td>
               <Td numeric>{u.tutor_requests}</Td>
               <Td>
@@ -225,6 +270,69 @@ export default async function UsersPage({ searchParams }: Props) {
         </Table>
       </Rise>
     </>
+  );
+}
+
+// Behind a disclosure so the page leads with the accounts. A new account is
+// created as a student by the database, then given the role picked here.
+function CreateAccount() {
+  return (
+    <details className="group mb-8 rounded-lg border border-line bg-surface shadow-card">
+      <summary className="flex cursor-pointer list-none items-center justify-between gap-3 p-4 [&::-webkit-details-marker]:hidden">
+        <span className="flex items-center gap-2 text-base font-semibold">
+          <Icon name="plus" size={18} />
+          Create an account
+        </span>
+        <span className="text-sm text-muted group-open:hidden">For a student, a teacher or an admin</span>
+      </summary>
+      <form action={createAccount} className="grid gap-4 border-t border-line p-4 sm:grid-cols-2">
+        <div>
+          <label htmlFor="new-name" className="text-sm font-medium">
+            Full name
+          </label>
+          <input id="new-name" name="full_name" required maxLength={120} autoComplete="off" className="field mt-1" />
+        </div>
+        <div>
+          <label htmlFor="new-email" className="text-sm font-medium">
+            Email
+          </label>
+          <input id="new-email" name="email" type="email" required autoComplete="off" className="field mt-1" />
+        </div>
+        <div>
+          <label htmlFor="new-password" className="text-sm font-medium">
+            Password
+          </label>
+          <input
+            id="new-password"
+            name="password"
+            type="password"
+            required
+            minLength={8}
+            autoComplete="new-password"
+            aria-describedby="new-password-help"
+            className="field mt-1"
+          />
+          <p id="new-password-help" className="mt-1 text-xs text-muted">
+            At least 8 characters. Give it to the person; they sign in with it in the tablet app or here.
+          </p>
+        </div>
+        <div>
+          <label htmlFor="new-role" className="text-sm font-medium">
+            Role
+          </label>
+          <select id="new-role" name="role" defaultValue="student" className="field mt-1">
+            {ROLES.map((r) => (
+              <option key={r} value={r}>
+                {capitalise(r)}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="sm:col-span-2">
+          <SubmitButton pendingLabel="Creating…">Create account</SubmitButton>
+        </div>
+      </form>
+    </details>
   );
 }
 
