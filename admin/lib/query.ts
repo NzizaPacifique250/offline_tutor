@@ -1,5 +1,5 @@
 export const SETUP_MESSAGE =
-  "The database is not set up yet: run supabase/migrations/0001_accounts_and_sync.sql in the Supabase SQL Editor.";
+  "The database is missing a part this page needs: run the files in supabase/migrations in the Supabase SQL Editor, in order (the latest is 0004_accounts_roles_struggles.sql).";
 
 type DbError = { code?: string; message: string } | null;
 type Response = { data: unknown; error: DbError; count?: number | null };
@@ -7,10 +7,10 @@ type Response = { data: unknown; error: DbError; count?: number | null };
 export type Loaded<T> = { data: T; problem: string | null };
 
 // PostgREST: PGRST205 = table not in the schema cache, 42P01 = undefined table,
-// PGRST202 = function not found.
+// PGRST202 = function not found, 42703 = undefined column.
 function describe(error: DbError): string | null {
   if (!error) return null;
-  if (error.code === "PGRST205" || error.code === "42P01" || error.code === "PGRST202") {
+  if (error.code === "PGRST205" || error.code === "42P01" || error.code === "PGRST202" || error.code === "42703") {
     return SETUP_MESSAGE;
   }
   return error.message;

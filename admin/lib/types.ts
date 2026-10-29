@@ -22,6 +22,27 @@ export type OverviewRow = {
   solutions: number;
   tutor_requests: number;
   last_activity: string | null;
+  // Added by migration 0004; absent until it runs.
+  email?: string;
+  wrong_answers?: number;
+  exercises_stuck?: number;
+  tutor_failed?: number;
+};
+
+// One student's record on one exercise (view exercise_progress, migration
+// 0004). Stuck: two or more wrong answers and none correct.
+export type ExerciseProgress = {
+  user_id: string;
+  lesson_id: string;
+  exercise_id: string;
+  attempts: number;
+  wrong: number;
+  solved: boolean;
+  hints_seen: number;
+  solution_seen: boolean;
+  last_attempt_at: string;
+  last_wrong_answer: string | null;
+  stuck: boolean;
 };
 
 export type Device = {
