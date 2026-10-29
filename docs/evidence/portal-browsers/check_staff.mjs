@@ -90,6 +90,8 @@ if (process.env.TEACHER_EMAIL) {
 if (process.env.ADMIN_EMAIL) {
   const { context, page, errors } = await signIn(process.env.ADMIN_EMAIL, process.env.ADMIN_PASSWORD);
   check('admin signs in', new URL(page.url()).pathname === '/', page.url());
+  await page.goto(base + '/users');
+  check('users list separates students from teachers and admins', (await shows(page, 'Teachers and admins')) && (await shows(page, 'Students')));
   const email = `crud.check.${Date.now()}@example.com`;
   const firstPassword = 'First-pass-123', secondPassword = 'Second-pass-456';
   await page.goto(base + '/users');
@@ -110,6 +112,7 @@ if (process.env.ADMIN_EMAIL) {
   const id = new URL(page.url()).searchParams.get('id');
   await page.goto(`${base}/users/${id}`);
   check('the new account is a teacher', await shows(page, 'Teacher'));
+  check('a teacher\'s page shows classes taught, not lesson progress', (await shows(page, 'Classes taught')) && !(await text(page)).includes('Progress by lesson'));
   await page.fill('#rename', 'CRUD Check Renamed');
   await Promise.all([page.waitForURL(u => u.search.includes('notice') || u.search.includes('error')), page.click('button:has-text("Save name")')]);
   check('admin renames it', page.url().includes('notice=renamed') && (await shows(page, 'CRUD Check Renamed')));

@@ -25,13 +25,15 @@ screenshots show the sign-in page in each browser.
 ## Signed in (29 October 2026, `check_staff.mjs`)
 
 Run against the live Supabase project with a demo teacher and an admin
-account, in Chrome at 1280 px. 32 of 32 checks passed:
+account, in Chrome at 1280 px. 34 of 34 checks passed:
 
 - **As a teacher:** every page opens; the overview shows where students
   struggle and the Users table their wrong answers and struggles; no account
   creation, role change or account management is shown; the Tablets page
   sends the teacher back to the overview.
-- **As an admin:** a throwaway teacher account was created, renamed and given
+- **As an admin:** the Users list shows students and staff in separate
+  tables, and a teacher's page shows the classes they teach rather than lesson
+  progress; a throwaway teacher account was created, renamed and given
   a new password; Supabase accepted the new password, refused the old one and
   showed the role in the account's app metadata; the account was deleted and
   could no longer sign in.
