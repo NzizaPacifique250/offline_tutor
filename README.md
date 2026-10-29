@@ -1,3 +1,5 @@
+<p align="center"><img src="docs/images/logo.png" width="96" alt="Offline Tutor logo: an open book with a spark, under a crossed-out Wi-Fi signal"></p>
+
 # Offline-First Intelligent Tutoring Platform
 
 ## Project title
