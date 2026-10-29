@@ -48,6 +48,10 @@ An admin publishes a new or corrected unit to the tablets (migration 0006). Make
 
 `lib/curriculum.ts` is generated from `../curriculum/rw_s6_mathematics/packages/{u1,u4,u5,u9}`. After the curriculum changes, including a lesson published from the Content page, regenerate it with `npm run curriculum` and deploy again. To add a unit, add its folder name to `units` in `scripts/generate-curriculum.mjs`.
 
+## Logo and icons
+
+Every logo and icon file comes from one master, `../docs/brand/offline-tutor-logo.png`: the tablet's launcher icons (adaptive, themed, and the older square and round ones), the app's header logo, this portal's browser and home-screen icons and its sidebar mark, and the README's logo. After changing the master, run `npm run icons` (`scripts/generate-icons.mjs`, using the sharp library that Next.js installs), then rebuild the app and the portal.
+
 ## Deploy to Vercel
 
 1. Import the repository in Vercel and set the Root Directory to `admin`.

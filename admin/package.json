@@ -11,7 +11,8 @@
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "curriculum": "node scripts/generate-curriculum.mjs"
+    "curriculum": "node scripts/generate-curriculum.mjs",
+    "icons": "node scripts/generate-icons.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "0.12.0",
