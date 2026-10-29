@@ -22,6 +22,10 @@
   `60639bff…e8e6d0eb`); the full checksums are in the release notes. Install either by hand with
   [docs/INSTALLATION_GUIDE.md](docs/INSTALLATION_GUIDE.md), or build them as
   described below.
+- **Teacher tools PIN: 4821.** On the tablet, **Teacher tools (PIN)** opens
+  class progress (tracked on the tablet, with no internet), the tutor model's
+  installation, research export and lesson import from a file. An approved
+  teacher or admin account opens them without the PIN.
 
 ## Overview
 
