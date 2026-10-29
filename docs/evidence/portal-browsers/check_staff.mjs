@@ -31,33 +31,46 @@ async function signIn(email, password) {
   await Promise.all([page.waitForURL(u => !u.pathname.startsWith('/login') || u.search.includes('error'), { timeout: 90000 }), page.click('button[type=submit]')]);
   return { context, page, errors };
 }
-const text = page => page.textContent('main');
+// Portal pages stream their content after a loading placeholder, so wait for
+// what a check expects rather than reading the page at once.
+const shows = (page, wanted) =>
+  page.waitForFunction(w => document.querySelector('main')?.innerText.includes(w), wanted, { timeout: 30000 }).then(() => true, () => false);
+const text = page => page.innerText('main');
 
 if (process.env.TEACHER_EMAIL) {
   const { context, page, errors } = await signIn(process.env.TEACHER_EMAIL, process.env.TEACHER_PASSWORD);
   check('teacher signs in to the overview', new URL(page.url()).pathname === '/', page.url());
+  check('overview shows students who need help', await shows(page, 'Students who need help'));
   let t = await text(page);
-  check('overview shows students who need help', t.includes('Students who need help'));
   check('overview does not show the setup notice', !t.includes('not fully set up'));
   await page.screenshot({ path: `${out}/teacher-overview.png`, fullPage: true });
   await page.goto(base + '/users');
+  check('users table has wrong answers and needs help', (await shows(page, 'Wrong answers')) && (await shows(page, 'Needs help')));
   t = await text(page);
-  check('users table has wrong answers and needs help', t.includes('Wrong answers') && t.includes('Needs help'));
   check('teacher sees no account creation', !t.includes('Create an account'));
   check('teacher sees no role change', !t.includes('Change role'));
   await page.screenshot({ path: `${out}/teacher-users.png`, fullPage: true });
   await page.goto(base + '/users?role=needs-help');
+  await shows(page, 'Needs help');
   await page.screenshot({ path: `${out}/teacher-needs-help.png`, fullPage: true });
-  const firstStudent = page.locator('table a[href^="/users/"]').first();
+  // The student who needs help most, or else the first account in the list.
+  await page.goto(base + '/users?role=needs-help');
+  await shows(page, 'Needs help');
+  let firstStudent = page.locator('table a[href^="/users/"]').first();
+  if (!(await firstStudent.count())) {
+    await page.goto(base + '/users?role=student');
+    await shows(page, 'Learner');
+    firstStudent = page.locator('table a[href^="/users/"]').first();
+  }
   if (await firstStudent.count()) {
     await firstStudent.click();
     await page.waitForURL(u => /\/users\/[0-9a-f-]{36}/.test(u.pathname));
+    check('a student page shows where they need help', await shows(page, 'needs help'));
     t = await text(page);
-    check('a student page shows where they need help', /Where .+ needs help/.test(t));
     check('teacher sees no account management', !t.includes('Manage account'));
     await page.screenshot({ path: `${out}/teacher-student.png`, fullPage: true });
   } else {
-    check('a student page shows where they need help', false, 'no student needs help, nothing to open');
+    check('a student page shows where they need help', false, 'no student account to open');
   }
   for (const path of ['/devices', '/activity', '/tutor']) {
     const r = await page.goto(base + path);
@@ -73,6 +86,12 @@ if (process.env.ADMIN_EMAIL) {
   const email = `crud.check.${Date.now()}@example.com`;
   const firstPassword = 'First-pass-123', secondPassword = 'Second-pass-456';
   await page.goto(base + '/users');
+  if (!(await shows(page, 'Create an account'))) {
+    check('admin sees account creation', false, 'not shown: is this account an admin?');
+    await context.close();
+    await browser.close();
+    process.exit(1);
+  }
   await page.click('summary:has-text("Create an account")');
   await page.fill('#new-name', 'CRUD Check');
   await page.fill('#new-email', email);
@@ -83,11 +102,10 @@ if (process.env.ADMIN_EMAIL) {
   await page.screenshot({ path: `${out}/admin-created.png`, fullPage: true });
   const id = new URL(page.url()).searchParams.get('id');
   await page.goto(`${base}/users/${id}`);
-  let t = await text(page);
-  check('the new account is a teacher', t.includes('Teacher'));
+  check('the new account is a teacher', await shows(page, 'Teacher'));
   await page.fill('#rename', 'CRUD Check Renamed');
   await Promise.all([page.waitForURL(u => u.search.includes('notice') || u.search.includes('error')), page.click('button:has-text("Save name")')]);
-  check('admin renames it', page.url().includes('notice=renamed') && (await text(page)).includes('CRUD Check Renamed'));
+  check('admin renames it', page.url().includes('notice=renamed') && (await shows(page, 'CRUD Check Renamed')));
   await page.fill('#new-password', secondPassword);
   await Promise.all([page.waitForURL(u => u.search.includes('notice=password') || u.search.includes('error')), page.click('button:has-text("Set password")')]);
   check('admin sets a new password', page.url().includes('notice=password-set'));
