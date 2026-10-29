@@ -189,7 +189,7 @@ tap **Sync now**.
 **Do:** In Chrome, sign in at http://localhost:3000 with the admin account.
 Show **Overview**, **Users** (press **Approve as teacher** or **Decline** on
 the pending request of `demo.teacher.1029@example.com`), open
-`demo.student.1029@example.com`, then **Tablets**, **Activity** and **Tutor**.
+`demo.student.1029@example.com`, then **Classes** (a class, its teacher and its students), **Tablets**, **Activity** and **Tutor**. Finally sign out and sign in as the class's teacher.
 
 **Say:**
 - "This is the web portal for teachers and admins, built with Next.js. It
@@ -200,6 +200,12 @@ the pending request of `demo.teacher.1029@example.com`), open
   role, and the database enforces that, not just the page."
 - On the student: "Here is the work I just did on the tablet, including the
   exercise answered offline."
+- On Classes: "An admin puts students into classes and gives each class its
+  teacher. A teacher then sees only the students in their own classes: the
+  database enforces it, so it holds everywhere in the portal."
+- Signed in as the teacher: "The same pages, but only this teacher's
+  students, with the ones who need help first, and none of the admin's
+  controls."
 - On Tablets and Tutor: "Each tablet's last sync, and the
   tutor's response times and outcomes, from the same log the offline test
   used."
@@ -241,7 +247,7 @@ Then show `docs/images/p8-tablet-topics-stale-cards.png` beside
   they waited fixed times. They now wait for the result itself, and they
   pass under load."
 - Policies: "Second, the security rules, run on an in-process Postgres as
-  different accounts: 43 checks, for example that a student cannot read
+  different accounts: 59 checks, for example that a student cannot read
   another student's rows or make itself a teacher. At first this script
   only printed its results; now it fails if any rule is wrong, and I
   checked that by breaking a rule on purpose."

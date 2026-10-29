@@ -173,7 +173,7 @@ INTERNET permission.
 
 ### 4a. Accounts, sync and the admin portal
 
-Run the four SQL files in `supabase/migrations/`, in order, in the Supabase SQL Editor,
+Run the five SQL files in `supabase/migrations/`, in order and once each, in the Supabase SQL Editor,
 switch off email confirmation, make the first admin, then start the portal:
 
 ```bash

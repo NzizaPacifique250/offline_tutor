@@ -4,13 +4,13 @@ A web portal for teachers and admins to monitor activity synced from the offline
 
 Every query runs as the signed-in user, so row-level security applies. The portal uses only the publishable key. Never put a `service_role` or secret key in it.
 
-Only `teacher` and `admin` accounts can use it. Teachers read everything; only admins can approve teacher requests and change roles.
+Only `teacher` and `admin` accounts can use it. An admin reads every account and record, manages accounts and classes, and approves teacher requests; a teacher reads only the students in their own classes (migration 0005), and does not see the Tablets page.
 
 ## Setup
 
 Requires Node 20.9 or newer.
 
-1. Run the files in `../supabase/migrations/` once each, in order (`0001_…` to `0004_…`), in the Supabase SQL Editor. Until then the pages show which files are missing.
+1. Run the files in `../supabase/migrations/` once each, in order (`0001_…` to `0005_…`), in the Supabase SQL Editor; each file runs once. Until then the pages show which files are missing.
 2. Create `.env.local` from `.env.example` and fill in your project URL and publishable key.
 3. Install and start:
 

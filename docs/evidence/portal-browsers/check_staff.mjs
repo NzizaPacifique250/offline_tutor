@@ -5,6 +5,9 @@
 // it, set a new password (checked against Supabase), confirm its role in the
 // auth record, and delete it.
 //
+// With both accounts: the admin makes a class taught by the teacher with one
+// throwaway student, and the teacher must see that student and no one else.
+//
 //   TEACHER_EMAIL=… TEACHER_PASSWORD=… ADMIN_EMAIL=… ADMIN_PASSWORD=… \
 //     node check_staff.mjs http://localhost:3000 <output dir>
 import { chromium } from 'playwright';
@@ -120,6 +123,59 @@ if (process.env.ADMIN_EMAIL) {
   await Promise.all([page.waitForURL(u => u.pathname === '/users' || u.search.includes('error'), { timeout: 90000 }), page.click('button:has-text("Delete account")')]);
   check('admin deletes it', page.url().includes('notice=account-deleted'), new URL(page.url()).search);
   check('the deleted account can no longer sign in', (await signInWith(secondPassword)).status === 400);
+
+  if (process.env.TEACHER_EMAIL) {
+    // A class taught by the teacher, with one new student.
+    const stamp = Date.now();
+    const studentName = `Class Check Student ${stamp}`, className = `Check class ${stamp}`;
+    await page.goto(base + '/users');
+    await shows(page, 'Create an account');
+    await page.click('summary:has-text("Create an account")');
+    await page.fill('#new-name', studentName);
+    await page.fill('#new-email', `class.check.${stamp}@example.com`);
+    await page.fill('#new-password', 'Class-check-123');
+    await page.selectOption('#new-role', 'student');
+    await Promise.all([page.waitForURL(u => u.search.includes('notice') || u.search.includes('error'), { timeout: 90000 }), page.click('button:has-text("Create account")')]);
+    const studentId = new URL(page.url()).searchParams.get('id');
+    check('admin creates a student for the class', page.url().includes('notice=account-created'));
+    await page.goto(base + '/classes');
+    await shows(page, 'Create a class');
+    await page.fill('#class-name', className);
+    await page.selectOption('#class-teacher', { label: 'Demo Teacher' });
+    await Promise.all([page.waitForURL(u => u.search.includes('notice') || u.search.includes('error'), { timeout: 90000 }), page.click('button:has-text("Create class")')]);
+    check('admin creates a class taught by the teacher', page.url().includes('notice=created'), new URL(page.url()).search);
+    const card = page.locator('section', { has: page.locator(`h2:text-is("${className}")`) });
+    await card.locator('select[name="student_id"]').selectOption(studentId);
+    await Promise.all([page.waitForURL(u => u.search.includes('notice=added') || u.search.includes('error'), { timeout: 90000 }), card.locator('button:has-text("Add")').click()]);
+    check('admin adds the student to the class', page.url().includes('notice=added') && (await shows(page, studentName)));
+    await page.screenshot({ path: `${out}/admin-classes.png`, fullPage: true });
+
+    const teacher = await signIn(process.env.TEACHER_EMAIL, process.env.TEACHER_PASSWORD);
+    await teacher.page.goto(base + '/users');
+    await shows(teacher.page, 'Your students');
+    const visible = await teacher.page.locator('table a[href^="/users/"]').allInnerTexts();
+    check('the teacher sees the class\'s student', visible.includes(studentName), visible.join(', '));
+    check('the teacher sees no account outside their classes', !visible.includes('Demo Admin') && !visible.includes('Demo Teacher'), visible.join(', '));
+    await teacher.page.screenshot({ path: `${out}/teacher-users-class.png`, fullPage: true });
+    await teacher.page.goto(base + '/classes');
+    check('the teacher sees the class', await shows(teacher.page, className));
+    check('the teacher cannot manage classes', !(await teacher.page.innerText('main')).includes('Create a class'));
+    await teacher.page.screenshot({ path: `${out}/teacher-classes.png`, fullPage: true });
+    const tablets = await teacher.page.goto(base + '/devices');
+    check('the teacher is sent away from the Tablets page', new URL(teacher.page.url()).pathname === '/', `${tablets?.status()} ${teacher.page.url()}`);
+    await teacher.context.close();
+
+    // Clean up: the class, then the student.
+    await page.goto(base + '/classes');
+    await shows(page, className);
+    await card.locator('summary').click();
+    await Promise.all([page.waitForURL(u => u.search.includes('notice=deleted') || u.search.includes('error'), { timeout: 90000 }), card.locator('button:has-text("Delete class")').click()]);
+    check('admin deletes the class', page.url().includes('notice=deleted'));
+    await page.goto(`${base}/users/${studentId}`);
+    await shows(page, 'Delete account');
+    await Promise.all([page.waitForURL(u => u.pathname === '/users' || u.search.includes('error'), { timeout: 90000 }), page.click('button:has-text("Delete account")')]);
+    check('admin deletes the class\'s student', page.url().includes('notice=account-deleted'));
+  }
   check('no page errors as admin', errors.length === 0, errors.join(' | '));
   await context.close();
 }

@@ -35,7 +35,8 @@ for the network.
   and the timings). Studying under a learner code without an account never
   syncs.
 - **Security.** Row-level security (`supabase/migrations/`): an account
-  writes and reads only its own rows; teachers and admins read everything; a
+  writes and reads only its own rows; an admin reads everything, and a
+  teacher only the students in their own classes (0005); a
   role changes only through `set_role`, which only an admin may call. The app
   and the portal hold only the publishable key.
 - **Roles and accounts (0004).** Each profile holds its account's email, and
@@ -60,7 +61,7 @@ for the network.
 
 1. In the SQL Editor, run `supabase/migrations/0001_accounts_and_sync.sql`,
    then `0002_decline_teacher_request.sql`, `0003_shared_tablets.sql` and
-   `0004_accounts_roles_struggles.sql`.
+   `0004_accounts_roles_struggles.sql` and `0005_classes.sql`, each once.
 2. Authentication → Sign In / Providers → Email: switch off "Confirm email"
    for the pilot, so students without a reachable inbox can sign in.
 3. Create the first admin (Authentication → Users → Add user), then:
@@ -73,7 +74,7 @@ for the network.
 |---|---|---|
 | `app/__tests__/account-sync.test.ts` (12 tests, sql.js, fake server) | Offline password check; sign-in online then offline; account creation; sync sends each account's rows once, only its own, mapped to the Supabase columns, and keeps its place when the connection drops | Pass |
 | `app/__tests__/account-screen.test.tsx` (4 tests) | The sign-in screen: signing in, the offline message, a teacher request, the routes without an account | Pass |
-| `supabase/tests/check_policies.mjs` (PGlite) | The migrations apply, 0004 over existing accounts as on the live project; two accounts sync from the same tablet; a student cannot write as another, read others' rows, or make itself a teacher; a teacher cannot change roles or write as a student; an admin approves and declines; each account carries its email and role, kept when Supabase Auth rewrites its metadata; only an admin renames, sets a password (bcrypt) or deletes, never its own or another admin's account; stuck exercises are counted; anonymous users read nothing. Each of the 43 checks states its expected result, and any mismatch exits with status 1 | Pass, 43 of 43 |
+| `supabase/tests/check_policies.mjs` (PGlite) | The migrations apply, 0004 over existing accounts as on the live project; two accounts sync from the same tablet; a student cannot write as another, read others' rows, or make itself a teacher; a teacher cannot change roles or write as a student; an admin approves and declines; each account carries its email and role, kept when Supabase Auth rewrites its metadata; only an admin renames, sets a password (bcrypt) or deletes, never its own or another admin's account; stuck exercises are counted; a teacher reads only the students in their classes, cannot create classes or add students, and loses access when changed to a student; anonymous users read nothing. Each of the 59 checks states its expected result, and any mismatch exits with status 1 | Pass, 59 of 59 |
 | `app/__tests__/supabase-live.test.ts` (`SUPABASE_LIVE=1`) | The app's own sign-in and sync code against the live project: a new student syncs a study session and reads back exactly its rows; a teacher request stays a student and cannot promote itself | Pass, 28 October |
 | On the IT-801B, 1.3.0 | Below | Pass |
 | Admin portal | `npm run lint` and `npm run build` pass; signed out, every page redirects to sign-in in Chrome 154 and Firefox 142 at desktop and phone widths (`docs/evidence/portal-browsers/`); a signed-in student is sent to "no access" | Pass; pages behind a staff sign-in need the first admin account |
@@ -94,7 +95,8 @@ nothing new.
   two-minute retry covers it.
 - Refresh tokens and records sit unencrypted in the app's private storage,
   as the learner records always have.
-- Teachers see every student; there are no classes yet.
+- A student in no class is seen only by admins; the Classes page lists such
+  students so an admin can place them.
 - Any signed-in account can read and update a tablet's row (needed because
   several accounts share a tablet), so a tablet's label is not trustworthy.
   Until migration 0003 (28 October) only the account that synced a tablet

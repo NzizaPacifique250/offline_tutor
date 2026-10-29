@@ -45,7 +45,8 @@ Installation: `docs/INSTALLATION_GUIDE.md`. Checks before a session:
   follow accounts, progress per lesson, tablets and their last sync, recent
   activity, and the tutor's response times, with the students who need
   help (stuck after two or more wrong answers); an admin creates, renames,
-  resets and deletes accounts and approves or declines teacher requests.
+  resets and deletes accounts, approves or declines teacher requests, and
+  sets up classes, and a teacher sees only the students in their classes.
 - **The study build.** `-PofflineOnly` removes the INTERNET permission, so
   that build cannot send anything, as in 1.2.2.
 
