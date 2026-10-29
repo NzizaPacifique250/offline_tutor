@@ -23,11 +23,11 @@ includes Android's input tool (about 0.1 s), which is recorded separately.
 
 | Task | What the script does | Expected result | Saved record | Limit |
 |---|---|---|---|---|
-| T1 Open a topic | Taps the lesson on the topic list | The lesson opens and every formula is typeset (`[lesson] KaTeX …: rendered n of n formulas`) | — | 2 s (stored content) |
+| T1 Open a topic | Taps the lesson on the topic list | The lesson opens and every formula is typeset (`[lesson] KaTeX …: rendered n of n formulas`) | none | 2 s (stored content) |
 | T2 Generated explanation | Types an in-scope question in the lesson's question box and taps "Ask the tutor" | The first step of a generated answer is shown complete (`[guidance] render:` after a `generated` outcome); the time to the first token is recorded | One `guidance_events` row per generated part | 120 s |
 | T3 Stored hint | On the exercise, taps "Show hint 1 of 3" | The hint text is on screen | A reveal row (`[practice] reveal #id hint 1`) | 2 s (stored content) |
 | T4 Exercise with feedback | Types the correct answer and taps "Check answer" | The tablet marks it correct and says so | An attempt row (`[practice] attempt #id … -> correct`) | 2 s (stored content) |
-| T5 Next-exercise recommendation | Opens "My progress" | Progress is computed from the saved attempts and recommends the first exercise of that lesson not yet answered correctly | — | 2 s (stored content) |
+| T5 Next-exercise recommendation | Opens "My progress" | Progress is computed from the saved attempts and recommends the first exercise of that lesson not yet answered correctly | none | 2 s (stored content) |
 | T6 Save and reopen progress | Force-stops the app, starts it, continues as the same learner and opens "My progress" | The app is ready (`[boot] ready`) and progress shows every attempt made so far by this learner | The attempts made before the restart | 10 s (startup and reopening), app start to ready |
 
 A task fails if the expected result does not appear, appears after its

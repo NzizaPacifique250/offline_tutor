@@ -58,14 +58,14 @@ an error, so a correct answer was confidently marked wrong.
 | 2 | LaTeX commands substituted without a separator | `i\sin` became the identifier `isin`, split into `i*s*i*n` | correct polar form scored wrong |
 | 3 | `\ln` and `Abs(` glued into `logAbs` | parsed as a product of seven letters | correct `ln\|x²+3x+2\|` scored wrong |
 | 4 | Concluding-cue regex captured only to end of line | captured `the final answer is:` while the answer sat in the display block on the next line | most `could not parse` failures |
-| 5 | Cue matched the *first* `therefore`, not the last | captured mid-working reasoning | — |
-| 6 | `\boxed{}` required the closing brace be followed by `$`, `\)` or end of string | a box followed by `\]` or a newline was missed | — |
-| 7 | Absolute-value bars never converted to `Abs()` | unparseable | — |
-| 8 | Unicode `²`, `³`, `π`, `≈`, `−` not folded | unparseable | — |
-| 9 | Markdown bold `**0.2048**` unparseable | — | — |
-| 10 | Prose root sets (`2 + 3i and -2 - 3i`) not split | unparseable | — |
-| 11 | Subscripted constants `C_1`, `C_2` not declared arbitrary | — | — |
-| 12 | Equation splitting ignored brackets | `P(X = 2) = 0.2240` split at the wrong `=` | — |
+| 5 | Cue matched the *first* `therefore`, not the last | captured mid-working reasoning | none |
+| 6 | `\boxed{}` required the closing brace be followed by `$`, `\)` or end of string | a box followed by `\]` or a newline was missed | none |
+| 7 | Absolute-value bars never converted to `Abs()` | unparseable | none |
+| 8 | Unicode `²`, `³`, `π`, `≈`, `−` not folded | unparseable | none |
+| 9 | Markdown bold `**0.2048**` unparseable | none | none |
+| 10 | Prose root sets (`2 + 3i and -2 - 3i`) not split | unparseable | none |
+| 11 | Subscripted constants `C_1`, `C_2` not declared arbitrary | none | none |
+| 12 | Equation splitting ignored brackets | `P(X = 2) = 0.2240` split at the wrong `=` | none |
 
 ### Two defects made the grader too lenient
 
@@ -259,7 +259,7 @@ pre-audit output is in
 
 - [x] Audit the four model result files and resolve grading defects
 - [x] Record the feasibility findings and provisional model choice
-- [x] Update the architecture, project scope and evaluation plan — done 22 September
+- [x] Update the architecture, project scope and evaluation plan (done 22 September)
 - [ ] Agree the revised response-time target with the supervisor
-- [x] P2: scaffold the app and prove the model loads on the tablet — done
+- [x] P2: scaffold the app and prove the model loads on the tablet (done)
 - [ ] P3: select the first Complex Numbers objective and five exercises
