@@ -1,4 +1,4 @@
-# Offline Tutor 1.3.0: Installation Guide
+# Offline Tutor 1.4.0: Installation Guide
 
 For the teacher or researcher who prepares the tablets. Tablets are set up
 by hand, one at a time, and need no programming tools; allow about 15
@@ -8,13 +8,13 @@ solutions, the tutor, progress, and Teacher tools.
 
 ## Choose the build
 
-Both files are release 1.3.0 (build 7), signed with the same key, so a
+Both files are release 1.4.0 (build 8), signed with the same key, so a
 tablet can move from one to the other without losing its records.
 
 | Build | File | Use it for |
 |---|---|---|
-| **Offline-only** (the study build) | `OfflineTutor-1.3.0-offline.apk` | Sessions with students in the pilot, and any tablet that must never send data. Android blocks it from the internet entirely. Students study under learner codes; accounts cannot be created or synced on it. |
-| **Connected** | `OfflineTutor-1.3.0.apk` | Tablets whose users have accounts and should send their work to the school's server when there is Wi-Fi. Everything above, plus accounts and sync, which stay off until an account holder turns sync on. |
+| **Offline-only** (the study build) | `OfflineTutor-1.4.0-offline.apk` | Sessions with students in the pilot, and any tablet that must never send data. Android blocks it from the internet entirely. Students study under learner codes; accounts cannot be created or synced on it, and new lessons are imported from a file. |
+| **Connected** | `OfflineTutor-1.4.0.apk` | Tablets whose users have accounts and should send their work to the school's server when there is Wi-Fi. Everything above, plus accounts and sync, which stay off until an account holder turns sync on, and new lessons offered as soon as they are published. |
 
 Participant data must not be synced until the ethics committee has
 approved an amendment covering it, so the pilot uses the offline-only
@@ -33,8 +33,8 @@ tell them apart by the file name, or by the checksum below.
 
 | File | SHA-256 |
 |---|---|
-| `OfflineTutor-1.3.0-offline.apk` | `319f2f0c5e581ebaa428a1af19c02838d3c6e55f84456e90494365622230d237` |
-| `OfflineTutor-1.3.0.apk` | `33b5298a0f4c54930524474448255c0d62a758501abe75ee062db15f143dbd8e` |
+| `OfflineTutor-1.4.0-offline.apk` | `84b70313947c20073a550e862c26397974b8b5667ff8fd993965c6ce62e7afda` |
+| `OfflineTutor-1.4.0.apk` | `ee25003548816241beebd283938bf24e3af5235b73e207895d35b6e8738e11e5` |
 | the model file | `9614a50f03c897028920ca0dc4365da570bf587f9ee7768261216fe370b37e8e` |
 
 On a computer, `sha256sum <file>` prints the checksum to compare. The app
@@ -113,7 +113,7 @@ and updates from interrupting a session.
 ## 6. Check the tablet before a session
 
 1. In **Teacher tools**, under **About this build**, check that it says
-   **Offline Tutor 1.3.0 (build 7, release …)** and lists the four content
+   **Offline Tutor 1.4.0 (build 8, release …)** and lists the four content
    packages.
 2. Go back to the first screen, tap **Continue without an account**, type
    the learner code `TEST` and tap **Start** (or sign in with a test
@@ -190,35 +190,61 @@ keep their code; their work on both tablets is then counted together.
 Export before uninstalling the app or resetting the tablet: removing the
 app deletes its records.
 
-## Updating tablets: a new lesson or a new version
+## Updating tablets: new lessons or a new version of the app
 
-Updates are installed by hand, like the first installation: there is no
-download over the network. Lessons are part of the app file, so a new or
-corrected lesson reaches a tablet in a new app file, and you choose which
-tablets get it by installing it only on those.
+**New or corrected lessons** travel as a release file of one unit,
+published on the web portal. Only that unit's lessons, examples and
+exercises change: the records, the model and the accounts stay as they
+are, and a tablet installs only a version newer than the one it has.
 
-**Installing an update on a tablet.** Copy the new app file to the
-tablet's **Download** folder and install it as in step 2. Android keeps
-the records, the installed model and the accounts, because every 1.x file
-is signed with the same key. When the app next starts it loads any
-package whose version has changed, replacing that unit's lessons and
-exercises and leaving the learners' records as they are. Check the
-content line on the first screen, or **About this build**, for the new
-version.
+- **Tablets with internet (connected build).** After an admin publishes a
+  release on the portal's **Content** page, a tablet that is online finds it
+  when the app starts, or within ten minutes. A window, **New lessons are
+  ready**, lists the units and what changed; it waits until no lesson is
+  open. Tap **Update now**. After a few seconds it says **Lessons updated**
+  and the new lessons are in the topic list. **Later** puts it off until
+  the app is next opened. A teacher can also open **Teacher tools** →
+  **Lesson updates**, tap **Check for updates**, then **Install updates**.
+- **Tablets without internet (either build).** On the portal's **Content**
+  page, tap **Download file** on the release. Copy the file into the
+  tablet's **Download** folder (as in step 1), then open **Teacher tools** →
+  **Lesson updates** → **Import lessons from a file** and choose it. The
+  tablet says which unit and version it installed.
 
-**Preparing an update (developer).** On the development laptop, with the
-repository set up as in the README:
+Either way, the content line on the first screen, and **Installed** under
+**Lesson updates**, show the new version. A file damaged in copying, or
+changed after it was published, is refused and nothing is installed.
+
+**Preparing a lesson update (developer).** On the development laptop, with
+the repository set up as in the README:
 
 1. Add or correct the lesson in its unit's package,
    `curriculum/rw_s6_mathematics/packages/<unit>/`, with its exercises,
    hints and answer keys, and raise the package's `version` in that
-   folder's `package.json`.
-2. Check it:
-   `./.venv/bin/python tools/validate_package.py curriculum/rw_s6_mathematics/packages/<unit>`
-   must end with `[ok]`; it proves every answer key with SymPy.
-3. For a new version of the app itself, raise `versionCode` and
-   `versionName` in `app/android/app/build.gradle`.
-4. Build both files:
+   folder's `package.json` (for example from 0.2.0 to 0.3.0).
+2. Make the release file:
+   `./.venv/bin/python tools/export_package.py curriculum/rw_s6_mathematics/packages/<unit>`.
+   It first runs the validator, which proves every answer key with SymPy,
+   and writes the file to `dist/content/` only if everything passes.
+3. Publish it: sign in to the portal as an admin, open **Content**, choose
+   the file, say what changed, choose every tablet or the tablets that
+   should have it, and tap **Publish release**. **Withdraw** takes it back:
+   tablets that have not installed it are no longer offered it.
+4. So that the web portal names the new lesson and counts its exercises,
+   run `npm run curriculum` in `admin/` and deploy the portal again. Commit
+   the package change, so that the next app file carries it too.
+
+**A new version of the app** is installed by hand, like the first
+installation. Copy the new app file to the tablet's **Download** folder and
+install it as in step 2. Android keeps the records, the installed model,
+the accounts and the lessons installed from updates, because every 1.x file
+is signed with the same key; at its next start the app loads any unit
+whose bundled version is newer than the tablet's.
+
+**Preparing a new version of the app (developer).**
+
+1. Raise `versionCode` and `versionName` in `app/android/app/build.gradle`.
+2. Build both files:
 
    ```bash
    . app/scripts/env.sh
@@ -233,8 +259,6 @@ repository set up as in the README:
    The signing key is `~/.android/offlinetutor-release.keystore` with its
    passwords in `~/.gradle/gradle.properties`; keep both backed up, as no
    other key can update the installed app without losing its records.
-5. So that the web portal names the new lesson and counts its exercises,
-   run `npm run curriculum` in `admin/` and deploy the portal again.
 
 ## If something goes wrong
 
@@ -248,4 +272,8 @@ repository set up as in the README:
 | An account cannot sign in with no internet | It has not signed in on this tablet before: sign in once with internet (connected build), or use a learner code. |
 | "No internet connection" under **Account and sync** | Normal while offline; the tablet tries again every two minutes once it has internet. |
 | Android refuses to install an update | The file is not signed with the project's key, or it is an older version: use a file built as above. |
+| "The update did not install" with "No internet connection" | Tap **Try again** once the tablet is online, or import the file instead. |
+| "The download is incomplete or changed: its checksum does not match." | The file was cut off on the way. Tap **Try again**; for an imported file, copy it onto the tablet again. |
+| "The file is not a lesson package." | The chosen file is not a release file. Use **Download file** on the portal's **Content** page. |
+| "… is already at 0.3.0; nothing changed." | The tablet already has that version or a newer one. Nothing needs doing. |
 | The app does not open after installing | Restart the tablet and open it again. If it still fails, note the time and report it. |

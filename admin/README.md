@@ -4,13 +4,13 @@ A web portal for teachers and admins to monitor activity synced from the offline
 
 Every query runs as the signed-in user, so row-level security applies. The portal uses only the publishable key. Never put a `service_role` or secret key in it.
 
-Only `teacher` and `admin` accounts can use it. An admin reads every account and record, manages accounts and classes, and approves teacher requests; a teacher reads only the students in their own classes (migration 0005), and does not see the Tablets page.
+Only `teacher` and `admin` accounts can use it. An admin reads every account and record, manages accounts and classes, and approves teacher requests; a teacher reads only the students in their own classes (migration 0005), and does not see the Tablets or Content pages.
 
 ## Setup
 
 Requires Node 20.9 or newer.
 
-1. Run the files in `../supabase/migrations/` once each, in order (`0001_…` to `0005_…`), in the Supabase SQL Editor; each file runs once. Until then the pages show which files are missing.
+1. Run the files in `../supabase/migrations/` once each, in order (`0001_…` to `0006_…`), in the Supabase SQL Editor; each file runs once. Until then the pages show which files are missing.
 2. Create `.env.local` from `.env.example` and fill in your project URL and publishable key.
 3. Install and start:
 
@@ -40,9 +40,13 @@ where id = (select id from auth.users where email = 'you@example.com');
 
 Sign in at `/login`. Further teachers and admins are managed on the Users page.
 
+## Publishing lessons (Content page)
+
+An admin publishes a new or corrected unit to the tablets (migration 0006). Make the release file with `../tools/export_package.py`, which validates the package first, then choose it on the Content page with a note on what changed and the tablets it is for (every tablet, or those that have synced). Connected tablets offer it in a pop-up; for a tablet with no internet, **Download file** gives the same file to import in the app's Teacher tools. A release can be withdrawn and offered again; its file never changes. Server actions accept up to 3 MB (`next.config.ts`) for these uploads. The flow is checked in Chrome by `../docs/evidence/portal-browsers/check_content.mjs`.
+
 ## Lesson and exercise names
 
-`lib/curriculum.ts` is generated from `../curriculum/rw_s6_mathematics/packages/{u1,u4,u5,u9}`. After the curriculum changes, regenerate it with `npm run curriculum`. To add a unit, add its folder name to `units` in `scripts/generate-curriculum.mjs`.
+`lib/curriculum.ts` is generated from `../curriculum/rw_s6_mathematics/packages/{u1,u4,u5,u9}`. After the curriculum changes, including a lesson published from the Content page, regenerate it with `npm run curriculum` and deploy again. To add a unit, add its folder name to `units` in `scripts/generate-curriculum.mjs`.
 
 ## Deploy to Vercel
 
