@@ -116,3 +116,22 @@ export const OUTCOMES = [
 // Migration 0005: a class has a teacher and students.
 export type ClassRow = { id: string; name: string; teacher_id: string | null; created_at: string };
 export type ClassMember = { class_id: string; student_id: string; added_at: string };
+
+// Migration 0006: one unit's lesson package, published to the tablets. The
+// file itself (package_text) is read only by the download.
+export type ContentRelease = {
+  id: string;
+  package_id: string;
+  version: string;
+  unit: number;
+  unit_title: string;
+  lessons: number;
+  exercises: number;
+  notes: string;
+  sha256: string;
+  // The install ids of the tablets it is for; empty means every tablet.
+  devices: string[];
+  published_by: string | null;
+  published_at: string;
+  withdrawn_at: string | null;
+};
