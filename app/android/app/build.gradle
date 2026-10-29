@@ -114,8 +114,8 @@ android {
         applicationId "rw.offlinetutor"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 9
-        versionName "1.4.1"
+        versionCode 10
+        versionName "1.5.0"
         buildConfigField "String", "GIT_COMMIT", "\"${gitCommit}\""
         manifestPlaceholders.appLabel = "Clevo AI"
     }
