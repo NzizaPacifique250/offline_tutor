@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Android 8 and later: the launcher draws the navy background and the white
+     mark through its own mask; Android 13 tints the monochrome layer to the
+     wallpaper when themed icons are on. The PNGs are made by
+     admin/scripts/generate-icons.mjs from docs/brand/offline-tutor-logo.png. -->
+<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+    <background android:drawable="@color/ic_launcher_background" />
+    <foreground android:drawable="@mipmap/ic_launcher_foreground" />
+    <monochrome android:drawable="@mipmap/ic_launcher_foreground" />
+</adaptive-icon>

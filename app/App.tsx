@@ -14,7 +14,7 @@
  */
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { BackHandler, Pressable, StatusBar, StyleSheet, Text, View } from 'react-native';
+import { BackHandler, Image, Pressable, StatusBar, StyleSheet, Text, View } from 'react-native';
 import { OfflineError } from './src/account/auth';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { ensureAccountSchema, isStaff, type Account } from './src/account/store';
@@ -94,6 +94,10 @@ async function readContent(db: Reader): Promise<Extract<Boot, { status: 'ready' 
   const line = `Content: ${versions.map(v => `${v.packageId} v${v.version}`).join(', ')} · ${lessons.length} lesson(s) · offline`;
   return { status: 'ready', lessons, versions, line };
 }
+
+// The app's logo, beside its name on the first screen (made by
+// admin/scripts/generate-icons.mjs).
+const LOGO = require('./src/assets/logo.png');
 
 function titleFor(route: Route, lessons: LessonSummary[]): string {
   switch (route.name) {
@@ -455,9 +459,12 @@ function App(): React.JSX.Element {
           ) : (
             <View style={styles.headerBtn} />
           )}
-          <Text style={styles.headerTitle} numberOfLines={1}>
-            {titleFor(route, lessons)}
-          </Text>
+          <View style={styles.headerTitleRow}>
+            {route.name === 'account' ? <Image source={LOGO} style={styles.headerLogo} accessible={false} /> : null}
+            <Text style={styles.headerTitle} numberOfLines={1}>
+              {titleFor(route, lessons)}
+            </Text>
+          </View>
           {session ? (
             <Pressable onPress={switchLearner} style={styles.headerBtn} testID="nav-learner" accessibilityRole="button">
               <Text style={styles.headerBtnText}>{session.learnerCode} ⇄</Text>
@@ -495,7 +502,9 @@ const styles = StyleSheet.create({
   },
   headerBtn: { minWidth: 72, paddingHorizontal: 8, paddingVertical: 8 },
   headerBtnText: { color: colors.primary, fontWeight: '600', fontSize: 14 },
-  headerTitle: { flex: 1, textAlign: 'center', fontSize: 16, fontWeight: '700', color: colors.text },
+  headerTitleRow: { flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 8 },
+  headerLogo: { width: 32, height: 32 },
+  headerTitle: { flexShrink: 1, textAlign: 'center', fontSize: 16, fontWeight: '700', color: colors.text },
   centered: { padding: 24, textAlign: 'center', fontSize: 15, color: colors.muted },
 });
 
