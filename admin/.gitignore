@@ -3,5 +3,5 @@ node_modules
 .env*.local
 next-env.d.ts
 *.tsbuildinfo
-# Written by `next dev` for AI coding tools; not part of the portal
+# Written by `next dev`; not part of the portal
 AGENTS.md
