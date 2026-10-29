@@ -1,6 +1,7 @@
 /**
- * The Supabase side of sign-in (account/auth.ts AuthRemote) and sync
- * (sync/engine.ts SyncRemote), over supabase-js.
+ * The Supabase side of sign-in (account/auth.ts AuthRemote), sync
+ * (sync/engine.ts SyncRemote) and lesson updates (updates/updater.ts
+ * UpdateRemote), over supabase-js.
  *
  * The client keeps no session of its own: the tablet stores each account's
  * refresh token (account/store.ts) and the sync engine resumes one account
@@ -13,6 +14,8 @@ import { AuthError, OfflineError, type AuthRemote, type RemoteProfile } from '..
 import type { Role } from '../account/store';
 import { SUPABASE_PUBLISHABLE_KEY, SUPABASE_URL } from './config';
 import type { SyncRemote } from './engine';
+import type { Release } from '../updates/releases';
+import type { UpdateRemote } from '../updates/updater';
 
 let client: SupabaseClient | null = null;
 
@@ -93,5 +96,71 @@ export const supabaseSync: SyncRemote = {
       }
       throw new Error(`${table}: ${error.message}`);
     }
+  },
+};
+
+type ReleaseRow = {
+  id: string;
+  package_id: string;
+  version: string;
+  unit: number;
+  unit_title: string;
+  lessons: number;
+  exercises: number;
+  notes: string;
+  sha256: string;
+  devices: string[] | null;
+  published_at: string;
+};
+
+/**
+ * Releases are readable without an account. Withdrawn ones are filtered here
+ * too, because an admin account that synced on this tablet could otherwise
+ * see them. A project without the releases table (migration 0006 not run)
+ * has no updates.
+ */
+export const supabaseUpdates: UpdateRemote = {
+  async listReleases(): Promise<Release[]> {
+    const { data, error } = await supabase()
+      .from('content_releases')
+      .select('id, package_id, version, unit, unit_title, lessons, exercises, notes, sha256, devices, published_at')
+      .is('withdrawn_at', null)
+      .order('published_at')
+      .then(r => r, e => ({ data: null, error: e }));
+    if (error) {
+      if (error.code === 'PGRST205' || error.code === '42P01') {
+        return [];
+      }
+      fail(error);
+    }
+    return ((data ?? []) as ReleaseRow[]).map(r => ({
+      id: r.id,
+      packageId: r.package_id,
+      version: r.version,
+      unit: r.unit,
+      unitTitle: r.unit_title,
+      lessons: r.lessons,
+      exercises: r.exercises,
+      notes: r.notes,
+      sha256: r.sha256,
+      devices: r.devices ?? [],
+      publishedAt: r.published_at,
+    }));
+  },
+
+  async fetchPackage(releaseId: string): Promise<string> {
+    const { data, error } = await supabase()
+      .from('content_releases')
+      .select('package_text')
+      .eq('id', releaseId)
+      .maybeSingle()
+      .then(r => r, e => ({ data: null, error: e }));
+    if (error) {
+      fail(error);
+    }
+    if (!data) {
+      throw new Error('That update is no longer available.');
+    }
+    return (data as { package_text: string }).package_text;
   },
 };

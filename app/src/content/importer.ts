@@ -1,16 +1,18 @@
 /**
  * Loads bundled curriculum packages into SQLite.
  *
- * Runs at every launch and is idempotent: a package whose version is already
- * recorded in content_version is left alone, and a package with a different
- * version replaces its own rows inside one transaction, so a crash mid-import
- * never leaves a half-loaded unit. Rich fields (blocks, steps, hints) are
+ * Runs at every launch and is idempotent: a bundled package is imported only
+ * when it is newer than the version recorded in content_version, and then
+ * replaces its own rows inside one transaction, so a crash mid-import never
+ * leaves a half-loaded unit. A newer version installed as a lesson update
+ * (src/updates/) is kept over an older bundled one. Rich fields (blocks, steps, hints) are
  * stored as JSON text; the pilot looks content up by ID and lesson, never
  * inside those fields, so a relational breakdown would buy nothing yet.
  */
 
 import type { DB } from '@op-engineering/op-sqlite';
 import type { ContentPackage } from './types';
+import { isNewer } from './version';
 
 export const SCHEMA: string[] = [
   `CREATE TABLE IF NOT EXISTS content_version (
@@ -65,7 +67,7 @@ export const SCHEMA: string[] = [
   'CREATE INDEX IF NOT EXISTS idx_exercises_lesson ON exercises(lesson_id)',
 ];
 
-export type ImportAction = 'imported' | 'up-to-date';
+export type ImportAction = 'imported' | 'up-to-date' | 'kept-newer';
 
 export type ImportReport = {
   packageId: string;
@@ -91,7 +93,7 @@ export async function ensureSchema(db: Executor): Promise<void> {
   }
 }
 
-async function recordedVersion(db: Executor, packageId: string): Promise<string | null> {
+export async function recordedVersion(db: Executor, packageId: string): Promise<string | null> {
   const res = await db.execute('SELECT version FROM content_version WHERE package_id = ?', [packageId]);
   const row = res.rows[0] as { version?: string } | undefined;
   return row?.version ?? null;
@@ -162,9 +164,16 @@ async function writePackage(tx: Executor, pkg: ContentPackage): Promise<void> {
   );
 }
 
+/** Replace one package's lessons, examples and exercises, in one transaction. */
+export async function importPackage(db: Transactor, pkg: ContentPackage): Promise<void> {
+  await db.transaction(async tx => {
+    await writePackage(tx, pkg);
+  });
+}
+
 /**
- * Import every bundled package that is missing or at a different version.
- * Returns one report line per package.
+ * Import every bundled package that is missing or older than the version
+ * installed. Returns one report line per package.
  */
 export async function importPackages(db: Transactor, packages: ContentPackage[]): Promise<ImportReport[]> {
   await ensureSchema(db);
@@ -177,13 +186,12 @@ export async function importPackages(db: Transactor, packages: ContentPackage[])
       exercises: pkg.exercises.length,
     };
     const have = await recordedVersion(db, manifest.id);
-    if (have === manifest.version) {
-      reports.push({ packageId: manifest.id, version: manifest.version, action: 'up-to-date', ...counts });
+    if (!isNewer(manifest.version, have)) {
+      const action: ImportAction = have === manifest.version ? 'up-to-date' : 'kept-newer';
+      reports.push({ packageId: manifest.id, version: have ?? manifest.version, action, ...counts });
       continue;
     }
-    await db.transaction(async tx => {
-      await writePackage(tx, pkg);
-    });
+    await importPackage(db, pkg);
     reports.push({ packageId: manifest.id, version: manifest.version, action: 'imported', ...counts });
   }
   return reports;
