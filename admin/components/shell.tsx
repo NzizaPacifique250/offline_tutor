@@ -1,17 +1,14 @@
+import Image from "next/image";
 import { Avatar } from "@/components/avatar";
 import { Nav } from "@/components/nav";
 import { SignOutButton } from "@/components/sign-out-button";
 import { initials } from "@/lib/ui";
 
+// The app's logo, navy on a white tile so it stands out on the navy sidebar,
+// header and sign-in panel; the name beside it carries the meaning. Made by
+// scripts/generate-icons.mjs.
 export function Logo({ size = 32 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 32 32" aria-hidden="true" focusable="false" className="shrink-0">
-      <rect width="32" height="32" rx="8" fill="#fff" />
-      <rect x="8" y="16" width="4" height="8" rx="1" fill="#14467E" />
-      <rect x="14" y="10" width="4" height="14" rx="1" fill="#14467E" />
-      <rect x="20" y="4" width="4" height="20" rx="1" fill="#14467E" />
-    </svg>
-  );
+  return <Image src="/images/logo-mark.png" alt="" width={size} height={size} unoptimized className="shrink-0" />;
 }
 
 type Props = {
