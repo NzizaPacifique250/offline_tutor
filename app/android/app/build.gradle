@@ -117,7 +117,7 @@ android {
         versionCode 9
         versionName "1.4.1"
         buildConfigField "String", "GIT_COMMIT", "\"${gitCommit}\""
-        manifestPlaceholders.appLabel = "Offline Tutor"
+        manifestPlaceholders.appLabel = "Clevo AI"
     }
     buildFeatures {
         buildConfig true
@@ -142,7 +142,7 @@ android {
         debug {
             signingConfig signingConfigs.debug
             buildConfigField "boolean", "PILOT", "false"
-            manifestPlaceholders.appLabel = "Offline Tutor dev"
+            manifestPlaceholders.appLabel = "Clevo AI dev"
         }
         release {
             // The pilot build installs beside the development build, so a

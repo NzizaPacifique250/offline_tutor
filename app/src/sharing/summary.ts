@@ -54,11 +54,11 @@ export function learnerSummary(code: string, lastSeenAt: string, progress: Lesso
   };
 }
 
-/** "OfflineTutor-progress-Tablet-7F3A-20261020-1042.txt": plain text, which every Bluetooth receiver accepts. */
+/** "ClevoAI-progress-Tablet-7F3A-20261020-1042.txt": plain text, which every Bluetooth receiver accepts. */
 export function summaryFileName(label: string, now: Date): string {
   const p = (n: number) => String(n).padStart(2, '0');
   const stamp = `${now.getFullYear()}${p(now.getMonth() + 1)}${p(now.getDate())}-${p(now.getHours())}${p(now.getMinutes())}`;
-  return `OfflineTutor-progress-${label.replace(/\s+/g, '-')}-${stamp}.txt`;
+  return `ClevoAI-progress-${label.replace(/\s+/g, '-')}-${stamp}.txt`;
 }
 
 // ---------------------------------------------------------------------------
@@ -119,12 +119,12 @@ export function parseSummary(text: string): ParseResult {
   try {
     raw = JSON.parse(text);
   } catch {
-    return { ok: false, reason: 'not a progress file from Offline Tutor' };
+    return { ok: false, reason: 'not a progress file from Clevo AI' };
   }
   try {
     const top = obj(raw, 'the file');
     if (top.format !== SUMMARY_FORMAT) {
-      return { ok: false, reason: 'not a progress file from Offline Tutor' };
+      return { ok: false, reason: 'not a progress file from Clevo AI' };
     }
     if (top.version !== SUMMARY_VERSION) {
       return { ok: false, reason: `made by a different version of the app (format ${String(top.version)}); update both tablets` };

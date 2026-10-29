@@ -102,7 +102,7 @@ const LOGO = require('./src/assets/logo.png');
 function titleFor(route: Route, lessons: LessonSummary[]): string {
   switch (route.name) {
     case 'account':
-      return 'Offline Tutor';
+      return 'Clevo AI';
     case 'learner':
       return 'Learner code';
     case 'topics':

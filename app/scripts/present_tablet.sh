@@ -42,4 +42,4 @@ fi
 "$ADB_BIN" shell wm dismiss-keyguard
 
 # 30 frames a second leaves more of the tablet's processor to the AI tutor.
-exec env ADB="$ADB_BIN" "$SCRCPY" --stay-awake --no-audio --max-fps=30 --window-title="Offline Tutor tablet" "$@"
+exec env ADB="$ADB_BIN" "$SCRCPY" --stay-awake --no-audio --max-fps=30 --window-title="Clevo AI tablet" "$@"

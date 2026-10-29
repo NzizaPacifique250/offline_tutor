@@ -60,7 +60,7 @@ describe('the summary a student tablet sends', () => {
     const back = parseSummary(text);
     expect(back.ok).toBe(true);
     expect(back.ok && back.summary).toEqual(file);
-    expect(summaryFileName('Tablet A1B2', new Date(2026, 9, 20, 10, 42))).toBe('OfflineTutor-progress-Tablet-A1B2-20261020-1042.txt');
+    expect(summaryFileName('Tablet A1B2', new Date(2026, 9, 20, 10, 42))).toBe('ClevoAI-progress-Tablet-A1B2-20261020-1042.txt');
     db.close();
   });
 });

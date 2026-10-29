@@ -94,7 +94,7 @@ describe('research export on real SQLite', () => {
       db,
       async (folder, name, mime, content) => {
         written.push({ folder, name, mime, content });
-        return `Download/OfflineTutor/${folder}/${name}`;
+        return `Download/ClevoAI/${folder}/${name}`;
       },
       { content: versions },
       new Date(2026, 9, 20, 9, 0, 0),
@@ -116,7 +116,7 @@ describe('research export on real SQLite', () => {
     const manifest = JSON.parse(written.find(w => w.name === 'manifest.json')!.content);
     expect(manifest.tables).toMatchObject({ learners: 1, sessions: 1, attempts: 1, reveals: 1, guidance_events: 1 });
     expect(manifest.content[0].packageId).toBe(PACKAGES[0].manifest.id);
-    expect(r.files.find(f => f.name === 'attempts.csv')).toMatchObject({ rows: 1, path: `Download/OfflineTutor/${r.folder}/attempts.csv` });
+    expect(r.files.find(f => f.name === 'attempts.csv')).toMatchObject({ rows: 1, path: `Download/ClevoAI/${r.folder}/attempts.csv` });
     db.close();
   });
 });
@@ -226,8 +226,8 @@ describe('TeacherScreen', () => {
     await act(async () => press(r.root, 'teacher-export'));
     await flush();
     expect(paths).toHaveLength(EXPORT_TABLES.length + 1);
-    expect(paths[0]).toMatch(/^OfflineTutor\/export-\d{8}-\d{6}\/learners\.csv$/);
-    expect(texts(r.root)).toMatch(/Saved to Download\/OfflineTutor\/export-\d{8}-\d{6}: learners\.csv \(1\)/);
+    expect(paths[0]).toMatch(/^ClevoAI\/export-\d{8}-\d{6}\/learners\.csv$/);
+    expect(texts(r.root)).toMatch(/Saved to Download\/ClevoAI\/export-\d{8}-\d{6}: learners\.csv \(1\)/);
 
     // Installation is refused plainly without the native module, and the model status stays.
     await act(async () => press(r.root, 'teacher-install'));
@@ -249,14 +249,14 @@ describe('TeacherScreen', () => {
     await act(async () => press(r.root, 'teacher-share'));
     await flush();
     expect(shared).toHaveLength(1);
-    expect(shared[0].name).toMatch(/^OfflineTutor-progress-Tablet-[0-9A-F]{4}-\d{8}-\d{4}\.txt$/);
+    expect(shared[0].name).toMatch(/^ClevoAI-progress-Tablet-[0-9A-F]{4}-\d{8}-\d{4}\.txt$/);
     expect(shared[0].mime).toBe('text/plain');
     const sent = JSON.parse(shared[0].content);
     expect(sent.learners.map((l: { code: string }) => l.code)).toEqual(['T1']);
     expect(texts(r.root)).toContain('Choose Bluetooth or Quick Share');
     await act(async () => press(r.root, 'teacher-share-save'));
     await flush();
-    expect(texts(r.root)).toMatch(/Saved Download\/OfflineTutor\/OfflineTutor-progress-.*\(1 learner\)/);
+    expect(texts(r.root)).toMatch(/Saved Download\/ClevoAI\/ClevoAI-progress-.*\(1 learner\)/);
 
     // Collecting: a file from another tablet is added, a stranger's file is refused.
     const other = { ...sent, tablet: { ...sent.tablet, id: 'other-tablet', label: 'Tablet 0THE' } };
@@ -269,7 +269,7 @@ describe('TeacherScreen', () => {
     await flush();
     const note = texts(r.root);
     expect(note).toContain('Tablet 0THE: 1 learner added.');
-    expect(note).toContain('notes.txt: not a progress file from Offline Tutor.');
+    expect(note).toContain('notes.txt: not a progress file from Clevo AI.');
     expect(note).toContain("this is this tablet's own file");
     db.close();
   });

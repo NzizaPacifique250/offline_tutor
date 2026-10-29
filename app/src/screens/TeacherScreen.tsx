@@ -146,10 +146,10 @@ export function TeacherScreen({
         content: versions,
         model: { file: MODEL_FILE, expectedSha256: MODEL_SHA256, ...modelFileInfo() },
       };
-      const r = await exportRecords(db, (folder, name, mime, content) => writeDownload(`OfflineTutor/${folder}`, name, mime, content), meta);
+      const r = await exportRecords(db, (folder, name, mime, content) => writeDownload(`ClevoAI/${folder}`, name, mime, content), meta);
       const tables = r.files.filter(f => f.name.endsWith('.csv')).map(f => `${f.name} (${f.rows})`);
       log('teacher', `export ${r.folder}: ${tables.join(', ')}`);
-      setExportNote(`Saved to Download/OfflineTutor/${r.folder}: ${tables.join(', ')} and manifest.json. Copy the folder to a computer by USB.`);
+      setExportNote(`Saved to Download/ClevoAI/${r.folder}: ${tables.join(', ')} and manifest.json. Copy the folder to a computer by USB.`);
     } catch (e) {
       log('teacher', `export failed: ${(e as Error).message}`);
       setExportNote(`Export failed: ${(e as Error).message}`);
@@ -180,7 +180,7 @@ export function TeacherScreen({
               : 'The share menu could not be opened.',
           );
         } else {
-          const path = await writeDownload('OfflineTutor', f.name, 'text/plain', f.content);
+          const path = await writeDownload('ClevoAI', f.name, 'text/plain', f.content);
           setShareNote(`Saved ${path} (${f.learners} learner${f.learners === 1 ? '' : 's'}). Copy it to the teacher's tablet by cable or memory card.`);
         }
         log('teacher', `progress summary ${how}: ${f.name}, ${f.learners} learners`);
@@ -381,7 +381,7 @@ export function TeacherScreen({
         <Text style={ui.label}>Research records</Text>
         <Text style={ui.muted}>
           Saves the learner records (learner codes, sessions, answers, hints and solutions seen, tutor requests with timings) as CSV files in
-          Download/OfflineTutor on this tablet. No names are stored, and nothing is sent anywhere.
+          Download/ClevoAI on this tablet. No names are stored, and nothing is sent anywhere.
         </Text>
         {exportNote ? (
           <Text style={ui.body} testID="teacher-export-note">
@@ -394,7 +394,7 @@ export function TeacherScreen({
       <Card>
         <Text style={ui.label}>About this build</Text>
         <Text style={ui.body} testID="teacher-version">
-          Offline Tutor {info.versionName} (build {info.versionCode}, {info.buildType}, commit {info.gitCommit})
+          Clevo AI {info.versionName} (build {info.versionCode}, {info.buildType}, commit {info.gitCommit})
         </Text>
         <Text style={ui.muted}>
           {info.applicationId} · {info.deviceModel} · Android API {info.sdkInt}

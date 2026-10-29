@@ -1,6 +1,6 @@
 /**
  * Research export for the pilot: the learner records, as one CSV file per
- * table plus a manifest, written to Download/OfflineTutor/<folder>/ for the
+ * table plus a manifest, written to Download/ClevoAI/<folder>/ for the
  * researcher to copy off the tablet by USB. Only the tables listed here
  * leave the device; lesson content, the developer check table and the
  * model never do. Records carry learner codes, never names.
@@ -13,7 +13,7 @@ import type { Executor } from '../learner/store';
 /** The tables a research export contains, in the order they are written. */
 export const EXPORT_TABLES = ['learners', 'sessions', 'attempts', 'reveals', 'guidance_events', 'content_version'] as const;
 
-/** Writes one file into Download/OfflineTutor/<folder>/ and resolves the path shown to the teacher. */
+/** Writes one file into Download/ClevoAI/<folder>/ and resolves the path shown to the teacher. */
 export type ExportWriter = (folder: string, fileName: string, mimeType: string, content: string) => Promise<string>;
 
 export type ExportMeta = Record<string, unknown>;
