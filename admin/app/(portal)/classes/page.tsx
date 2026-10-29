@@ -11,11 +11,12 @@ import { Rise } from "@/components/rise";
 import { SubmitButton } from "@/components/submit-button";
 import { getClient, requireStaff } from "@/lib/auth";
 import { firstProblem, rows } from "@/lib/query";
+import { isStruggling, struggles, type ProgressRow } from "@/lib/struggles";
 import type { ClassMember, ClassRow, OverviewRow } from "@/lib/types";
 import { initials } from "@/lib/ui";
 import { addStudent, createClass, deleteClass, removeStudent, updateClass } from "./actions";
 
-type Person = Pick<OverviewRow, "user_id" | "full_name" | "learner_code" | "role" | "email" | "exercises_stuck">;
+type Person = Pick<OverviewRow, "user_id" | "full_name" | "learner_code" | "role" | "email">;
 
 // The actions redirect here with short codes; the copy lives here.
 const NOTICES: Record<string, string> = {
@@ -46,16 +47,20 @@ export default async function ClassesPage({ searchParams }: Props) {
   const supabase = await getClient();
   // What each person can read is decided by the database: an admin every
   // class and account, a teacher their own classes and students.
-  const [{ profile }, [classes, members, people]] = await Promise.all([
+  const [{ profile }, [classes, members, people, wrongRows]] = await Promise.all([
     requireStaff(),
     Promise.all([
       rows<ClassRow>(supabase.from("classes").select("*").order("name")),
       rows<ClassMember>(supabase.from("class_members").select("*")),
-      rows<Person>(supabase.from("learner_overview").select("user_id, full_name, learner_code, role, email, exercises_stuck")),
+      rows<Person>(supabase.from("learner_overview").select("user_id, full_name, learner_code, role, email")),
+      rows<ProgressRow>(
+        supabase.from("exercise_progress").select("user_id, exercise_id, wrong, solved, stuck, last_attempt_at").gte("wrong", 1),
+      ),
     ]),
   ]);
   const isAdmin = profile.role === "admin";
-  const problem = firstProblem(classes, members, people);
+  const problem = firstProblem(classes, members, people, wrongRows);
+  const struggleOf = struggles(wrongRows.data);
   const notice = noticeCode ? (NOTICES[noticeCode] ?? null) : null;
   const error = errorCode ? (ERRORS[errorCode] ?? "That did not work. Try again.") : null;
 
@@ -72,7 +77,7 @@ export default async function ClassesPage({ searchParams }: Props) {
         description={
           isAdmin
             ? "Create classes, choose each class's teacher and add its students. A teacher sees only the students in their own classes."
-            : "Your classes and their students. An admin creates classes and adds students."
+            : "Your classes and their students, with the ones who struggle marked. An admin creates classes and adds students."
         }
         problem={problem}
       />
@@ -152,11 +157,19 @@ export default async function ClassesPage({ searchParams }: Props) {
                           </div>
                         </div>
                         <div className="flex shrink-0 items-center gap-2">
-                          {(s.exercises_stuck ?? 0) > 0 ? (
-                            <Badge tone="warn" icon="alert">
-                              Stuck on {s.exercises_stuck}
-                            </Badge>
-                          ) : null}
+                          {(() => {
+                            const st = struggleOf.get(s.user_id);
+                            if (!isStruggling(st) || !st) return null;
+                            return st.stuck > 0 ? (
+                              <Badge tone="warn" icon="alert">
+                                Stuck on {st.stuck}
+                              </Badge>
+                            ) : (
+                              <Badge tone="info" icon="clock">
+                                Struggled on {st.struggled}
+                              </Badge>
+                            );
+                          })()}
                           {isAdmin ? (
                             <form action={removeStudent}>
                               <input type="hidden" name="class_id" value={c.id} />

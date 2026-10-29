@@ -196,7 +196,7 @@ export default async function UserPage({ params, searchParams }: Props) {
         </div>
       </Section>
 
-      <Section title={`Where ${shownName} needs help`}>
+      <Section title={`Where ${shownName} struggles`}>
         <Table
           caption={`Exercises ${shownName} has answered wrongly or not yet solved`}
           head={[

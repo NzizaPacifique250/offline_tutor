@@ -13,12 +13,13 @@ import { SubmitButton } from "@/components/submit-button";
 import { Table, Td } from "@/components/table";
 import { getClient, requireStaff } from "@/lib/auth";
 import { firstProblem, rows } from "@/lib/query";
+import { isStruggling, struggles, type ProgressRow, type StudentStruggles } from "@/lib/struggles";
 import { kigaliDateTime, timeAgo } from "@/lib/stats";
 import type { ClassMember, ClassRow, OverviewRow, Role } from "@/lib/types";
 import { capitalise, initials, roleTone } from "@/lib/ui";
 import { createAccount, setRole } from "./actions";
 
-const FILTERS = ["all", "student", "teacher", "admin", "needs-help"] as const;
+const FILTERS = ["all", "student", "teacher", "admin", "struggling"] as const;
 type Filter = (typeof FILTERS)[number];
 const ROLES: Role[] = ["student", "teacher", "admin"];
 
@@ -44,25 +45,28 @@ const EMPTY_BODY: Record<Filter, string> = {
   student: "Students appear here after they create an account in the tablet app and it syncs.",
   teacher: "Approve a teacher request to add one.",
   admin: "",
-  "needs-help": "No student is stuck: nobody has two or more wrong answers on an exercise they have not yet solved.",
+  struggling: "No student has two or more wrong answers on any exercise yet.",
 };
-
-const stuck = (u: OverviewRow) => (u.exercises_stuck ?? 0) > 0;
 
 export default async function UsersPage({ searchParams }: Props) {
   const { role: roleParam, notice: noticeCode, error: errorCode, id: changedId, to } = await searchParams;
   const supabase = await getClient();
   // The query starts together with the staff check, not after it.
   // An admin reads every account; a teacher the students in their classes.
-  const [{ profile, user }, overview, classes, members] = await Promise.all([
+  const [{ profile, user }, overview, classes, members, wrongRows] = await Promise.all([
     requireStaff(),
     rows<OverviewRow>(supabase.from("learner_overview").select("*").order("created_at", { ascending: false })),
     rows<ClassRow>(supabase.from("classes").select("id, name")),
     rows<ClassMember>(supabase.from("class_members").select("class_id, student_id")),
+    rows<ProgressRow>(
+      supabase.from("exercise_progress").select("user_id, exercise_id, wrong, solved, stuck, last_attempt_at").gte("wrong", 1),
+    ),
   ]);
+  const struggleOf = struggles(wrongRows.data);
   const isAdmin = profile.role === "admin";
-  const filters: readonly Filter[] = isAdmin ? FILTERS : ["all", "needs-help"];
-  const filter = filters.find((f) => f === roleParam) ?? "all";
+  const filters: readonly Filter[] = isAdmin ? FILTERS : ["all", "struggling"];
+  // "needs-help" was this filter's earlier name; old links still work.
+  const filter = filters.find((f) => f === (roleParam === "needs-help" ? "struggling" : roleParam)) ?? "all";
   const accounts = isAdmin ? overview.data : overview.data.filter((u) => u.role === "student");
   const className = new Map(classes.data.map((c) => [c.id, c.name]));
   const classesOf = (id: string) =>
@@ -81,12 +85,13 @@ export default async function UsersPage({ searchParams }: Props) {
   const error = errorCode ? (ERRORS[errorCode] ?? "That did not work. Try again.") : null;
 
   const pending = accounts.filter((u) => u.role === "student" && u.requested_role === "teacher");
-  const matches = (f: Filter) => (u: OverviewRow) => (f === "all" ? true : f === "needs-help" ? stuck(u) : u.role === f);
+  const matches = (f: Filter) => (u: OverviewRow) =>
+    f === "all" ? true : f === "struggling" ? isStruggling(struggleOf.get(u.user_id)) : u.role === f;
   const shown = accounts.filter(matches(filter));
   // Students includes people who have asked to become teachers, as on the Overview.
   const countFor = (f: Filter) => accounts.filter(matches(f)).length;
   const filterLabel = (f: Filter) =>
-    f === "all" ? (isAdmin ? "All" : "Your students") : f === "needs-help" ? "Needs help" : capitalise(f) + "s";
+    f === "all" ? (isAdmin ? "All" : "Your students") : f === "struggling" ? "Struggling" : capitalise(f) + "s";
 
   return (
     <>
@@ -97,7 +102,7 @@ export default async function UsersPage({ searchParams }: Props) {
             ? "Create accounts, approve teacher requests and change roles. Open an account to rename it, set a new password or delete it."
             : "The students in your classes and their progress. Only an admin creates or changes accounts."
         }
-        problem={firstProblem(overview, classes, members)}
+        problem={firstProblem(overview, classes, members, wrongRows)}
         kigaliTime
       />
       {notice || error ? (
@@ -205,7 +210,7 @@ export default async function UsersPage({ searchParams }: Props) {
             { label: "Attempts", numeric: true },
             { label: "Exercises correct", numeric: true },
             { label: "Wrong answers", numeric: true },
-            "Needs help",
+            "Struggles",
             { label: "Tutor requests", numeric: true },
             "Last activity",
             ...(isAdmin ? ["Change role"] : []),
@@ -215,8 +220,8 @@ export default async function UsersPage({ searchParams }: Props) {
               ? isAdmin
                 ? { title: "No accounts to show", body: EMPTY_BODY.all }
                 : { title: "No students in your classes yet", body: "An admin adds students to your classes on the Classes page." }
-              : filter === "needs-help"
-                ? { title: "No one needs help right now", body: EMPTY_BODY["needs-help"], link: { href: "/users", label: "Show all accounts" } }
+              : filter === "struggling"
+                ? { title: "No one is struggling right now", body: EMPTY_BODY.struggling, link: { href: "/users", label: "Show all accounts" } }
                 : {
                   title: `No ${filter}s yet`,
                   body: EMPTY_BODY[filter],
@@ -263,15 +268,7 @@ export default async function UsersPage({ searchParams }: Props) {
               </Td>
               <Td numeric>{u.wrong_answers ?? "–"}</Td>
               <Td>
-                {stuck(u) ? (
-                  <span className="whitespace-nowrap">
-                    <Badge tone="warn" icon="alert">
-                      Stuck on {u.exercises_stuck}
-                    </Badge>
-                  </span>
-                ) : (
-                  <span className="text-muted">–</span>
-                )}
+                <StruggleBadges s={struggleOf.get(u.user_id)} />
               </Td>
               <Td numeric>{u.tutor_requests}</Td>
               <Td>
@@ -291,6 +288,26 @@ export default async function UsersPage({ searchParams }: Props) {
         </Table>
       </Rise>
     </>
+  );
+}
+
+// Stuck: two or more wrong answers on an exercise not yet solved. Struggled:
+// as many on an exercise solved later. Both count as struggling.
+function StruggleBadges({ s }: { s: StudentStruggles | undefined }) {
+  if (!isStruggling(s) || !s) return <span className="text-muted">–</span>;
+  return (
+    <span className="flex flex-wrap gap-1 whitespace-nowrap">
+      {s.stuck > 0 ? (
+        <Badge tone="warn" icon="alert">
+          Stuck on {s.stuck}
+        </Badge>
+      ) : null}
+      {s.struggled > 0 ? (
+        <Badge tone="info" icon="clock">
+          Struggled on {s.struggled}
+        </Badge>
+      ) : null}
+    </span>
   );
 }
 

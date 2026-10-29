@@ -12,8 +12,8 @@ import { WeekBars } from "@/components/week-bars";
 import { getClient, requireStaff } from "@/lib/auth";
 import { allRows, count, firstProblem, rows } from "@/lib/query";
 import { countByDay, daysAgoIso, syncStatus, timeAgo } from "@/lib/stats";
-import { exerciseLabel } from "@/lib/curriculum";
-import { OUTCOMES, type Device, type ExerciseProgress, type Profile } from "@/lib/types";
+import { describe, isStruggling, ranked, struggles, type ProgressRow } from "@/lib/struggles";
+import { OUTCOMES, type Device, type Profile } from "@/lib/types";
 import { OUTCOME_META } from "@/lib/ui";
 
 export default async function OverviewPage() {
@@ -24,7 +24,7 @@ export default async function OverviewPage() {
   // The queries start together with the staff check, not after it.
   // An admin reads everyone; a teacher only the students in their classes,
   // so every figure below is about the reader's own students.
-  const [{ profile: me }, [profiles, devices, attempts, correct, attempts7, tutor7, sessions7, week, outcomes, stuckRows, classCount]] = await Promise.all([
+  const [{ profile: me }, [profiles, devices, attempts, correct, attempts7, tutor7, sessions7, week, outcomes, wrongRows, classCount]] = await Promise.all([
     requireStaff(),
     Promise.all([
       rows<Pick<Profile, "id" | "full_name" | "learner_code" | "role" | "requested_role">>(
@@ -42,22 +42,25 @@ export default async function OverviewPage() {
         5,
       ),
       allRows<{ outcome: string }>((from, to) => supabase.from("guidance_events").select("outcome").order("created_at").order("device_id").order("local_id").range(from, to)),
-      rows<Pick<ExerciseProgress, "user_id" | "exercise_id" | "wrong" | "last_attempt_at">>(
-        supabase.from("exercise_progress").select("user_id, exercise_id, wrong, last_attempt_at").eq("stuck", true).order("last_attempt_at", { ascending: false }),
+      // Every exercise answered wrongly at least once, solved since or not.
+      rows<ProgressRow>(
+        supabase.from("exercise_progress").select("user_id, exercise_id, wrong, solved, stuck, last_attempt_at").gte("wrong", 1),
       ),
       count(supabase.from("classes").select("*", head)),
     ]),
   ]);
   const isAdmin = me.role === "admin";
 
-  const problem = firstProblem(profiles, devices, attempts, correct, attempts7, tutor7, sessions7, week, outcomes, stuckRows, classCount);
-  // Students stuck on at least one exercise, the most recently stuck first.
+  const problem = firstProblem(profiles, devices, attempts, correct, attempts7, tutor7, sessions7, week, outcomes, wrongRows, classCount);
+  // Every student with a wrong answer: stuck first, then those who struggled
+  // (two or more wrong answers on an exercise, solved later), then the rest.
   const byId = new Map(profiles.data.map((p) => [p.id, p]));
-  const needHelp = [...new Set(stuckRows.data.map((r) => r.user_id))].map((id) => {
-    const rowsFor = stuckRows.data.filter((r) => r.user_id === id);
+  const studentsWithWrong = ranked(struggles(wrongRows.data));
+  const struggling = studentsWithWrong.filter(isStruggling);
+  const nameOf = (id: string) => {
     const p = byId.get(id);
-    return { id, name: p ? p.full_name || p.learner_code : "Unknown account", exercises: rowsFor.map((r) => exerciseLabel(r.exercise_id)), wrong: rowsFor.reduce((n, r) => n + r.wrong, 0) };
-  });
+    return p ? p.full_name || p.learner_code : "Unknown account";
+  };
   const roleCount = (role: string) => profiles.data.filter((p) => p.role === role).length;
   const pending = profiles.data.filter((p) => p.role === "student" && p.requested_role === "teacher").length;
   const tutorTotal = outcomes.data.length;
@@ -121,7 +124,7 @@ export default async function OverviewPage() {
                 {[
                   ["Sessions", sessions7.data],
                   ["Tutor requests", tutor7.data],
-                  isAdmin ? ["Tablets synced in 24 h", syncedRecently] : ["Students who need help", needHelp.length],
+                  isAdmin ? ["Tablets synced in 24 h", syncedRecently] : ["Students struggling", struggling.length],
                 ].map(([label, value]) => (
                   <div key={label} className="flex flex-col-reverse">
                     <dt className="text-xs text-white/85">{label}</dt>
@@ -146,7 +149,7 @@ export default async function OverviewPage() {
                     label={`${Math.round((correct.data / attempts.data) * 100)} percent correct`}
                   />
                   <p className="text-sm text-ink-2">
-                    {correct.data} of {attempts.data} attempts were correct, across all students.
+                    {correct.data} of {attempts.data} attempts were correct, across {isAdmin ? "all students" : "your students"}.
                   </p>
                 </div>
               )}
@@ -177,9 +180,10 @@ export default async function OverviewPage() {
                 note={classCount.data === 0 ? "An admin makes you the teacher of a class." : undefined}
               />
               <StatCard
-                label="Need help"
-                value={needHelp.length}
-                className={needHelp.length > 0 ? "border-warn/40 bg-warn-soft" : "border-line bg-surface"}
+                label="Struggling"
+                value={struggling.length}
+                note={struggling.length > 0 ? "Two or more wrong answers on an exercise" : undefined}
+                className={struggling.length > 0 ? "border-warn/40 bg-warn-soft" : "border-line bg-surface"}
               />
             </dl>
           )}
@@ -187,41 +191,63 @@ export default async function OverviewPage() {
 
         <Rise i={4}>
           <Card
-            title={`Students who need help (${needHelp.length})`}
-            className={needHelp.length > 0 ? "border-warn/40" : ""}
+            title={`Where students struggle (${studentsWithWrong.length})`}
+            className={struggling.length > 0 ? "border-warn/40" : ""}
             action={
-              needHelp.length > 0 ? (
-                <Link href="/users?role=needs-help" className="link inline-flex items-center gap-1 text-sm">
-                  All of them
+              struggling.length > 0 ? (
+                <Link href="/users?role=struggling" className="link inline-flex items-center gap-1 text-sm">
+                  All who struggle
                   <Icon name="arrow" size={16} />
                 </Link>
               ) : null
             }
           >
-            {needHelp.length === 0 ? (
+            {studentsWithWrong.length === 0 ? (
               <EmptyState
                 compact
                 icon="check"
-                title="No student is stuck right now"
-                body="A student appears here after two or more wrong answers on an exercise they have not solved."
+                title="No wrong answers yet"
+                body="Each student with a wrong answer appears here, with the exercises and how many times they got them wrong."
               />
             ) : (
               <ul className="divide-y divide-line">
-                {needHelp.slice(0, 6).map((s) => (
-                  <li key={s.id} className="flex flex-wrap items-start justify-between gap-2 py-3">
-                    <div className="min-w-0">
-                      <Link href={`/users/${s.id}`} className="link text-sm font-semibold">
-                        {s.name}
+                {studentsWithWrong.slice(0, 8).map((s) => (
+                  <li key={s.userId} className="flex flex-wrap items-start justify-between gap-x-4 gap-y-2 py-3">
+                    <div className="min-w-0 grow basis-72">
+                      <Link href={`/users/${s.userId}`} className="link text-sm font-semibold">
+                        {nameOf(s.userId)}
                       </Link>
-                      <p className="mt-0.5 text-xs text-muted">Stuck on {s.exercises.join("; ")}</p>
+                      <ul className="mt-1 space-y-0.5 text-xs text-ink-2">
+                        {s.exercises.slice(0, 3).map((e) => (
+                          <li key={e.exercise_id} className={e.stuck ? "font-semibold text-warn" : ""}>
+                            {describe(e)}
+                          </li>
+                        ))}
+                        {s.exercises.length > 3 ? <li className="text-muted">and {s.exercises.length - 3} more</li> : null}
+                      </ul>
                     </div>
-                    <Badge tone="warn" icon="alert">
-                      {s.wrong} wrong {s.wrong === 1 ? "answer" : "answers"}
-                    </Badge>
+                    <div className="flex flex-wrap items-center gap-2">
+                      {s.stuck > 0 ? (
+                        <Badge tone="warn" icon="alert">
+                          Stuck on {s.stuck}
+                        </Badge>
+                      ) : null}
+                      {s.struggled > 0 ? (
+                        <Badge tone="info" icon="clock">
+                          Struggled on {s.struggled}
+                        </Badge>
+                      ) : null}
+                      <Badge tone="neutral">
+                        {s.wrong} wrong {s.wrong === 1 ? "answer" : "answers"}
+                      </Badge>
+                    </div>
                   </li>
                 ))}
               </ul>
             )}
+            {studentsWithWrong.length > 8 ? (
+              <p className="mt-3 text-sm text-muted">{studentsWithWrong.length - 8} more students have wrong answers; see Users.</p>
+            ) : null}
           </Card>
         </Rise>
 
