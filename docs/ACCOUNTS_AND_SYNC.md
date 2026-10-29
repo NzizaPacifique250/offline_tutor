@@ -48,10 +48,13 @@ for the network.
   own account and another admin.
 - **Where students struggle (0004).** `exercise_progress` gives, per student
   and exercise, wrong answers, whether it is solved, hints, the solution
-  opened and the last wrong answer; a student is stuck after two or more
-  wrong answers and none correct, the app's "needs help" rule. The portal
-  shows stuck students on the overview, a Needs help filter on Users, and
-  each student's struggles on their page.
+  opened and the last wrong answer. Two or more wrong answers on one
+  exercise is a struggle; while the exercise is unsolved the student is
+  stuck, the app's "needs help" rule. The portal's overview lists every
+  student with a wrong answer, stuck first, with each exercise, its wrong
+  answers and whether it was solved later; Users has a Struggles column and
+  a Struggling filter; a student's page lists every exercise answered
+  wrongly.
 - **The study build.** `./gradlew :app:assembleRelease -PofflineOnly` removes
   the INTERNET permission, so Android itself stops that build sending
   anything, whatever the sync setting. Participant data must not be synced

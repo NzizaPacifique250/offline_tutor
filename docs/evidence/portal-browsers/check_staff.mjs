@@ -43,22 +43,22 @@ const text = page => page.innerText('main');
 if (process.env.TEACHER_EMAIL) {
   const { context, page, errors } = await signIn(process.env.TEACHER_EMAIL, process.env.TEACHER_PASSWORD);
   check('teacher signs in to the overview', new URL(page.url()).pathname === '/', page.url());
-  check('overview shows students who need help', await shows(page, 'Students who need help'));
+  check('overview shows where students struggle', await shows(page, 'Where students struggle'));
   let t = await text(page);
   check('overview does not show the setup notice', !t.includes('not fully set up'));
   await page.screenshot({ path: `${out}/teacher-overview.png`, fullPage: true });
   await page.goto(base + '/users');
-  check('users table has wrong answers and needs help', (await shows(page, 'Wrong answers')) && (await shows(page, 'Needs help')));
+  check('users table has wrong answers and struggles', (await shows(page, 'Wrong answers')) && (await shows(page, 'Struggles')));
   t = await text(page);
   check('teacher sees no account creation', !t.includes('Create an account'));
   check('teacher sees no role change', !t.includes('Change role'));
   await page.screenshot({ path: `${out}/teacher-users.png`, fullPage: true });
-  await page.goto(base + '/users?role=needs-help');
-  await shows(page, 'Needs help');
-  await page.screenshot({ path: `${out}/teacher-needs-help.png`, fullPage: true });
-  // The student who needs help most, or else the first account in the list.
-  await page.goto(base + '/users?role=needs-help');
-  await shows(page, 'Needs help');
+  await page.goto(base + '/users?role=struggling');
+  await shows(page, 'Struggling');
+  await page.screenshot({ path: `${out}/teacher-struggling.png`, fullPage: true });
+  // A student who struggles, or else the first account in the list.
+  await page.goto(base + '/users?role=struggling');
+  await shows(page, 'Struggling');
   let firstStudent = page.locator('table a[href^="/users/"]').first();
   if (!(await firstStudent.count())) {
     await page.goto(base + '/users?role=student');
@@ -68,16 +68,20 @@ if (process.env.TEACHER_EMAIL) {
   if (await firstStudent.count()) {
     await firstStudent.click();
     await page.waitForURL(u => /\/users\/[0-9a-f-]{36}/.test(u.pathname));
-    check('a student page shows where they need help', await shows(page, 'needs help'));
+    check('a student page shows where they struggle', await shows(page, 'struggles'));
     t = await text(page);
     check('teacher sees no account management', !t.includes('Manage account'));
     await page.screenshot({ path: `${out}/teacher-student.png`, fullPage: true });
   } else {
-    check('a student page shows where they need help', false, 'no student account to open');
+    check('a student page shows where they struggle', false, 'no student account to open');
   }
-  for (const path of ['/devices', '/activity', '/tutor']) {
-    const r = await page.goto(base + path);
-    check(`teacher opens ${path}`, r?.status() === 200 && new URL(page.url()).pathname === path);
+  // Tablets are for admins: a teacher lands on the overview instead. The
+  // page streams, so the redirect finishes in the browser after the 200.
+  await page.goto(base + '/devices');
+  check('teacher is sent away from Tablets', await page.waitForURL(u => u.pathname === '/', { timeout: 30000 }).then(() => true, () => false), page.url());
+  for (const [path, title] of [['/activity', 'Activity'], ['/tutor', 'Tutor']]) {
+    await page.goto(base + path);
+    check(`teacher opens ${path}`, (await shows(page, title)) && new URL(page.url()).pathname === path, page.url());
   }
   check('no page errors as teacher', errors.length === 0, errors.join(' | '));
   await context.close();
@@ -112,9 +116,16 @@ if (process.env.ADMIN_EMAIL) {
   await page.fill('#new-password', secondPassword);
   await Promise.all([page.waitForURL(u => u.search.includes('notice=password') || u.search.includes('error')), page.click('button:has-text("Set password")')]);
   check('admin sets a new password', page.url().includes('notice=password-set'));
+  // This laptop's DNS sometimes stalls past Node's 10 s connect limit; retry.
   const signInWith = async pw => {
-    const r = await fetch(`${SUPABASE}/auth/v1/token?grant_type=password`, { method: 'POST', headers: { apikey: KEY, 'Content-Type': 'application/json' }, body: JSON.stringify({ email, password: pw }) });
-    return { status: r.status, body: await r.json() };
+    for (let attempt = 1; ; attempt++) {
+      try {
+        const r = await fetch(`${SUPABASE}/auth/v1/token?grant_type=password`, { method: 'POST', headers: { apikey: KEY, 'Content-Type': 'application/json' }, body: JSON.stringify({ email, password: pw }) });
+        return { status: r.status, body: await r.json() };
+      } catch (e) {
+        if (attempt === 4) throw e;
+      }
+    }
   };
   const withNew = await signInWith(secondPassword), withOld = await signInWith(firstPassword);
   check('the new password signs in; the old one does not', withNew.status === 200 && withOld.status === 400, `${withNew.status} / ${withOld.status}`);
@@ -161,8 +172,8 @@ if (process.env.ADMIN_EMAIL) {
     check('the teacher sees the class', await shows(teacher.page, className));
     check('the teacher cannot manage classes', !(await teacher.page.innerText('main')).includes('Create a class'));
     await teacher.page.screenshot({ path: `${out}/teacher-classes.png`, fullPage: true });
-    const tablets = await teacher.page.goto(base + '/devices');
-    check('the teacher is sent away from the Tablets page', new URL(teacher.page.url()).pathname === '/', `${tablets?.status()} ${teacher.page.url()}`);
+    await teacher.page.goto(base + '/devices');
+    check('the teacher is sent away from the Tablets page', await teacher.page.waitForURL(u => u.pathname === '/', { timeout: 30000 }).then(() => true, () => false), teacher.page.url());
     await teacher.context.close();
 
     // Clean up: the class, then the student.

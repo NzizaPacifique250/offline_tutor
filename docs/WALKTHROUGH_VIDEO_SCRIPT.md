@@ -204,7 +204,7 @@ the pending request of `demo.teacher.1029@example.com`), open
   teacher. A teacher then sees only the students in their own classes: the
   database enforces it, so it holds everywhere in the portal."
 - Signed in as the teacher: "The same pages, but only this teacher's
-  students, with the ones who need help first, and none of the admin's
+  students, with the ones who struggle first, and none of the admin's
   controls."
 - On Tablets and Tutor: "Each tablet's last sync, and the
   tutor's response times and outcomes, from the same log the offline test
