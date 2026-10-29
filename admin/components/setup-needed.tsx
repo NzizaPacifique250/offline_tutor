@@ -15,9 +15,11 @@ export function SetupNeeded() {
           "supabase/migrations/0002_decline_teacher_request.sql",
           "supabase/migrations/0003_shared_tablets.sql",
           "supabase/migrations/0004_accounts_roles_struggles.sql",
+          "supabase/migrations/0005_classes.sql",
+          "supabase/migrations/0006_lesson_updates.sql",
         ].map((f) => (
           <li key={f}>
-            <code className="inline-block rounded-md border border-line bg-surface px-3 py-2 font-mono text-[13px] text-ink">{f}</code>
+            <code className="inline-block max-w-full rounded-md border border-line bg-surface px-3 py-2 font-mono text-[13px] break-all text-ink">{f}</code>
           </li>
         ))}
       </ul>

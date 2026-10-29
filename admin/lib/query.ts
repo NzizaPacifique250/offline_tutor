@@ -1,5 +1,5 @@
 export const SETUP_MESSAGE =
-  "The database is missing a part this page needs: run the files in supabase/migrations in the Supabase SQL Editor, in order (the latest is 0004_accounts_roles_struggles.sql).";
+  "The database is missing a part this page needs: run the files in supabase/migrations in the Supabase SQL Editor, in order (the latest is 0006_lesson_updates.sql).";
 
 type DbError = { code?: string; message: string } | null;
 type Response = { data: unknown; error: DbError; count?: number | null };
