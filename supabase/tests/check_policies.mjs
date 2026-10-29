@@ -2,6 +2,7 @@
 // Postgres (PGlite), with stand-ins for the auth schema Supabase provides.
 // Run: cd supabase/tests && npm install && npm test
 import { PGlite } from '@electric-sql/pglite';
+import { createHash } from 'node:crypto';
 import { readdirSync, readFileSync } from 'node:fs';
 // pgcrypto ships in PGlite as a bundle without a wrapper; Supabase has it in
 // the extensions schema, where 0004's admin_set_password calls it.
@@ -36,9 +37,14 @@ await db.exec(`insert into auth.users (id, email, raw_user_meta_data) values
 await apply(files.filter(f => f >= '0004'));
 // Runs a statement as a signed-in account, the way PostgREST does: the
 // authenticated role with the account's id as the JWT subject.
-async function as(uid, sql) {
+async function as(uid, sql, params = []) {
   await db.exec(`set role authenticated; select set_config('request.jwt.sub', '${uid}', false);`);
-  try { return (await db.query(sql)).rows; } catch (e) { return 'ERROR: ' + e.message; } finally { await db.exec('reset role;'); }
+  try { return (await db.query(sql, params)).rows; } catch (e) { return 'ERROR: ' + e.message; } finally { await db.exec('reset role;'); }
+}
+// An anonymous request carries no account id, so clear the one the last as() set.
+async function asAnon(sql, params = []) {
+  await db.exec(`select set_config('request.jwt.sub', '', false); set role anon;`);
+  try { return (await db.query(sql, params)).rows; } catch (e) { return 'ERROR: ' + e.message; } finally { await db.exec('reset role'); }
 }
 
 // Each check runs a statement as one account and states what must come back:
@@ -173,6 +179,34 @@ check('anon reads classes (sees none)', await (async () => {
   await db.exec('set role anon');
   try { return Number((await db.query('select count(*) from public.classes')).rows[0].count); } catch (e) { return 'ERROR: ' + e.message; } finally { await db.exec('reset role'); }
 })(), 0);
+
+// 0006: lesson updates published from the portal.
+const release = (version, extra = {}) => JSON.stringify({
+  format: 'offline-tutor-package', format_version: 1,
+  manifest: { id: 'rw-s6-am.u1', version, unit: 1, unit_title: 'Complex Numbers' },
+  lessons: [{ id: 'rw-s6-am.u1.l07' }], examples: [], exercises: [{ id: 'rw-s6-am.u1.q.001' }, { id: 'rw-s6-am.u1.q.002' }],
+  ...extra,
+});
+const publish = (who, text, notes = '') => as(who, `insert into public.content_releases (package_text, notes) values ($1, $2) returning package_id, version, unit, unit_title, lessons, exercises, sha256`, [text, notes]);
+const r030 = release('0.3.0');
+const published = await publish(A, r030, 'Two new exercises');
+check('admin publishes a release; the database reads it from the file', typeof published === 'string' ? published : published.map(({ sha256, ...rest }) => rest), [{ package_id: 'rw-s6-am.u1', version: '0.3.0', unit: 1, unit_title: 'Complex Numbers', lessons: 1, exercises: 2 }]);
+check('the database\'s checksum is the file\'s SHA-256', typeof published === 'string' ? published : published[0].sha256, createHash('sha256').update(r030, 'utf8').digest('hex'));
+check('the same version again (refused)', await publish(A, r030), /not newer/);
+check('an older version (refused)', await publish(A, release('0.2.9')), /not newer/);
+check('a file that is not JSON (refused)', await publish(A, '{"format": '), /not valid JSON/);
+check('a file in another format (refused)', await publish(A, release('0.4.0', { format: 'something-else' })), /not a lesson package file/);
+check('a version that is not major.minor.patch (refused)', await publish(A, release('0.4')), /major\.minor\.patch/);
+check('a teacher publishes (refused)', await publish(S2, release('0.4.0')), /row-level security/);
+check('a student publishes (refused)', await publish(P1, release('0.4.0')), /row-level security/);
+check('anon publishes (refused)', await asAnon(`insert into public.content_releases (package_text) values ($1)`, [release('0.4.0')]), /row-level security|permission denied/);
+const seen = await asAnon(`select version, sha256, package_text from public.content_releases`);
+check('a tablet without an account reads the active release and its file', typeof seen === 'string' ? seen : seen.map(r => [r.version, r.package_text === r030, r.sha256 === createHash('sha256').update(r.package_text, 'utf8').digest('hex')]), [['0.3.0', true, true]]);
+check('admin changes a published file (refused)', await as(A, `update public.content_releases set package_text = $1 returning version`, [release('0.3.0', { lessons: [] })]), /permission denied/);
+check('admin limits the release to one tablet', await as(A, `update public.content_releases set devices = '{dev1}' where version = '0.3.0' returning devices`), [{ devices: ['dev1'] }]);
+check('a teacher changes a release (no row changed)', await as(S2, `update public.content_releases set notes = 'x' returning notes`), []);
+await as(A, `update public.content_releases set withdrawn_at = now() where version = '0.3.0'`);
+check('a withdrawn release is hidden from tablets, not from admins', [count(await asAnon(`select count(*) from public.content_releases`)), count(await as(A, `select count(*) from public.content_releases`))], [0, 1]);
 
 console.log(failures ? `\n${failures} check(s) failed` : '\nall checks passed');
 process.exit(failures ? 1 : 0);
