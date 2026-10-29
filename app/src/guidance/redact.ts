@@ -12,7 +12,7 @@
 import { approxEqual, evaluate, UnsupportedInput, type Complex } from '../checker/complex';
 import type { AnswerKey } from '../content/types';
 
-export const MASK = '[final answer hidden — work it out]';
+export const MASK = '[final answer hidden: work it out]';
 
 // Things that look like a complex or real number written as an answer:
 // "5 + 3i", "-9-15i", "3i + 5", "10 - 41 i", "5+3*i", plus a lone "7" or

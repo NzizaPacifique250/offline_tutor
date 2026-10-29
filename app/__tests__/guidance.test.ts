@@ -165,7 +165,7 @@ describe('redactAnswer', () => {
   it('masks a real answer only when the key is real', () => {
     const real = { ...key, expected: '7', accepted: [], display_tex: '7' };
     expect(redactAnswer('The result is 7.', real).masked).toBe(1);
-    expect(redactAnswer('There are 7 steps and the result is 5 + 3i.', key).text).not.toContain('[final answer hidden — work it out] steps');
+    expect(redactAnswer('There are 7 steps and the result is 5 + 3i.', key).text).not.toContain('[final answer hidden: work it out] steps');
   });
 });
 

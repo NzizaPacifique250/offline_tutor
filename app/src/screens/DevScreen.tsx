@@ -224,8 +224,8 @@ export function DevScreen({ service }: { service: GuidanceService }): React.JSX.
     setBusy(false);
   }, [log, service]);
 
-  const pps = result && result.promptMs > 0 ? `${((result.promptTokens ?? 0) / (result.promptMs / 1000)).toFixed(2)} tok/s` : '—';
-  const gps = result && result.generatedMs > 0 ? `${((result.generatedTokens ?? 0) / (result.generatedMs / 1000)).toFixed(2)} tok/s` : '—';
+  const pps = result && result.promptMs > 0 ? `${((result.promptTokens ?? 0) / (result.promptMs / 1000)).toFixed(2)} tok/s` : '–';
+  const gps = result && result.generatedMs > 0 ? `${((result.generatedTokens ?? 0) / (result.generatedMs / 1000)).toFixed(2)} tok/s` : '–';
 
   return (
     <ScrollView contentContainerStyle={styles.body} keyboardShouldPersistTaps="handled">
@@ -256,11 +256,11 @@ export function DevScreen({ service }: { service: GuidanceService }): React.JSX.
       <Text style={ui.mono}>{TEST_QUESTION}</Text>
 
       <Text style={ui.label}>Answer{generating ? ' (generating…)' : ''}</Text>
-      <Text style={styles.answer}>{output || '—'}</Text>
+      <Text style={styles.answer}>{output || '–'}</Text>
 
       <View style={styles.stats}>
-        <Stat name="First token" value={result?.firstTokenMs == null ? '—' : `${(result.firstTokenMs / 1000).toFixed(1)} s`} />
-        <Stat name="Total" value={result ? `${(result.totalMs / 1000).toFixed(1)} s` : '—'} />
+        <Stat name="First token" value={result?.firstTokenMs == null ? '–' : `${(result.firstTokenMs / 1000).toFixed(1)} s`} />
+        <Stat name="Total" value={result ? `${(result.totalMs / 1000).toFixed(1)} s` : '–'} />
         <Stat name="Prompt" value={pps} />
         <Stat name="Generate" value={gps} />
       </View>
