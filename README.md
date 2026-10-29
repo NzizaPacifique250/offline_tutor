@@ -11,7 +11,11 @@
 
 ## Final submission
 
-- **Walkthrough video:** link added once the video is uploaded.
+- **Walkthrough video (10 minutes, narrated):** [youtu.be/VVfRPJn8KC4](https://youtu.be/VVfRPJn8KC4).
+  It shows the core features on the tablet with no internet, accounts and
+  sync, the admin and teacher portals, lessons published from the portal,
+  then testing, performance and compatibility. The video file is also in
+  the submission ZIP.
 - **Technical report (PDF, 5 pages):** [docs/report/Technical_Report.pdf](docs/report/Technical_Report.pdf):
   scope against the proposal, how the product works, testing and results,
   performance and compatibility, code quality.
