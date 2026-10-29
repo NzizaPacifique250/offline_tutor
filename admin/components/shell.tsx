@@ -35,7 +35,7 @@ export function Shell({ name, code, role, children }: Props) {
         <div className="flex items-center gap-3">
           <Logo />
           <div className="min-w-0">
-            <p className="text-base font-semibold">Tutor admin</p>
+            <p className="text-base font-semibold">Clevo AI</p>
             <p className="text-xs text-white/75">Senior Six Advanced Mathematics</p>
           </div>
         </div>
@@ -56,7 +56,7 @@ export function Shell({ name, code, role, children }: Props) {
         <header className="on-primary sticky top-0 z-30 flex h-14 items-center justify-between bg-primary px-4 text-white lg:hidden">
           <div className="flex items-center gap-3">
             <Logo />
-            <span className="text-base font-semibold">Tutor admin</span>
+            <span className="text-base font-semibold">Clevo AI</span>
           </div>
           <details className="relative">
             <summary

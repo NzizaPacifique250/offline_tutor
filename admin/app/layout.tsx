@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Tutor admin",
-  description: "Monitor synced activity from the offline tutoring tablets.",
+  title: "Clevo AI",
+  description: "Clevo AI for teachers and admins: progress synced from the tablets, accounts, classes and lessons.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

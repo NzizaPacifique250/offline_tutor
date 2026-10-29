@@ -96,7 +96,7 @@ Replaces the top bar in `app/(portal)/layout.tsx`.
 
 **Desktop, 1024 px and up: fixed left sidebar, 240 px wide.**
 - `aside` is `fixed inset-y-0 left-0 w-60 bg-primary text-white flex flex-col px-4 py-6`.
-- Top: brand block. 32 px logo mark (white rounded-8 square holding three ascending navy bars, inline SVG), then "Tutor admin" (16/600) with "Senior Six Advanced Mathematics" under it (12, `text-white/75`).
+- Top: brand block. 32 px logo mark (white rounded-8 square holding three ascending navy bars, inline SVG), then "Clevo AI" (16/600) with "Senior Six Advanced Mathematics" under it (12, `text-white/75`).
 - Middle: `nav aria-label="Main"`, `mt-8 flex flex-col gap-1`. Five items: Overview, Users, Tablets, Activity, Tutor. Each item is `h-10 rounded-md px-3 gap-3 flex items-center text-sm font-medium`, with a 20 px icon on the left.
   - Idle: `text-white/80`. Hover: `bg-white/10 text-white`.
   - Current (`aria-current="page"`): `bg-white/15 text-white font-semibold`, plus a 4 px wide, 20 px tall white pill at the left edge of the item (`before:` pseudo-element, `before:absolute before:-left-4`; give the item `relative`). This is the "you are here" marker; it is not colour-only because of the pill shape and weight change.
@@ -105,7 +105,7 @@ Replaces the top bar in `app/(portal)/layout.tsx`.
 - Content wrapper: `lg:pl-60`.
 
 **Phone and tablet, below 1024 px: slim top bar plus bottom tab bar.**
-- Top bar: `sticky top-0 z-30 h-14 bg-primary text-white flex items-center justify-between px-4`. Left: logo mark and "Tutor admin". Right: account `<details>` (no JavaScript). Summary is the 32 px avatar; the panel is `absolute right-4 top-12 w-64 rounded-lg bg-surface text-ink shadow-pop p-4` showing name and role, then the Sign out button (`variant="default"`).
+- Top bar: `sticky top-0 z-30 h-14 bg-primary text-white flex items-center justify-between px-4`. Left: logo mark and "Clevo AI". Right: account `<details>` (no JavaScript). Summary is the 32 px avatar; the panel is `absolute right-4 top-12 w-64 rounded-lg bg-surface text-ink shadow-pop p-4` showing name and role, then the Sign out button (`variant="default"`).
 - Bottom tab bar: `fixed bottom-0 inset-x-0 z-30 h-16 bg-surface border-t border-line grid grid-cols-5 pb-[env(safe-area-inset-bottom)]`. Each tab is a column: 24 px icon over a 12 px label, `h-full`, min target 64 x 48. Idle `text-muted`; current `text-primary font-semibold` with a 24 x 4 px primary pill above the icon (top of the tab). Labels are always visible, so the nav works at 375 px (5 x 75 px).
 - Main gets `pb-24` so the tab bar never covers content.
 - Both bars are rendered by the same `Nav` client component using one list of links; CSS (`hidden lg:flex` and `lg:hidden`) chooses which is visible. Link list is defined once.

@@ -25,7 +25,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
     <div className="min-h-screen lg:grid lg:grid-cols-2">
       <div className="on-primary flex h-16 items-center gap-3 bg-primary px-4 text-white lg:hidden">
         <Logo />
-        <span className="text-base font-semibold">Tutor admin</span>
+        <span className="text-base font-semibold">Clevo AI</span>
       </div>
 
       <aside className="on-primary relative hidden flex-col justify-between overflow-hidden bg-primary p-12 text-white lg:flex">
@@ -43,7 +43,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
         <div className="relative flex items-center gap-3">
           <Logo />
           <div>
-            <p className="text-base font-semibold">Tutor admin</p>
+            <p className="text-base font-semibold">Clevo AI</p>
             <p className="text-xs text-white/75">Senior Six Advanced Mathematics</p>
           </div>
         </div>

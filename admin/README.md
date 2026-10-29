@@ -1,4 +1,4 @@
-# Tutor admin portal
+# Clevo AI admin portal
 
 A web portal for teachers and admins to monitor activity synced from the offline tutoring tablets (see `../app`). It reads the Supabase tables defined in `../supabase/migrations/`: accounts, tablets, sessions, attempts, hints and solutions, and tutor requests.
 
