@@ -9,8 +9,7 @@
 
 ## Final submission
 
-- **Walkthrough video:** link added once the video is uploaded. Its script is
-  [docs/WALKTHROUGH_VIDEO_SCRIPT.md](docs/WALKTHROUGH_VIDEO_SCRIPT.md).
+- **Walkthrough video:** link added once the video is uploaded.
 - **Technical report (PDF, 5 pages):** [docs/report/Technical_Report.pdf](docs/report/Technical_Report.pdf):
   scope against the proposal, how the product works, testing and results,
   performance and compatibility, code quality.
@@ -83,7 +82,7 @@ offline_tutor/
 ├── tools/                      Python: SymPy grader, package validator, corpus extractor,
 │                               model fetcher, benchmark driver
 ├── bench/                      llama.cpp benchmark kit for the tablet, probes and results
-└── docs/                       report, video script, architecture, release notes,
+└── docs/                       report, architecture, release notes,
                                 installation guide, test evidence, screenshots
 ```
 
@@ -310,7 +309,6 @@ across restarts, and equations render offline.
 ## Documentation
 
 - [Technical report (PDF)](docs/report/Technical_Report.pdf), built from [its HTML source](docs/report/technical-report.html) by `docs/report/build.sh`
-- [Script of the walkthrough video](docs/WALKTHROUGH_VIDEO_SCRIPT.md)
 - [Release notes and the readiness run](docs/RELEASE_V1.md)
 - [Offline reliability test: protocol and results, 178 of 180](docs/evidence/offline-test-2026-10-28/)
 - [Accounts, sync and the admin portal](docs/ACCOUNTS_AND_SYNC.md), [the portal's README](admin/README.md) and [the portal in Chrome and Firefox](docs/evidence/portal-browsers/)

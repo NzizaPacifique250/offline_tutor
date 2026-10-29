@@ -45,12 +45,12 @@ limit; neither change was made during the run.
 
 ## Where the run departs from the protocol
 
-- **Four dry runs, not one** (`dry-runs/`). The first three found faults in
+- **Four dry runs, not one.** The first three found faults in
   the script, not the app: the first launch after installing an update
   was slow to render; `ui.py` read a stale screen when uiautomator could
   not dump a busy one; and a tap made while a scroll was still moving was
   lost. Each was fixed in the script before the next dry run.
-- **A first run was stopped after 25 attempts** (`aborted-run-1/`, on
+- **A first run was stopped after 25 attempts** (on
   1.2.1). It found a fault in the app: after a restart, topic cards below
   the fold kept their old size when progress arrived, so a tap on one
   lesson opened another (`../../images/p8-tablet-topics-stale-cards.png`)
@@ -68,4 +68,3 @@ limit; neither change was made during the run.
 | `run/logcat.txt` | The app's log for the whole run, with device timestamps |
 | `run/failures/` | A screenshot taken at each failed attempt |
 | `run-output.txt` | The script's console output |
-| `aborted-run-1/`, `dry-runs/` | The stopped run and the dry runs, kept for the record |

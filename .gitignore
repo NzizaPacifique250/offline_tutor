@@ -48,3 +48,25 @@ dist/
 
 # Supabase test dependencies
 supabase/tests/node_modules/
+
+# Working files kept on the author's laptop, not in the submitted repository:
+# older screenshots no document uses, raw logs of the offline test's dry runs
+# and stopped first run, an old verification log, and the video's script.
+/docs/images/p2-tablet-answer.png
+/docs/images/p2-tablet-lesson.png
+/docs/images/p3-tablet-exercise-solution.png
+/docs/images/p4-tablet-relaunch.png
+/docs/images/p5-tablet-cancelled.png
+/docs/images/p5-tablet-continue.png
+/docs/images/p5-tablet-declined.png
+/docs/images/p5-tablet-exercise-guidance.png
+/docs/images/p5-tablet-generated.png
+/docs/images/p5-tablet-progress-tutor.png
+/docs/images/p5-tablet-rendered.png
+/docs/images/p6-keyboard-after.png
+/docs/images/p6-keyboard-before.png
+/docs/images/p6-unable-to-load-script.png
+/docs/tablet-verification-2026-10-08.txt
+/docs/WALKTHROUGH_VIDEO_SCRIPT.md
+/docs/evidence/offline-test-2026-10-28/dry-runs/
+/docs/evidence/offline-test-2026-10-28/aborted-run-1/

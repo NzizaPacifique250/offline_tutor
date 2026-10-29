@@ -1,7 +1,0 @@
-condition,case,task,learner,item,expected,observed,passed,reason,latency_ms,limit_ms,input_tool_ms,first_token_ms,record,cpu_temp_c,battery_pct,power,network,device_time
-A,1,T1,OT-DRY,Operations on complex numbers in algebraic form,every formula typeset,,False,lesson not rendered,,2000,96,,,47.8,79,USB,off,1793184653.312
-A,1,T2,OT-DRY,How do I add two complex numbers?,first step of a generated answer,first step shown,True,generated,75864,120000,127,29577,guidance #29,47.8,79,USB,off,1793184734.274
-A,1,T3,OT-DRY,"Application activity 1.7, question 3",Add the two real parts t,hint text on screen,True,hint shown and saved,103,2000,123,,reveal #9,47.8,79,USB,off,1793184845.905
-A,1,T4,OT-DRY,"Application activity 1.7, question 3",5+3i -> correct,"""5+3i"" -> correct",True,marked correct and shown,124,2000,153,,attempt #11,47.8,79,USB,off,1793184868.951
-A,1,T5,OT-DRY,Operations on complex numbers in algebraic form,"Practise: Application activity 1.7, question 7",,False,progress not computed,,2000,,,,47.8,79,USB,off,0.000
-A,1,T6,OT-DRY,,1 attempts after restart,1 attempts,True,ready; 1 of 1 attempts shown after the restart,794,10000,164,,,47.8,79,USB,off,1793184948.156
