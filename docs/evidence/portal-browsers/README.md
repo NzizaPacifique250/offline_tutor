@@ -44,3 +44,20 @@ account, in Chrome at 1280 px. 34 of 34 checks passed:
 
 The screenshots and the result file of that run name real students, so they
 are kept out of the repository.
+
+## Content page (29 October 2026, `check_content.mjs`)
+
+Run against the live Supabase project after migration 0006, signed in as an
+admin, in Chrome at 1280 px and 360 px, with a test release of Unit 1 made
+from a copy of its package with only the version raised. 16 of 16 checks
+passed (`content/results.json`): the menu has Content; the release file was
+published for one tablet and listed as offered with the database's checksum,
+which is the file's SHA-256; the downloaded file was byte for byte the one
+published; the same version again was refused as not newer, and a file that
+is not a lesson package as not a release file; withdrawing and offering it
+again worked; at 360 px the tab bar's seven links fit with nothing scrolling
+sideways. The first run, on the release before, passed 14 of 16: the two
+refusal checks waited for an address the previous step had already left in
+the address bar, so the script now sends each form from a clean page. The
+tablet side of the same test is in
+[`../lesson-updates-2026-10-29/`](../lesson-updates-2026-10-29/).

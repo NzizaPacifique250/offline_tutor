@@ -1,0 +1,98 @@
+[
+  {
+    "step": "admin signs in",
+    "ok": true,
+    "detail": "http://localhost:3000/",
+    "at": "2026-10-29T10:55:08.669Z"
+  },
+  {
+    "step": "the menu has Content",
+    "ok": true,
+    "detail": "",
+    "at": "2026-10-29T10:55:08.770Z"
+  },
+  {
+    "step": "the Content page opens with the publish form",
+    "ok": true,
+    "detail": "",
+    "at": "2026-10-29T10:55:09.995Z"
+  },
+  {
+    "step": "the database has the releases table (0006)",
+    "ok": true,
+    "detail": "",
+    "at": "2026-10-29T10:55:10.117Z"
+  },
+  {
+    "step": "publishing the release file",
+    "ok": true,
+    "detail": "?notice=published",
+    "at": "2026-10-29T10:55:12.851Z"
+  },
+  {
+    "step": "the release is listed as offered",
+    "ok": true,
+    "detail": "",
+    "at": "2026-10-29T10:55:12.929Z"
+  },
+  {
+    "step": "the listed checksum is the file's SHA-256",
+    "ok": true,
+    "detail": "bb80a480dfef",
+    "at": "2026-10-29T10:55:12.964Z"
+  },
+  {
+    "step": "it is for the chosen tablet, or every tablet",
+    "ok": true,
+    "detail": "",
+    "at": "2026-10-29T10:55:12.979Z"
+  },
+  {
+    "step": "the download is the file that was published",
+    "ok": true,
+    "detail": "rw-s6-am.u1-0.2.2.json",
+    "at": "2026-10-29T10:55:14.204Z"
+  },
+  {
+    "step": "the same version again is refused as not newer",
+    "ok": true,
+    "detail": "?error=not-newer",
+    "at": "2026-10-29T10:55:16.345Z"
+  },
+  {
+    "step": "a file that is not a package is refused",
+    "ok": true,
+    "detail": "?error=not-package",
+    "at": "2026-10-29T10:55:18.409Z"
+  },
+  {
+    "step": "withdrawing it",
+    "ok": true,
+    "detail": "",
+    "at": "2026-10-29T10:55:19.832Z"
+  },
+  {
+    "step": "offering it again",
+    "ok": true,
+    "detail": "",
+    "at": "2026-10-29T10:55:21.591Z"
+  },
+  {
+    "step": "no script errors as an admin",
+    "ok": true,
+    "detail": "",
+    "at": "2026-10-29T10:55:21.591Z"
+  },
+  {
+    "step": "at 360 px the tab bar shows seven links",
+    "ok": true,
+    "detail": "7",
+    "at": "2026-10-29T10:55:25.205Z"
+  },
+  {
+    "step": "at 360 px nothing scrolls sideways",
+    "ok": true,
+    "detail": "360 of 360 px",
+    "at": "2026-10-29T10:55:25.206Z"
+  }
+]
