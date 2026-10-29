@@ -3,29 +3,37 @@
 // Run: cd supabase/tests && npm install && npm test
 import { PGlite } from '@electric-sql/pglite';
 import { readdirSync, readFileSync } from 'node:fs';
-const db = new PGlite();
+// pgcrypto ships in PGlite as a bundle without a wrapper; Supabase has it in
+// the extensions schema, where 0004's admin_set_password calls it.
+const pgcrypto = { name: 'pgcrypto', setup: async () => ({ bundlePath: new URL('./node_modules/@electric-sql/pglite/dist/pgcrypto.tar.gz', import.meta.url) }) };
+const db = new PGlite({ extensions: { pgcrypto } });
 // Stand-ins for what Supabase provides.
 await db.exec(`
   create role anon nologin; create role authenticated nologin;
   create schema auth;
-  create table auth.users (id uuid primary key, email text, raw_user_meta_data jsonb);
+  create table auth.users (id uuid primary key, email text, raw_user_meta_data jsonb, raw_app_meta_data jsonb,
+    encrypted_password text, updated_at timestamptz);
+  create schema extensions; create extension pgcrypto schema extensions;
   create function auth.uid() returns uuid language sql stable as $$ select nullif(current_setting('request.jwt.sub', true), '')::uuid $$;
   grant usage on schema public, auth to anon, authenticated;
   grant execute on function auth.uid() to anon, authenticated;
   alter default privileges in schema public grant all on tables to anon, authenticated;
   alter default privileges in schema public grant all on functions to anon, authenticated;
 `);
+// The accounts are created after 0001 to 0003 and before the later
+// migrations, as on the live project, so 0004's backfill is tested too.
 const dir = new URL('../migrations/', import.meta.url);
-for (const f of readdirSync(dir).filter(f => f.endsWith('.sql')).sort()) {
-  await db.exec(readFileSync(new URL(f, dir), 'utf8'));
-  console.log('applied', f);
-}
+const files = readdirSync(dir).filter(f => f.endsWith('.sql')).sort();
+const apply = async list => { for (const f of list) { await db.exec(readFileSync(new URL(f, dir), 'utf8')); console.log('applied', f); } };
+await apply(files.filter(f => f < '0004'));
 const S1 = '11111111-1111-1111-1111-111111111111', S2 = '22222222-2222-2222-2222-222222222222', A = '33333333-3333-3333-3333-333333333333';
-await db.exec(`insert into auth.users values
+const S3 = '44444444-4444-4444-4444-444444444444';
+await db.exec(`insert into auth.users (id, email, raw_user_meta_data) values
   ('${S1}', 's1@x', '{"full_name":"Student One","requested_role":"student"}'),
   ('${S2}', 's2@x', '{"full_name":"Wants Teacher","requested_role":"teacher"}'),
   ('${A}',  'a@x',  '{"full_name":"Admin","requested_role":"admin"}');
   update public.profiles set role = 'admin' where id = '${A}';`);
+await apply(files.filter(f => f >= '0004'));
 // Runs a statement as a signed-in account, the way PostgREST does: the
 // authenticated role with the account's id as the JWT subject.
 async function as(uid, sql) {
@@ -86,6 +94,50 @@ check('anon reads tablets (sees none)', await (async () => {
 await db.exec(`update public.profiles set requested_role = 'teacher' where id = '${S1}'`);
 check('admin declines S1\'s teacher request', await as(A, `select public.set_role('${S1}', 'student')`), [{ set_role: '' }]);
 check('S1 is a student and no longer pending', (await db.query(`select role, requested_role from public.profiles where id = '${S1}'`)).rows, [{ role: 'student', requested_role: 'student' }]);
+
+// 0004: emails and roles on every account, admin account management, and
+// where students struggle.
+const appRoles = async () => (await db.query(`select email, raw_app_meta_data ->> 'role' as role from auth.users order by email`)).rows;
+check('the upgrade gives each profile its email', (await db.query('select learner_code, email from public.profiles order by learner_code')).rows, [
+  { learner_code: 'S-111111', email: 's1@x' },
+  { learner_code: 'S-333333', email: 'a@x' },
+  { learner_code: 'T-222222', email: 's2@x' },
+]);
+check('each account carries its role in app metadata', await appRoles(), [
+  { email: 'a@x', role: 'admin' },
+  { email: 's1@x', role: 'student' },
+  { email: 's2@x', role: 'teacher' },
+]);
+await db.exec(`insert into auth.users (id, email, raw_user_meta_data) values ('${S3}', 's3@x', '{"full_name":"Student Three"}')`);
+check('a new account gets its email and the student role', (await db.query(`select p.email, p.role, u.raw_app_meta_data ->> 'role' as app_role from public.profiles p join auth.users u on u.id = p.id where p.id = '${S3}'`)).rows, [{ email: 's3@x', role: 'student', app_role: 'student' }]);
+await db.exec(`update auth.users set raw_app_meta_data = '{"provider":"email","providers":["email"]}' where id = '${A}'`);
+check('Supabase Auth rewriting app metadata keeps the role', (await db.query(`select raw_app_meta_data ->> 'provider' as provider, raw_app_meta_data ->> 'role' as role from auth.users where id = '${A}'`)).rows, [{ provider: 'email', role: 'admin' }]);
+check('admin renames S1', await as(A, `update public.profiles set full_name = 'Renamed by admin' where id = '${S1}' returning full_name`), [{ full_name: 'Renamed by admin' }]);
+check('S2, a teacher, renames S1 (no row changed)', await as(S2, `update public.profiles set full_name = 'X' where id = '${S1}' returning full_name`), []);
+check('S1 sets a password for S3 (refused)', await as(S1, `select public.admin_set_password('${S3}', 'long-enough-1')`), /only an admin/);
+check('admin sets a 5-character password (refused)', await as(A, `select public.admin_set_password('${S3}', 'short')`), /at least 8/);
+check('admin sets a new password for S3', await as(A, `select public.admin_set_password('${S3}', 'long-enough-1')`), [{ admin_set_password: '' }]);
+check('the new password verifies as bcrypt', (await db.query(`select extensions.crypt('long-enough-1', encrypted_password) = encrypted_password as ok, left(encrypted_password, 4) as kind from auth.users where id = '${S3}'`)).rows, [{ ok: true, kind: '$2a$' }]);
+// S1 answers E2 wrongly twice and never correctly: stuck there; E is solved.
+await as(S1, `insert into public.attempts values ('dev1', 10, '${S1}', 'S-111111', 1, 'L', 'E2', '7', 'wrong', 1, now() - interval '2 minutes')`);
+await as(S1, `insert into public.attempts values ('dev1', 11, '${S1}', 'S-111111', 1, 'L', 'E2', '8', 'wrong', 2, now())`);
+check('S1 reads where it struggles', await as(S1, `select exercise_id, attempts, wrong, solved, stuck, last_wrong_answer from public.exercise_progress order by exercise_id`), [
+  { exercise_id: 'E', attempts: 1, wrong: 0, solved: true, stuck: false, last_wrong_answer: null },
+  { exercise_id: 'E2', attempts: 2, wrong: 2, solved: false, stuck: true, last_wrong_answer: '8' },
+]);
+check('the overview counts wrong answers and stuck exercises', await as(A, `select learner_code, email, wrong_answers, exercises_stuck, tutor_failed from public.learner_overview where user_id = '${S1}'`), [{ learner_code: 'S-111111', email: 's1@x', wrong_answers: 2, exercises_stuck: 1, tutor_failed: 0 }]);
+check('S2, a teacher, sees where S1 struggles', count(await as(S2, `select count(*) from public.exercise_progress where user_id = '${S1}'`)), 2);
+check('S3, a student, sees no one else\'s struggles', count(await as(S3, `select count(*) from public.exercise_progress`)), 0);
+check('anon deletes an account (refused)', await (async () => {
+  await db.exec('set role anon');
+  try { return (await db.query(`select public.admin_delete_user('${S3}')`)).rows; } catch (e) { return 'ERROR: ' + e.message; } finally { await db.exec('reset role'); }
+})(), /permission denied/);
+check('S2, a teacher, deletes S3 (refused)', await as(S2, `select public.admin_delete_user('${S3}')`), /only an admin/);
+check('admin deletes itself (refused)', await as(A, `select public.admin_delete_user('${A}')`), /your own account/);
+await as(A, `select public.set_role('${S3}', 'admin')`);
+check('admin deletes another admin (refused)', await as(A, `select public.admin_delete_user('${S3}')`), /change an admin to another role/);
+check('admin deletes S1', await as(A, `select public.admin_delete_user('${S1}')`), [{ admin_delete_user: '' }]);
+check('S1\'s profile and synced rows are gone; the tablet stays', (await db.query(`select (select count(*) from public.profiles where id = '${S1}')::int as profiles, (select count(*) from public.attempts where user_id = '${S1}')::int as attempts, (select count(*) from public.devices where id = 'dev1')::int as tablets, (select last_user from public.devices where id = 'dev1') as last_user`)).rows, [{ profiles: 0, attempts: 0, tablets: 1, last_user: null }]);
 
 console.log(failures ? `\n${failures} check(s) failed` : '\nall checks passed');
 process.exit(failures ? 1 : 0);
