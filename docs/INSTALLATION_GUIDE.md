@@ -1,4 +1,4 @@
-# Offline Tutor 1.4.0: Installation Guide
+# Offline Tutor 1.4.1: Installation Guide
 
 For the teacher or researcher who prepares the tablets. Tablets are set up
 by hand, one at a time, and need no programming tools; allow about 15
@@ -8,13 +8,13 @@ solutions, the tutor, progress, and Teacher tools.
 
 ## Choose the build
 
-Both files are release 1.4.0 (build 8), signed with the same key, so a
+Both files are release 1.4.1 (build 9), signed with the same key, so a
 tablet can move from one to the other without losing its records.
 
 | Build | File | Use it for |
 |---|---|---|
-| **Offline-only** (the study build) | `OfflineTutor-1.4.0-offline.apk` | Sessions with students in the pilot, and any tablet that must never send data. Android blocks it from the internet entirely. Students study under learner codes; accounts cannot be created or synced on it, and new lessons are imported from a file. |
-| **Connected** | `OfflineTutor-1.4.0.apk` | Tablets whose users have accounts and should send their work to the school's server when there is Wi-Fi. Everything above, plus accounts and sync, which stay off until an account holder turns sync on, and new lessons offered as soon as they are published. |
+| **Offline-only** (the study build) | `OfflineTutor-1.4.1-offline.apk` | Sessions with students in the pilot, and any tablet that must never send data. Android blocks it from the internet entirely. Students study under learner codes; accounts cannot be created or synced on it, and new lessons are imported from a file. |
+| **Connected** | `OfflineTutor-1.4.1.apk` | Tablets whose users have accounts and should send their work to the school's server when there is Wi-Fi. Everything above, plus accounts and sync, which stay off until an account holder turns sync on, and new lessons offered as soon as they are published. |
 
 Participant data must not be synced until the ethics committee has
 approved an amendment covering it, so the pilot uses the offline-only
@@ -33,8 +33,8 @@ tell them apart by the file name, or by the checksum below.
 
 | File | SHA-256 |
 |---|---|
-| `OfflineTutor-1.4.0-offline.apk` | `84b70313947c20073a550e862c26397974b8b5667ff8fd993965c6ce62e7afda` |
-| `OfflineTutor-1.4.0.apk` | `ee25003548816241beebd283938bf24e3af5235b73e207895d35b6e8738e11e5` |
+| `OfflineTutor-1.4.1-offline.apk` | `a5908bf0176a78d906fcff14c6aab31912c53da0e48f92fad8c7258e62826876` |
+| `OfflineTutor-1.4.1.apk` | `59c17870af5c3e832e98084407ecaaf3f2632a963abcea1c802907b9c95a70bb` |
 | the model file | `9614a50f03c897028920ca0dc4365da570bf587f9ee7768261216fe370b37e8e` |
 
 On a computer, `sha256sum <file>` prints the checksum to compare. The app
@@ -59,7 +59,8 @@ refused.
    **Settings**, switch on **Allow from this source**, and go back.
 4. Tap **Install**, then **Open**.
 
-The app is called **Offline Tutor**. Its first screen is **Sign in**, with
+The app is called **Offline Tutor**; its icon is a white open book with a
+spark on navy. Its first screen is **Sign in**, with
 **Continue without an account** and **Teacher tools (PIN)** below the form,
 and at the bottom a line naming the content:
 `Content: rw-s6-am.u1 v0.2.0, rw-s6-am.u4 v0.1.0, rw-s6-am.u5 v0.1.0, rw-s6-am.u9 v0.1.0 · 4 lesson(s) · offline`.
@@ -113,7 +114,7 @@ and updates from interrupting a session.
 ## 6. Check the tablet before a session
 
 1. In **Teacher tools**, under **About this build**, check that it says
-   **Offline Tutor 1.4.0 (build 8, release …)** and lists the four content
+   **Offline Tutor 1.4.1 (build 9, release …)** and lists the four content
    packages.
 2. Go back to the first screen, tap **Continue without an account**, type
    the learner code `TEST` and tap **Start** (or sign in with a test

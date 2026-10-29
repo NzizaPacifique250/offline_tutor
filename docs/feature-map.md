@@ -1,6 +1,6 @@
 # Feature Map
 
-Every major feature, the directory that owns it, its status at v1.4.0
+Every major feature, the directory that owns it, its status at v1.4.1
 (29 October 2026), and the tests or records that show it works. Check this
 before touching code so a change lands in the right place, and keep each
 feature's logic inside its directory.
@@ -30,6 +30,7 @@ feature's logic inside its directory.
 | Lesson updates: release files exported and validated, published from the portal for every tablet or chosen ones, offered in a pop-up on a connected tablet and installed after a checksum and structure check, or imported from a file offline; only newer versions, learners' records kept | `tools/export_package.py`, `supabase/migrations/0006_lesson_updates.sql`, `admin/app/(portal)/content/`, `app/src/updates/` (`releases.ts`, `packageFile.ts`, `install.ts`, `updater.ts`), `app/src/content/version.ts`, `app/src/screens/UpdatePrompt.tsx`, scheduling in `app/App.tsx` | Done in 1.4.0; checked on the IT-801B with the live project | `app/__tests__/updates.test.tsx`; the 0006 checks in `supabase/tests/check_policies.mjs`; `docs/evidence/portal-browsers/check_content.mjs`; `docs/evidence/lesson-updates-2026-10-29/` |
 | Online database and its security rules | `supabase/migrations/` | 0001 to 0005 applied to the project on 28 October | `supabase/tests/check_policies.mjs` (74 checks, fails on any mismatch) |
 | Admin portal: account management (create, rename, password, role, delete), classes (a teacher sees only their students), every student's wrong answers and struggles, progress, tablets, lesson releases, activity, tutor timings | `admin/` (Next.js) | Done in 1.3.0; Content page in 1.4.0 | `admin/README.md`; `npm run lint`, `npm run build`; `docs/evidence/portal-browsers/check_portal.mjs` in Chrome and Firefox |
+| Logo and icons: the master logo, the Android launcher icons (adaptive, themed, older square and round), the app's header logo, the portal's mark and browser icons | `docs/brand/offline-tutor-logo.png`, `admin/scripts/generate-icons.mjs` (`npm run icons`), `app/android/app/src/main/res/mipmap-*`, `app/src/assets/`, `admin/app/icon.png`, `admin/public/images/logo-mark.png` | Done in 1.4.1 | Every size checked on a contact sheet with the launcher masks; the portal's mark and icons in Chrome; the launcher icon and header logo on the IT-801B |
 | Android build, toolchain pinning, device scripts | `app/android/`, `app/scripts/env.sh`, `run_debug.sh`, `stage_model.sh` | Debug build for development; signed release `rw.offlinetutor.pilot` in a connected build and an offline-only build (`-PofflineOnly`, no internet permission) | `docs/INSTALLATION_GUIDE.md` |
 | Tablet UI driver: dump, tap by text, type, wait, screenshot, airplane mode | `app/scripts/ui.py` | Done; drives the tablet checks | `docs/TABLET_TEST_CHECKLIST.md` |
 | Offline reliability test: six tasks, ten cases, three network conditions | `app/scripts/offline_test.py` | Run on 28 October | `docs/evidence/offline-test-2026-10-28/` |

@@ -15,11 +15,11 @@
 - **Technical report (PDF, 5 pages):** [docs/report/Technical_Report.pdf](docs/report/Technical_Report.pdf):
   scope against the proposal, how the product works, testing and results,
   performance and compatibility, code quality.
-- **Installable app:** release 1.4.0 (build 8) in two builds, both in the
-  submission ZIP and not in Git: `OfflineTutor-1.4.0-offline.apk`, the study
-  build with no internet permission (SHA-256 `84b70313…62e7afda`), and
-  `OfflineTutor-1.4.0.apk`, the connected build with accounts, sync and lesson
-  updates (SHA-256 `ee250035…738e11e5`); the full checksums are in the release
+- **Installable app:** release 1.4.1 (build 9) in two builds, both in the
+  submission ZIP and not in Git: `OfflineTutor-1.4.1-offline.apk`, the study
+  build with no internet permission (SHA-256 `a5908bf0…62826876`), and
+  `OfflineTutor-1.4.1.apk`, the connected build with accounts, sync and lesson
+  updates (SHA-256 `59c17870…c95a70bb`); the full checksums are in the release
   notes. Install either by hand with
   [docs/INSTALLATION_GUIDE.md](docs/INSTALLATION_GUIDE.md), or build them as
   described below.
@@ -275,7 +275,7 @@ no network. The plan, from the state today to the school pilot:
 
 ## Current status
 
-**v1.4.0: four units, an on-device tutor, teacher tools with class progress and research export, personal accounts that sign in offline, sync to Supabase when there is internet, a web admin portal, and lesson updates published from the portal.** The offline study build (`-PofflineOnly`, as 1.2.2) passed the proposal's 180-attempt offline test with 178 passes. See [docs/RELEASE_V1.md](docs/RELEASE_V1.md) and [docs/ACCOUNTS_AND_SYNC.md](docs/ACCOUNTS_AND_SYNC.md). Testing with students waits for teacher review of the content and the institutional approvals.
+**v1.4.1: four units, an on-device tutor, teacher tools with class progress and research export, personal accounts that sign in offline, sync to Supabase when there is internet, a web admin portal, and lesson updates published from the portal.** The offline study build (`-PofflineOnly`, as 1.2.2) passed the proposal's 180-attempt offline test with 178 passes. See [docs/RELEASE_V1.md](docs/RELEASE_V1.md) and [docs/ACCOUNTS_AND_SYNC.md](docs/ACCOUNTS_AND_SYNC.md). Testing with students waits for teacher review of the content and the institutional approvals.
 
 The pilot scope is fixed: Rwanda REB curriculum, Senior Six Advanced
 Mathematics, four pilot units, an ATMPC IT-801B Android tablet, React Native
