@@ -21,7 +21,8 @@ tools, behind a PIN.
 
 | File | Size | SHA-256 |
 |---|---|---|
-| `OfflineTutor-1.3.0.apk` | 101,099,686 bytes | `33b5298a0f4c54930524474448255c0d62a758501abe75ee062db15f143dbd8e` |
+| `OfflineTutor-1.3.0.apk` (connected: accounts and sync) | 101,099,686 bytes | `33b5298a0f4c54930524474448255c0d62a758501abe75ee062db15f143dbd8e` |
+| `OfflineTutor-1.3.0-offline.apk` (built with `-PofflineOnly`: no internet permission; the study build) | 101,099,658 bytes | `319f2f0c5e581ebaa428a1af19c02838d3c6e55f84456e90494365622230d237` |
 | `OfflineTutor-1.2.2.apk` (offline only, the build the offline test ran on) | 100,401,394 bytes | `1f9643ba09f348467cd1f9f92252e1bc7a19141ea4c6783e6735572235f9955f` |
 | `qwen25-math-1.5b-Qwen2.5-Math-1.5B-Instruct-Q4_K_M.gguf` | 986,048,832 bytes | `9614a50f03c897028920ca0dc4365da570bf587f9ee7768261216fe370b37e8e` |
 

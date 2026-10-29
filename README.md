@@ -13,10 +13,13 @@
 - **Technical report (PDF, 5 pages):** [docs/report/Technical_Report.pdf](docs/report/Technical_Report.pdf):
   scope against the proposal, how the product works, testing and results,
   performance and compatibility, code quality.
-- **Installable app:** `OfflineTutor-1.3.0.apk` (release 1.3.0, build 7,
-  SHA-256 `33b5298a0f4c54930524474448255c0d62a758501abe75ee062db15f143dbd8e`),
-  in the submission ZIP; the APK is not in Git. Install it with
-  [docs/INSTALLATION_GUIDE.md](docs/INSTALLATION_GUIDE.md), or build it as
+- **Installable app:** release 1.3.0 (build 7) in two builds, both in the
+  submission ZIP and not in Git: `OfflineTutor-1.3.0-offline.apk`, the study
+  build with no internet permission (SHA-256 `319f2f0c…2230d237`), and
+  `OfflineTutor-1.3.0.apk`, the connected build with accounts and sync
+  (SHA-256 `33b5298a…143dbd8e`); the full checksums are in the release
+  notes. Install either by hand with
+  [docs/INSTALLATION_GUIDE.md](docs/INSTALLATION_GUIDE.md), or build them as
   described below.
 
 ## Overview
@@ -253,8 +256,11 @@ no network. The plan, from the state today to the school pilot:
    of the content and the institutional approvals: tablets prepared
    offline, learner codes rather than names, data kept on the device,
    results exported by the researcher.
-6. **Updates.** Curriculum packages are versioned; a new version is
-   re-imported on the next launch. Application updates are a new APK.
+6. **Updates.** Curriculum packages are versioned and travel inside the
+   APK; a tablet re-imports a package whose version changed at its next
+   launch, keeping the learners' records. New lessons and new versions are
+   therefore installed by hand, tablet by tablet, as the installation guide
+   describes; delivering packages over the network is future work.
    Synchronization stays optional and never on the tutoring path.
 7. **After the capstone.** More units and grades through the package
    format, one subject at a time.
