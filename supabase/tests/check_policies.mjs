@@ -72,7 +72,11 @@ check('S2 reads attempts (sees none)', count(await as(S2, `select count(*) from 
 check('S2 makes itself teacher directly (refused)', await as(S2, `update public.profiles set role = 'teacher' where id = '${S2}' returning role`), /permission denied/);
 check('S2 calls set_role (refused)', await as(S2, `select public.set_role('${S2}', 'teacher')`), /only an admin/);
 check('admin approves S2 as teacher', await as(A, `select public.set_role('${S2}', 'teacher')`), [{ set_role: '' }]);
-check('S2, now a teacher, reads attempts (sees 1)', count(await as(S2, `select count(*) from public.attempts`)), 1);
+// 0005: a teacher reads only the students in their own classes.
+check('S2, a teacher without a class, reads attempts (sees none)', count(await as(S2, `select count(*) from public.attempts`)), 0);
+const CLASS_A = (await as(A, `insert into public.classes (name, teacher_id) values ('S6 A', '${S2}') returning id`))[0].id;
+await as(A, `insert into public.class_members (class_id, student_id) values ('${CLASS_A}', '${S1}')`);
+check('S2, teacher of S1\'s class, reads attempts (sees 1)', count(await as(S2, `select count(*) from public.attempts`)), 1);
 check('S2, a teacher, promotes S1 (refused)', await as(S2, `select public.set_role('${S1}', 'admin')`), /only an admin/);
 check('S2, a teacher, writes a row as S1 (refused)', await as(S2, `insert into public.attempts values ('dev1', 3, '${S1}', 'S-111111', 1, 'L', 'E', 'x', 'wrong', 0, now())`), /row-level security/);
 check('S1 renames itself', await as(S1, `update public.profiles set full_name = 'S One' where id = '${S1}' returning full_name`), [{ full_name: 'S One' }]);
@@ -138,6 +142,37 @@ await as(A, `select public.set_role('${S3}', 'admin')`);
 check('admin deletes another admin (refused)', await as(A, `select public.admin_delete_user('${S3}')`), /change an admin to another role/);
 check('admin deletes S1', await as(A, `select public.admin_delete_user('${S1}')`), [{ admin_delete_user: '' }]);
 check('S1\'s profile and synced rows are gone; the tablet stays', (await db.query(`select (select count(*) from public.profiles where id = '${S1}')::int as profiles, (select count(*) from public.attempts where user_id = '${S1}')::int as attempts, (select count(*) from public.devices where id = 'dev1')::int as tablets, (select last_user from public.devices where id = 'dev1') as last_user`)).rows, [{ profiles: 0, attempts: 0, tablets: 1, last_user: null }]);
+
+// 0005: classes. T teaches class B with P1; P2 is in no class of T's.
+const T = '55555555-5555-5555-5555-555555555555', P1 = '66666666-6666-6666-6666-666666666666', P2 = '77777777-7777-7777-7777-777777777777';
+await db.exec(`insert into auth.users (id, email, raw_user_meta_data) values
+  ('${T}', 't@x', '{"full_name":"Teacher T","requested_role":"teacher"}'),
+  ('${P1}', 'p1@x', '{"full_name":"Pupil One"}'),
+  ('${P2}', 'p2@x', '{"full_name":"Pupil Two"}')`);
+await as(A, `select public.set_role('${T}', 'teacher')`);
+for (const [who, local] of [[P1, 21], [P2, 22]]) {
+  await as(who, `insert into public.attempts values ('dev1', ${local}, '${who}', 'S-X', 1, 'L', 'E', '1', 'wrong', 0, now())`);
+}
+check('T, a teacher, creates a class (refused)', await as(T, `insert into public.classes (name, teacher_id) values ('Mine', '${T}')`), /row-level security/);
+check('admin makes a student the teacher of a class (refused)', await as(A, `insert into public.classes (name, teacher_id) values ('Wrong', '${P1}')`), /needs a teacher or an admin/);
+check('admin creates class B for T', (await as(A, `insert into public.classes (name, teacher_id) values ('S6 B', '${T}') returning name`)), [{ name: 'S6 B' }]);
+const CLASS_B = (await as(A, `select id from public.classes where name = 'S6 B'`))[0].id;
+check('admin adds P1 to class B', await as(A, `insert into public.class_members (class_id, student_id) values ('${CLASS_B}', '${P1}') returning student_id`), [{ student_id: P1 }]);
+check('admin adds a teacher as a student (refused)', await as(A, `insert into public.class_members (class_id, student_id) values ('${CLASS_B}', '${S2}')`), /only students/);
+check('T adds P2 to its own class (refused)', await as(T, `insert into public.class_members (class_id, student_id) values ('${CLASS_B}', '${P2}')`), /row-level security/);
+check('T reads its class and its member', [await as(T, `select name from public.classes`), count(await as(T, `select count(*) from public.class_members`))], [[{ name: 'S6 B' }], 1]);
+check('T reads only P1\'s attempts', await as(T, `select user_id from public.attempts`), [{ user_id: P1 }]);
+check('T reads only its own and P1\'s profiles', await as(T, `select email from public.profiles order by email`), [{ email: 'p1@x' }, { email: 't@x' }]);
+check('T reads only P1 and itself in the overview, and P1\'s struggles', [await as(T, `select email from public.learner_overview order by email`), count(await as(T, `select count(*) from public.exercise_progress`))], [[{ email: 'p1@x' }, { email: 't@x' }], 1]);
+check('P1, a student, reads no class', count(await as(P1, `select count(*) from public.classes`)), 0);
+check('admin reads every attempt (S1\'s went with its account)', count(await as(A, `select count(*) from public.attempts`)), 2);
+await as(A, `select public.set_role('${T}', 'student')`);
+check('T, changed to a student, reads nothing of P1', [count(await as(T, `select count(*) from public.attempts`)), count(await as(T, `select count(*) from public.profiles`))], [0, 1]);
+check('admin deletes class B with its members', [await as(A, `delete from public.classes where id = '${CLASS_B}' returning name`), count(await as(A, `select count(*) from public.class_members where class_id = '${CLASS_B}'`))], [[{ name: 'S6 B' }], 0]);
+check('anon reads classes (sees none)', await (async () => {
+  await db.exec('set role anon');
+  try { return Number((await db.query('select count(*) from public.classes')).rows[0].count); } catch (e) { return 'ERROR: ' + e.message; } finally { await db.exec('reset role'); }
+})(), 0);
 
 console.log(failures ? `\n${failures} check(s) failed` : '\nall checks passed');
 process.exit(failures ? 1 : 0);
