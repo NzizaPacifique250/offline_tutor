@@ -6,8 +6,9 @@
  *   SUPABASE_LIVE=1 npx jest __tests__/supabase-live.test.ts
  *
  * Each run creates two accounts named "Integration test" on the reserved
- * example.com domain (a student and a teacher request); delete them from
- * the Supabase dashboard when they are no longer wanted.
+ * example.com domain (a student and a teacher request) and registers a
+ * tablet called "Tablet TEST". docs/ACCOUNTS_AND_SYNC.md (Removing test
+ * data) has the SQL that removes them afterwards.
  */
 
 import { createClient } from '@supabase/supabase-js';

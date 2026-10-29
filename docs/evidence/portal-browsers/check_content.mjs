@@ -11,7 +11,8 @@
 // byte for byte the one uploaded; the same file again is refused as not
 // newer; a file that is not a package is refused; withdrawing and offering it
 // again work. With KEEP=1 the release stays offered at the end, for a tablet
-// to install; otherwise it is left withdrawn.
+// to install; otherwise it is left withdrawn. Either way, remove it afterwards
+// with the SQL in docs/ACCOUNTS_AND_SYNC.md (Removing test data).
 //
 //   ADMIN_EMAIL=… ADMIN_PASSWORD=… [TEACHER_EMAIL=… TEACHER_PASSWORD=…] \
 //   [RELEASE_FILE=dist/content/rw-s6-am.u1-0.2.1.json DEVICE_ID=… KEEP=1] \

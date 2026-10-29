@@ -143,6 +143,23 @@ internet connection" with no effect on studying. After Wi-Fi came back, the
 next automatic sync sent that session and attempt once; a later sync sent
 nothing new.
 
+## Removing test data
+
+Two checks leave data in the live project on purpose, so that a run can be
+inspected afterwards. The live test (`app/__tests__/supabase-live.test.ts`)
+creates two accounts named "Integration test" and a tablet called "Tablet
+TEST" each time it runs, and `docs/evidence/portal-browsers/check_content.mjs`
+leaves the release it publishes, withdrawn. Remove them in the SQL Editor:
+
+```sql
+-- Accounts made by the tests, with everything they synced.
+delete from auth.users where email like 'it-%@example.com';
+-- The tablets the live test registered; their records went with the accounts.
+delete from public.devices where id like 'it-device-%';
+-- Releases published by the portal check.
+delete from public.content_releases where notes like 'Portal check%';
+```
+
 ## Known limits
 
 - For about a minute after the connection returns, a sync can still fail
