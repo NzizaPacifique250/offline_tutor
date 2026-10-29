@@ -12,9 +12,9 @@ import { Rise } from "@/components/rise";
 import { SubmitButton } from "@/components/submit-button";
 import { Table, Td } from "@/components/table";
 import { getClient, requireStaff } from "@/lib/auth";
-import { rows } from "@/lib/query";
+import { firstProblem, rows } from "@/lib/query";
 import { kigaliDateTime, timeAgo } from "@/lib/stats";
-import type { OverviewRow, Role } from "@/lib/types";
+import type { ClassMember, ClassRow, OverviewRow, Role } from "@/lib/types";
 import { capitalise, initials, roleTone } from "@/lib/ui";
 import { createAccount, setRole } from "./actions";
 
@@ -53,14 +53,22 @@ export default async function UsersPage({ searchParams }: Props) {
   const { role: roleParam, notice: noticeCode, error: errorCode, id: changedId, to } = await searchParams;
   const supabase = await getClient();
   // The query starts together with the staff check, not after it.
-  const [{ profile, user }, overview] = await Promise.all([
+  // An admin reads every account; a teacher the students in their classes.
+  const [{ profile, user }, overview, classes, members] = await Promise.all([
     requireStaff(),
     rows<OverviewRow>(supabase.from("learner_overview").select("*").order("created_at", { ascending: false })),
+    rows<ClassRow>(supabase.from("classes").select("id, name")),
+    rows<ClassMember>(supabase.from("class_members").select("class_id, student_id")),
   ]);
   const isAdmin = profile.role === "admin";
-  const filter = FILTERS.find((f) => f === roleParam) ?? "all";
+  const filters: readonly Filter[] = isAdmin ? FILTERS : ["all", "needs-help"];
+  const filter = filters.find((f) => f === roleParam) ?? "all";
+  const accounts = isAdmin ? overview.data : overview.data.filter((u) => u.role === "student");
+  const className = new Map(classes.data.map((c) => [c.id, c.name]));
+  const classesOf = (id: string) =>
+    members.data.filter((m) => m.student_id === id).map((m) => className.get(m.class_id)).filter(Boolean).join(", ");
   // The account is looked up by its id, so the message never repeats text from the address bar.
-  const changed = overview.data.find((u) => u.user_id === changedId);
+  const changed = accounts.find((u) => u.user_id === changedId);
   const changedName = changed ? changed.full_name || changed.learner_code : "The account";
   const notice =
     noticeCode === "role-changed" && ROLES.some((r) => r === to)
@@ -72,12 +80,13 @@ export default async function UsersPage({ searchParams }: Props) {
           : null;
   const error = errorCode ? (ERRORS[errorCode] ?? "That did not work. Try again.") : null;
 
-  const pending = overview.data.filter((u) => u.role === "student" && u.requested_role === "teacher");
+  const pending = accounts.filter((u) => u.role === "student" && u.requested_role === "teacher");
   const matches = (f: Filter) => (u: OverviewRow) => (f === "all" ? true : f === "needs-help" ? stuck(u) : u.role === f);
-  const shown = overview.data.filter(matches(filter));
+  const shown = accounts.filter(matches(filter));
   // Students includes people who have asked to become teachers, as on the Overview.
-  const countFor = (f: Filter) => overview.data.filter(matches(f)).length;
-  const filterLabel = (f: Filter) => (f === "all" ? "All" : f === "needs-help" ? "Needs help" : capitalise(f) + "s");
+  const countFor = (f: Filter) => accounts.filter(matches(f)).length;
+  const filterLabel = (f: Filter) =>
+    f === "all" ? (isAdmin ? "All" : "Your students") : f === "needs-help" ? "Needs help" : capitalise(f) + "s";
 
   return (
     <>
@@ -86,9 +95,9 @@ export default async function UsersPage({ searchParams }: Props) {
         description={
           isAdmin
             ? "Create accounts, approve teacher requests and change roles. Open an account to rename it, set a new password or delete it."
-            : "Accounts and their progress. Only an admin can create or change accounts."
+            : "The students in your classes and their progress. Only an admin creates or changes accounts."
         }
-        problem={overview.problem}
+        problem={firstProblem(overview, classes, members)}
         kigaliTime
       />
       {notice || error ? (
@@ -170,7 +179,7 @@ export default async function UsersPage({ searchParams }: Props) {
         <h2 className="sr-only">All accounts</h2>
         <nav aria-label="Filter by role" className="mb-4 max-w-full overflow-x-auto">
           <div className="inline-flex gap-1 rounded-md bg-tint p-1">
-            {FILTERS.map((f) => (
+            {filters.map((f) => (
               <Link
                 key={f}
                 href={f === "all" ? "/users" : `/users?role=${f}`}
@@ -191,7 +200,8 @@ export default async function UsersPage({ searchParams }: Props) {
           caption="Accounts"
           head={[
             "Learner",
-            "Role",
+            ...(isAdmin ? ["Role"] : []),
+            "Class",
             { label: "Attempts", numeric: true },
             { label: "Exercises correct", numeric: true },
             { label: "Wrong answers", numeric: true },
@@ -202,7 +212,9 @@ export default async function UsersPage({ searchParams }: Props) {
           ]}
           empty={
             filter === "all"
-              ? { title: "No accounts to show", body: EMPTY_BODY.all }
+              ? isAdmin
+                ? { title: "No accounts to show", body: EMPTY_BODY.all }
+                : { title: "No students in your classes yet", body: "An admin adds students to your classes on the Classes page." }
               : filter === "needs-help"
                 ? { title: "No one needs help right now", body: EMPTY_BODY["needs-help"], link: { href: "/users", label: "Show all accounts" } }
                 : {
@@ -231,10 +243,19 @@ export default async function UsersPage({ searchParams }: Props) {
                   </div>
                 </div>
               </Td>
+              {isAdmin ? (
+                <Td>
+                  <span className="whitespace-nowrap">
+                    <Badge tone={roleTone(u.role)}>{capitalise(u.role)}</Badge>
+                  </span>
+                </Td>
+              ) : null}
               <Td>
-                <span className="whitespace-nowrap">
-                  <Badge tone={roleTone(u.role)}>{capitalise(u.role)}</Badge>
-                </span>
+                {u.role === "student" ? (
+                  classesOf(u.user_id) || <span className="text-muted">No class</span>
+                ) : (
+                  <span className="text-muted">–</span>
+                )}
               </Td>
               <Td numeric>{u.attempts}</Td>
               <Td numeric>

@@ -70,6 +70,7 @@ const paths = {
   play: <path d="M8 5.5v13l11-6.5z" />,
   pencil: <path d="M4 20l1-4L16.5 4.5a2.1 2.1 0 0 1 3 3L8 19z" />,
   plus: <path d="M12 5v14M5 12h14" />,
+  classes: <path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v16H5.5A1.5 1.5 0 0 1 4 18.5zM20 5.5A1.5 1.5 0 0 0 18.5 4H13v16h5.5a1.5 1.5 0 0 0 1.5-1.5z" />,
   trash: <path d="M4 7h16M9.5 7V4.5h5V7M6.5 7l1 13h9l1-13M10 11v5M14 11v5" />,
   dot: <circle cx="12" cy="12" r="3.5" fill="currentColor" stroke="none" />,
 } satisfies Record<string, ReactNode>;

@@ -19,7 +19,7 @@ import { getClient, requireStaff } from "@/lib/auth";
 import { LESSONS, exerciseLabel, lessonTitle } from "@/lib/curriculum";
 import { allRows, firstProblem, rows } from "@/lib/query";
 import { TOTAL_EXERCISES, formatMs } from "@/lib/stats";
-import type { Attempt, ExerciseProgress, GuidanceEvent, OverviewRow, Role } from "@/lib/types";
+import type { Attempt, ClassMember, ClassRow, ExerciseProgress, GuidanceEvent, OverviewRow, Role } from "@/lib/types";
 import { capitalise, initials, outcomeMeta, roleTone, verdictMeta } from "@/lib/ui";
 import { deleteAccount, renameAccount, setAccountPassword, setRole } from "../actions";
 
@@ -52,7 +52,7 @@ export default async function UserPage({ params, searchParams }: Props) {
   const supabase = await getClient();
 
   // The queries start together with the staff check, not after it.
-  const [{ profile: me, user: meUser }, [overview, attempts, tutor, exercises]] = await Promise.all([
+  const [{ profile: me, user: meUser }, [overview, attempts, tutor, exercises, memberships, classes]] = await Promise.all([
     requireStaff(),
     Promise.all([
       rows<OverviewRow>(supabase.from("learner_overview").select("*").eq("user_id", id)),
@@ -63,10 +63,12 @@ export default async function UserPage({ params, searchParams }: Props) {
         supabase.from("guidance_events").select("*").eq("user_id", id).order("created_at", { ascending: false }).limit(RECENT),
       ),
       rows<ExerciseProgress>(supabase.from("exercise_progress").select("*").eq("user_id", id)),
+      rows<ClassMember>(supabase.from("class_members").select("class_id, student_id").eq("student_id", id)),
+      rows<ClassRow>(supabase.from("classes").select("id, name")),
     ]),
   ]);
 
-  const problem = firstProblem(overview, attempts, tutor, exercises);
+  const problem = firstProblem(overview, attempts, tutor, exercises, memberships, classes);
   const user = overview.data[0];
   if (!user && !problem) notFound();
   if (!user) return <PageHeader title="Account" problem={problem} />;
@@ -75,6 +77,7 @@ export default async function UserPage({ params, searchParams }: Props) {
   const name = user.full_name || "(no name)";
   const shownName = user.full_name || user.learner_code;
   const isAdmin = me.role === "admin";
+  const classNames = memberships.data.map((m) => classes.data.find((c) => c.id === m.class_id)?.name).filter(Boolean).join(", ");
   const notice = noticeCode ? (NOTICES[noticeCode] ?? null) : null;
   const error = errorCode ? (ERRORS[errorCode] ?? "That did not work. Try again.") : null;
   // Stuck first, then the most wrong answers, then the most recent.
@@ -95,7 +98,13 @@ export default async function UserPage({ params, searchParams }: Props) {
         avatar={<Avatar initials={initials(user.full_name, user.learner_code)} size={48} />}
         title={name}
         badges={<Badge tone={roleTone(user.role)}>{capitalise(user.role)}</Badge>}
-        description={user.email ? `Code ${user.learner_code} · ${user.email}` : `Code ${user.learner_code}`}
+        description={[
+          `Code ${user.learner_code}`,
+          user.email,
+          user.role === "student" ? (classNames ? `Class: ${classNames}` : "In no class") : null,
+        ]
+          .filter(Boolean)
+          .join(" · ")}
         problem={problem}
         kigaliTime
       />

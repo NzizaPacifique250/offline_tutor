@@ -99,6 +99,9 @@
   .btn-lg {
     @apply h-11 text-base;
   }
+  .btn-sm {
+    @apply h-8 px-3 text-xs;
+  }
   .field {
     @apply block h-11 w-full rounded-md border border-field bg-surface px-3 text-base text-ink placeholder:text-muted hover:border-ink-2 focus:border-primary disabled:bg-tint disabled:text-muted;
   }

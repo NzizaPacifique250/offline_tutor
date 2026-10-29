@@ -112,3 +112,7 @@ export const OUTCOMES = [
   "failed",
   "no-model",
 ] as const;
+
+// Migration 0005: a class has a teacher and students.
+export type ClassRow = { id: string; name: string; teacher_id: string | null; created_at: string };
+export type ClassMember = { class_id: string; student_id: string; added_at: string };

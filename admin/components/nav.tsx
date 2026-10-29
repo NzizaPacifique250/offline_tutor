@@ -4,17 +4,23 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Icon, type IconName } from "@/components/icons";
 
-const links: { href: string; label: string; icon: IconName }[] = [
+const allLinks: { href: string; label: string; icon: IconName; adminOnly?: true }[] = [
   { href: "/", label: "Overview", icon: "overview" },
   { href: "/users", label: "Users", icon: "users" },
-  { href: "/devices", label: "Tablets", icon: "tablet" },
+  { href: "/classes", label: "Classes", icon: "classes" },
+  { href: "/devices", label: "Tablets", icon: "tablet", adminOnly: true },
   { href: "/activity", label: "Activity", icon: "activity" },
   { href: "/tutor", label: "Tutor", icon: "tutor" },
 ];
 
+// Static class names, so Tailwind generates them.
+const TAB_COLUMNS: Record<number, string> = { 5: "grid-cols-5", 6: "grid-cols-6" };
+
 // One link list, two layouts: the sidebar on wide screens, the tab bar below 1024 px.
-export function Nav({ variant }: { variant: "sidebar" | "tabs" }) {
+// Teachers do not see the Tablets page, which is for admins.
+export function Nav({ variant, role }: { variant: "sidebar" | "tabs"; role: string }) {
   const pathname = usePathname();
+  const links = allLinks.filter((l) => !l.adminOnly || role === "admin");
   const isCurrent = (href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
 
   if (variant === "sidebar") {
@@ -45,7 +51,7 @@ export function Nav({ variant }: { variant: "sidebar" | "tabs" }) {
   return (
     <nav
       aria-label="Main"
-      className="pb-[env(safe-area-inset-bottom)] fixed inset-x-0 bottom-0 z-30 grid h-16 grid-cols-5 border-t border-line bg-surface lg:hidden"
+      className={`pb-[env(safe-area-inset-bottom)] fixed inset-x-0 bottom-0 z-30 grid h-16 ${TAB_COLUMNS[links.length] ?? "grid-cols-6"} border-t border-line bg-surface lg:hidden`}
     >
       {links.map(({ href, label, icon }) => {
         const current = isCurrent(href);

@@ -42,7 +42,7 @@ export function Shell({ name, code, role, children }: Props) {
             <p className="text-xs text-white/75">Senior Six Advanced Mathematics</p>
           </div>
         </div>
-        <Nav variant="sidebar" />
+        <Nav variant="sidebar" role={role} />
         <div className="mt-auto">
           <div className="mb-3 flex items-center gap-3">
             <Avatar initials={letters} onDark />
@@ -81,7 +81,7 @@ export function Shell({ name, code, role, children }: Props) {
         </main>
       </div>
 
-      <Nav variant="tabs" />
+      <Nav variant="tabs" role={role} />
     </>
   );
 }

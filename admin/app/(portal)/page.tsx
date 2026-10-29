@@ -22,7 +22,9 @@ export default async function OverviewPage() {
   const head = { count: "exact", head: true } as const;
 
   // The queries start together with the staff check, not after it.
-  const [{ profile: me }, [profiles, devices, attempts, correct, attempts7, tutor7, sessions7, week, outcomes, stuckRows]] = await Promise.all([
+  // An admin reads everyone; a teacher only the students in their classes,
+  // so every figure below is about the reader's own students.
+  const [{ profile: me }, [profiles, devices, attempts, correct, attempts7, tutor7, sessions7, week, outcomes, stuckRows, classCount]] = await Promise.all([
     requireStaff(),
     Promise.all([
       rows<Pick<Profile, "id" | "full_name" | "learner_code" | "role" | "requested_role">>(
@@ -43,11 +45,12 @@ export default async function OverviewPage() {
       rows<Pick<ExerciseProgress, "user_id" | "exercise_id" | "wrong" | "last_attempt_at">>(
         supabase.from("exercise_progress").select("user_id, exercise_id, wrong, last_attempt_at").eq("stuck", true).order("last_attempt_at", { ascending: false }),
       ),
+      count(supabase.from("classes").select("*", head)),
     ]),
   ]);
   const isAdmin = me.role === "admin";
 
-  const problem = firstProblem(profiles, devices, attempts, correct, attempts7, tutor7, sessions7, week, outcomes, stuckRows);
+  const problem = firstProblem(profiles, devices, attempts, correct, attempts7, tutor7, sessions7, week, outcomes, stuckRows, classCount);
   // Students stuck on at least one exercise, the most recently stuck first.
   const byId = new Map(profiles.data.map((p) => [p.id, p]));
   const needHelp = [...new Set(stuckRows.data.map((r) => r.user_id))].map((id) => {
@@ -70,7 +73,11 @@ export default async function OverviewPage() {
 
   return (
     <>
-      <PageHeader title="Overview" description="Activity synced from the tablets." problem={problem} />
+      <PageHeader
+        title="Overview"
+        description={isAdmin ? "Activity synced from the tablets." : "Activity of the students in your classes."}
+        problem={problem}
+      />
 
       <div className="grid gap-4 md:gap-6">
         {isAdmin && pending > 0 ? (
@@ -114,7 +121,7 @@ export default async function OverviewPage() {
                 {[
                   ["Sessions", sessions7.data],
                   ["Tutor requests", tutor7.data],
-                  ["Tablets synced in 24 h", syncedRecently],
+                  isAdmin ? ["Tablets synced in 24 h", syncedRecently] : ["Students who need help", needHelp.length],
                 ].map(([label, value]) => (
                   <div key={label} className="flex flex-col-reverse">
                     <dt className="text-xs text-white/85">{label}</dt>
@@ -148,19 +155,34 @@ export default async function OverviewPage() {
         </div>
 
         <Rise i={3}>
-          <dl className={`grid grid-cols-2 gap-4 md:gap-6 ${isAdmin ? "lg:grid-cols-4" : "lg:grid-cols-3"}`}>
-            <StatCard label="Students" value={roleCount("student")} />
-            <StatCard label="Teachers" value={roleCount("teacher")} />
-            <StatCard label="Admins" value={roleCount("admin")} />
-            {isAdmin ? (
+          {isAdmin ? (
+            <dl className="grid grid-cols-2 gap-4 md:gap-6 lg:grid-cols-5">
+              <StatCard label="Students" value={roleCount("student")} />
+              <StatCard label="Teachers" value={roleCount("teacher")} />
+              <StatCard label="Admins" value={roleCount("admin")} />
+              <StatCard label="Classes" value={classCount.data} />
               <StatCard
                 label="Pending teacher requests"
                 value={pending}
                 note={pending > 0 ? "Review them on the Users page." : undefined}
                 className={pending > 0 ? "border-warn/40 bg-warn-soft" : "border-line bg-surface"}
               />
-            ) : null}
-          </dl>
+            </dl>
+          ) : (
+            <dl className="grid grid-cols-2 gap-4 md:gap-6 lg:grid-cols-3">
+              <StatCard label="Your students" value={roleCount("student")} />
+              <StatCard
+                label="Your classes"
+                value={classCount.data}
+                note={classCount.data === 0 ? "An admin makes you the teacher of a class." : undefined}
+              />
+              <StatCard
+                label="Need help"
+                value={needHelp.length}
+                className={needHelp.length > 0 ? "border-warn/40 bg-warn-soft" : "border-line bg-surface"}
+              />
+            </dl>
+          )}
         </Rise>
 
         <Rise i={4}>
@@ -204,7 +226,7 @@ export default async function OverviewPage() {
         </Rise>
 
         <div className="grid gap-4 md:gap-6 lg:grid-cols-12">
-          <Rise i={5} className="lg:col-span-7">
+          <Rise i={5} className={isAdmin ? "lg:col-span-7" : "lg:col-span-12"}>
             <Card title="Tutor requests by outcome" className="h-full">
               {tutorTotal === 0 ? (
                 <EmptyState
@@ -221,6 +243,7 @@ export default async function OverviewPage() {
             </Card>
           </Rise>
 
+          {isAdmin ? (
           <Rise i={6} className="lg:col-span-5">
             <Card title={`Tablets (${devices.data.length})`} className="h-full">
               {devices.data.length === 0 ? (
@@ -258,6 +281,7 @@ export default async function OverviewPage() {
               </p>
             </Card>
           </Rise>
+          ) : null}
         </div>
       </div>
     </>
