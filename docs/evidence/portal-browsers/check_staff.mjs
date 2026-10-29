@@ -119,14 +119,16 @@ if (process.env.ADMIN_EMAIL) {
   await page.fill('#new-password', secondPassword);
   await Promise.all([page.waitForURL(u => u.search.includes('notice=password') || u.search.includes('error')), page.click('button:has-text("Set password")')]);
   check('admin sets a new password', page.url().includes('notice=password-set'));
-  // This laptop's DNS sometimes stalls past Node's 10 s connect limit; retry.
+  // This laptop's DNS sometimes stalls past Node's 10 s connect limit; retry,
+  // pausing between tries, so a stall does not leave the test account behind.
   const signInWith = async pw => {
     for (let attempt = 1; ; attempt++) {
       try {
         const r = await fetch(`${SUPABASE}/auth/v1/token?grant_type=password`, { method: 'POST', headers: { apikey: KEY, 'Content-Type': 'application/json' }, body: JSON.stringify({ email, password: pw }) });
         return { status: r.status, body: await r.json() };
       } catch (e) {
-        if (attempt === 4) throw e;
+        if (attempt === 8) throw e;
+        await new Promise(resolve => setTimeout(resolve, 5000));
       }
     }
   };

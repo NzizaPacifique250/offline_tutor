@@ -12,7 +12,7 @@ with `npm run start`, in Chrome, Firefox and WebKit, at a desktop width
 | Chrome 154 | 390 | yes | yes | none |
 | Firefox 142 | 1280 | yes | yes | none |
 | Firefox 142 | 390 | yes | yes | none |
-| WebKit 26 | — | not run: the browser needs `libwoff1` and `libavif16`, which are not installed on this laptop | | |
+| WebKit 26 | n/a | not run: the browser needs `libwoff1` and `libavif16`, which are not installed on this laptop | | |
 
 Pressing "Sign in" with the form empty stays on `/login` (the fields are
 required). A made-up account is refused with "That email or password is not
@@ -61,3 +61,18 @@ refusal checks waited for an address the previous step had already left in
 the address bar, so the script now sends each form from a clean page. The
 tablet side of the same test is in
 [`../lesson-updates-2026-10-29/`](../lesson-updates-2026-10-29/).
+
+## Again after the rename to Clevo AI (29 October 2026)
+
+The portal was renamed and the live project cleaned of test accounts, so
+every check ran again on that build, with the demo teacher and the admin
+account kept for the demonstration. Signed out, `check_portal.mjs` passed in
+Chrome 154 and Firefox 142 at both widths with no console errors (WebKit
+still needs the two missing libraries). Signed in, `check_staff.mjs` passed
+34 of 34; its throwaway accounts and class were deleted at the end. Its
+first try stopped when this laptop's DNS stalled past four quick retries and
+left one throwaway account, which was deleted by hand; the script now waits
+five seconds between up to eight tries. `check_content.mjs` passed 18 of 18
+(`content/results.json`), now also checking that a teacher sees no Content
+page and cannot download a release; its release was deleted afterwards.
+
