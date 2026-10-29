@@ -43,8 +43,9 @@ Installation: `docs/INSTALLATION_GUIDE.md`. Checks before a session:
   it has internet, each row once, and studying never waits for it.
 - **The admin portal** (`admin/`), a web app where teachers and admins
   follow accounts, progress per lesson, tablets and their last sync, recent
-  activity, and the tutor's response times; an admin approves or declines
-  teacher requests.
+  activity, and the tutor's response times, with the students who need
+  help (stuck after two or more wrong answers); an admin creates, renames,
+  resets and deletes accounts and approves or declines teacher requests.
 - **The study build.** `-PofflineOnly` removes the INTERNET permission, so
   that build cannot send anything, as in 1.2.2.
 
