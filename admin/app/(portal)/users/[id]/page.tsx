@@ -20,6 +20,7 @@ import { LESSONS, exerciseLabel, lessonTitle } from "@/lib/curriculum";
 import { allRows, firstProblem, rows } from "@/lib/query";
 import { TOTAL_EXERCISES, formatMs } from "@/lib/stats";
 import type { Attempt, ClassMember, ClassRow, ExerciseProgress, GuidanceEvent, OverviewRow, Role } from "@/lib/types";
+import { isStruggling, struggles as struggleMap, type ProgressRow, type StudentStruggles } from "@/lib/struggles";
 import { capitalise, initials, outcomeMeta, roleTone, verdictMeta } from "@/lib/ui";
 import { deleteAccount, renameAccount, setAccountPassword, setRole } from "../actions";
 
@@ -52,7 +53,7 @@ export default async function UserPage({ params, searchParams }: Props) {
   const supabase = await getClient();
 
   // The queries start together with the staff check, not after it.
-  const [{ profile: me, user: meUser }, [overview, attempts, tutor, exercises, memberships, classes]] = await Promise.all([
+  const [{ profile: me, user: meUser }, [overview, attempts, tutor, exercises, members, classes, people, wrongRows]] = await Promise.all([
     requireStaff(),
     Promise.all([
       rows<OverviewRow>(supabase.from("learner_overview").select("*").eq("user_id", id)),
@@ -63,12 +64,18 @@ export default async function UserPage({ params, searchParams }: Props) {
         supabase.from("guidance_events").select("*").eq("user_id", id).order("created_at", { ascending: false }).limit(RECENT),
       ),
       rows<ExerciseProgress>(supabase.from("exercise_progress").select("*").eq("user_id", id)),
-      rows<ClassMember>(supabase.from("class_members").select("class_id, student_id").eq("student_id", id)),
-      rows<ClassRow>(supabase.from("classes").select("id, name")),
+      // Classes and their members, and who struggles: a student's page names
+      // their classes, a teacher's or admin's page lists the classes they teach.
+      rows<ClassMember>(supabase.from("class_members").select("class_id, student_id")),
+      rows<ClassRow>(supabase.from("classes").select("id, name, teacher_id").order("name")),
+      rows<Pick<OverviewRow, "user_id" | "full_name" | "learner_code">>(supabase.from("learner_overview").select("user_id, full_name, learner_code")),
+      rows<ProgressRow>(
+        supabase.from("exercise_progress").select("user_id, exercise_id, wrong, solved, stuck, last_attempt_at").gte("wrong", 1),
+      ),
     ]),
   ]);
 
-  const problem = firstProblem(overview, attempts, tutor, exercises, memberships, classes);
+  const problem = firstProblem(overview, attempts, tutor, exercises, members, classes, people, wrongRows);
   const user = overview.data[0];
   if (!user && !problem) notFound();
   if (!user) return <PageHeader title="Account" problem={problem} />;
@@ -77,7 +84,25 @@ export default async function UserPage({ params, searchParams }: Props) {
   const name = user.full_name || "(no name)";
   const shownName = user.full_name || user.learner_code;
   const isAdmin = me.role === "admin";
-  const classNames = memberships.data.map((m) => classes.data.find((c) => c.id === m.class_id)?.name).filter(Boolean).join(", ");
+  const classNames = members.data
+    .filter((m) => m.student_id === id)
+    .map((m) => classes.data.find((c) => c.id === m.class_id)?.name)
+    .filter(Boolean)
+    .join(", ");
+  // Teachers and admins do not study here: their page shows what they teach.
+  const isStaff = user.role !== "student";
+  const hasPractice = attempts.data.length > 0 || tutor.data.length > 0;
+  const struggleOf = struggleMap(wrongRows.data);
+  const personName = new Map(people.data.map((p) => [p.user_id, p.full_name || p.learner_code]));
+  const taught = classes.data
+    .filter((c) => c.teacher_id === id)
+    .map((c) => ({
+      ...c,
+      students: members.data
+        .filter((m) => m.class_id === c.id)
+        .map((m) => ({ id: m.student_id, name: personName.get(m.student_id) ?? "Unknown account", struggle: struggleOf.get(m.student_id) }))
+        .sort((a, b) => a.name.localeCompare(b.name)),
+    }));
   const notice = noticeCode ? (NOTICES[noticeCode] ?? null) : null;
   const error = errorCode ? (ERRORS[errorCode] ?? "That did not work. Try again.") : null;
   // Stuck first, then the most wrong answers, then the most recent.
@@ -115,6 +140,10 @@ export default async function UserPage({ params, searchParams }: Props) {
         </div>
       ) : null}
 
+      {isStaff ? (
+        <StaffSummary name={shownName} taught={taught} isAdminViewer={isAdmin} />
+      ) : (
+      <>
       <div className="grid gap-4 md:gap-6 lg:grid-cols-12">
         <Rise className="lg:col-span-5">
           <Card className="h-full">
@@ -254,6 +283,14 @@ export default async function UserPage({ params, searchParams }: Props) {
         </Table>
       </Section>
 
+      </>
+      )}
+
+      {isStaff && hasPractice ? (
+        <h2 className="mt-10 text-lg font-semibold">Their own practice on a tablet</h2>
+      ) : null}
+      {!isStaff || hasPractice ? (
+      <>
       <Section title="Recent attempts">
         <Table
           caption="Recent attempts"
@@ -319,7 +356,74 @@ export default async function UserPage({ params, searchParams }: Props) {
         </Table>
       </Section>
 
+      </>
+      ) : null}
+
       {isAdmin ? <ManageAccount user={user} isSelf={user.user_id === meUser.id} /> : null}
+    </>
+  );
+}
+
+type Taught = { id: string; name: string; students: { id: string; name: string; struggle: StudentStruggles | undefined }[] };
+
+// A teacher's or admin's page: the classes they teach, their students and
+// who among them struggles. A teacher can only open their own students'
+// pages, so only an admin ever sees another staff account here.
+function StaffSummary({ name, taught, isAdminViewer }: { name: string; taught: Taught[]; isAdminViewer: boolean }) {
+  const students = new Set(taught.flatMap((c) => c.students.map((s) => s.id)));
+  const struggling = new Set(taught.flatMap((c) => c.students.filter((s) => isStruggling(s.struggle)).map((s) => s.id)));
+  return (
+    <>
+      <dl className="grid grid-cols-3 gap-4 md:gap-6">
+        <StatCard label="Classes taught" value={taught.length} />
+        <StatCard label="Students" value={students.size} />
+        <StatCard
+          label="Struggling"
+          value={struggling.size}
+          className={struggling.size > 0 ? "border-warn/40 bg-warn-soft" : "border-line bg-surface"}
+        />
+      </dl>
+      <Section title="Classes taught">
+        {taught.length === 0 ? (
+          <p className="text-sm text-muted">
+            {name} teaches no class yet.{" "}
+            {isAdminViewer ? (
+              <Link href="/classes" className="link">
+                Choose a class&apos;s teacher on the Classes page.
+              </Link>
+            ) : null}
+          </p>
+        ) : (
+          <div className="grid gap-4 md:grid-cols-2 md:gap-6">
+            {taught.map((c) => (
+              <Card key={c.id} title={c.name} action={<Badge tone="neutral">{`${c.students.length} ${c.students.length === 1 ? "student" : "students"}`}</Badge>}>
+                {c.students.length === 0 ? (
+                  <p className="text-sm text-muted">No students in this class yet.</p>
+                ) : (
+                  <ul className="divide-y divide-line">
+                    {c.students.map((s) => (
+                      <li key={s.id} className="flex items-center justify-between gap-3 py-2">
+                        <Link href={`/users/${s.id}`} className="link truncate text-sm">
+                          {s.name}
+                        </Link>
+                        {s.struggle && s.struggle.stuck > 0 ? (
+                          <Badge tone="warn" icon="alert">
+                            Stuck on {s.struggle.stuck}
+                          </Badge>
+                        ) : s.struggle && s.struggle.struggled > 0 ? (
+                          <Badge tone="info" icon="clock">
+                            Struggled on {s.struggle.struggled}
+                          </Badge>
+                        ) : null}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </Card>
+            ))}
+          </div>
+        )}
+      </Section>
     </>
   );
 }

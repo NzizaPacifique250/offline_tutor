@@ -56,7 +56,7 @@ export default async function UsersPage({ searchParams }: Props) {
   const [{ profile, user }, overview, classes, members, wrongRows] = await Promise.all([
     requireStaff(),
     rows<OverviewRow>(supabase.from("learner_overview").select("*").order("created_at", { ascending: false })),
-    rows<ClassRow>(supabase.from("classes").select("id, name")),
+    rows<ClassRow>(supabase.from("classes").select("id, name, teacher_id")),
     rows<ClassMember>(supabase.from("class_members").select("class_id, student_id")),
     rows<ProgressRow>(
       supabase.from("exercise_progress").select("user_id, exercise_id, wrong, solved, stuck, last_attempt_at").gte("wrong", 1),
@@ -71,6 +71,12 @@ export default async function UsersPage({ searchParams }: Props) {
   const className = new Map(classes.data.map((c) => [c.id, c.name]));
   const classesOf = (id: string) =>
     members.data.filter((m) => m.student_id === id).map((m) => className.get(m.class_id)).filter(Boolean).join(", ");
+  // What a teacher or an admin teaches: their classes and those classes' students.
+  const taughtBy = (id: string) => {
+    const own = classes.data.filter((c) => c.teacher_id === id);
+    const ids = new Set(members.data.filter((m) => own.some((c) => c.id === m.class_id)).map((m) => m.student_id));
+    return { classes: own.map((c) => c.name), students: ids.size, struggling: [...ids].filter((sid) => isStruggling(struggleOf.get(sid))).length };
+  };
   // The account is looked up by its id, so the message never repeats text from the address bar.
   const changed = accounts.find((u) => u.user_id === changedId);
   const changedName = changed ? changed.full_name || changed.learner_code : "The account";
@@ -86,7 +92,7 @@ export default async function UsersPage({ searchParams }: Props) {
 
   const pending = accounts.filter((u) => u.role === "student" && u.requested_role === "teacher");
   const matches = (f: Filter) => (u: OverviewRow) =>
-    f === "all" ? true : f === "struggling" ? isStruggling(struggleOf.get(u.user_id)) : u.role === f;
+    f === "all" ? true : f === "struggling" ? u.role === "student" && isStruggling(struggleOf.get(u.user_id)) : u.role === f;
   const shown = accounts.filter(matches(filter));
   // Students includes people who have asked to become teachers, as on the Overview.
   const countFor = (f: Filter) => accounts.filter(matches(f)).length;
@@ -201,93 +207,140 @@ export default async function UsersPage({ searchParams }: Props) {
             ))}
           </div>
         </nav>
-        <Table
-          caption="Accounts"
-          head={[
-            "Learner",
-            ...(isAdmin ? ["Role"] : []),
-            "Class",
-            { label: "Attempts", numeric: true },
-            { label: "Exercises correct", numeric: true },
-            { label: "Wrong answers", numeric: true },
-            "Struggles",
-            { label: "Tutor requests", numeric: true },
-            "Last activity",
-            ...(isAdmin ? ["Change role"] : []),
-          ]}
-          empty={
-            filter === "all"
-              ? isAdmin
-                ? { title: "No accounts to show", body: EMPTY_BODY.all }
-                : { title: "No students in your classes yet", body: "An admin adds students to your classes on the Classes page." }
-              : filter === "struggling"
-                ? { title: "No one is struggling right now", body: EMPTY_BODY.struggling, link: { href: "/users", label: "Show all accounts" } }
-                : {
-                  title: `No ${filter}s yet`,
-                  body: EMPTY_BODY[filter],
-                  link: { href: "/users", label: "Show all accounts" },
-                }
-          }
-          isEmpty={shown.length === 0}
-        >
-          {shown.map((u) => (
-            <tr key={u.user_id} className="h-14">
-              <Td rowHeader>
-                <div className="flex items-center gap-3">
-                  <span className="hidden sm:contents">
-                    <Avatar initials={initials(u.full_name, u.learner_code)} />
-                  </span>
-                  <div>
-                    <Link href={`/users/${u.user_id}`} className="link block max-w-56 truncate" title={u.full_name || undefined}>
-                      {u.full_name || "(no name)"}
-                    </Link>
-                    <p className="max-w-64 truncate text-xs text-muted" title={u.email || undefined}>
-                      {u.learner_code}
-                      {u.email ? ` · ${u.email}` : ""}
-                    </p>
-                  </div>
-                </div>
-              </Td>
-              {isAdmin ? (
-                <Td>
-                  <span className="whitespace-nowrap">
-                    <Badge tone={roleTone(u.role)}>{capitalise(u.role)}</Badge>
-                  </span>
-                </Td>
+        {(() => {
+          // Students and staff have different things to show: a student's
+          // learning, a teacher's or admin's classes. "All" shows both tables.
+          const students = shown.filter((u) => u.role === "student");
+          const staff = shown.filter((u) => u.role !== "student");
+          const showStudents = filter !== "teacher" && filter !== "admin";
+          const showStaff = isAdmin && (filter === "all" || filter === "teacher" || filter === "admin");
+          return (
+            <div className="space-y-8">
+              {showStudents ? (
+                <section aria-labelledby="students-heading">
+                  {showStaff ? (
+                    <h2 id="students-heading" className="mb-3 text-lg font-semibold">
+                      Students <span className="text-muted tabular-nums">({students.length})</span>
+                    </h2>
+                  ) : (
+                    <h2 id="students-heading" className="sr-only">
+                      Students
+                    </h2>
+                  )}
+                  <Table
+                    caption="Students"
+                    head={[
+                      "Student",
+                      "Class",
+                      { label: "Attempts", numeric: true },
+                      { label: "Exercises correct", numeric: true },
+                      { label: "Wrong answers", numeric: true },
+                      "Struggles",
+                      { label: "Tutor requests", numeric: true },
+                      "Last activity",
+                      ...(isAdmin ? ["Change role"] : []),
+                    ]}
+                    empty={
+                      filter === "struggling"
+                        ? { title: "No one is struggling right now", body: EMPTY_BODY.struggling, link: { href: "/users", label: "Show all accounts" } }
+                        : isAdmin
+                          ? { title: "No students yet", body: EMPTY_BODY.student }
+                          : { title: "No students in your classes yet", body: "An admin adds students to your classes on the Classes page." }
+                    }
+                    isEmpty={students.length === 0}
+                  >
+                    {students.map((u) => (
+                      <tr key={u.user_id} className="h-14">
+                        <Td rowHeader>
+                          <AccountName u={u} />
+                        </Td>
+                        <Td>{classesOf(u.user_id) || <span className="text-muted">No class</span>}</Td>
+                        <Td numeric>{u.attempts}</Td>
+                        <Td numeric>
+                          <MiniProgress done={u.exercises_correct} />
+                        </Td>
+                        <Td numeric>{u.wrong_answers ?? "–"}</Td>
+                        <Td>
+                          <StruggleBadges s={struggleOf.get(u.user_id)} />
+                        </Td>
+                        <Td numeric>{u.tutor_requests}</Td>
+                        <Td>
+                          {u.last_activity ? (
+                            <span className="whitespace-nowrap" title={kigaliDateTime(u.last_activity)}>
+                              {timeAgo(u.last_activity)}
+                            </span>
+                          ) : (
+                            <span className="text-muted">No activity yet</span>
+                          )}
+                        </Td>
+                        {isAdmin ? <Td>{u.user_id === user.id ? <Badge tone="neutral">You</Badge> : <RoleForm user={u} />}</Td> : null}
+                      </tr>
+                    ))}
+                  </Table>
+                </section>
               ) : null}
-              <Td>
-                {u.role === "student" ? (
-                  classesOf(u.user_id) || <span className="text-muted">No class</span>
-                ) : (
-                  <span className="text-muted">–</span>
-                )}
-              </Td>
-              <Td numeric>{u.attempts}</Td>
-              <Td numeric>
-                <MiniProgress done={u.exercises_correct} />
-              </Td>
-              <Td numeric>{u.wrong_answers ?? "–"}</Td>
-              <Td>
-                <StruggleBadges s={struggleOf.get(u.user_id)} />
-              </Td>
-              <Td numeric>{u.tutor_requests}</Td>
-              <Td>
-                {u.last_activity ? (
-                  <span className="whitespace-nowrap" title={kigaliDateTime(u.last_activity)}>
-                    {timeAgo(u.last_activity)}
-                  </span>
-                ) : (
-                  <span className="text-muted">No activity yet</span>
-                )}
-              </Td>
-              {isAdmin ? (
-                <Td>{u.user_id === user.id ? <Badge tone="neutral">You</Badge> : <RoleForm user={u} />}</Td>
+
+              {showStaff ? (
+                <section aria-labelledby="staff-heading">
+                  <h2 id="staff-heading" className="mb-3 text-lg font-semibold">
+                    {filter === "teacher" ? "Teachers" : filter === "admin" ? "Admins" : "Teachers and admins"}{" "}
+                    <span className="text-muted tabular-nums">({staff.length})</span>
+                  </h2>
+                  <Table
+                    caption="Teachers and admins"
+                    head={["Name", "Role", "Teaches", { label: "Students", numeric: true }, { label: "Struggling", numeric: true }, "Joined", "Change role"]}
+                    empty={{ title: `No ${filter === "admin" ? "admins" : "teachers"} yet`, body: EMPTY_BODY.teacher, link: { href: "/users", label: "Show all accounts" } }}
+                    isEmpty={staff.length === 0}
+                  >
+                    {staff.map((u) => {
+                      const t = taughtBy(u.user_id);
+                      return (
+                        <tr key={u.user_id} className="h-14">
+                          <Td rowHeader>
+                            <AccountName u={u} />
+                          </Td>
+                          <Td>
+                            <span className="whitespace-nowrap">
+                              <Badge tone={roleTone(u.role)}>{capitalise(u.role)}</Badge>
+                            </span>
+                          </Td>
+                          <Td>{t.classes.length ? t.classes.join(", ") : <span className="text-muted">No class</span>}</Td>
+                          <Td numeric>{t.students}</Td>
+                          <Td numeric>{t.struggling > 0 ? <span className="font-semibold text-warn">{t.struggling}</span> : t.struggling}</Td>
+                          <Td>
+                            <LocalTime iso={u.created_at} />
+                          </Td>
+                          <Td>{u.user_id === user.id ? <Badge tone="neutral">You</Badge> : <RoleForm user={u} />}</Td>
+                        </tr>
+                      );
+                    })}
+                  </Table>
+                </section>
               ) : null}
-            </tr>
-          ))}
-        </Table>
+            </div>
+          );
+        })()}
       </Rise>
     </>
+  );
+}
+
+function AccountName({ u }: { u: OverviewRow }) {
+  return (
+    <div className="flex items-center gap-3">
+      <span className="hidden sm:contents">
+        <Avatar initials={initials(u.full_name, u.learner_code)} />
+      </span>
+      <div>
+        <Link href={`/users/${u.user_id}`} className="link block max-w-56 truncate" title={u.full_name || undefined}>
+          {u.full_name || "(no name)"}
+        </Link>
+        <p className="max-w-64 truncate text-xs text-muted" title={u.email || undefined}>
+          {u.learner_code}
+          {u.email ? ` · ${u.email}` : ""}
+        </p>
+      </div>
+    </div>
   );
 }
 

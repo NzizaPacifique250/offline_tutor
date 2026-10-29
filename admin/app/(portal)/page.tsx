@@ -55,7 +55,8 @@ export default async function OverviewPage() {
   // Every student with a wrong answer: stuck first, then those who struggled
   // (two or more wrong answers on an exercise, solved later), then the rest.
   const byId = new Map(profiles.data.map((p) => [p.id, p]));
-  const studentsWithWrong = ranked(struggles(wrongRows.data));
+  // Students only: a teacher or admin who practises on a tablet is not listed.
+  const studentsWithWrong = ranked(struggles(wrongRows.data)).filter((s) => byId.get(s.userId)?.role === "student");
   const struggling = studentsWithWrong.filter(isStruggling);
   const nameOf = (id: string) => {
     const p = byId.get(id);
