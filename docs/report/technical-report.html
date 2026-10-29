@@ -2,11 +2,11 @@
 <html lang="en-GB">
 <head>
 <meta charset="utf-8">
-<title>Offline Mathematics Tutor: Technical Report</title>
+<title>Clevo AI: Technical Report</title>
 <style>
   @page { size: A4; margin: 13mm 14mm 14mm 14mm;
     @bottom-right { content: counter(page) " / " counter(pages); font: 7.5pt "Noto Sans", sans-serif; color: #667; } 
-    @bottom-left { content: "Offline Mathematics Tutor · Technical report · Nziza Aime Pacifique"; font: 7.5pt "Noto Sans", sans-serif; color: #667; } }
+    @bottom-left { content: "Clevo AI · Technical report · Nziza Aime Pacifique"; font: 7.5pt "Noto Sans", sans-serif; color: #667; } }
   :root { --ink: #16202a; --muted: #4c5866; --rule: #c9d1da; --head: #eef2f6; --accent: #12507a; }
   * { box-sizing: border-box; }
   body { margin: 0; font: 9.3pt/1.38 "Noto Sans", "Liberation Sans", sans-serif; color: var(--ink); background: #fff; }
@@ -25,6 +25,7 @@
   .ok { color: #17663a; font-weight: 600; } .part { color: #8a5a00; font-weight: 600; } .no { color: #a1261d; font-weight: 600; } .add { color: #12507a; font-weight: 600; }
   .caption { font-size: 7.4pt; color: var(--muted); margin: 0.6mm 0 2mm; }
   .shots { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5mm 4mm; margin-top: 1.5mm; }
+  .shots.three { grid-template-columns: 1fr 1fr 1fr; gap: 2mm 3mm; }
   .shots figure { margin: 0; } .shots img { width: 100%; border: 0.4pt solid var(--rule); display: block; }
   .shots figcaption { font-size: 7.6pt; color: var(--muted); margin-top: 0.5mm; line-height: 1.2; }
   .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; }
@@ -36,12 +37,12 @@
 </head>
 <body>
 
-<h1>Offline Mathematics Tutor for Senior Six: Technical Report on the Final Version</h1>
+<h1>Clevo AI, an Offline Mathematics Tutor for Senior Six: Technical Report on the Final Version</h1>
 <div class="meta">Nziza Aime Pacifique · BSc Software Engineering, African Leadership University · Supervisor: Elvira Immaculate Khwatenge · 29&nbsp;October&nbsp;2026<br>
-Release 1.4.1 (build 9) · Repository <span class="mono">github.com/NzizaPacifique250/offline_tutor</span> · The walkthrough video is linked from the repository's README.</div>
+Release 1.5.0 (build 10) · Repository <span class="mono">github.com/NzizaPacifique250/offline_tutor</span> · The walkthrough video is linked from the repository's README.</div>
 
 <h2>1. The product</h2>
-<p>The product is an Android tutor for Senior Six Advanced Mathematics in the Rwanda Education Board (REB) curriculum that works with no internet connection. A learner reads lessons taken from the REB Student's Book with typeset formulas, practises exercises that the tablet marks, opens the book's hints in order before the worked solution, and asks a language model that runs on the tablet (Qwen2.5-Math-1.5B-Instruct, 4-bit, through <span class="mono">llama.rn</span>) for help one step at a time. Progress is computed from saved attempts and recommends the next exercise. Behind a PIN, teachers install the model, follow class progress and export research records. Release 1.3.0 added personal accounts that sign in offline after their first online sign-in, opt-in synchronisation to Supabase, and a web portal for teachers and admins; in 1.4.0 an admin publishes new or corrected lessons from the portal, and connected tablets offer to install them.</p>
+<p>The product, Clevo AI, is an Android tutor for Senior Six Advanced Mathematics in the Rwanda Education Board (REB) curriculum that works with no internet connection. A learner reads lessons taken from the REB Student's Book with typeset formulas, practises exercises that the tablet marks, opens the book's hints in order before the worked solution, and asks a language model that runs on the tablet (Qwen2.5-Math-1.5B-Instruct, 4-bit, through <span class="mono">llama.rn</span>) for help one step at a time. Progress is computed from saved attempts and recommends the next exercise. Behind a PIN, teachers install the model, follow class progress and export research records. Release 1.3.0 added personal accounts that sign in offline after their first online sign-in, opt-in synchronisation to Supabase, and a web portal for teachers and admins; in 1.4.0 an admin publishes new or corrected lessons from the portal, and connected tablets offer to install them.</p>
 
 <svg viewBox="0 0 720 150" width="100%" role="img" aria-label="Architecture: tablet, Supabase and admin portal">
   <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#12507a"/></marker></defs>
@@ -73,7 +74,7 @@ Release 1.4.1 (build 9) · Repository <span class="mono">github.com/NzizaPacifiq
 <thead><tr><th style="width:23%">Planned feature (proposal section)</th><th style="width:19%">Intended purpose</th><th style="width:13%">Status</th><th>Evidence</th></tr></thead>
 <tbody>
 <tr><td>Comparison of four quantised models on the tablet (Objective 2, §3.4.2)</td><td>Choose a model on correctness, speed and memory</td><td class="ok">Completed</td><td>Correct on 24 maths probes: Qwen2.5-Math-1.5B 23, Qwen2.5-1.5B 14, Qwen3-1.7B 8, Llama-3.2-1B 4; Qwen3 peaked at 1,467 MB. <span class="mono">docs/FEASIBILITY_FINDINGS.md</span>, <span class="mono">bench/</span></td></tr>
-<tr><td>Installable Android prototype (Objective 3)</td><td>Study with no internet</td><td class="ok">Completed</td><td>Signed APK 1.4.1, checksummed; <span class="mono">docs/INSTALLATION_GUIDE.md</span>; <span class="mono">-PofflineOnly</span> gives the study build</td></tr>
+<tr><td>Installable Android prototype (Objective 3)</td><td>Study with no internet</td><td class="ok">Completed</td><td>Signed APK 1.5.0, checksummed; <span class="mono">docs/INSTALLATION_GUIDE.md</span>; <span class="mono">-PofflineOnly</span> gives the study build</td></tr>
 <tr><td>Lessons from the REB books, readable notation (§3.3)</td><td>Curriculum content offline</td><td class="ok">Completed</td><td>4 lessons and 7 worked examples rendered with KaTeX from local assets; <span class="mono">app/src/katex/</span>; Fig. 2</td></tr>
 <tr><td>Practice package of 80 exercises and 240 hints (§1.5)</td><td>Bounded practice per unit</td><td class="part">Partial: 20 and 60</td><td>Five exercises with three hints per unit, from the book with page numbers; every key proven with SymPy. <span class="mono">curriculum/rw_s6_mathematics/packages/</span></td></tr>
 <tr><td>Answer checking against reviewed keys (§3.4)</td><td>Immediate, reliable feedback</td><td class="ok">Completed</td><td>On-device evaluator for a + bi, π, e, √, ln and functions of x; 111 tests. <span class="mono">app/src/checker/</span></td></tr>
@@ -106,13 +107,15 @@ Release 1.4.1 (build 9) · Repository <span class="mono">github.com/NzizaPacifiq
 <p><b>The tutor pipeline.</b> A question passes through four stages. (1) The router matches it against each lesson's topic keywords as whole words; no match means the question is declined and the model is never loaded. (2) On an exercise, the controller serves the next stored hint while any remain. (3) The prompt has a fixed system message, so llama.cpp reuses its cached prefix, plus one passage: the lesson paragraph that best overlaps the question, or the exercise and its hints. (4) <span class="mono">GuidanceService</span> loads the model lazily, runs one request at a time, stops it at 120 s or on Cancel, and pre-processes likely prompts while the learner reads. Output is paced one step at a time: each generation stops at the next step's heading or after 80 tokens, and a long step continues in further chunks. A numeric or complex final answer in the text is masked. The outcome and its timings go to <span class="mono">guidance_events</span>.</p>
 <p><b>Accounts, sync and the portal.</b> The first sign-in is checked online by Supabase Auth. The tablet then keeps the profile, a salted PBKDF2-SHA256 hash of the password (3,000 rounds, sized for Hermes, which has no JIT) and the refresh token, so the account signs in again offline. When sync is switched on, <span class="mono">app/src/sync/engine.ts</span> runs at start-up, every two minutes and on demand. It upserts the account's rows keyed by tablet and local id, so a repeat changes nothing, in batches of 200. A per-account, per-table high-water mark means each run sends only new rows; a failure leaves the mark, and the next run resends. Row-level security in <span class="mono">supabase/migrations/</span> lets an account write and read only its own rows; an admin reads everything and a teacher only the students in their own classes; roles change only through <span class="mono">set_role</span>, which only an admin may call. The Next.js portal renders on the server and queries as the signed-in user with the publishable key only; <span class="mono">proxy.ts</span> sends signed-out visitors to the sign-in page. Teachers see every wrong answer: who struggled (two or more wrong answers on an exercise, solved later or not) and who is stuck (not yet solved, the app's own rule), on the overview, as a filter on Users and on each student's page, with the last wrong answer typed; admins create, rename, reset and delete accounts and manage classes, and the database checks every one of those actions again.</p>
 
-<div class="shots avoid">
+<div class="shots three avoid">
 <figure><img src="../images/p4-tablet-practice-correct.png" alt="Practice screen with a correct answer"><figcaption>(a) An answer in another spelling marked correct on the tablet.</figcaption></figure>
 <figure><img src="../images/p5-tablet-steps.png" alt="Tutor answering step by step"><figcaption>(b) The on-device tutor, one step at a time, with its timings.</figcaption></figure>
 <figure><img src="../images/p8-tablet-topics-stale-cards.png" alt="Topic cards with stale size"><figcaption>(c) Fault found by the offline test in 1.2.1: "Open lesson" outside its card.</figcaption></figure>
-<figure><img src="../images/p9-tablet-sign-in.png" alt="Sign-in screen"><figcaption>(d) Sign-in in 1.3.0; studying under a learner code still needs no account.</figcaption></figure>
+<figure><img src="../images/p9-tablet-sign-in.png" alt="Sign-in screen"><figcaption>(d) Sign-in; studying under a learner code needs no account.</figcaption></figure>
+<figure><img src="../images/p10-portal-admin-users.png" alt="Admin portal, Users page"><figcaption>(e) Admin portal: accounts by type, each student's class, wrong answers and struggles.</figcaption></figure>
+<figure><img src="../images/p10-portal-teacher-classes.png" alt="Teacher portal, Classes page"><figcaption>(f) Teacher portal: only their own classes and students, the stuck ones marked.</figcaption></figure>
 </div>
-<div class="caption">Figure 2. Screens from the ATMPC IT-801B in airplane mode (more in <span class="mono">docs/images/</span>).</div>
+<div class="caption">Figure 2. The tablet in airplane mode (a to d) and the web portal in Chrome on the demo data, signed in as an admin and as a teacher (e, f). The database's security rules, not the page, limit what the teacher sees.</div>
 
 <h2>4. Testing strategies, results and improvements</h2>
 <table>
@@ -146,7 +149,7 @@ Release 1.4.1 (build 9) · Repository <span class="mono">github.com/NzizaPacifiq
 <tr><td>Exercise checked, with feedback</td><td class="num">0.13 s</td><td class="num">0.16 s</td><td class="num">2 s</td></tr>
 <tr><td>Topic opened</td><td class="num">1.44 s</td><td class="num">1.55 s</td><td class="num">2 s</td></tr>
 <tr><td>Restart, progress reopened</td><td class="num">0.81 s</td><td class="num">0.96 s</td><td class="num">10 s</td></tr>
-<tr><td>Tutor: first token</td><td class="num">23.2 s</td><td class="num">47.0 s</td><td class="num">—</td></tr>
+<tr><td>Tutor: first token</td><td class="num">23.2 s</td><td class="num">47.0 s</td><td class="num">none</td></tr>
 <tr><td>Tutor: complete first step</td><td class="num">76.7 s</td><td class="num">120.6 s</td><td class="num">120 s</td></tr>
 </tbody></table>
 <p>Other measures: cold launch shown in 768–788 ms; about 1.2 GB of memory with the model loaded; APK 101 MB plus the 986 MB model; CPU mean 61 °C and peak 82.3 °C over a 26-minute session; battery 73% to 46% over the 2.5-hour test on USB power.</p>
@@ -166,7 +169,7 @@ Release 1.4.1 (build 9) · Repository <span class="mono">github.com/NzizaPacifiq
 <table>
 <thead><tr><th style="width:30%">Environment</th><th>Result</th></tr></thead>
 <tbody>
-<tr><td>ATMPC IT-801B, Android 15 (API 35), 3.79 GB RAM: the low-end target</td><td>All features and every test above; 1.2.2 offline-only, 1.3.0, 1.4.0 and 1.4.1 release builds; a lesson update offered and installed, and imported offline</td></tr>
+<tr><td>ATMPC IT-801B, Android 15 (API 35), 3.79 GB RAM: the low-end target</td><td>All features and every test above; 1.2.2 offline-only and 1.3.0 to 1.5.0 release builds; a lesson update offered and installed, and imported offline</td></tr>
 <tr><td>Infinix Smart 8 phone, as a teacher's device</td><td>1.2.0 installed; received a progress file over Bluetooth and showed the class; ran without the model</td></tr>
 <tr><td>Android versions</td><td>Built for API 24 to 36 (Android 7 to 16); only Android 15 was tested on a device</td></tr>
 <tr><td>Portal in Chrome 154 and Firefox 142, at 1280 px and 390 px wide (Linux)</td><td>Signed out, every page redirects to sign-in; the form fits without horizontal scrolling; no console errors after the site icon was served to signed-out visitors. WebKit could not start without two system libraries.</td></tr>
