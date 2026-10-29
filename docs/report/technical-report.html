@@ -4,30 +4,30 @@
 <meta charset="utf-8">
 <title>Clevo AI: Technical Report</title>
 <style>
-  @page { size: A4; margin: 13mm 14mm 14mm 14mm;
-    @bottom-right { content: counter(page) " / " counter(pages); font: 7.5pt "Noto Sans", sans-serif; color: #667; } 
-    @bottom-left { content: "Clevo AI · Technical report · Nziza Aime Pacifique"; font: 7.5pt "Noto Sans", sans-serif; color: #667; } }
-  :root { --ink: #16202a; --muted: #4c5866; --rule: #c9d1da; --head: #eef2f6; --accent: #12507a; }
+  @page { size: A4; margin: 11mm 13mm 12mm 13mm;
+    @bottom-right { content: counter(page) " / " counter(pages); font: 7.5pt "Noto Sans", sans-serif; color: #000; } 
+    @bottom-left { content: "Clevo AI · Technical report · Nziza Aime Pacifique"; font: 7.5pt "Noto Sans", sans-serif; color: #000; } }
+  :root { --ink: #000; --muted: #000; --rule: #000; --head: #eeeeee; --accent: #000; }
   * { box-sizing: border-box; }
-  body { margin: 0; font: 9.3pt/1.38 "Noto Sans", "Liberation Sans", sans-serif; color: var(--ink); background: #fff; }
+  body { margin: 0; font: 9.3pt/1.5 "Noto Sans", "Liberation Sans", sans-serif; color: var(--ink); background: #fff; }
   h1 { font-size: 15pt; margin: 0 0 1mm; line-height: 1.2; color: var(--accent); }
-  h2 { font-size: 10.8pt; margin: 3.2mm 0 1.2mm; color: var(--accent); border-bottom: 0.4pt solid var(--rule); padding-bottom: 0.6mm; }
+  h2 { font-size: 10.8pt; margin: 3.6mm 0 1.2mm; color: var(--accent); }
   h3 { font-size: 9.2pt; margin: 2.2mm 0 0.8mm; }
   p { margin: 0 0 1.5mm; }
   ul { margin: 0 0 1.5mm; padding-left: 4.5mm; }
   li { margin: 0 0 0.6mm; }
   .meta { color: var(--muted); font-size: 8.2pt; margin-bottom: 2mm; }
   code, .mono { font-family: "DejaVu Sans Mono", monospace; font-size: 7.4pt; }
-  table { width: 100%; border-collapse: collapse; margin: 0.8mm 0 2mm; font-size: 7.85pt; line-height: 1.3; }
+  table { width: 100%; border-collapse: collapse; margin: 0.8mm 0 2mm; font-size: 7.85pt; line-height: 1.4; }
   th, td { border: 0.4pt solid var(--rule); padding: 0.7mm 1.2mm; vertical-align: top; text-align: left; }
   th { background: var(--head); font-weight: 600; }
   tr { break-inside: avoid; }
-  .ok { color: #17663a; font-weight: 600; } .part { color: #8a5a00; font-weight: 600; } .no { color: #a1261d; font-weight: 600; } .add { color: #12507a; font-weight: 600; }
+  .ok, .part, .no, .add { color: #000; font-weight: 600; }
   .caption { font-size: 7.4pt; color: var(--muted); margin: 0.6mm 0 2mm; }
   .shots { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5mm 4mm; margin-top: 1.5mm; }
   .shots.three { grid-template-columns: 1fr 1fr 1fr; gap: 2mm 3mm; }
   .shots figure { margin: 0; } .shots img { width: 100%; border: 0.4pt solid var(--rule); display: block; }
-  .shots figcaption { font-size: 7.6pt; color: var(--muted); margin-top: 0.5mm; line-height: 1.2; }
+  .shots figcaption { font-size: 7.6pt; color: var(--muted); margin-top: 0.5mm; line-height: 1.3; }
   .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; }
   .num { text-align: right; white-space: nowrap; }
   .nowrap { white-space: nowrap; }
@@ -45,26 +45,26 @@ Release 1.5.0 (build 10) · Repository <span class="mono">github.com/NzizaPacifi
 <p>The product, Clevo AI, is an Android tutor for Senior Six Advanced Mathematics in the Rwanda Education Board (REB) curriculum that works with no internet connection. A learner reads lessons taken from the REB Student's Book with typeset formulas, practises exercises that the tablet marks, opens the book's hints in order before the worked solution, and asks a language model that runs on the tablet (Qwen2.5-Math-1.5B-Instruct, 4-bit, through <span class="mono">llama.rn</span>) for help one step at a time. Progress is computed from saved attempts and recommends the next exercise. Behind a PIN, teachers install the model, follow class progress and export research records. Release 1.3.0 added personal accounts that sign in offline after their first online sign-in, opt-in synchronisation to Supabase, and a web portal for teachers and admins; in 1.4.0 an admin publishes new or corrected lessons from the portal, and connected tablets offer to install them.</p>
 
 <svg viewBox="0 0 720 150" width="100%" role="img" aria-label="Architecture: tablet, Supabase and admin portal">
-  <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#12507a"/></marker></defs>
-  <rect x="2" y="2" width="430" height="146" rx="6" fill="#f5f8fb" stroke="#9fb3c6"/>
-  <text x="12" y="18" font-size="10.5" font-weight="700" fill="#12507a">Tablet: React Native 0.87, Hermes, TypeScript; works fully offline</text>
-  <rect x="12" y="26" width="410" height="24" rx="4" fill="#fff" stroke="#c9d1da"/>
+  <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#000"/></marker></defs>
+  <rect x="2" y="2" width="430" height="146" rx="6" fill="#fff" stroke="#000"/>
+  <text x="12" y="18" font-size="10.5" font-weight="700" fill="#000">Tablet: React Native 0.87, Hermes, TypeScript; works fully offline</text>
+  <rect x="12" y="26" width="410" height="24" rx="4" fill="#fff" stroke="#000"/>
   <text x="20" y="42" font-size="9">Screens: sign-in · topics · lesson · practice · tutor · progress · teacher · class</text>
-  <rect x="12" y="56" width="410" height="40" rx="4" fill="#fff" stroke="#c9d1da"/>
+  <rect x="12" y="56" width="410" height="40" rx="4" fill="#fff" stroke="#000"/>
   <text x="20" y="71" font-size="9">Feature modules, pure and unit-tested: content, router, checker, study rules,</text>
   <text x="20" y="86" font-size="9">learner, progress, guidance, account, sync, sharing, teacher, export</text>
-  <rect x="12" y="102" width="130" height="38" rx="4" fill="#fff" stroke="#c9d1da"/><text x="20" y="117" font-size="9">SQLite (op-sqlite)</text><text x="20" y="131" font-size="8" fill="#4c5866">content, learner records</text>
-  <rect x="150" y="102" width="136" height="38" rx="4" fill="#fff" stroke="#c9d1da"/><text x="158" y="117" font-size="9">llama.rn / llama.cpp</text><text x="158" y="131" font-size="8" fill="#4c5866">Qwen2.5-Math 1.5B, 986 MB</text>
-  <rect x="294" y="102" width="128" height="38" rx="4" fill="#fff" stroke="#c9d1da"/><text x="302" y="117" font-size="9">Kotlin device module</text><text x="302" y="131" font-size="8" fill="#4c5866">model install, SHA-256</text>
-  <line x1="434" y1="76" x2="510" y2="76" stroke="#12507a" stroke-width="1.5" marker-end="url(#a)"/>
-  <text x="440" y="68" font-size="8.5" fill="#12507a">sync, opt-in</text><text x="440" y="90" font-size="8.5" fill="#12507a">own rows only</text>
-  <rect x="512" y="40" width="94" height="72" rx="6" fill="#f5f8fb" stroke="#9fb3c6"/>
-  <text x="520" y="58" font-size="10" font-weight="700" fill="#12507a">Supabase</text>
+  <rect x="12" y="102" width="130" height="38" rx="4" fill="#fff" stroke="#000"/><text x="20" y="117" font-size="9">SQLite (op-sqlite)</text><text x="20" y="131" font-size="8" fill="#000">content, learner records</text>
+  <rect x="150" y="102" width="136" height="38" rx="4" fill="#fff" stroke="#000"/><text x="158" y="117" font-size="9">llama.rn / llama.cpp</text><text x="158" y="131" font-size="8" fill="#000">Qwen2.5-Math 1.5B, 986 MB</text>
+  <rect x="294" y="102" width="128" height="38" rx="4" fill="#fff" stroke="#000"/><text x="302" y="117" font-size="9">Kotlin device module</text><text x="302" y="131" font-size="8" fill="#000">model install, SHA-256</text>
+  <line x1="434" y1="76" x2="510" y2="76" stroke="#000" stroke-width="1.5" marker-end="url(#a)"/>
+  <text x="440" y="68" font-size="8.5" fill="#000">sync, opt-in</text><text x="440" y="90" font-size="8.5" fill="#000">own rows only</text>
+  <rect x="512" y="40" width="94" height="72" rx="6" fill="#fff" stroke="#000"/>
+  <text x="520" y="58" font-size="10" font-weight="700" fill="#000">Supabase</text>
   <text x="520" y="74" font-size="8.5">Auth, Postgres,</text><text x="520" y="88" font-size="8.5">row-level</text><text x="520" y="101" font-size="8.5">security</text>
-  <line x1="636" y1="76" x2="608" y2="76" stroke="#12507a" stroke-width="1.5" marker-end="url(#a)"/>
-  <text x="611" y="68" font-size="8" fill="#12507a">read</text>
-  <rect x="638" y="40" width="80" height="72" rx="6" fill="#f5f8fb" stroke="#9fb3c6"/>
-  <text x="646" y="58" font-size="10" font-weight="700" fill="#12507a">Portal</text>
+  <line x1="636" y1="76" x2="608" y2="76" stroke="#000" stroke-width="1.5" marker-end="url(#a)"/>
+  <text x="611" y="68" font-size="8" fill="#000">read</text>
+  <rect x="638" y="40" width="80" height="72" rx="6" fill="#fff" stroke="#000"/>
+  <text x="646" y="58" font-size="10" font-weight="700" fill="#000">Portal</text>
   <text x="646" y="74" font-size="8.5">Next.js 16,</text><text x="646" y="88" font-size="8.5">teachers</text><text x="646" y="101" font-size="8.5">and admins</text>
 </svg>
 <div class="caption">Figure 1. Architecture. The tablet is the source of truth; Supabase holds copies of each account's rows; the portal reads them as the signed-in user, so the database's security rules decide what each person sees.</div>
@@ -92,13 +92,14 @@ Release 1.5.0 (build 10) · Repository <span class="mono">github.com/NzizaPacifi
 <tr><td>Student pilot: SUS and pre/post tests (Objective 5)</td><td>Usability, learning indications</td><td class="no">Not started</td><td>Waits for ALU ethics approval and school permission; instruments prepared</td></tr>
 <tr><td><em>Added:</em> class progress and Bluetooth progress files (1.1, 1.2)</td><td>A teacher sees a class spread over tablets, offline</td><td class="add">Added</td><td><span class="mono">app/src/sharing/</span>; tablet to Infinix Smart 8 phone transfer, 20 Oct</td></tr>
 <tr><td><em>Added:</em> accounts, opt-in sync, admin portal (1.3)</td><td>Monitoring across tablets and over time</td><td class="add">Added</td><td><span class="mono">app/src/account/</span>, <span class="mono">app/src/sync/</span>, <span class="mono">supabase/</span>, <span class="mono">admin/</span>; <span class="mono">docs/ACCOUNTS_AND_SYNC.md</span></td></tr>
+<tr><td><em>Added:</em> lesson updates published from the portal (1.4)</td><td>New or corrected lessons reach the tablets without a new app, online or from a file</td><td class="add">Added</td><td><span class="mono">tools/export_package.py</span>, <span class="mono">app/src/updates/</span>, the portal's Content page; tablet test in <span class="mono">docs/evidence/lesson-updates-2026-10-29/</span></td></tr>
 </tbody></table>
 <p><b>Justified changes.</b></p>
 <ul>
 <li><b>Fewer exercises.</b> Each item is copied from the Student's Book with its page, and its key is proven by SymPy and compared with the Teacher's Guide. I chose 20 verified items over 80 unverified ones; the proposal did not promise complete units.</li>
 <li><b>One short passage, chosen by keywords.</b> The tablet processes prompts at 3.7 tokens per second, so each 100-token passage adds about 28 s. The proposal's cap of one passage of at most 100 tokens (320 characters here) is kept, and keyword search is the proposal's own first baseline.</li>
 <li><b>Rules in the application, not the prompt.</b> No candidate model declined an out-of-scope question or held back an answer (0 of 4), so the router declines, stored hints come first and the final answer is masked in generated text.</li>
-<li><b>Accounts and sync go beyond §1.5,</b> which excluded cloud accounts from the pilot. They are opt-in per account, studying never waits for them, and the study build made with <span class="mono">-PofflineOnly</span> has no INTERNET permission, so the pilot can run exactly as proposed. No participant data will be synced before the ethics committee approves an amendment.</li>
+<li><b>Accounts, sync and lesson updates go beyond §1.5,</b> which excluded cloud accounts from the pilot. They are opt-in per account, studying never waits for them, and the study build made with <span class="mono">-PofflineOnly</span> has no INTERNET permission and takes lesson updates from a file, so the pilot can run exactly as proposed. No participant data will be synced before the ethics committee approves an amendment.</li>
 <li><b>Objectives 1, 4 and 5</b> depend on teacher review and ethics approval, both pending. As §1.5 provides, this report presents the technical evaluation and makes no learning claims.</li>
 </ul>
 
