@@ -6,6 +6,12 @@ import React from 'react';
 import ReactTestRenderer from 'react-test-renderer';
 import App from '../App';
 
+// The app looks for lesson updates at start-up; the test must not reach the real server.
+jest.mock('../src/sync/supabase', () => ({
+  ...jest.requireActual('../src/sync/supabase'),
+  supabaseUpdates: { listReleases: async () => [], fetchPackage: async () => '' },
+}));
+
 test('renders correctly', async () => {
   let app!: ReactTestRenderer.ReactTestRenderer;
   await ReactTestRenderer.act(() => {

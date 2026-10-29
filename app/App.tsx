@@ -3,8 +3,10 @@
  * session, background sync, and a small stack navigator.
  *
  * Start-up opens SQLite, makes sure the learner tables exist, imports any
- * bundled curriculum package whose version is not yet loaded, and reads the
- * lesson list. Everything after that is offline reads and writes of that one
+ * bundled curriculum package newer than the one loaded, and reads the
+ * lesson list. When there is internet the app also looks for lesson updates
+ * published from the admin portal (src/updates/) and offers them in a
+ * pop-up on the sign-in, learner and topic screens, never mid-lesson. Everything after that is offline reads and writes of that one
  * database; sync (src/sync/) copies the records of accounts that switched it
  * on to Supabase when there is internet, and nothing waits for it. The navigator is React state plus the Android back button; there
  * are no native navigation modules, so the debug APK from P3 runs this code
@@ -13,6 +15,7 @@
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { BackHandler, Pressable, StatusBar, StyleSheet, Text, View } from 'react-native';
+import { OfflineError } from './src/account/auth';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { ensureAccountSchema, isStaff, type Account } from './src/account/store';
 import { getDb } from './src/content/db';
@@ -24,7 +27,7 @@ import { ensureSharingSchema } from './src/sharing/store';
 import { ensureGuidanceSchema } from './src/guidance/log';
 import { openSession, type ActiveSession } from './src/learner/session';
 import { ensureLearnerSchema } from './src/learner/store';
-import { deviceInfo, tabletLabel } from './src/device/device';
+import { deviceInfo, pickTextFiles, tabletLabel } from './src/device/device';
 import { log } from './src/log';
 import { AccountScreen } from './src/screens/AccountScreen';
 import { DevScreen } from './src/screens/DevScreen';
@@ -36,10 +39,15 @@ import { ClassScreen } from './src/screens/ClassScreen';
 import { TeacherScreen } from './src/screens/TeacherScreen';
 import { SyncCard } from './src/screens/SyncCard';
 import { TopicsScreen } from './src/screens/TopicsScreen';
+import { UpdatePrompt, type InstallSummary } from './src/screens/UpdatePrompt';
 import { colors } from './src/screens/ui';
-import { SYNC_INTERVAL_MS } from './src/sync/config';
+import { SYNC_INTERVAL_MS, UPDATE_CHECK_MS } from './src/sync/config';
 import { syncAll } from './src/sync/engine';
-import { supabaseAuth, supabaseSync } from './src/sync/supabase';
+import { supabaseAuth, supabaseSync, supabaseUpdates } from './src/sync/supabase';
+import { ensureUpdatesSchema } from './src/updates/install';
+import { MAX_PACKAGE_BYTES } from './src/updates/packageFile';
+import { describeRelease, type Release } from './src/updates/releases';
+import { checkForUpdates, installFromFile, installReleases } from './src/updates/updater';
 
 type Route =
   | { name: 'account' }
@@ -68,13 +76,22 @@ async function bootstrap(): Promise<Extract<Boot, { status: 'ready' }>> {
   await ensureGuidanceSchema(db);
   await ensureSharingSchema(db);
   await ensureAccountSchema(db);
+  await ensureUpdatesSchema(db);
   const reports = await importPackages(db, PACKAGES);
   for (const r of reports) {
     log('boot', `content ${r.packageId} v${r.version}: ${r.action} (${r.lessons} lesson, ${r.examples} examples, ${r.exercises} exercises)`);
   }
+  const content = await readContent(db);
+  log('boot', `ready in ${Date.now() - t0} ms: ${content.line}`);
+  return content;
+}
+
+type Reader = Parameters<typeof listLessons>[0];
+
+/** The lessons and versions the screens show, re-read after a lesson update. */
+async function readContent(db: Reader): Promise<Extract<Boot, { status: 'ready' }>> {
   const [lessons, versions] = await Promise.all([listLessons(db), getContentVersions(db)]);
   const line = `Content: ${versions.map(v => `${v.packageId} v${v.version}`).join(', ')} · ${lessons.length} lesson(s) · offline`;
-  log('boot', `ready in ${Date.now() - t0} ms: ${line}`);
   return { status: 'ready', lessons, versions, line };
 }
 
@@ -206,6 +223,120 @@ function App(): React.JSX.Element {
     return () => clearInterval(h);
   }, [boot.status, runSync]);
 
+  // Lesson updates: looked for at start-up and every ten minutes; a tablet
+  // with no internet, or the offline-only build, just finds none.
+  const [updates, setUpdates] = useState<Release[]>([]);
+  const [dismissed, setDismissed] = useState<string[]>([]);
+  const [prompt, setPrompt] = useState<Release[] | null>(null);
+  const checking = useRef(false);
+
+  const reloadContent = useCallback(async () => {
+    const content = await readContent(db);
+    setBoot(content);
+    log('updates', `content now ${content.line}`);
+  }, [db]);
+
+  const checkUpdates = useCallback(async (): Promise<string> => {
+    if (boot.status !== 'ready' || checking.current) {
+      return 'Already checking.';
+    }
+    checking.current = true;
+    try {
+      const pending = await checkForUpdates(supabaseUpdates, boot.versions, deviceInfo().installId);
+      setUpdates(pending);
+      if (pending.length) {
+        log('updates', `available: ${pending.map(r => `${r.packageId} v${r.version}`).join(', ')}`);
+      }
+      return pending.length ? `${pending.length} update${pending.length === 1 ? '' : 's'} ready to install.` : 'The lessons are up to date.';
+    } catch (e) {
+      const message = e instanceof OfflineError ? 'No internet connection.' : (e as Error).message || String(e);
+      log('updates', `check: ${message}`);
+      return `Could not check for updates: ${message}`;
+    } finally {
+      checking.current = false;
+    }
+  }, [boot]);
+
+  useEffect(() => {
+    if (boot.status !== 'ready') {
+      return;
+    }
+    checkUpdates();
+    const h = setInterval(checkUpdates, UPDATE_CHECK_MS);
+    return () => clearInterval(h);
+  }, [boot.status, checkUpdates]);
+
+  const installUpdates = useCallback(
+    async (releases: Release[]): Promise<InstallSummary> => {
+      const versionsBefore = boot.status === 'ready' ? boot.versions : [];
+      const results = await installReleases(db, supabaseUpdates, releases);
+      const summary: InstallSummary = { installed: [], problems: [] };
+      for (const { release, outcome, problem } of results) {
+        const before = versionsBefore.find(v => v.packageId === release.packageId)?.version;
+        if (outcome?.result === 'installed') {
+          summary.installed.push(describeRelease(release, before));
+        } else if (outcome) {
+          summary.installed.push(`${release.unitTitle} (Unit ${release.unit}) is already at ${outcome.installed}`);
+        } else {
+          summary.problems.push(`${release.unitTitle} (Unit ${release.unit}): ${problem}`);
+        }
+        log('updates', `${release.packageId} v${release.version}: ${outcome ? outcome.result : `FAIL ${problem}`}`);
+      }
+      if (results.some(r => r.outcome?.result === 'installed')) {
+        await reloadContent();
+      }
+      setUpdates(u => u.filter(x => !results.some(r => r.release.id === x.id && r.outcome)));
+      return summary;
+    },
+    [boot, db, reloadContent],
+  );
+
+  // The offline route: package files copied onto the tablet, from Teacher tools.
+  const importLessonFiles = useCallback(async (): Promise<string> => {
+    const files = await pickTextFiles(MAX_PACKAGE_BYTES);
+    if (!files.length) {
+      return 'No file was chosen.';
+    }
+    const lines: string[] = [];
+    let changed = false;
+    for (const f of files) {
+      if (f.error) {
+        lines.push(`${f.name}: ${f.error}`);
+        continue;
+      }
+      const r = await installFromFile(db, f.name, f.content);
+      if (r.outcome?.result === 'installed') {
+        changed = true;
+        lines.push(`${f.name}: installed ${r.outcome.packageId} v${r.outcome.version}.`);
+      } else if (r.outcome) {
+        lines.push(`${f.name}: ${r.outcome.packageId} is already at ${r.outcome.installed}; nothing changed.`);
+      } else {
+        lines.push(`${f.name}: ${r.problem}`);
+      }
+      log('updates', `file ${f.name} (sha256 ${r.sha256.slice(0, 12)}…): ${r.outcome ? r.outcome.result : `FAIL ${r.problem}`}`);
+    }
+    if (changed) {
+      await reloadContent();
+    }
+    return lines.join('\n');
+  }, [db, reloadContent]);
+
+  // The pop-up waits for a calm screen: sign-in, learner code or the topic list.
+  const promptable = route.name === 'account' || route.name === 'learner' || route.name === 'topics';
+  const offered = updates.filter(u => !dismissed.includes(u.id));
+  const offeredKey = offered.map(u => u.id).join(',');
+  useEffect(() => {
+    if (promptable && prompt === null && offered.length > 0) {
+      setPrompt(offered);
+    }
+    // offeredKey stands for `offered`, which is a new array on every render.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [promptable, prompt, offeredKey]);
+  const closePrompt = useCallback(() => {
+    setDismissed(d => [...d, ...(prompt ?? []).map(r => r.id)]);
+    setPrompt(null);
+  }, [prompt]);
+
   const signedIn = useCallback(
     (a: Account, online: boolean) => {
       log('account', `${a.email} (${a.role}, ${a.learnerCode}) signed in ${online ? 'online' : 'offline, from this tablet'}`);
@@ -237,6 +368,10 @@ function App(): React.JSX.Element {
         onUnlock={() => setTeacherUnlocked(true)}
         onClass={() => push({ name: 'class' })}
         onDeveloper={() => push({ name: 'dev' })}
+        updates={updates}
+        onCheckUpdates={checkUpdates}
+        onInstallUpdates={() => installUpdates(updates)}
+        onImportLessonFiles={importLessonFiles}
       />
     );
   } else if (route.name === 'class') {
@@ -332,6 +467,16 @@ function App(): React.JSX.Element {
           )}
         </View>
         {body}
+        {prompt && boot.status === 'ready' ? (
+          <UpdatePrompt
+            key={prompt.map(r => r.id).join(',')}
+            releases={prompt}
+            installed={boot.versions}
+            onInstall={() => installUpdates(prompt)}
+            onLater={closePrompt}
+            onClose={closePrompt}
+          />
+        ) : null}
       </SafeAreaView>
     </SafeAreaProvider>
   );

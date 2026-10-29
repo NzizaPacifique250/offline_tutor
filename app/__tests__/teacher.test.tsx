@@ -184,6 +184,10 @@ describe('TeacherScreen', () => {
           onUnlock={() => setUnlocked(true)}
           onClass={onClass}
           onDeveloper={onDeveloper}
+          updates={[]}
+          onCheckUpdates={async () => 'The lessons are up to date.'}
+          onInstallUpdates={async () => ({ installed: [], problems: [] })}
+          onImportLessonFiles={async () => 'No file was chosen.'}
         />
       );
     }

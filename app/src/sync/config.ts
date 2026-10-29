@@ -11,6 +11,9 @@ export const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_eDY-FhmdHNW5BHrwEFYkVA_Y
 /** How often the app tries to sync while it is open. */
 export const SYNC_INTERVAL_MS = 2 * 60 * 1000;
 
+/** How often the app looks for lesson updates while it is open (also at start-up). */
+export const UPDATE_CHECK_MS = 10 * 60 * 1000;
+
 /** Rows sent per request; a tablet's backlog after weeks offline goes in several. */
 export const SYNC_BATCH = 200;
 

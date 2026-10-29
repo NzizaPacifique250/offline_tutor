@@ -1,6 +1,7 @@
 /**
  * Teacher tools, behind the teacher PIN: install the tutor model from a
- * file, export the learner records for the research, see the build and
+ * file, install lesson updates (online, or from a package file on an offline
+ * tablet), export the learner records for the research, see the build and
  * content versions with the notices the app must carry, and open the
  * developer checks. Layout and wiring only; the rules live in
  * src/teacher/, src/export/ and src/device/.
@@ -30,7 +31,9 @@ import { log } from '../log';
 import { buildSummaryFile, saveReceived } from '../sharing/store';
 import { MAX_SUMMARY_BYTES, parseSummary, summaryFileName } from '../sharing/summary';
 import { installOutcomeText, megabytes, modelState, modelStatusText, NOTICES, pinMatches, progressText } from '../teacher/teacher';
+import { describeRelease, type Release } from '../updates/releases';
 import { KeyboardScrollView } from './KeyboardScrollView';
+import type { InstallSummary } from './UpdatePrompt';
 import { Badge, Button, Card, colors, ui } from './ui';
 
 export function TeacherScreen({
@@ -42,6 +45,10 @@ export function TeacherScreen({
   onUnlock,
   onClass,
   onDeveloper,
+  updates,
+  onCheckUpdates,
+  onInstallUpdates,
+  onImportLessonFiles,
 }: {
   db: Executor;
   guidance: GuidanceService;
@@ -52,6 +59,11 @@ export function TeacherScreen({
   onUnlock: () => void;
   onClass: () => void;
   onDeveloper: () => void;
+  /** Lesson updates published for this tablet and not yet installed. */
+  updates: Release[];
+  onCheckUpdates: () => Promise<string>;
+  onInstallUpdates: () => Promise<InstallSummary>;
+  onImportLessonFiles: () => Promise<string>;
 }): React.JSX.Element {
   const [pin, setPin] = useState('');
   const [pinWrong, setPinWrong] = useState(false);
@@ -65,6 +77,19 @@ export function TeacherScreen({
   const [shareNote, setShareNote] = useState<string | null>(null);
   const [importing, setImporting] = useState(false);
   const [importNote, setImportNote] = useState<string | null>(null);
+  const [lessonBusy, setLessonBusy] = useState(false);
+  const [lessonNote, setLessonNote] = useState<string | null>(null);
+  const lessonAction = useCallback(async (run: () => Promise<string>) => {
+    setLessonBusy(true);
+    setLessonNote(null);
+    try {
+      setLessonNote(await run());
+    } catch (e) {
+      setLessonNote(`That did not work: ${(e as Error).message}`);
+    } finally {
+      setLessonBusy(false);
+    }
+  }, []);
   const timer = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(
@@ -281,6 +306,50 @@ export function TeacherScreen({
           </Text>
         ) : null}
         <Button label={importing ? 'Importing…' : 'Import progress files'} primary onPress={() => collect()} disabled={importing} testID="teacher-import" />
+      </Card>
+
+      <Card>
+        <View style={ui.row}>
+          <Text style={[ui.label, ui.flex1]}>Lesson updates</Text>
+          <Badge text={updates.length ? `${updates.length} ready` : 'none waiting'} tone={updates.length ? 'warn' : 'ok'} />
+        </View>
+        <Text style={ui.muted} testID="teacher-lessons-installed">
+          Installed: {versions.map(v => `${v.unitTitle} ${v.version}`).join(', ') || 'none'}
+        </Text>
+        {updates.map(r => (
+          <Text key={r.id} style={ui.body}>
+            {describeRelease(r, versions.find(v => v.packageId === r.packageId)?.version)}
+            {r.notes ? `. ${r.notes}` : ''}
+          </Text>
+        ))}
+        <Text style={ui.muted}>
+          With internet, the tablet looks for lessons published on the admin portal at start-up and every ten minutes, and offers them
+          when no lesson is open. Without internet (or on the offline-only build), download the release file from the portal's Content
+          page, copy it into Download and import it here. Only a newer version is installed, and saved progress is kept.
+        </Text>
+        {lessonNote ? (
+          <Text style={ui.body} testID="teacher-lessons-note">
+            {lessonNote}
+          </Text>
+        ) : null}
+        {updates.length ? (
+          <Button
+            label={lessonBusy ? 'Installing…' : 'Install updates'}
+            primary
+            disabled={lessonBusy}
+            onPress={() =>
+              lessonAction(async () => {
+                const s = await onInstallUpdates();
+                return [...s.installed.map(l => `Installed: ${l}`), ...s.problems].join('\n') || 'Nothing to install.';
+              })
+            }
+            testID="teacher-lessons-install"
+          />
+        ) : null}
+        <View style={ui.row}>
+          <Button label="Check for updates" disabled={lessonBusy} onPress={() => lessonAction(onCheckUpdates)} testID="teacher-lessons-check" />
+          <Button label="Import lessons from a file" disabled={lessonBusy} onPress={() => lessonAction(onImportLessonFiles)} testID="teacher-lessons-import" />
+        </View>
       </Card>
 
       <Card>
